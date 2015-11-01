@@ -1,0 +1,45 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       				Application.index
+
+# USER COMMON
+POST	/user/auth												UserController.authenticate
+
+GET		/user/profile											UserController.getProfile
+GET		/user/profile/											UserController.getProfile
+GET		/user/profile/{id}										UserController.getProfile
+
+POST	/device/push/register									UserController.registerOrUpdateDevicePushKey
+
+# USER FRIENDS
+GET		/user/friends											UserController.getUserFriends
+GET		/user/friends/add/{id}									UserController.addUserFriend
+GET		/user/friends/remove/{id}								UserController.removeUserFriend
+
+# USER SEARCH
+GET		/search/user											SearchController.searchUsers
+GET		/search/department										SearchController.searchDepartments
+GET		/search/department/										SearchController.searchDepartments
+GET		/search/department/{id}									SearchController.searchDepartments
+
+# GAME API
+GET		/game/invitation/create									GameController.createInvitation
+GET		/game/invitation/create/								GameController.createInvitation
+GET		/game/invitation/create/{userId}						GameController.createInvitation
+GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
+
+GET		/games													GameController.getUserGames
+
+
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

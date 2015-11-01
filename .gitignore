@@ -1,0 +1,12 @@
+.classpath
+.project
+sources/brain-fights-web/.classpath
+sources/brain-fights-web/.project
+sources/brain-fights-web/.settings
+sources/brain-fights-web/.DS_Store
+sources/brain-fights-web/tmp/*
+sources/brain-fights-web/eclipse/*
+sources/brain-fights-web/precompiled/*
+sources/brain-fights-web/conf/application.conf
+.DS_Store
+workspace
