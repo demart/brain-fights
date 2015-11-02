@@ -4,6 +4,7 @@ import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
+import kz.aphion.brainfights.models.game.GameRoundQuestionsModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.GameService;
@@ -81,7 +82,7 @@ public class GameController extends Controller {
 	 * @param gameId Идентификатор игры
 	 */
 	public static void declineInvitation(String authToken, Long gameId){
-		
+		// TODO
 	}
 	
 	
@@ -101,7 +102,6 @@ public class GameController extends Controller {
 
 	    	UserGamesModel model = GameService.getUserGames(user);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
-			
 			
 		} catch (AuthorizationException aEx) {
 			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
@@ -137,7 +137,22 @@ public class GameController extends Controller {
 	 * 	1. Выбирает вопросы из указанной группы
 	 * 	2. Учитывает что каждый пользователь их еще не играл в ближайшие 2-3 недели
 	 */	
-	public static void generateGameRound(String gameId, String categoryId){
+	public static void generateGameRound(String authToken, Long gameId, Long categoryId){
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+
+	    	GameRoundQuestionsModel model = GameService.generateGameRound(user, gameId, categoryId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+			
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
 	}
 
 	/**

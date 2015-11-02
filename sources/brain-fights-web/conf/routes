@@ -32,6 +32,7 @@ GET		/game/invitation/create/{userId}						GameController.createInvitation
 GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
 
 GET		/games													GameController.getUserGames
+GET		/game/{gameId}/round/generate/{categoryId}				GameController.generateGameRound
 
 
 

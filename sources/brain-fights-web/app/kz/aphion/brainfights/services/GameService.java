@@ -1,15 +1,26 @@
 package kz.aphion.brainfights.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
+import kz.aphion.brainfights.models.game.GameRoundQuestionsModel;
+import kz.aphion.brainfights.models.game.UserGameModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.game.Game;
+import kz.aphion.brainfights.persistents.game.GameRound;
+import kz.aphion.brainfights.persistents.game.GameRoundQuestion;
+import kz.aphion.brainfights.persistents.game.GameRoundStatus;
 import kz.aphion.brainfights.persistents.game.GameStatus;
 import kz.aphion.brainfights.persistents.game.Gamer;
 import kz.aphion.brainfights.persistents.game.GamerStatus;
+import kz.aphion.brainfights.persistents.game.question.Category;
+import kz.aphion.brainfights.persistents.game.question.Question;
 import kz.aphion.brainfights.persistents.user.User;
+import play.Logger;
+import play.db.jpa.JPA;
 
 /**
  * Сервис для обеспечения игрового процесса
@@ -42,12 +53,14 @@ public class GameService {
 		// Проверка есть ли уже игра с этим игроком
 		if (authorizedUser.getGamers() != null && authorizedUser.getGamers().size() > 0) {
 			for (Gamer gamer : authorizedUser.getGamers()) {
+				
+				// Если игра уже закончилась в ней проверять смысла нет
+				if (gamer.getGame().getStatus() == GameStatus.FINISHED)
+					continue;
+				
 				for (Gamer oponent : gamer.getGame().getGamers()) {
-					if (gamer.id == oponent.id)
-						continue;
-					
 					// Если уже есть игра с чуваком, то завершаем процесс создания приглашения
-					if (gamer.getUser().id == oponentId) {
+					if (oponent.getUser().id == friend.id) {
 						// TODO 
 						return;
 					}
@@ -72,6 +85,8 @@ public class GameService {
 	public static void createRandomInvitation(User authorizedUser) throws PlatformException {
 		if (authorizedUser == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
+		
+		// TODO Добавить ограничение по ID пользователей с кем уже играю
 		
 		// Retrieve random records
 		User oponentUser = User.find("deleted = false and id <> " + authorizedUser.id + "  order by RANDOM()").first();
@@ -212,9 +227,125 @@ public class GameService {
 		if (authorizedUser == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
 		
-
+		List<GamerStatus> statuses = new ArrayList<>();
+		statuses.add(GamerStatus.WAITING_OPONENT);
+		statuses.add(GamerStatus.WAITING_OPONENT_DECISION);
+		statuses.add(GamerStatus.WAITING_OWN_DECISION);
+		statuses.add(GamerStatus.WAITING_ROUND);
+		statuses.add(GamerStatus.WAITING_ANSWERS);
 		
-		return null;
+		List<Gamer> notCompletedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+				.setParameter("userId", authorizedUser.id)
+				.setParameter("statuses", statuses)
+				.getResultList();
+		
+		List<GamerStatus> completedStatuses = new ArrayList<>();
+		completedStatuses.add(GamerStatus.DRAW);
+		completedStatuses.add(GamerStatus.LOOSER);
+		completedStatuses.add(GamerStatus.SURRENDED);
+		completedStatuses.add(GamerStatus.WINNER);
+		
+		// Достаем законченные игры (последние 5 штук)
+		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) order by lastUpdateStatusDate DESC")
+				.setMaxResults(5)
+				.setParameter("userId", authorizedUser.id)
+				.setParameter("statuses", completedStatuses)
+				.getResultList();
+		
+		System.out.println("notCompleted Games count: " + notCompletedGames.size());
+		System.out.println("Completed Games count: " + completedGames.size());
+		
+		
+		UserGamesModel gamesModel = new UserGamesModel();
+		gamesModel.games = new ArrayList<>();
+		
+		for (Gamer gamer : notCompletedGames) {
+			UserGameModel model = UserGameModel.buildModel(authorizedUser, gamer);
+			gamesModel.games.add(model);
+		}
+		
+		for (Gamer gamer : completedGames) {
+			UserGameModel model = UserGameModel.buildModel(authorizedUser, gamer);
+			gamesModel.games.add(model);
+		}
+		
+		return gamesModel;
+	}
+
+	/**
+	 * Метод создает новый раунд в игре но основе указанной категории.
+	 * 
+	 * @param user
+	 * @param gameId
+	 * @param categoryId
+	 * @throws PlatformException 
+	 */
+	public static GameRoundQuestionsModel generateGameRound(User user, Long gameId, Long categoryId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user is null");
+		
+		Game game = Game.findById(gameId);
+		if (game == null || game.getDeleted() == null || game.getDeleted() == true)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game is null or not found");
+		
+		if (game.getStatus() == GameStatus.FINISHED || game.getStatus() == GameStatus.WAITING)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game is not in STARTED state");
+		
+		if (game.getRounds() != null && game.getRounds().size() >= 6)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game already has 6 game round");
+		
+		if (categoryId == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "category id is null");
+		Category category = Category.findById(categoryId);
+		if (category == null || category.getDeleted() == null || category.getDeleted() == true)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "category not found or deleted");
+		
+		// Достаем игрока
+		Gamer gamer = null;
+		for (Gamer gameGamer : game.getGamers()) {
+			if (gameGamer.getUser().id == user.id)
+				gamer = gameGamer;
+		}
+		if (gamer == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "gamer not found");
+		if (gamer.getStatus() != GamerStatus.WAITING_ROUND)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "gamer status is not WAITING ROUND");
+		
+		// Создаем раунд
+		GameRound gameRound = new GameRound();
+		gameRound.setGame(game);
+		gameRound.setCategory(category);
+		gameRound.setStatus(GameRoundStatus.WAITING_ANSWER);
+		gameRound.setQuestions(new ArrayList<GameRoundQuestion>());
+		gameRound.save();
+		
+		// Генерируем вопросы к раунду
+		List<Question> questions = JPA.em().createQuery("from Question where deleted = false and category.id = :categoryId order by RANDOM()")
+				.setMaxResults(3)
+				.setParameter("categoryId", category.id)
+				.getResultList();
+
+		Logger.info("Question count: " + questions.size());
+		
+		for (Question question : questions) {
+			
+			GameRoundQuestion grq = new GameRoundQuestion();
+			grq.setGameRound(gameRound);
+			grq.setQuestion(question);
+			grq.save();
+			
+			gameRound.getQuestions().add(grq);
+		}
+		
+		// Выставляем статус ожидания ответов пользователя
+		gamer.setStatus(GamerStatus.WAITING_ANSWERS);
+		gamer.save();
+		
+		
+		// Вернуть модель вопросов
+		GameRoundQuestionsModel model = new GameRoundQuestionsModel();
+		
+		return model;
 	}
 	
 }
