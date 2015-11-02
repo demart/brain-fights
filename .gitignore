@@ -10,3 +10,13 @@ sources/brain-fights-web/precompiled/*
 sources/brain-fights-web/conf/application.conf
 .DS_Store
 workspace
+sources/brain-fights-android/.idea/.name
+sources/brain-fights-android/.idea/compiler.xml
+sources/brain-fights-android/.idea/copyright/profiles_settings.xml
+sources/brain-fights-android/.idea/encodings.xml
+sources/brain-fights-android/.idea/gradle.xml
+sources/brain-fights-android/.idea/misc.xml
+sources/brain-fights-android/.idea/modules.xml
+sources/brain-fights-android/.idea/runConfigurations.xml
+sources/brain-fights-android/.idea/vcs.xml
+sources/brain-fights-android/BrainFights.iml
