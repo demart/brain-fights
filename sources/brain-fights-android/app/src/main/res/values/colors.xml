@@ -7,4 +7,5 @@
     <color name="ttk_lightGreen">#8AD75F</color>
     <color name="ttk_orange">#E46C0A</color>
     <color name="ttk_red">#C00000</color>
+    <color name="ttk_white">#FFFFFF</color>
 </resources>

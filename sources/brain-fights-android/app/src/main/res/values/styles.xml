@@ -9,4 +9,9 @@
         <item name="android:background" tools:ignore="NewApi">@color/ttk_green</item>
         <item name="background">@color/ttk_green</item>
     </style>
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/ttk_white</item>
+        <item name="android:textColorPrimary">@color/ttk_white</item>
+        <item name="android:background">@color/ttk_green</item>
+    </style>
 </resources>
