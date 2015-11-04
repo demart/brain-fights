@@ -1,6 +1,7 @@
 package kz.aphion.groupbridge.brainfights;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -18,9 +19,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import kz.aphion.groupbridge.brainfights.controllers.LoginActivity;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    public static int MY_GAMES_FRAGMENT;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -35,7 +39,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -134,7 +139,15 @@ public class MainActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = null;
+            switch (getArguments().getInt(ARG_SECTION_NUMBER)){
+                case 0:
+                    rootView = inflater.inflate(R.layout.my_games_fragment, container, false);
+                    break;
+                default:
+                    rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            }
+
             return rootView;
         }
 
