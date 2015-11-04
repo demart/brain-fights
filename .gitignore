@@ -7,7 +7,6 @@ sources/brain-fights-web/.DS_Store
 sources/brain-fights-web/tmp/*
 sources/brain-fights-web/eclipse/*
 sources/brain-fights-web/precompiled/*
-sources/brain-fights-web/conf/application.conf
 .DS_Store
 workspace
 sources/brain-fights-android/.idea/.name

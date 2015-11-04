@@ -42,6 +42,18 @@ public class GameRound extends PersistentObject {
     @ManyToOne
 	private Game game;
 	
+    /**
+     * Владелец раунда (тот кто выбирал категорию)
+     */
+    @ManyToOne
+    private Gamer owner;
+    
+    /**
+     * Номер раунда
+     */
+    @Column(name="number")
+    private Integer number;
+    
 	/**
 	 * Выбранная категория для вопросов
 	 */
@@ -91,6 +103,18 @@ public class GameRound extends PersistentObject {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Gamer getOwner() {
+		return owner;
+	}
+	public void setOwner(Gamer owner) {
+		this.owner = owner;
+	}
+	public Integer getNumber() {
+		return number;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 }

@@ -112,10 +112,10 @@ public class UserController extends Controller {
 				Gson gson = new Gson();
 				model = gson.fromJson(requestBody, DevicePushTokenRegisterModel.class);
 			} catch (JsonSyntaxException jSE) {
-				throw new PlatformException(ErrorCode.JSON_PARSE_ERROR, "authenticate request model is incorrect");
+				throw new PlatformException(ErrorCode.JSON_PARSE_ERROR, "register or update device push request model is incorrect");
 			}   	
 	    	if (model == null)
-	    		throw new PlatformException(ErrorCode.VALIDATION_ERROR, "authenticate request model is empty.");
+	    		throw new PlatformException(ErrorCode.VALIDATION_ERROR, "register or update device push request model is empty.");
 	    	
 	    	// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);

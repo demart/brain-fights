@@ -2,15 +2,14 @@ package kz.aphion.brainfights.persistents.game;
 
 import java.util.List;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import kz.aphion.brainfights.persistents.PersistentObject;
 import kz.aphion.brainfights.persistents.game.question.Question;
@@ -49,6 +48,7 @@ public class GameRoundQuestion extends PersistentObject {
 	 * Ответы пользователей на вопросы в раунде
 	 */
 	@OneToMany(mappedBy="gameRoundQuestion")
+	@OrderBy("id ASC")
 	private List<GameRoundQuestionAnswer> questionAnswers;
 	
 	public GameRound getGameRound() {

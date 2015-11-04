@@ -31,9 +31,11 @@ GET		/game/invitation/create/								GameController.createInvitation
 GET		/game/invitation/create/{userId}						GameController.createInvitation
 GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
 
-GET		/games													GameController.getUserGames
-GET		/game/{gameId}/round/generate/{categoryId}				GameController.generateGameRound
-
+GET		/games																			GameController.getUserGames
+GET		/game/list																		GameController.getUserGames
+GET		/game/{gameId}/round/generate/{categoryId}										GameController.generateGameRound
+GET		/game/{gameId}/round/questions													GameController.getRoundQuestions
+GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			GameController.answerQuestion
 
 
 # Ignore favicon requests

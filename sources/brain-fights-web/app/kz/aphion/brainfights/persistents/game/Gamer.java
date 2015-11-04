@@ -44,6 +44,12 @@ public class Gamer extends PersistentObject {
     @ManyToOne
 	private Game game;
 	
+    /**
+     * Противник
+     */
+    @ManyToOne
+    private Gamer oponent;
+    
 	/**
 	 * Статус игрока в текущей игре (Ждет, Ходит и т.д.)
 	 */
@@ -133,6 +139,12 @@ public class Gamer extends PersistentObject {
 	}
 	public void setGameInitiator(Boolean gameInitiator) {
 		this.gameInitiator = gameInitiator;
+	}
+	public Gamer getOponent() {
+		return oponent;
+	}
+	public void setOponent(Gamer oponent) {
+		this.oponent = oponent;
 	}
     
 }
