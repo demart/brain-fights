@@ -29,4 +29,8 @@ public class GamerQuestionAnswerResultModel {
 	 */
 	public GamerStatus gamerStatus;
 	
+	/**
+	 * На сколько изменился рейтинг пользователя после этого ответа (если это последний ответ в игре)
+	 */
+	public Integer gamerScore;
 }

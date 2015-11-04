@@ -4,6 +4,7 @@ import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
+import kz.aphion.brainfights.models.game.GameModel;
 import kz.aphion.brainfights.models.game.GameRoundModel;
 import kz.aphion.brainfights.models.game.GamerQuestionAnswerResultModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
@@ -121,7 +122,7 @@ public class GameController extends Controller {
 	 *  3. Информация о раундах и их результатах
 	 * @param gameId Идентификатор игры
 	 */
-	public static void getUserGame(String gameId){
+	public static void getGameInformation(String authToken, Long gameId){
 		// Статус игры
 		// Информацию об игроках
 		// Информация о счете 
@@ -131,6 +132,22 @@ public class GameController extends Controller {
 			// Ответы пользователя
 		// Доступные действия
 			// Предлагаемые категории вопросов для нового раунда
+		try {
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+
+	    	GameModel model = GameService.getGameInformation(user, gameId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+			
+
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
 	}	
 	
 	/**

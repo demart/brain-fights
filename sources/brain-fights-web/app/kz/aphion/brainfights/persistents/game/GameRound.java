@@ -10,12 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import kz.aphion.brainfights.persistents.PersistentObject;
 import kz.aphion.brainfights.persistents.game.question.Category;
-import kz.aphion.brainfights.persistents.game.question.Question;
 
 /**
  * Раунд игры
@@ -65,6 +65,7 @@ public class GameRound extends PersistentObject {
 	 */
 	// TODO Сортировать вопросы по ID
     @OneToMany(mappedBy="gameRound")
+    @OrderBy("id ASC")
 	private List<GameRoundQuestion> questions;
 	
 	/**

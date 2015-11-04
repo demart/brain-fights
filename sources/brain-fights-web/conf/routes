@@ -33,6 +33,8 @@ GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
 
 GET		/games																			GameController.getUserGames
 GET		/game/list																		GameController.getUserGames
+GET		/game/{gameId}																	GameController.getGameInformation
+GET		/game/{gameId}/																	GameController.getGameInformation
 GET		/game/{gameId}/round/generate/{categoryId}										GameController.generateGameRound
 GET		/game/{gameId}/round/questions													GameController.getRoundQuestions
 GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			GameController.answerQuestion

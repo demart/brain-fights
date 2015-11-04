@@ -68,7 +68,7 @@ public class Gamer extends PersistentObject {
 	 * Кол-во правильных ответов за игру
 	 */
     @Column(name="correct_answer_count")
-	private Integer correctAnswerCount;
+	private Integer correctAnswerCount = 0;
 
     /**
      * Счет заработанный в этой игре (Может быть плюс и минус)
@@ -81,7 +81,6 @@ public class Gamer extends PersistentObject {
      */
     @Column(name="game_initiator", nullable=false, columnDefinition="boolean default false")
     private Boolean gameInitiator;
-    
     
 	public User getUser() {
 		return user;

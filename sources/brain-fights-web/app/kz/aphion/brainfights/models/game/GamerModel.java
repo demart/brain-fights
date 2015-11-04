@@ -36,6 +36,10 @@ public class GamerModel {
 	 */
 	public Calendar lastUpdateStatusDate;
 	
+	/**
+	 * Кол-во правильных ответов
+	 */
+	public Integer correctAnswerCount;
 	
 	public static GamerModel buildGamerModel(User authorizedUser, Gamer gamer) throws PlatformException {
 		GamerModel model = new GamerModel();
@@ -44,6 +48,7 @@ public class GamerModel {
 		model.lastUpdateStatusDate = gamer.getLastUpdateStatusDate();
 		model.user = UserProfileModel.buildModel(authorizedUser, gamer.getUser()); 
 		model.status = gamer.getStatus();
+		model.correctAnswerCount = gamer.getCorrectAnswerCount();
 		
 		return model;
 	}

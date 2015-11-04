@@ -25,6 +25,6 @@ public class ErrorCode {
 	/**
 	 * Ошибка авторизации
 	 */
-	public static final String AUTH_ERROR = "004";	
+	public static final String AUTH_ERROR = "005";	
 }
 
