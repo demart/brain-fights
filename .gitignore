@@ -19,3 +19,6 @@ sources/brain-fights-android/.idea/modules.xml
 sources/brain-fights-android/.idea/runConfigurations.xml
 sources/brain-fights-android/.idea/vcs.xml
 sources/brain-fights-android/BrainFights.iml
+sources/brain-fights-web/brain-fights-web.iml
+sources/brain-fights-web/brain-fights-web.ipr
+sources/brain-fights-web/brain-fights-web.iws
