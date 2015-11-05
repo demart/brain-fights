@@ -15,5 +15,4 @@ public class UserGamesModel {
 	public List<UserGameModel> games;
 	
 	
-	
 }

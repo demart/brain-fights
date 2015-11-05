@@ -44,6 +44,12 @@ public class Gamer extends PersistentObject {
     @ManyToOne
 	private Game game;
 	
+    /**
+     * Противник
+     */
+    @ManyToOne
+    private Gamer oponent;
+    
 	/**
 	 * Статус игрока в текущей игре (Ждет, Ходит и т.д.)
 	 */
@@ -62,7 +68,7 @@ public class Gamer extends PersistentObject {
 	 * Кол-во правильных ответов за игру
 	 */
     @Column(name="correct_answer_count")
-	private Integer correctAnswerCount;
+	private Integer correctAnswerCount = 0;
 
     /**
      * Счет заработанный в этой игре (Может быть плюс и минус)
@@ -75,7 +81,6 @@ public class Gamer extends PersistentObject {
      */
     @Column(name="game_initiator", nullable=false, columnDefinition="boolean default false")
     private Boolean gameInitiator;
-    
     
 	public User getUser() {
 		return user;
@@ -133,6 +138,12 @@ public class Gamer extends PersistentObject {
 	}
 	public void setGameInitiator(Boolean gameInitiator) {
 		this.gameInitiator = gameInitiator;
+	}
+	public Gamer getOponent() {
+		return oponent;
+	}
+	public void setOponent(Gamer oponent) {
+		this.oponent = oponent;
 	}
     
 }

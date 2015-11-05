@@ -60,7 +60,7 @@ public class UserService {
 		
 		if (model.devicePushToken != null || "".equals(model.devicePushToken.trim()))
 			user.setDevicePushToken(model.devicePushToken);
-
+		
 		user.save();
 		
 		UserProfileModel userProfileModel = UserProfileModel.buildModel(user);

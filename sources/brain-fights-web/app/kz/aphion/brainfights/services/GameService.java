@@ -6,16 +6,21 @@ import java.util.List;
 
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
-import kz.aphion.brainfights.models.game.GameRoundQuestionsModel;
+import kz.aphion.brainfights.models.game.GameModel;
+import kz.aphion.brainfights.models.game.GameRoundCategoryModel;
+import kz.aphion.brainfights.models.game.GameRoundModel;
+import kz.aphion.brainfights.models.game.GamerQuestionAnswerResultModel;
 import kz.aphion.brainfights.models.game.UserGameModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.game.Game;
 import kz.aphion.brainfights.persistents.game.GameRound;
 import kz.aphion.brainfights.persistents.game.GameRoundQuestion;
+import kz.aphion.brainfights.persistents.game.GameRoundQuestionAnswer;
 import kz.aphion.brainfights.persistents.game.GameRoundStatus;
 import kz.aphion.brainfights.persistents.game.GameStatus;
 import kz.aphion.brainfights.persistents.game.Gamer;
 import kz.aphion.brainfights.persistents.game.GamerStatus;
+import kz.aphion.brainfights.persistents.game.question.Answer;
 import kz.aphion.brainfights.persistents.game.question.Category;
 import kz.aphion.brainfights.persistents.game.question.Question;
 import kz.aphion.brainfights.persistents.user.User;
@@ -72,7 +77,8 @@ public class GameService {
 
 		createInvitationWithPushNotification(authorizedUser, friend);
 		// TODO Send PUSH notification to oponent
-	
+		// TODO Возвращать модель с информацией чем закончилось выполенение и кто будет играть
+		
 	}
 	
 	/**
@@ -151,6 +157,15 @@ public class GameService {
 		oponent.setGameInitiator(false);
 		
 		oponent.save();
+		
+		gamer.setOponent(oponent);
+		gamer.save();
+		
+		oponent.setOponent(gamer);
+		oponent.save();
+		
+		// PUSH уведомление
+		Logger.info("PUSH " + oponent.getUser().getName() + " игрок принял ваше приглашение!");
 	}
 	
 	
@@ -211,7 +226,7 @@ public class GameService {
 		invitationReceiver.save();
 		
 		// TODO Отправить PUSH уведомление о том что игрок принял приглашение
-		
+		Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
 	}
 
 	/**
@@ -273,14 +288,84 @@ public class GameService {
 	}
 
 	/**
+	 * Метод формирует модель игры, в которой
+	 * 1. Информация об игроках
+	 * 2. Информация о текущем состояниии игры
+	 * 3. Информация о возможных действиях (играть, реванш и т.д.)
+	 * 4. Информация можно ли добавить чувака в друзья
+	 * @param user
+	 * @param gameId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GameModel getGameInformation(User user, Long gameId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user is null");
+		if (user.getDeleted())
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user was deleted");
+		
+		// Проверяем игру
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
+		
+		// Получаем список игроков
+		Gamer gamer = null;
+		Gamer oponent = null;
+		for (Gamer gamerObject : game.getGamers()) {
+			if (gamerObject.getUser().id == user.id) {
+				gamer = gamerObject;
+				oponent = gamer.getOponent();
+			}
+		}
+		// TODO CHECKS
+		
+		// Если пользователю выбирать вопросы к раунду то, сгенерируем их сразу
+		List<GameRoundCategoryModel> categories = null;
+		if (gamer.getStatus() == GamerStatus.WAITING_ROUND) {
+			categories = new ArrayList<GameRoundCategoryModel>();
+			
+			// Формируем список использованных категорий в игре
+			List<Long> usedCategoryIds = new ArrayList<>();
+			if (game.getRounds() != null)
+				for (GameRound gameRound : game.getRounds()) {
+					usedCategoryIds.add(gameRound.getCategory().id);
+				}
+			
+			// Получаем список категорий, крое использованных
+			List<Category> result = JPA.em().createQuery("from Category where deleted = false and id not in (:ids) order by RANDOM()")
+					.setMaxResults(3)
+					.setParameter("ids", usedCategoryIds)
+					.getResultList();
+			
+			for (Category category : result) {
+				GameRoundCategoryModel gameRoundCategoryModel = GameRoundCategoryModel.buildModel(category);
+				categories.add(gameRoundCategoryModel);
+			}
+			
+		}
+		
+		// Строим модель игры
+		GameModel model = GameModel.buildModel(game, gamer, oponent, categories);  
+		
+		return model;
+	}
+	
+	
+	
+	
+	/**
 	 * Метод создает новый раунд в игре но основе указанной категории.
+	 * Генерирует 3 случайных вопроса для игры.
 	 * 
 	 * @param user
 	 * @param gameId
 	 * @param categoryId
 	 * @throws PlatformException 
 	 */
-	public static GameRoundQuestionsModel generateGameRound(User user, Long gameId, Long categoryId) throws PlatformException {
+	public static GameRoundModel generateGameRound(User user, Long gameId, Long categoryId) throws PlatformException {
 		if (user == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user is null");
 		
@@ -300,6 +385,13 @@ public class GameService {
 		if (category == null || category.getDeleted() == null || category.getDeleted() == true)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "category not found or deleted");
 		
+		if (game.getRounds() != null)
+			for (GameRound gameRound : game.getRounds()) {
+				if (gameRound.getCategory().id == category.id)
+					throw new PlatformException(ErrorCode.VALIDATION_ERROR, "category already used in this game, in previous round");
+			}
+		
+		
 		// Достаем игрока
 		Gamer gamer = null;
 		for (Gamer gameGamer : game.getGamers()) {
@@ -315,9 +407,15 @@ public class GameService {
 		GameRound gameRound = new GameRound();
 		gameRound.setGame(game);
 		gameRound.setCategory(category);
+		gameRound.setOwner(gamer); // Кто создает раунд тот и главный
+		gameRound.setNumber(game.getRounds().size()+1); // текущее кол-во плюс один
 		gameRound.setStatus(GameRoundStatus.WAITING_ANSWER);
 		gameRound.setQuestions(new ArrayList<GameRoundQuestion>());
 		gameRound.save();
+		
+		// Если это первый раунд то сохраняем когда игра началась
+		game.setGameStartedDate(Calendar.getInstance());
+		game.save();
 		
 		// Генерируем вопросы к раунду
 		List<Question> questions = JPA.em().createQuery("from Question where deleted = false and category.id = :categoryId order by RANDOM()")
@@ -341,11 +439,279 @@ public class GameService {
 		gamer.setStatus(GamerStatus.WAITING_ANSWERS);
 		gamer.save();
 		
-		
 		// Вернуть модель вопросов
-		GameRoundQuestionsModel model = new GameRoundQuestionsModel();
+		GameRoundModel model = GameRoundModel.buildModel(gameRound, gamer, gamer.getOponent());
 		
 		return model;
 	}
+
+	/**
+	 * Метод возврщает список вопросов к раунду, 
+	 * также умеет восстанавливать сессию и показывать какие вопросы пользователь уже ответил.
+	 * Показывает также какие варианты ответов были у его опонента.
+	 * @param user
+	 * @param gameId
+	 * @param roundId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GameRoundModel getRoundQuestions(User user, Long gameId, Long roundId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user is null");
+		// TOOD Валидация входных парамтеров, пока не понятно что именно нужно
+		
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND,"game not found");
+		if (game.getStatus() == GameStatus.WAITING || game.getStatus() == GameStatus.FINISHED)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR,"game is not in STARTED state");
+		
+		if (game.getRounds().size() == 0)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND,"game rounds are not exists");
+		
+		// Получаем последий раунд
+		GameRound lastGameRound = game.getRounds().get(game.getRounds().size()-1);
+		if (lastGameRound.getStatus() == GameRoundStatus.COMPLETED)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR,"game round already completed");
+		
+		// Получам игрока, жесткий способ но пока пойдет
+		Gamer gamer = game.getGamers().get(0).getUser().id == user.id ? game.getGamers().get(0) : game.getGamers().get(1);
+		Gamer oponent = gamer.getOponent();
+		
+		if (gamer.getUser().id != user.id && oponent.getUser().id != user.id)
+			throw new PlatformException(ErrorCode.AUTH_ERROR,"user are not allowed to check others games");
+		
+		// Проверяем нужно ли вообще показывать вопросы игроку
+		if (gamer.getStatus() != GamerStatus.WAITING_ANSWERS)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR,"gamer should't answer on question");
+		
+		// Вернуть модель вопросов
+		GameRoundModel model = GameRoundModel.buildModel(lastGameRound, gamer, oponent);
+				
+		return model;
+	}
+
+	/**
+	 * Метод ведет учет ответов пользователей, если необходимо завершает раунд или игру.
+	 * В рамках этого метода генерируется и считается быстрая стратистика + вытавляетяс рейтинг
+	 * @param user
+	 * @param gameId
+	 * @param roundId
+	 * @param questionId
+	 * @param answerId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GamerQuestionAnswerResultModel answerQuestions(User user,
+			Long gameId, Long roundId, Long questionId, Long answerId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user is null");
+
+		// Получаем игру и делаем стандартные проверки
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
+		if (game.getStatus() == GameStatus.WAITING || game.getStatus() == GameStatus.FINISHED)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game is not STARTED state");
+		
+		// Проверяем игроков
+		Gamer gamer = game.getGamers().get(0);
+		if (gamer.getUser().id != user.id) {
+			gamer = game.getGamers().get(1);
+			if (gamer.getUser().id != user.id)
+				throw new PlatformException(ErrorCode.AUTH_ERROR, "user can't asnwer on foreign questions");
+		}
+		if (gamer.getStatus() != GamerStatus.WAITING_ANSWERS)
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user can't asnwer on question if your status is not WAITING_ANSWER");
+		
+		// Опонент
+		Gamer oponent = gamer.getOponent();	
+		
+		// проверяем указанный раунд игры
+		GameRound gameRound = GameRound.findById(roundId);
+		if (gameRound == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game round not found");
+		if (gameRound.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game round was deleted");
+		if (gameRound.getStatus() == GameRoundStatus.COMPLETED)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game round already completed, you can't answer questions any more");
+		if (gameRound.getGame().id != game.id)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game round doesn't belons to selected game");
+		
+		// Проверяем указанный вопрос раунда
+		GameRoundQuestion gameRoundQuestion = GameRoundQuestion.findById(questionId);
+		if (gameRoundQuestion == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game round question was not found");
+		if (gameRoundQuestion.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game round question was deleted");
+		if (gameRoundQuestion.getGameRound().id != gameRound.id)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game round question doesn't belons to selected game round");
+			
+		// Проверка отвечал пользователь или нет на этот вопрос
+		if (gameRoundQuestion.getQuestionAnswers() != null)
+			for (GameRoundQuestionAnswer questionAnswer : gameRoundQuestion.getQuestionAnswers()) {
+				if (questionAnswer.getGamer().id == gamer.id) {
+					throw new PlatformException(ErrorCode.VALIDATION_ERROR, "gamer already answered the question");
+				}
+			}
+		
+		// Фиксируем ответ игрока
+		Answer answer = Answer.findById(answerId);
+		if (answer == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer not found");
+
+		if (answer.getQuestion().id != gameRoundQuestion.getQuestion().id)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer doesn't belong to the question");
+		
+		// Добавляем ответ
+		GameRoundQuestionAnswer gamerAnswer = new GameRoundQuestionAnswer();
+		gamerAnswer.setGamer(gamer);
+		gamerAnswer.setGameRoundQuestion(gameRoundQuestion);
+		gamerAnswer.setAnswer(answer);
+		gamerAnswer.setIsCorrectAnswer(answer.getCorrect());
+		gamerAnswer.save();
+		
+		if (gameRoundQuestion.getQuestionAnswers() == null)
+			gameRoundQuestion.setQuestionAnswers(new ArrayList<GameRoundQuestionAnswer>());
+		gameRoundQuestion.getQuestionAnswers().add(gamerAnswer);
+		
+		// Добавляем очко если правильно ответил на вопрос
+		if (gamerAnswer.getIsCorrectAnswer()) {
+			gamer.setCorrectAnswerCount(gamer.getCorrectAnswerCount()+1);
+			gamer.save();
+		}
+		
+		// Проверяем не конец ли игры или раунда и делаем соотвествующие передвижки
+		
+		Integer gamerQuestionAnswers = 0;
+		Integer oponentQuestionAnswers = 0;
+		
+		// Обновляем коллекцию
+		gameRound.refresh();
+		for (GameRoundQuestion gameRoundQuestionObject : gameRound.getQuestions()) {
+			for (GameRoundQuestionAnswer gameRoundQuestionAnswer : gameRoundQuestionObject.getQuestionAnswers()) {
+				if (gameRoundQuestionAnswer.getGamer().id == gamer.id) {
+					gamerQuestionAnswers =gamerQuestionAnswers+1;
+				} else {
+					oponentQuestionAnswers =oponentQuestionAnswers+1;
+				}
+			}
+		}
+		
+		Logger.info("Gamer question answers: " + gamerQuestionAnswers);
+		Logger.info("Oponent question answers: " + oponentQuestionAnswers);
+		
+		// Если уже 3 ответа на вопросы
+		if (gamerQuestionAnswers == 3) {
+			// Если у опонента тоже 3 ответа на вопросы
+			if (oponentQuestionAnswers == 3) {
+				// Нужно завершать раунд
+				gameRound.setStatus(GameRoundStatus.COMPLETED);
+				gameRound.save();
+				
+				if (gameRound.getNumber() == 6) {
+					// Последний раунд
+					// Завершаем игру, считаем баллы и так далле
+					// Отправляем PUSH уведомление другому участнику с результатом и т.д.
+					
+					// TODO Завершить игру
+					game.setStatus(GameStatus.FINISHED);
+					game.setGameFinishedDate(Calendar.getInstance());
+					game.save();
+					
+					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
+						// Ничья
+						
+						gamer.setStatus(GamerStatus.DRAW);
+						// TODO считаем очки
+						gamer.save();
+						
+						oponent.setStatus(GamerStatus.DRAW);
+						// TODO считаем очки
+						oponent.save();
+						Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
+						// TODO отправить уведомление второму игроку о ничье
+						
+					} else {
+						if (gamer.getCorrectAnswerCount() > oponent.getCorrectAnswerCount()) {
+							// Выиграл текущий игрок
+							gamer.setStatus(GamerStatus.WINNER);
+							// TODO считаем очки
+							gamer.save();
+							
+							// Проиграл опонент
+							oponent.setStatus(GamerStatus.LOOSER);
+							// TODO считаем очки
+							oponent.save();
+							
+							// TODO отправить уведомление второму что он проиграл
+							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
+							
+						} else {
+							// Выиграл текущий игрок
+							gamer.setStatus(GamerStatus.LOOSER);
+							// TODO считаем очки
+							gamer.save();
+							
+							// Проиграл опонент
+							oponent.setStatus(GamerStatus.WINNER);
+							// TODO считаем очки
+							oponent.save();
+							
+							// TODO отправить уведомление второму что он выиграл
+							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
+
+						}
+					}
+					
+				} else {
+					// Еще есть раунды
+					
+					// Если игрок был инициатором раунда, тогда теперь выбирает противник
+					if (gamer.id == gameRound.getOwner().id) {
+						gamer.setStatus(GamerStatus.WAITING_OPONENT);
+						gamer.save();
+						
+						oponent.setStatus(GamerStatus.WAITING_ROUND);
+						oponent.save();
+						// TODO SEND PUSH уведомление о ходе
+						Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
+						
+					} else {
+						// Инициатором был опонент теперь наша очередь выбирать
+						gamer.setStatus(GamerStatus.WAITING_ROUND);
+						gamer.save();
+						
+						oponent.setStatus(GamerStatus.WAITING_OPONENT);
+						oponent.save();
+					}
+
+				}
+			} else {
+				// Если противник еще не ответил на вопросы тогда нужно изменить статус и ждать его ответов
+				// Пора менять статус на опонента
+				gamer.setStatus(GamerStatus.WAITING_OPONENT);
+				gamer.save();
+				
+				oponent.setStatus(GamerStatus.WAITING_ANSWERS);
+				// TODO SEND PUSH NOTIFICATION что пора отвечать второму участнику
+				Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
+				oponent.save();
+			}
+		} else {
+			// Если меньше 3х ответов, то пока еще нужно отвечать
+		}
+		
+		GamerQuestionAnswerResultModel model = new GamerQuestionAnswerResultModel();
+		model.gameStatus = game.getStatus();
+		model.gamerStatus = gamer.getStatus();
+		model.gamerScore = 0;
+		model.gameRoundStatus = gameRound.getStatus();
+		
+		return model;
+	}
+
 	
 }
