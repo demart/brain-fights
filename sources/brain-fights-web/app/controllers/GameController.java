@@ -7,6 +7,7 @@ import kz.aphion.brainfights.models.ResponseWrapperModel;
 import kz.aphion.brainfights.models.game.GameModel;
 import kz.aphion.brainfights.models.game.GameRoundModel;
 import kz.aphion.brainfights.models.game.GamerQuestionAnswerResultModel;
+import kz.aphion.brainfights.models.game.UserGameModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.GameService;
@@ -34,12 +35,13 @@ public class GameController extends Controller {
 	    	User user = UserService.getUserByAuthToken(authToken);
 
 	    	// Создаем приглашение и отправляем уведомления
+	    	UserGameModel model = null;
 	    	if (userId != null) {
-	    		GameService.createInvitation(user, userId);
+	    		model = GameService.createInvitation(user, userId);
 	    	} else {
-	    		GameService.createRandomInvitation(user);
+	    		model = GameService.createRandomInvitation(user);
 	    	}
-	    	renderJSON(ResponseWrapperModel.getSuccess(null));
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 	    	
 		} catch (AuthorizationException aEx) {
 			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));

@@ -42,7 +42,7 @@ public class GameService {
 	 * @param oponentId
 	 * @throws PlatformException 
 	 */
-	public static void createInvitation(User authorizedUser, Long oponentId) throws PlatformException {
+	public static UserGameModel createInvitation(User authorizedUser, Long oponentId) throws PlatformException {
 		if (authorizedUser == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
 		
@@ -67,7 +67,7 @@ public class GameService {
 					// Если уже есть игра с чуваком, то завершаем процесс создания приглашения
 					if (oponent.getUser().id == friend.id) {
 						// TODO 
-						return;
+						throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user already plays with you");
 					}
 						
 				}
@@ -75,9 +75,18 @@ public class GameService {
 		}
 		
 
-		createInvitationWithPushNotification(authorizedUser, friend);
+		Game game = createInvitationWithPushNotification(authorizedUser, friend);
 		// TODO Send PUSH notification to oponent
-		// TODO Возвращать модель с информацией чем закончилось выполенение и кто будет играть
+		Gamer gamer = null;
+		for (Gamer gamerObject : game.getGamers())
+			if (gamer.getUser().id == authorizedUser.id)
+				gamer = gamerObject;
+		
+		// PUSH уведомление
+		Logger.info("PUSH " + friend.getName() + " вам пришло приглашение сыграть игру!");
+		
+		UserGameModel model = UserGameModel.buildModel(authorizedUser, gamer);
+		return model;
 		
 	}
 	
@@ -88,16 +97,37 @@ public class GameService {
 	 * @param oponentId
 	 * @throws PlatformException 
 	 */
-	public static void createRandomInvitation(User authorizedUser) throws PlatformException {
+	public static UserGameModel createRandomInvitation(User authorizedUser) throws PlatformException {
 		if (authorizedUser == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
 		
+		// Статусы активных игр
+		List<GamerStatus> statuses = new ArrayList<GamerStatus>();
+		statuses.add(GamerStatus.WAITING_ANSWERS);
+		statuses.add(GamerStatus.WAITING_OPONENT);
+		statuses.add(GamerStatus.WAITING_OPONENT_DECISION);
+		statuses.add(GamerStatus.WAITING_OWN_DECISION);
+		statuses.add(GamerStatus.WAITING_ROUND);
+		
 		// TODO Добавить ограничение по ID пользователей с кем уже играю
+		List<Gamer> myGamerPresents = JPA.em().createQuery("from Gamer where deleted = false and status in (:statuses) and user.id = :userId")
+		.setParameter("statuses", statuses)
+		.setParameter("userId", authorizedUser.id)
+		.getResultList();
+		
+		List<Long> exceptionUsersToPlayRandomGame = new ArrayList<Long>();
+		for (Gamer myGamerPresent : myGamerPresents) {
+			exceptionUsersToPlayRandomGame.add(myGamerPresent.getOponent().getUser().id);
+		}
+		exceptionUsersToPlayRandomGame.add(authorizedUser.id);
 		
 		// Retrieve random records
-		User oponentUser = User.find("deleted = false and id <> " + authorizedUser.id + "  order by RANDOM()").first();
+		User oponentUser = User.find("deleted = false and id not in (:exceptions)  order by RANDOM()")
+				.setParameter("exceptions", exceptionUsersToPlayRandomGame)
+				.first();
+		
 		if (oponentUser == null)
-			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "oponent with given Id not found");
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "we didn't find anybody for you to play, maybe you already playing with all players");
 		if (oponentUser.getDeleted() == true)
 			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "oponent with given Id was deleted");
 		
@@ -112,21 +142,28 @@ public class GameService {
 				for (Gamer oponent : gamer.getGame().getGamers()) {
 					// Если уже есть игра с чуваком, то завершаем процесс создания приглашения
 					if (oponent.getUser().id == oponentUser.id) {
-						// TODO 
-						return;
+						throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user already plays with you");
 					}
-						
 				}
 			}
 		}
 		
-		createInvitationWithPushNotification(authorizedUser, oponentUser);
-		// TODO Send PUSH notification to oponent
+		Game game = createInvitationWithPushNotification(authorizedUser, oponentUser);
+
+		Gamer gamer = null;
+		for (Gamer gamerObject : game.getGamers())
+			if (gamerObject.getUser().id == authorizedUser.id)
+				gamer = gamerObject;
 		
+		// PUSH уведомление
+		Logger.info("PUSH " + oponentUser.getName() + " вам пришло приглашение сыграть игру!");
+		
+		UserGameModel model = UserGameModel.buildModel(authorizedUser, gamer);
+		return model;
 	}
 	
 	
-	private static void createInvitationWithPushNotification(User authorizedUser, User oponentUser) {
+	private static Game createInvitationWithPushNotification(User authorizedUser, User oponentUser) {
 		// Создвем приглашению на игру
 		Game game = new Game();
 		game.setInvitationSentDate(Calendar.getInstance());
@@ -164,8 +201,12 @@ public class GameService {
 		oponent.setOponent(gamer);
 		oponent.save();
 		
-		// PUSH уведомление
-		Logger.info("PUSH " + oponent.getUser().getName() + " игрок принял ваше приглашение!");
+		if (game.getGamers() == null)
+			game.setGamers(new ArrayList<Gamer>());
+		game.getGamers().add(gamer);
+		game.getGamers().add(oponent);
+		
+		return game;
 	}
 	
 	
@@ -479,7 +520,7 @@ public class GameService {
 		Gamer oponent = gamer.getOponent();
 		
 		if (gamer.getUser().id != user.id && oponent.getUser().id != user.id)
-			throw new PlatformException(ErrorCode.AUTH_ERROR,"user are not allowed to check others games");
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR,"user are not allowed to check others games");
 		
 		// Проверяем нужно ли вообще показывать вопросы игроку
 		if (gamer.getStatus() != GamerStatus.WAITING_ANSWERS)
@@ -521,10 +562,10 @@ public class GameService {
 		if (gamer.getUser().id != user.id) {
 			gamer = game.getGamers().get(1);
 			if (gamer.getUser().id != user.id)
-				throw new PlatformException(ErrorCode.AUTH_ERROR, "user can't asnwer on foreign questions");
+				throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user can't asnwer on foreign questions");
 		}
 		if (gamer.getStatus() != GamerStatus.WAITING_ANSWERS)
-			throw new PlatformException(ErrorCode.AUTH_ERROR, "user can't asnwer on question if your status is not WAITING_ANSWER");
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user can't asnwer on question if your status is not WAITING_ANSWER");
 		
 		// Опонент
 		Gamer oponent = gamer.getOponent();	
@@ -639,12 +680,24 @@ public class GameService {
 							// Выиграл текущий игрок
 							gamer.setStatus(GamerStatus.WINNER);
 							// TODO считаем очки
+							gamer.setScore(gamer.getCorrectAnswerCount());
+							
 							gamer.save();
+							
+							// Вата а не очки
+							gamer.getUser().setScore(gamer.getUser().getScore()+gamer.getScore());
+							gamer.getUser().save();
 							
 							// Проиграл опонент
 							oponent.setStatus(GamerStatus.LOOSER);
 							// TODO считаем очки
+							oponent.setScore(oponent.getCorrectAnswerCount()*-1);
+							
 							oponent.save();
+							
+							// Вата а не очки
+							oponent.getUser().setScore(oponent.getUser().getScore()+gamer.getScore());
+							oponent.getUser().save();
 							
 							// TODO отправить уведомление второму что он проиграл
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
@@ -653,12 +706,24 @@ public class GameService {
 							// Выиграл текущий игрок
 							gamer.setStatus(GamerStatus.LOOSER);
 							// TODO считаем очки
+							gamer.setScore(gamer.getCorrectAnswerCount()*-1);
+							
 							gamer.save();
+							
+							// Вата а не очки
+							gamer.getUser().setScore(gamer.getUser().getScore()+gamer.getScore());
+							gamer.getUser().save();
 							
 							// Проиграл опонент
 							oponent.setStatus(GamerStatus.WINNER);
 							// TODO считаем очки
+							oponent.setScore(oponent.getCorrectAnswerCount());
+							
 							oponent.save();
+							
+							// Вата а не очки
+							oponent.getUser().setScore(oponent.getUser().getScore()+gamer.getScore());
+							oponent.getUser().save();
 							
 							// TODO отправить уведомление второму что он выиграл
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
