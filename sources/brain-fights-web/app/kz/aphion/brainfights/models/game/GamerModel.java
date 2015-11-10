@@ -33,8 +33,9 @@ public class GamerModel {
 	
 	/**
 	 * Время последнего обновления
+	 * Формат ISO 8601
 	 */
-	public Calendar lastUpdateStatusDate;
+	public String lastUpdateStatusDate;
 	
 	/**
 	 * Кол-во правильных ответов
@@ -45,7 +46,7 @@ public class GamerModel {
 		GamerModel model = new GamerModel();
 		
 		model.id = gamer.id;
-		model.lastUpdateStatusDate = gamer.getLastUpdateStatusDate();
+		model.lastUpdateStatusDate = gamer.getLastUpdateStatusDateISO8601();
 		model.user = UserProfileModel.buildModel(authorizedUser, gamer.getUser()); 
 		model.status = gamer.getStatus();
 		model.correctAnswerCount = gamer.getCorrectAnswerCount();

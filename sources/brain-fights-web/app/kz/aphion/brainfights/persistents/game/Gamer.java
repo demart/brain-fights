@@ -1,6 +1,10 @@
 package kz.aphion.brainfights.persistents.game;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -108,6 +112,17 @@ public class Gamer extends PersistentObject {
 
 	public Calendar getLastUpdateStatusDate() {
 		return lastUpdateStatusDate;
+	}
+	
+	public String getLastUpdateStatusDateISO8601() {
+		if (lastUpdateStatusDate != null) {
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			df.setTimeZone(tz);
+			String timeAsISO = df.format(lastUpdateStatusDate.getTime());
+			return timeAsISO;
+		}
+		return null;
 	}
 
 	public void setLastUpdateStatusDate(Calendar lastUpdateStatusDate) {

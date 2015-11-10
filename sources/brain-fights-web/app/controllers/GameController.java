@@ -8,6 +8,7 @@ import kz.aphion.brainfights.models.game.GameModel;
 import kz.aphion.brainfights.models.game.GameRoundModel;
 import kz.aphion.brainfights.models.game.GamerQuestionAnswerResultModel;
 import kz.aphion.brainfights.models.game.UserGameModel;
+import kz.aphion.brainfights.models.game.UserGamesGroupedModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.GameService;
@@ -65,8 +66,8 @@ public class GameController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 
-	    	GameService.acceptInvitation(user, gameId);
-	    	renderJSON(ResponseWrapperModel.getSuccess(null));
+	    	UserGameModel model = GameService.acceptInvitation(user, gameId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
 		} catch (AuthorizationException aEx) {
 			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
@@ -116,6 +117,25 @@ public class GameController extends Controller {
 			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
 		}
 	}	
+	
+	
+	public static void getUserGamesGrouped(String authToken) {
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+
+	    	UserGamesGroupedModel model = GameService.getUserGamesGrouped(user);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+			
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}		
+	}
 	
 	/**
 	 * Возвращает информацию об игре

@@ -1,0 +1,818 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */; };
+		8DB8AA0A1BEBEFCC005B7508 /* AuthorizationCheckedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */; };
+		8DB8AA0D1BEBF0BA005B7508 /* AuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA0C1BEBF0BA005B7508 /* AuthorizationService.m */; };
+		8DB8AA121BECCE37005B7508 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA111BECCE37005B7508 /* SignInViewController.m */; };
+		8DB8AA151BECD92C005B7508 /* AuthorizationRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA141BECD92C005B7508 /* AuthorizationRequestModel.m */; };
+		8DB8AA181BECD9B7005B7508 /* AuthorizationResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA171BECD9B7005B7508 /* AuthorizationResponseModel.m */; };
+		8DB8AA1C1BECD9F0005B7508 /* UserProfileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA1B1BECD9F0005B7508 /* UserProfileModel.m */; };
+		8DB8AA1F1BECDAF4005B7508 /* DepartmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA1E1BECDAF4005B7508 /* DepartmentModel.m */; };
+		8DB8AA221BECDC02005B7508 /* ResponseWrapperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA211BECDC02005B7508 /* ResponseWrapperModel.m */; };
+		8DB8AA261BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA251BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m */; };
+		8DB8AA2A1BECFE45005B7508 /* GameMainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA291BECFE45005B7508 /* GameMainTableViewController.m */; };
+		8DB8AA2D1BED1E1D005B7508 /* Authorization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DB8AA2B1BED1E1D005B7508 /* Authorization.storyboard */; };
+		8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA2F1BED4655005B7508 /* LocalStorageService.m */; };
+		8DB8AA331BED4D04005B7508 /* UrlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA321BED4D04005B7508 /* UrlHelper.m */; };
+		8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */; };
+		8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */; };
+		8DF18E0F1BEE72860046C27B /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0E1BEE72860046C27B /* UserService.m */; };
+		8DF18E141BEE7F250046C27B /* MenuProfileCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E121BEE7F250046C27B /* MenuProfileCellTableViewCell.m */; };
+		8DF18E151BEE7F250046C27B /* MenuProfileCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E131BEE7F250046C27B /* MenuProfileCellTableViewCell.xib */; };
+		8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */; };
+		8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E181BEE80E50046C27B /* MenuItemTableViewCell.xib */; };
+		8DF18E1F1BEF97F30046C27B /* UserProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E1E1BEF97F30046C27B /* UserProfileTableViewController.m */; };
+		8DF18E221BEF98370046C27B /* RatingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E211BEF98370046C27B /* RatingTableViewController.m */; };
+		8DF18E261BEF9E960046C27B /* GameService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E251BEF9E960046C27B /* GameService.m */; };
+		8DF18E291BEF9F5D0046C27B /* GameHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E281BEF9F5D0046C27B /* GameHelper.m */; };
+		8DF18E2D1BEF9FF80046C27B /* UserGamesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E2C1BEF9FF80046C27B /* UserGamesModel.m */; };
+		8DF18E301BEFA0EE0046C27B /* UserGameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E2F1BEFA0EE0046C27B /* UserGameModel.m */; };
+		8DF18E331BEFA1B20046C27B /* GameStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E321BEFA1B20046C27B /* GameStatus.m */; };
+		8DF18E361BEFA23E0046C27B /* GamerStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E351BEFA23E0046C27B /* GamerStatus.m */; };
+		8DF18E391BEFA3CA0046C27B /* GamerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E381BEFA3CA0046C27B /* GamerModel.m */; };
+		8DF18E3D1BEFB3830046C27B /* NewGameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E3B1BEFB3830046C27B /* NewGameTableViewCell.m */; };
+		8DF18E3E1BEFB3830046C27B /* NewGameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E3C1BEFB3830046C27B /* NewGameTableViewCell.xib */; };
+		8DF18E411BEFBFED0046C27B /* UserGamesGroupedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E401BEFBFED0046C27B /* UserGamesGroupedModel.m */; };
+		8DF18E441BEFC0350046C27B /* UserGameGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E431BEFC0350046C27B /* UserGameGroupModel.m */; };
+		8DF18E481BF09CB40046C27B /* NewGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E471BF09CB40046C27B /* NewGameTableViewController.m */; };
+		8DF18E4B1BF09CD90046C27B /* OrganizationStructureTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E4A1BF09CD90046C27B /* OrganizationStructureTableViewController.m */; };
+		8DF18E4E1BF09D040046C27B /* SearchByNameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E4D1BF09D040046C27B /* SearchByNameTableViewController.m */; };
+		8DF18E521BF0AD940046C27B /* GameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E501BF0AD940046C27B /* GameTableViewCell.m */; };
+		8DF18E531BF0AD940046C27B /* GameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E511BF0AD940046C27B /* GameTableViewCell.xib */; };
+		8DF18E561BF0B3E60046C27B /* UserType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E551BF0B3E60046C27B /* UserType.m */; };
+		8DF18E5A1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E581BF0BD760046C27B /* ChoiceSearchActionTableViewCell.m */; };
+		8DF18E5B1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E591BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib */; };
+		8DF18E5F1BF10B6C0046C27B /* UserFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E5E1BF10B6C0046C27B /* UserFriendsModel.m */; };
+		8DF18E621BF10EC30046C27B /* UserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E611BF10EC30046C27B /* UserHelper.m */; };
+		8DF18E661BF111C90046C27B /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E641BF111C90046C27B /* UserTableViewCell.m */; };
+		8DF18E671BF111C90046C27B /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E651BF111C90046C27B /* UserTableViewCell.xib */; };
+		8DF18E6A1BF1C73C0046C27B /* DepartmentSearchResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E691BF1C73C0046C27B /* DepartmentSearchResultModel.m */; };
+		8DF18E6E1BF1E4EF0046C27B /* DepartmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E6C1BF1E4EF0046C27B /* DepartmentTableViewCell.m */; };
+		8DF18E6F1BF1E4EF0046C27B /* DepartmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E6D1BF1E4EF0046C27B /* DepartmentTableViewCell.xib */; };
+		8DF18E731BF24A7A0046C27B /* UserSearchResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E721BF24A7A0046C27B /* UserSearchResultModel.m */; };
+		8DF18E761BF269170046C27B /* SearchByNameResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E751BF269170046C27B /* SearchByNameResultsTableViewController.m */; };
+		8DFCAC651BEBDD2E0035DE1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC641BEBDD2E0035DE1E /* main.m */; };
+		8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */; };
+		8DFCAC6B1BEBDD2E0035DE1E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */; };
+		8DFCAC6E1BEBDD2E0035DE1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6C1BEBDD2E0035DE1E /* Main.storyboard */; };
+		8DFCAC701BEBDD2E0035DE1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */; };
+		8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC711BEBDD2E0035DE1E /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8DB8AA081BEBEFCC005B7508 /* AuthorizationCheckedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationCheckedViewController.h; path = View/Authorization/AuthorizationCheckedViewController.h; sourceTree = "<group>"; };
+		8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationCheckedViewController.m; path = View/Authorization/AuthorizationCheckedViewController.m; sourceTree = "<group>"; };
+		8DB8AA0B1BEBF0BA005B7508 /* AuthorizationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationService.h; path = Services/AuthorizationService.h; sourceTree = "<group>"; };
+		8DB8AA0C1BEBF0BA005B7508 /* AuthorizationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationService.m; path = Services/AuthorizationService.m; sourceTree = "<group>"; };
+		8DB8AA101BECCE37005B7508 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = View/Authorization/SignInViewController.h; sourceTree = "<group>"; };
+		8DB8AA111BECCE37005B7508 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = View/Authorization/SignInViewController.m; sourceTree = "<group>"; };
+		8DB8AA131BECD92C005B7508 /* AuthorizationRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationRequestModel.h; path = Data/ServerModels/AuthorizationRequestModel.h; sourceTree = "<group>"; };
+		8DB8AA141BECD92C005B7508 /* AuthorizationRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationRequestModel.m; path = Data/ServerModels/AuthorizationRequestModel.m; sourceTree = "<group>"; };
+		8DB8AA161BECD9B7005B7508 /* AuthorizationResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationResponseModel.h; path = Data/ServerModels/AuthorizationResponseModel.h; sourceTree = "<group>"; };
+		8DB8AA171BECD9B7005B7508 /* AuthorizationResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationResponseModel.m; path = Data/ServerModels/AuthorizationResponseModel.m; sourceTree = "<group>"; };
+		8DB8AA1A1BECD9F0005B7508 /* UserProfileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileModel.h; path = Data/ServerModels/UserProfileModel.h; sourceTree = "<group>"; };
+		8DB8AA1B1BECD9F0005B7508 /* UserProfileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileModel.m; path = Data/ServerModels/UserProfileModel.m; sourceTree = "<group>"; };
+		8DB8AA1D1BECDAF4005B7508 /* DepartmentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartmentModel.h; sourceTree = "<group>"; };
+		8DB8AA1E1BECDAF4005B7508 /* DepartmentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepartmentModel.m; sourceTree = "<group>"; };
+		8DB8AA201BECDC02005B7508 /* ResponseWrapperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponseWrapperModel.h; path = Data/ServerModels/ResponseWrapperModel.h; sourceTree = "<group>"; };
+		8DB8AA211BECDC02005B7508 /* ResponseWrapperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponseWrapperModel.m; path = Data/ServerModels/ResponseWrapperModel.m; sourceTree = "<group>"; };
+		8DB8AA241BECFC94005B7508 /* LeftFloatingDrawerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftFloatingDrawerTableViewController.h; path = View/Menu/LeftFloatingDrawerTableViewController.h; sourceTree = "<group>"; };
+		8DB8AA251BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftFloatingDrawerTableViewController.m; path = View/Menu/LeftFloatingDrawerTableViewController.m; sourceTree = "<group>"; };
+		8DB8AA281BECFE45005B7508 /* GameMainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameMainTableViewController.h; path = View/Game/GameMainTableViewController.h; sourceTree = "<group>"; };
+		8DB8AA291BECFE45005B7508 /* GameMainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameMainTableViewController.m; path = View/Game/GameMainTableViewController.m; sourceTree = "<group>"; };
+		8DB8AA2C1BED1E1D005B7508 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Authorization.storyboard; sourceTree = "<group>"; };
+		8DB8AA2E1BED4655005B7508 /* LocalStorageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalStorageService.h; path = Services/LocalStorageService.h; sourceTree = "<group>"; };
+		8DB8AA2F1BED4655005B7508 /* LocalStorageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalStorageService.m; path = Services/LocalStorageService.m; sourceTree = "<group>"; };
+		8DB8AA311BED4D04005B7508 /* UrlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlHelper.h; sourceTree = "<group>"; };
+		8DB8AA321BED4D04005B7508 /* UrlHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UrlHelper.m; sourceTree = "<group>"; };
+		8DB8AA341BED51AE005B7508 /* AuthorizationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationHelper.h; path = Helpers/AuthorizationHelper.h; sourceTree = "<group>"; };
+		8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationHelper.m; path = Helpers/AuthorizationHelper.m; sourceTree = "<group>"; };
+		8DB8AA371BED544F005B7508 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRestKit.a; path = "Pods/../build/Debug-iphoneos/libRestKit.a"; sourceTree = "<group>"; };
+		8DF18E0A1BEE6CA40046C27B /* ResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponseStatus.h; path = Data/ServerModels/ResponseStatus.h; sourceTree = "<group>"; };
+		8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponseStatus.m; path = Data/ServerModels/ResponseStatus.m; sourceTree = "<group>"; };
+		8DF18E0D1BEE72860046C27B /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserService.h; path = Services/UserService.h; sourceTree = "<group>"; };
+		8DF18E0E1BEE72860046C27B /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserService.m; path = Services/UserService.m; sourceTree = "<group>"; };
+		8DF18E111BEE7F250046C27B /* MenuProfileCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuProfileCellTableViewCell.h; path = View/Menu/MenuCells/MenuProfileCellTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E121BEE7F250046C27B /* MenuProfileCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuProfileCellTableViewCell.m; path = View/Menu/MenuCells/MenuProfileCellTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E131BEE7F250046C27B /* MenuProfileCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuProfileCellTableViewCell.xib; path = View/Menu/MenuCells/MenuProfileCellTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E161BEE80E50046C27B /* MenuItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemTableViewCell.h; path = View/Menu/MenuCells/MenuItemTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuItemTableViewCell.m; path = View/Menu/MenuCells/MenuItemTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E181BEE80E50046C27B /* MenuItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuItemTableViewCell.xib; path = View/Menu/MenuCells/MenuItemTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E1D1BEF97F30046C27B /* UserProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileTableViewController.h; path = View/Profile/UserProfileTableViewController.h; sourceTree = "<group>"; };
+		8DF18E1E1BEF97F30046C27B /* UserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileTableViewController.m; path = View/Profile/UserProfileTableViewController.m; sourceTree = "<group>"; };
+		8DF18E201BEF98370046C27B /* RatingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RatingTableViewController.h; path = View/Rating/RatingTableViewController.h; sourceTree = "<group>"; };
+		8DF18E211BEF98370046C27B /* RatingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RatingTableViewController.m; path = View/Rating/RatingTableViewController.m; sourceTree = "<group>"; };
+		8DF18E241BEF9E960046C27B /* GameService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameService.h; path = Services/GameService.h; sourceTree = "<group>"; };
+		8DF18E251BEF9E960046C27B /* GameService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameService.m; path = Services/GameService.m; sourceTree = "<group>"; };
+		8DF18E271BEF9F5D0046C27B /* GameHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameHelper.h; path = Helpers/GameHelper.h; sourceTree = "<group>"; };
+		8DF18E281BEF9F5D0046C27B /* GameHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameHelper.m; path = Helpers/GameHelper.m; sourceTree = "<group>"; };
+		8DF18E2B1BEF9FF80046C27B /* UserGamesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGamesModel.h; path = Data/ServerModels/UserGamesModel.h; sourceTree = "<group>"; };
+		8DF18E2C1BEF9FF80046C27B /* UserGamesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGamesModel.m; path = Data/ServerModels/UserGamesModel.m; sourceTree = "<group>"; };
+		8DF18E2E1BEFA0EE0046C27B /* UserGameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGameModel.h; path = Data/ServerModels/UserGameModel.h; sourceTree = "<group>"; };
+		8DF18E2F1BEFA0EE0046C27B /* UserGameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGameModel.m; path = Data/ServerModels/UserGameModel.m; sourceTree = "<group>"; };
+		8DF18E311BEFA1B20046C27B /* GameStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameStatus.h; path = Data/ServerModels/GameStatus.h; sourceTree = "<group>"; };
+		8DF18E321BEFA1B20046C27B /* GameStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameStatus.m; path = Data/ServerModels/GameStatus.m; sourceTree = "<group>"; };
+		8DF18E341BEFA23E0046C27B /* GamerStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamerStatus.h; path = Data/ServerModels/GamerStatus.h; sourceTree = "<group>"; };
+		8DF18E351BEFA23E0046C27B /* GamerStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamerStatus.m; path = Data/ServerModels/GamerStatus.m; sourceTree = "<group>"; };
+		8DF18E371BEFA3CA0046C27B /* GamerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamerModel.h; path = Data/ServerModels/GamerModel.h; sourceTree = "<group>"; };
+		8DF18E381BEFA3CA0046C27B /* GamerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamerModel.m; path = Data/ServerModels/GamerModel.m; sourceTree = "<group>"; };
+		8DF18E3A1BEFB3830046C27B /* NewGameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewGameTableViewCell.h; path = View/Game/Cells/NewGameTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E3B1BEFB3830046C27B /* NewGameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewGameTableViewCell.m; path = View/Game/Cells/NewGameTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E3C1BEFB3830046C27B /* NewGameTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewGameTableViewCell.xib; path = View/Game/Cells/NewGameTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E3F1BEFBFED0046C27B /* UserGamesGroupedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGamesGroupedModel.h; path = Data/ServerModels/UserGamesGroupedModel.h; sourceTree = "<group>"; };
+		8DF18E401BEFBFED0046C27B /* UserGamesGroupedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGamesGroupedModel.m; path = Data/ServerModels/UserGamesGroupedModel.m; sourceTree = "<group>"; };
+		8DF18E421BEFC0350046C27B /* UserGameGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGameGroupModel.h; path = Data/ServerModels/UserGameGroupModel.h; sourceTree = "<group>"; };
+		8DF18E431BEFC0350046C27B /* UserGameGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGameGroupModel.m; path = Data/ServerModels/UserGameGroupModel.m; sourceTree = "<group>"; };
+		8DF18E461BF09CB40046C27B /* NewGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewGameTableViewController.h; path = View/Search/NewGameTableViewController.h; sourceTree = "<group>"; };
+		8DF18E471BF09CB40046C27B /* NewGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewGameTableViewController.m; path = View/Search/NewGameTableViewController.m; sourceTree = "<group>"; };
+		8DF18E491BF09CD90046C27B /* OrganizationStructureTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrganizationStructureTableViewController.h; path = View/Search/OrganizationStructureTableViewController.h; sourceTree = "<group>"; };
+		8DF18E4A1BF09CD90046C27B /* OrganizationStructureTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrganizationStructureTableViewController.m; path = View/Search/OrganizationStructureTableViewController.m; sourceTree = "<group>"; };
+		8DF18E4C1BF09D040046C27B /* SearchByNameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchByNameTableViewController.h; path = View/Search/SearchByNameTableViewController.h; sourceTree = "<group>"; };
+		8DF18E4D1BF09D040046C27B /* SearchByNameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchByNameTableViewController.m; path = View/Search/SearchByNameTableViewController.m; sourceTree = "<group>"; };
+		8DF18E4F1BF0AD940046C27B /* GameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTableViewCell.h; path = View/Game/Cells/GameTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E501BF0AD940046C27B /* GameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameTableViewCell.m; path = View/Game/Cells/GameTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E511BF0AD940046C27B /* GameTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameTableViewCell.xib; path = View/Game/Cells/GameTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E541BF0B3E60046C27B /* UserType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserType.h; path = Data/ServerModels/UserType.h; sourceTree = "<group>"; };
+		8DF18E551BF0B3E60046C27B /* UserType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserType.m; path = Data/ServerModels/UserType.m; sourceTree = "<group>"; };
+		8DF18E571BF0BD760046C27B /* ChoiceSearchActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChoiceSearchActionTableViewCell.h; path = View/Search/Cells/ChoiceSearchActionTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E581BF0BD760046C27B /* ChoiceSearchActionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChoiceSearchActionTableViewCell.m; path = View/Search/Cells/ChoiceSearchActionTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E591BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChoiceSearchActionTableViewCell.xib; path = View/Search/Cells/ChoiceSearchActionTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E5D1BF10B6C0046C27B /* UserFriendsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserFriendsModel.h; path = Data/ServerModels/UserFriendsModel.h; sourceTree = "<group>"; };
+		8DF18E5E1BF10B6C0046C27B /* UserFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserFriendsModel.m; path = Data/ServerModels/UserFriendsModel.m; sourceTree = "<group>"; };
+		8DF18E601BF10EC30046C27B /* UserHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserHelper.h; path = Helpers/UserHelper.h; sourceTree = "<group>"; };
+		8DF18E611BF10EC30046C27B /* UserHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserHelper.m; path = Helpers/UserHelper.m; sourceTree = "<group>"; };
+		8DF18E631BF111C90046C27B /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = View/Search/Cells/UserTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E641BF111C90046C27B /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = View/Search/Cells/UserTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E651BF111C90046C27B /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserTableViewCell.xib; path = View/Search/Cells/UserTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E681BF1C73C0046C27B /* DepartmentSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentSearchResultModel.h; path = Data/ServerModels/DepartmentSearchResultModel.h; sourceTree = "<group>"; };
+		8DF18E691BF1C73C0046C27B /* DepartmentSearchResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentSearchResultModel.m; path = Data/ServerModels/DepartmentSearchResultModel.m; sourceTree = "<group>"; };
+		8DF18E6B1BF1E4EF0046C27B /* DepartmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentTableViewCell.h; path = View/Search/Cells/DepartmentTableViewCell.h; sourceTree = "<group>"; };
+		8DF18E6C1BF1E4EF0046C27B /* DepartmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentTableViewCell.m; path = View/Search/Cells/DepartmentTableViewCell.m; sourceTree = "<group>"; };
+		8DF18E6D1BF1E4EF0046C27B /* DepartmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DepartmentTableViewCell.xib; path = View/Search/Cells/DepartmentTableViewCell.xib; sourceTree = "<group>"; };
+		8DF18E711BF24A7A0046C27B /* UserSearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSearchResultModel.h; path = Data/ServerModels/UserSearchResultModel.h; sourceTree = "<group>"; };
+		8DF18E721BF24A7A0046C27B /* UserSearchResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSearchResultModel.m; path = Data/ServerModels/UserSearchResultModel.m; sourceTree = "<group>"; };
+		8DF18E741BF269170046C27B /* SearchByNameResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchByNameResultsTableViewController.h; path = View/Search/SearchByNameResultsTableViewController.h; sourceTree = "<group>"; };
+		8DF18E751BF269170046C27B /* SearchByNameResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchByNameResultsTableViewController.m; path = View/Search/SearchByNameResultsTableViewController.m; sourceTree = "<group>"; };
+		8DFCAC601BEBDD2E0035DE1E /* BrainFights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainFights.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DFCAC641BEBDD2E0035DE1E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8DFCAC661BEBDD2E0035DE1E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8DFCAC691BEBDD2E0035DE1E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8DFCAC6D1BEBDD2E0035DE1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8DFCAC721BEBDD2E0035DE1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8DFCAC741BEBDD2E0035DE1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrainFights.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C44AAD8B7020E154BFD28048 /* Pods-BrainFights.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrainFights.release.xcconfig"; path = "Pods/Target Support Files/Pods-BrainFights/Pods-BrainFights.release.xcconfig"; sourceTree = "<group>"; };
+		FFA11DD2F85200C693D7F79F /* Pods-BrainFights.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrainFights.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BrainFights/Pods-BrainFights.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DFCAC5D1BEBDD2E0035DE1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		801FEBB67E042E921D245B86 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FFA11DD2F85200C693D7F79F /* Pods-BrainFights.debug.xcconfig */,
+				C44AAD8B7020E154BFD28048 /* Pods-BrainFights.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8DB8AA071BEBEF8E005B7508 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA081BEBEFCC005B7508 /* AuthorizationCheckedViewController.h */,
+				8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */,
+				8DB8AA101BECCE37005B7508 /* SignInViewController.h */,
+				8DB8AA111BECCE37005B7508 /* SignInViewController.m */,
+			);
+			name = Authorization;
+			sourceTree = "<group>";
+		};
+		8DB8AA0E1BEC8413005B7508 /* ServerModels */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E701BF24A630046C27B /* Search */,
+				8DF18E2A1BEF9FE00046C27B /* Game */,
+				8DB8AA191BECD9DF005B7508 /* User */,
+				8DB8AA0F1BEC8422005B7508 /* Authorization */,
+				8DB8AA201BECDC02005B7508 /* ResponseWrapperModel.h */,
+				8DB8AA211BECDC02005B7508 /* ResponseWrapperModel.m */,
+				8DF18E0A1BEE6CA40046C27B /* ResponseStatus.h */,
+				8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */,
+			);
+			name = ServerModels;
+			sourceTree = "<group>";
+		};
+		8DB8AA0F1BEC8422005B7508 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA131BECD92C005B7508 /* AuthorizationRequestModel.h */,
+				8DB8AA141BECD92C005B7508 /* AuthorizationRequestModel.m */,
+				8DB8AA161BECD9B7005B7508 /* AuthorizationResponseModel.h */,
+				8DB8AA171BECD9B7005B7508 /* AuthorizationResponseModel.m */,
+			);
+			name = Authorization;
+			sourceTree = "<group>";
+		};
+		8DB8AA191BECD9DF005B7508 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA1A1BECD9F0005B7508 /* UserProfileModel.h */,
+				8DB8AA1B1BECD9F0005B7508 /* UserProfileModel.m */,
+				8DB8AA1D1BECDAF4005B7508 /* DepartmentModel.h */,
+				8DB8AA1E1BECDAF4005B7508 /* DepartmentModel.m */,
+				8DF18E541BF0B3E60046C27B /* UserType.h */,
+				8DF18E551BF0B3E60046C27B /* UserType.m */,
+				8DF18E5D1BF10B6C0046C27B /* UserFriendsModel.h */,
+				8DF18E5E1BF10B6C0046C27B /* UserFriendsModel.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		8DB8AA231BECFC43005B7508 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E101BEE7EF60046C27B /* MenuCells */,
+				8DB8AA241BECFC94005B7508 /* LeftFloatingDrawerTableViewController.h */,
+				8DB8AA251BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		8DB8AA271BECFE04005B7508 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E231BEF9A030046C27B /* Cells */,
+				8DB8AA281BECFE45005B7508 /* GameMainTableViewController.h */,
+				8DB8AA291BECFE45005B7508 /* GameMainTableViewController.m */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		8DF18E101BEE7EF60046C27B /* MenuCells */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E111BEE7F250046C27B /* MenuProfileCellTableViewCell.h */,
+				8DF18E121BEE7F250046C27B /* MenuProfileCellTableViewCell.m */,
+				8DF18E131BEE7F250046C27B /* MenuProfileCellTableViewCell.xib */,
+				8DF18E161BEE80E50046C27B /* MenuItemTableViewCell.h */,
+				8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */,
+				8DF18E181BEE80E50046C27B /* MenuItemTableViewCell.xib */,
+			);
+			name = MenuCells;
+			sourceTree = "<group>";
+		};
+		8DF18E1B1BEF973C0046C27B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E1D1BEF97F30046C27B /* UserProfileTableViewController.h */,
+				8DF18E1E1BEF97F30046C27B /* UserProfileTableViewController.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		8DF18E1C1BEF97430046C27B /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E201BEF98370046C27B /* RatingTableViewController.h */,
+				8DF18E211BEF98370046C27B /* RatingTableViewController.m */,
+			);
+			name = Rating;
+			sourceTree = "<group>";
+		};
+		8DF18E231BEF9A030046C27B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E3A1BEFB3830046C27B /* NewGameTableViewCell.h */,
+				8DF18E3B1BEFB3830046C27B /* NewGameTableViewCell.m */,
+				8DF18E3C1BEFB3830046C27B /* NewGameTableViewCell.xib */,
+				8DF18E4F1BF0AD940046C27B /* GameTableViewCell.h */,
+				8DF18E501BF0AD940046C27B /* GameTableViewCell.m */,
+				8DF18E511BF0AD940046C27B /* GameTableViewCell.xib */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		8DF18E2A1BEF9FE00046C27B /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E2B1BEF9FF80046C27B /* UserGamesModel.h */,
+				8DF18E2C1BEF9FF80046C27B /* UserGamesModel.m */,
+				8DF18E2E1BEFA0EE0046C27B /* UserGameModel.h */,
+				8DF18E2F1BEFA0EE0046C27B /* UserGameModel.m */,
+				8DF18E311BEFA1B20046C27B /* GameStatus.h */,
+				8DF18E321BEFA1B20046C27B /* GameStatus.m */,
+				8DF18E341BEFA23E0046C27B /* GamerStatus.h */,
+				8DF18E351BEFA23E0046C27B /* GamerStatus.m */,
+				8DF18E371BEFA3CA0046C27B /* GamerModel.h */,
+				8DF18E381BEFA3CA0046C27B /* GamerModel.m */,
+				8DF18E3F1BEFBFED0046C27B /* UserGamesGroupedModel.h */,
+				8DF18E401BEFBFED0046C27B /* UserGamesGroupedModel.m */,
+				8DF18E421BEFC0350046C27B /* UserGameGroupModel.h */,
+				8DF18E431BEFC0350046C27B /* UserGameGroupModel.m */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		8DF18E451BF09C4B0046C27B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E5C1BF0BD810046C27B /* Cells */,
+				8DF18E461BF09CB40046C27B /* NewGameTableViewController.h */,
+				8DF18E471BF09CB40046C27B /* NewGameTableViewController.m */,
+				8DF18E491BF09CD90046C27B /* OrganizationStructureTableViewController.h */,
+				8DF18E4A1BF09CD90046C27B /* OrganizationStructureTableViewController.m */,
+				8DF18E4C1BF09D040046C27B /* SearchByNameTableViewController.h */,
+				8DF18E4D1BF09D040046C27B /* SearchByNameTableViewController.m */,
+				8DF18E741BF269170046C27B /* SearchByNameResultsTableViewController.h */,
+				8DF18E751BF269170046C27B /* SearchByNameResultsTableViewController.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		8DF18E5C1BF0BD810046C27B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E571BF0BD760046C27B /* ChoiceSearchActionTableViewCell.h */,
+				8DF18E581BF0BD760046C27B /* ChoiceSearchActionTableViewCell.m */,
+				8DF18E591BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib */,
+				8DF18E631BF111C90046C27B /* UserTableViewCell.h */,
+				8DF18E641BF111C90046C27B /* UserTableViewCell.m */,
+				8DF18E651BF111C90046C27B /* UserTableViewCell.xib */,
+				8DF18E6B1BF1E4EF0046C27B /* DepartmentTableViewCell.h */,
+				8DF18E6C1BF1E4EF0046C27B /* DepartmentTableViewCell.m */,
+				8DF18E6D1BF1E4EF0046C27B /* DepartmentTableViewCell.xib */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		8DF18E701BF24A630046C27B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E711BF24A7A0046C27B /* UserSearchResultModel.h */,
+				8DF18E721BF24A7A0046C27B /* UserSearchResultModel.m */,
+				8DF18E681BF1C73C0046C27B /* DepartmentSearchResultModel.h */,
+				8DF18E691BF1C73C0046C27B /* DepartmentSearchResultModel.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		8DFCAC571BEBDD2E0035DE1E = {
+			isa = PBXGroup;
+			children = (
+				8DFCAC621BEBDD2E0035DE1E /* BrainFights */,
+				8DFCAC611BEBDD2E0035DE1E /* Products */,
+				801FEBB67E042E921D245B86 /* Pods */,
+				B819977A69033E686EB79CF6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8DFCAC611BEBDD2E0035DE1E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DFCAC601BEBDD2E0035DE1E /* BrainFights.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8DFCAC621BEBDD2E0035DE1E /* BrainFights */ = {
+			isa = PBXGroup;
+			children = (
+				8DFCAC7A1BEBEA030035DE1E /* View */,
+				8DFCAC7B1BEBEA090035DE1E /* Data */,
+				8DFCAC7C1BEBEA0E0035DE1E /* Services */,
+				8DFCAC7F1BEBEDF70035DE1E /* Helpers */,
+				8DFCAC661BEBDD2E0035DE1E /* AppDelegate.h */,
+				8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */,
+				8DFCAC691BEBDD2E0035DE1E /* ViewController.h */,
+				8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */,
+				8DFCAC6C1BEBDD2E0035DE1E /* Main.storyboard */,
+				8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */,
+				8DFCAC711BEBDD2E0035DE1E /* LaunchScreen.storyboard */,
+				8DFCAC741BEBDD2E0035DE1E /* Info.plist */,
+				8DFCAC631BEBDD2E0035DE1E /* Supporting Files */,
+				8DB8AA2B1BED1E1D005B7508 /* Authorization.storyboard */,
+			);
+			path = BrainFights;
+			sourceTree = "<group>";
+		};
+		8DFCAC631BEBDD2E0035DE1E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8DFCAC641BEBDD2E0035DE1E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8DFCAC7A1BEBEA030035DE1E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8DF18E451BF09C4B0046C27B /* Search */,
+				8DF18E1C1BEF97430046C27B /* Rating */,
+				8DF18E1B1BEF973C0046C27B /* Profile */,
+				8DB8AA271BECFE04005B7508 /* Game */,
+				8DB8AA231BECFC43005B7508 /* Menu */,
+				8DB8AA071BEBEF8E005B7508 /* Authorization */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		8DFCAC7B1BEBEA090035DE1E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA0E1BEC8413005B7508 /* ServerModels */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		8DFCAC7C1BEBEA0E0035DE1E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA0B1BEBF0BA005B7508 /* AuthorizationService.h */,
+				8DB8AA0C1BEBF0BA005B7508 /* AuthorizationService.m */,
+				8DB8AA2E1BED4655005B7508 /* LocalStorageService.h */,
+				8DB8AA2F1BED4655005B7508 /* LocalStorageService.m */,
+				8DF18E0D1BEE72860046C27B /* UserService.h */,
+				8DF18E0E1BEE72860046C27B /* UserService.m */,
+				8DF18E241BEF9E960046C27B /* GameService.h */,
+				8DF18E251BEF9E960046C27B /* GameService.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		8DFCAC7F1BEBEDF70035DE1E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA311BED4D04005B7508 /* UrlHelper.h */,
+				8DB8AA321BED4D04005B7508 /* UrlHelper.m */,
+				8DB8AA341BED51AE005B7508 /* AuthorizationHelper.h */,
+				8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */,
+				8DF18E271BEF9F5D0046C27B /* GameHelper.h */,
+				8DF18E281BEF9F5D0046C27B /* GameHelper.m */,
+				8DF18E601BF10EC30046C27B /* UserHelper.h */,
+				8DF18E611BF10EC30046C27B /* UserHelper.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		B819977A69033E686EB79CF6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8DB8AA371BED544F005B7508 /* libRestKit.a */,
+				A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DFCAC5F1BEBDD2E0035DE1E /* BrainFights */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8DFCAC771BEBDD2E0035DE1E /* Build configuration list for PBXNativeTarget "BrainFights" */;
+			buildPhases = (
+				EBAF0489182D02B9698E6030 /* Check Pods Manifest.lock */,
+				8DFCAC5C1BEBDD2E0035DE1E /* Sources */,
+				8DFCAC5D1BEBDD2E0035DE1E /* Frameworks */,
+				8DFCAC5E1BEBDD2E0035DE1E /* Resources */,
+				AB9642B6EB9BB5329B9A20C3 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BrainFights;
+			productName = BrainFights;
+			productReference = 8DFCAC601BEBDD2E0035DE1E /* BrainFights.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8DFCAC581BEBDD2E0035DE1E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Aphion Software";
+				TargetAttributes = {
+					8DFCAC5F1BEBDD2E0035DE1E = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 4W3DP52J38;
+					};
+				};
+			};
+			buildConfigurationList = 8DFCAC5B1BEBDD2E0035DE1E /* Build configuration list for PBXProject "BrainFights" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8DFCAC571BEBDD2E0035DE1E;
+			productRefGroup = 8DFCAC611BEBDD2E0035DE1E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DFCAC5F1BEBDD2E0035DE1E /* BrainFights */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DFCAC5E1BEBDD2E0035DE1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DB8AA2D1BED1E1D005B7508 /* Authorization.storyboard in Resources */,
+				8DF18E5B1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib in Resources */,
+				8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */,
+				8DF18E3E1BEFB3830046C27B /* NewGameTableViewCell.xib in Resources */,
+				8DF18E671BF111C90046C27B /* UserTableViewCell.xib in Resources */,
+				8DF18E531BF0AD940046C27B /* GameTableViewCell.xib in Resources */,
+				8DF18E6F1BF1E4EF0046C27B /* DepartmentTableViewCell.xib in Resources */,
+				8DFCAC701BEBDD2E0035DE1E /* Assets.xcassets in Resources */,
+				8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */,
+				8DF18E151BEE7F250046C27B /* MenuProfileCellTableViewCell.xib in Resources */,
+				8DFCAC6E1BEBDD2E0035DE1E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AB9642B6EB9BB5329B9A20C3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BrainFights/Pods-BrainFights-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBAF0489182D02B9698E6030 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DFCAC5C1BEBDD2E0035DE1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DF18E141BEE7F250046C27B /* MenuProfileCellTableViewCell.m in Sources */,
+				8DF18E291BEF9F5D0046C27B /* GameHelper.m in Sources */,
+				8DB8AA181BECD9B7005B7508 /* AuthorizationResponseModel.m in Sources */,
+				8DF18E6E1BF1E4EF0046C27B /* DepartmentTableViewCell.m in Sources */,
+				8DF18E221BEF98370046C27B /* RatingTableViewController.m in Sources */,
+				8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */,
+				8DB8AA2A1BECFE45005B7508 /* GameMainTableViewController.m in Sources */,
+				8DF18E621BF10EC30046C27B /* UserHelper.m in Sources */,
+				8DF18E441BEFC0350046C27B /* UserGameGroupModel.m in Sources */,
+				8DB8AA261BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m in Sources */,
+				8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */,
+				8DB8AA1F1BECDAF4005B7508 /* DepartmentModel.m in Sources */,
+				8DB8AA221BECDC02005B7508 /* ResponseWrapperModel.m in Sources */,
+				8DF18E521BF0AD940046C27B /* GameTableViewCell.m in Sources */,
+				8DB8AA151BECD92C005B7508 /* AuthorizationRequestModel.m in Sources */,
+				8DB8AA0D1BEBF0BA005B7508 /* AuthorizationService.m in Sources */,
+				8DFCAC6B1BEBDD2E0035DE1E /* ViewController.m in Sources */,
+				8DF18E5F1BF10B6C0046C27B /* UserFriendsModel.m in Sources */,
+				8DF18E2D1BEF9FF80046C27B /* UserGamesModel.m in Sources */,
+				8DF18E3D1BEFB3830046C27B /* NewGameTableViewCell.m in Sources */,
+				8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */,
+				8DF18E6A1BF1C73C0046C27B /* DepartmentSearchResultModel.m in Sources */,
+				8DF18E561BF0B3E60046C27B /* UserType.m in Sources */,
+				8DF18E4E1BF09D040046C27B /* SearchByNameTableViewController.m in Sources */,
+				8DF18E481BF09CB40046C27B /* NewGameTableViewController.m in Sources */,
+				8DF18E761BF269170046C27B /* SearchByNameResultsTableViewController.m in Sources */,
+				8DB8AA1C1BECD9F0005B7508 /* UserProfileModel.m in Sources */,
+				8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */,
+				8DB8AA0A1BEBEFCC005B7508 /* AuthorizationCheckedViewController.m in Sources */,
+				8DF18E5A1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.m in Sources */,
+				8DB8AA331BED4D04005B7508 /* UrlHelper.m in Sources */,
+				8DB8AA121BECCE37005B7508 /* SignInViewController.m in Sources */,
+				8DF18E361BEFA23E0046C27B /* GamerStatus.m in Sources */,
+				8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */,
+				8DF18E261BEF9E960046C27B /* GameService.m in Sources */,
+				8DF18E4B1BF09CD90046C27B /* OrganizationStructureTableViewController.m in Sources */,
+				8DF18E661BF111C90046C27B /* UserTableViewCell.m in Sources */,
+				8DF18E301BEFA0EE0046C27B /* UserGameModel.m in Sources */,
+				8DF18E391BEFA3CA0046C27B /* GamerModel.m in Sources */,
+				8DF18E411BEFBFED0046C27B /* UserGamesGroupedModel.m in Sources */,
+				8DF18E0F1BEE72860046C27B /* UserService.m in Sources */,
+				8DFCAC651BEBDD2E0035DE1E /* main.m in Sources */,
+				8DF18E331BEFA1B20046C27B /* GameStatus.m in Sources */,
+				8DF18E1F1BEF97F30046C27B /* UserProfileTableViewController.m in Sources */,
+				8DF18E731BF24A7A0046C27B /* UserSearchResultModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8DB8AA2B1BED1E1D005B7508 /* Authorization.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DB8AA2C1BED1E1D005B7508 /* Base */,
+			);
+			name = Authorization.storyboard;
+			sourceTree = "<group>";
+		};
+		8DFCAC6C1BEBDD2E0035DE1E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DFCAC6D1BEBDD2E0035DE1E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8DFCAC711BEBDD2E0035DE1E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DFCAC721BEBDD2E0035DE1E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8DFCAC751BEBDD2E0035DE1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8DFCAC761BEBDD2E0035DE1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8DFCAC781BEBDD2E0035DE1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFA11DD2F85200C693D7F79F /* Pods-BrainFights.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = BrainFights/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8DFCAC791BEBDD2E0035DE1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C44AAD8B7020E154BFD28048 /* Pods-BrainFights.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = BrainFights/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8DFCAC5B1BEBDD2E0035DE1E /* Build configuration list for PBXProject "BrainFights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DFCAC751BEBDD2E0035DE1E /* Debug */,
+				8DFCAC761BEBDD2E0035DE1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8DFCAC771BEBDD2E0035DE1E /* Build configuration list for PBXNativeTarget "BrainFights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DFCAC781BEBDD2E0035DE1E /* Debug */,
+				8DFCAC791BEBDD2E0035DE1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8DFCAC581BEBDD2E0035DE1E /* Project object */;
+}
