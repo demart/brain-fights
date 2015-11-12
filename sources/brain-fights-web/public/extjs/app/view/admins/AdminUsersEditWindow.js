@@ -66,6 +66,7 @@ Ext.define('BrainFightsConsole.view.admins.AdminUsersEditWindow', {
 	            fieldLabel: 'Пароль',
 	            allowBlank: false
 	        },
+	        
 	        {
 	            xtype: 'radiogroup',
 	            fieldLabel : 'Роль пользователя',
