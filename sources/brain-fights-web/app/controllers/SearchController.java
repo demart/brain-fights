@@ -3,6 +3,7 @@ package controllers;
 import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
+import kz.aphion.brainfights.models.DepartmentModel;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
 import kz.aphion.brainfights.models.search.DepartmentSearchResultModel;
 import kz.aphion.brainfights.models.search.UserSearchResultModel;
@@ -61,6 +62,29 @@ public class SearchController extends Controller {
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
 	    	DepartmentSearchResultModel model = new DepartmentService().getChildren(user, id);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+			
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
+	}
+	
+	/**
+	 * Возвращает информацию об указанном департаменте
+	 * @param authToken
+	 * @param id идентификатор департамента
+	 */
+	public static void searchDepartmentById(String authToken, Long id) {
+		try {
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	DepartmentModel model = new DepartmentService().getDepartment(user, id);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
 		} catch (AuthorizationException aEx) {

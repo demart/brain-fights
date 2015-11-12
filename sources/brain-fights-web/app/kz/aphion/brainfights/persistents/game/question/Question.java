@@ -2,6 +2,7 @@ package kz.aphion.brainfights.persistents.game.question;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.engine.CascadeStyle;
 
 import kz.aphion.brainfights.persistents.PersistentObject;
 
@@ -49,7 +52,7 @@ public class Question extends PersistentObject {
 	@Column(name="image_url", length=255)
 	private String imageUrl;
 	
-	@OneToMany(mappedBy="question")
+	@OneToMany(mappedBy="question", cascade={CascadeType.PERSIST})
 	@OrderBy("id ASC")
 	private List<Answer> answers;
 
