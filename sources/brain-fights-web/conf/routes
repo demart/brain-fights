@@ -24,6 +24,7 @@ GET		/search/user											SearchController.searchUsers
 GET		/search/department										SearchController.searchDepartments
 GET		/search/department/										SearchController.searchDepartments
 GET		/search/department/{id}									SearchController.searchDepartments
+GET		/search/department/id/{id}								SearchController.searchDepartmentById
 
 # GAME API
 GET		/game/invitation/create									GameController.createInvitation
@@ -33,6 +34,7 @@ GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
 
 GET		/games																			GameController.getUserGames
 GET		/game/list																		GameController.getUserGames
+GET		/game/list/grouped																GameController.getUserGamesGrouped
 GET		/game/{gameId}																	GameController.getGameInformation
 GET		/game/{gameId}/																	GameController.getGameInformation
 GET		/game/{gameId}/round/generate/{categoryId}										GameController.generateGameRound

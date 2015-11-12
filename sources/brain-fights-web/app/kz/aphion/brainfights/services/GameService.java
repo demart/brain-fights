@@ -6,11 +6,14 @@ import java.util.List;
 
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
+import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.models.game.GameModel;
 import kz.aphion.brainfights.models.game.GameRoundCategoryModel;
 import kz.aphion.brainfights.models.game.GameRoundModel;
 import kz.aphion.brainfights.models.game.GamerQuestionAnswerResultModel;
+import kz.aphion.brainfights.models.game.UserGameGroupModel;
 import kz.aphion.brainfights.models.game.UserGameModel;
+import kz.aphion.brainfights.models.game.UserGamesGroupedModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.game.Game;
 import kz.aphion.brainfights.persistents.game.GameRound;
@@ -217,7 +220,7 @@ public class GameService {
 	 * @param gameId
 	 * @throws PlatformException 
 	 */
-	public static void acceptInvitation(User authorizedUser, Long gameId) throws PlatformException {
+	public static UserGameModel acceptInvitation(User authorizedUser, Long gameId) throws PlatformException {
 		if (authorizedUser == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
 		
@@ -268,6 +271,10 @@ public class GameService {
 		
 		// TODO Отправить PUSH уведомление о том что игрок принял приглашение
 		Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
+		
+		
+		UserGameModel model = UserGameModel.buildModel(authorizedUser, invitationReceiver);
+		return model;
 	}
 
 	/**
@@ -313,6 +320,7 @@ public class GameService {
 		
 		
 		UserGamesModel gamesModel = new UserGamesModel();
+		gamesModel.user = UserProfileModel.buildModel(authorizedUser);
 		gamesModel.games = new ArrayList<>();
 		
 		for (Gamer gamer : notCompletedGames) {
@@ -328,6 +336,96 @@ public class GameService {
 		return gamesModel;
 	}
 
+	
+	/**
+	 * Возвращает список игр пользователя сгруппированные по статусу
+	 * 	1. Активные игры
+	 * 	2. Ожидающие принятия
+	 * 	3. Завершенные игры (Топ 5)
+	 * @param user игрок
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static UserGamesGroupedModel getUserGamesGrouped(User authorizedUser) throws PlatformException {
+		if (authorizedUser == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
+		
+		List<GamerStatus> waitingStatuses = new ArrayList<>();
+		waitingStatuses.add(GamerStatus.WAITING_OPONENT_DECISION);
+		waitingStatuses.add(GamerStatus.WAITING_OWN_DECISION);
+		
+		List<Gamer> waitingGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+				.setParameter("userId", authorizedUser.id)
+				.setParameter("statuses", waitingStatuses)
+				.getResultList();
+		
+		List<GamerStatus> inProgressStatuses = new ArrayList<>();
+		inProgressStatuses.add(GamerStatus.WAITING_OPONENT);
+		inProgressStatuses.add(GamerStatus.WAITING_ROUND);
+		inProgressStatuses.add(GamerStatus.WAITING_ANSWERS);
+		
+		List<Gamer> inProgressGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+				.setParameter("userId", authorizedUser.id)
+				.setParameter("statuses", inProgressStatuses)
+				.getResultList();
+		
+		List<GamerStatus> completedStatuses = new ArrayList<>();
+		completedStatuses.add(GamerStatus.DRAW);
+		completedStatuses.add(GamerStatus.LOOSER);
+		completedStatuses.add(GamerStatus.SURRENDED);
+		completedStatuses.add(GamerStatus.WINNER);
+		
+		// Достаем законченные игры (последние 5 штук)
+		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) order by lastUpdateStatusDate DESC")
+				.setMaxResults(5)
+				.setParameter("userId", authorizedUser.id)
+				.setParameter("statuses", completedStatuses)
+				.getResultList();
+		
+		System.out.println("waiting Games count: " + waitingGames.size());
+		System.out.println("in progress Games count: " + inProgressGames.size());
+		System.out.println("Completed Games count: " + completedGames.size());
+		
+		UserGamesGroupedModel gamesModel = new UserGamesGroupedModel();
+		gamesModel.user = UserProfileModel.buildModel(authorizedUser);
+		gamesModel.gameGroups = new ArrayList<>();
+		
+		if (inProgressGames.size() > 0) {
+			UserGameGroupModel model = new UserGameGroupModel();
+			model.status = GameStatus.STARTED;
+			model.games = new ArrayList<>();
+			for (Gamer gamer : inProgressGames) {
+				UserGameModel gameModel = UserGameModel.buildModel(authorizedUser, gamer);
+				model.games.add(gameModel);
+			}
+			gamesModel.gameGroups.add(model);
+		}
+		
+		if (waitingGames.size() > 0) {
+			UserGameGroupModel model = new UserGameGroupModel();
+			model.status = GameStatus.WAITING;
+			model.games = new ArrayList<>();
+			for (Gamer gamer : waitingGames) {
+				UserGameModel gameModel = UserGameModel.buildModel(authorizedUser, gamer);
+				model.games.add(gameModel);
+			}
+			gamesModel.gameGroups.add(model);
+		}
+		
+		if (completedGames.size() > 0) {
+			UserGameGroupModel model = new UserGameGroupModel();
+			model.status = GameStatus.FINISHED;
+			model.games = new ArrayList<>();
+			for (Gamer gamer : completedGames) {
+				UserGameModel gameModel = UserGameModel.buildModel(authorizedUser, gamer);
+				model.games.add(gameModel);
+			}
+			gamesModel.gameGroups.add(model);
+		}
+		
+		return gamesModel;
+	}
+	
 	/**
 	 * Метод формирует модель игры, в которой
 	 * 1. Информация об игроках

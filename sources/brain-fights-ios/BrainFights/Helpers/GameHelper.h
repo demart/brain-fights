@@ -1,0 +1,34 @@
+//
+//  GameHelper.h
+//  BrainFights
+//
+//  Created by Artem Demidovich on 11/8/15.
+//  Copyright © 2015 Aphion Software. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+#import "RKObjectManager.h"
+#import "RKObjectMapping.h"
+#import "RKResponseDescriptor.h"
+#import "RKObjectRequestOperation.h"
+#import "RKRelationshipMapping.h"
+#import "RKRequestDescriptor.h"
+#import "RKLog.h"
+#import "RKMIMETypes.h"
+
+@interface GameHelper : NSObject
+
+// Строит модель для получения списка игр пользователя
++ (RKResponseDescriptor*) buildResponseDescriptorForGames;
+
+// Строит модель для получения списка игр пользователя
++ (RKResponseDescriptor*) buildResponseDescriptorForGamesGroups;
+
+// Строит маппинг для результата отправки приглашения пользователю
++ (RKResponseDescriptor*) buildResponseDescriptorForCreateInvitation;
+
+// Строит маппинг для результата отправки приглашения пользователю
++ (RKResponseDescriptor*) buildResponseDescriptorForAcceptInvitation;
+
+@end
