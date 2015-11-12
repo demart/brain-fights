@@ -109,6 +109,23 @@ public class DepartmentService {
 		return model;
 	}
 	
-	
+	/**
+	 * Возвращает указанный объект организационной структуры
+	 * @param authorizedUser авторизованный пользователь
+	 * @param id идентификатор орг структуры
+	 * @return модель орг структуры
+	 * @throws PlatformException 
+	 */
+	public static DepartmentModel getDepartment(User authorizedUser, Long id) throws PlatformException {
+		if (authorizedUser == null)
+			throw new AuthorizationException(ErrorCode.AUTH_ERROR, "authorized user is null");
+		
+		Department department = Department.findById(id);
+		if (department == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "department is null, not found");
+		
+		DepartmentModel model = DepartmentModel.buildModel(authorizedUser, department);
+		return model;
+	}
 	
 }

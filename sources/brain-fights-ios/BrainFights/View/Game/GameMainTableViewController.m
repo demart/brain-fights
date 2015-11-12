@@ -211,9 +211,8 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      if ([segue.destinationViewController isKindOfClass:[GameStatusTableViewController class]]) {
          GameStatusTableViewController *viewController = (GameStatusTableViewController*)segue.destinationViewController;
-         
-         viewController
-         
+         // TODO add Back button title
+         [self.navigationController pushViewController:viewController animated:YES];
      }
  }
 
