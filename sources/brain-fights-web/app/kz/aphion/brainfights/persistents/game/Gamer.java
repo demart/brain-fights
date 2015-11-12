@@ -1,6 +1,10 @@
 package kz.aphion.brainfights.persistents.game;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +48,12 @@ public class Gamer extends PersistentObject {
     @ManyToOne
 	private Game game;
 	
+    /**
+     * Противник
+     */
+    @ManyToOne
+    private Gamer oponent;
+    
 	/**
 	 * Статус игрока в текущей игре (Ждет, Ходит и т.д.)
 	 */
@@ -62,7 +72,7 @@ public class Gamer extends PersistentObject {
 	 * Кол-во правильных ответов за игру
 	 */
     @Column(name="correct_answer_count")
-	private Integer correctAnswerCount;
+	private Integer correctAnswerCount = 0;
 
     /**
      * Счет заработанный в этой игре (Может быть плюс и минус)
@@ -75,7 +85,6 @@ public class Gamer extends PersistentObject {
      */
     @Column(name="game_initiator", nullable=false, columnDefinition="boolean default false")
     private Boolean gameInitiator;
-    
     
 	public User getUser() {
 		return user;
@@ -103,6 +112,17 @@ public class Gamer extends PersistentObject {
 
 	public Calendar getLastUpdateStatusDate() {
 		return lastUpdateStatusDate;
+	}
+	
+	public String getLastUpdateStatusDateISO8601() {
+		if (lastUpdateStatusDate != null) {
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			df.setTimeZone(tz);
+			String timeAsISO = df.format(lastUpdateStatusDate.getTime());
+			return timeAsISO;
+		}
+		return null;
 	}
 
 	public void setLastUpdateStatusDate(Calendar lastUpdateStatusDate) {
@@ -133,6 +153,12 @@ public class Gamer extends PersistentObject {
 	}
 	public void setGameInitiator(Boolean gameInitiator) {
 		this.gameInitiator = gameInitiator;
+	}
+	public Gamer getOponent() {
+		return oponent;
+	}
+	public void setOponent(Gamer oponent) {
+		this.oponent = oponent;
 	}
     
 }

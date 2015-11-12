@@ -10,12 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import kz.aphion.brainfights.persistents.PersistentObject;
 import kz.aphion.brainfights.persistents.game.question.Category;
-import kz.aphion.brainfights.persistents.game.question.Question;
 
 /**
  * Раунд игры
@@ -42,6 +42,18 @@ public class GameRound extends PersistentObject {
     @ManyToOne
 	private Game game;
 	
+    /**
+     * Владелец раунда (тот кто выбирал категорию)
+     */
+    @ManyToOne
+    private Gamer owner;
+    
+    /**
+     * Номер раунда
+     */
+    @Column(name="number")
+    private Integer number;
+    
 	/**
 	 * Выбранная категория для вопросов
 	 */
@@ -53,6 +65,7 @@ public class GameRound extends PersistentObject {
 	 */
 	// TODO Сортировать вопросы по ID
     @OneToMany(mappedBy="gameRound")
+    @OrderBy("id ASC")
 	private List<GameRoundQuestion> questions;
 	
 	/**
@@ -91,6 +104,18 @@ public class GameRound extends PersistentObject {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Gamer getOwner() {
+		return owner;
+	}
+	public void setOwner(Gamer owner) {
+		this.owner = owner;
+	}
+	public Integer getNumber() {
+		return number;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 }

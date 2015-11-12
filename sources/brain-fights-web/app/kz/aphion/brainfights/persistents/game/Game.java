@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -51,6 +52,7 @@ public class Game extends PersistentObject {
 	 */
 	//TODO НАКИКУТЬ СОРТИРОВКУ ПО ID
     @OneToMany(mappedBy="game")
+    @OrderBy("id ASC")
 	private List<GameRound> rounds;
 
     /**

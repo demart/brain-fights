@@ -58,10 +58,10 @@ public class UserService {
 		user.setDeviceType(model.deviceType);
 		user.setAppVersion(model.appVersion);
 		
-		if (model.devicePushToken != null || "".equals(model.devicePushToken.trim()))
+		if (model.devicePushToken != null && "".equals(model.devicePushToken.trim()))
 			user.setDevicePushToken(model.devicePushToken);
 		
-		JPA.em().persist(user);
+		user.save();
 		
 		UserProfileModel userProfileModel = UserProfileModel.buildModel(user);
 		

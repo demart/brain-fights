@@ -4,7 +4,11 @@ import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
-import kz.aphion.brainfights.models.game.GameRoundQuestionsModel;
+import kz.aphion.brainfights.models.game.GameModel;
+import kz.aphion.brainfights.models.game.GameRoundModel;
+import kz.aphion.brainfights.models.game.GamerQuestionAnswerResultModel;
+import kz.aphion.brainfights.models.game.UserGameModel;
+import kz.aphion.brainfights.models.game.UserGamesGroupedModel;
 import kz.aphion.brainfights.models.game.UserGamesModel;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.GameService;
@@ -32,12 +36,13 @@ public class GameController extends Controller {
 	    	User user = UserService.getUserByAuthToken(authToken);
 
 	    	// Создаем приглашение и отправляем уведомления
+	    	UserGameModel model = null;
 	    	if (userId != null) {
-	    		GameService.createInvitation(user, userId);
+	    		model = GameService.createInvitation(user, userId);
 	    	} else {
-	    		GameService.createRandomInvitation(user);
+	    		model = GameService.createRandomInvitation(user);
 	    	}
-	    	renderJSON(ResponseWrapperModel.getSuccess(null));
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 	    	
 		} catch (AuthorizationException aEx) {
 			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
@@ -61,8 +66,8 @@ public class GameController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 
-	    	GameService.acceptInvitation(user, gameId);
-	    	renderJSON(ResponseWrapperModel.getSuccess(null));
+	    	UserGameModel model = GameService.acceptInvitation(user, gameId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
 		} catch (AuthorizationException aEx) {
 			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
@@ -113,6 +118,25 @@ public class GameController extends Controller {
 		}
 	}	
 	
+	
+	public static void getUserGamesGrouped(String authToken) {
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+
+	    	UserGamesGroupedModel model = GameService.getUserGamesGrouped(user);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+			
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}		
+	}
+	
 	/**
 	 * Возвращает информацию об игре
 	 * 	1. Кол-во правильных ответов
@@ -120,7 +144,7 @@ public class GameController extends Controller {
 	 *  3. Информация о раундах и их результатах
 	 * @param gameId Идентификатор игры
 	 */
-	public static void getUserGame(String gameId){
+	public static void getGameInformation(String authToken, Long gameId){
 		// Статус игры
 		// Информацию об игроках
 		// Информация о счете 
@@ -130,6 +154,22 @@ public class GameController extends Controller {
 			// Ответы пользователя
 		// Доступные действия
 			// Предлагаемые категории вопросов для нового раунда
+		try {
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+
+	    	GameModel model = GameService.getGameInformation(user, gameId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+			
+
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
 	}	
 	
 	/**
@@ -142,7 +182,7 @@ public class GameController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 
-	    	GameRoundQuestionsModel model = GameService.generateGameRound(user, gameId, categoryId);
+	    	GameRoundModel model = GameService.generateGameRound(user, gameId, categoryId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
 		} catch (AuthorizationException aEx) {
@@ -156,15 +196,30 @@ public class GameController extends Controller {
 	}
 
 	/**
-	 * Запускает раунд игры. И возврщает список вопросов
-	 * 	1. В ответ получается список вопросов
+	 * Возвращает список вопросов и возможных ответов
+	 * 	1. В ответ получается список вопросов и ответов
 	 * 	2. Если какие-то вопросы уже пройдены то они с пометкой
 	 * 	3. Если играет второй участник, то еще ответы первого участника
 	 * 
-	 * @param gameId
-	 * @param roundId
+	 * @param gameId идентификатор игры
+	 * @param roundId идентификатор раунда
 	 */
-	public static void  getRoundQuestions(String gameId){
+	public static void  getRoundQuestions(String authToken, Long gameId, Long roundId){
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	GameRoundModel model = GameService.getRoundQuestions(user, gameId, roundId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+	    	
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
 	}
 	
 	/**
@@ -178,7 +233,22 @@ public class GameController extends Controller {
 	 * @param questionId Вопрос
 	 * @param answerId Ответ
 	 */
-	public static void answerQuestion(String gameId, String roundId, String questionId, String answerId) {
+	public static void answerQuestion(String authToken, Long gameId, Long roundId, Long questionId, Long answerId) {
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	GamerQuestionAnswerResultModel model = GameService.answerQuestions(user, gameId, roundId, questionId, answerId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+	    	
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
 	}
 	
 
