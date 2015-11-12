@@ -89,17 +89,20 @@ static const CGFloat kJVTableViewTopInset = 0.0;
     
         // Мои игры
         if (indexPath.row == 0) {
-            [cell initCell:@"Мои игры"];
+            UIImage *iconImage = [UIImage imageNamed:@"brainIcon"];
+            [cell initCell:@"Мои игры" withImage:iconImage];
         }
         
         // Профиль
         if (indexPath.row == 1) {
-            [cell initCell:@"Мой профиль"];
+            UIImage *iconImage = [UIImage imageNamed:@"profileIcon"];
+            [cell initCell:@"Мой профиль" withImage:iconImage];
         }
         
         // Рейтинг
         if (indexPath.row == 2) {
-            [cell initCell:@"Рейтинг"];
+            UIImage *iconImage = [UIImage imageNamed:@"ratingIcon"];
+            [cell initCell:@"Рейтинг" withImage:iconImage];
         }
         
         

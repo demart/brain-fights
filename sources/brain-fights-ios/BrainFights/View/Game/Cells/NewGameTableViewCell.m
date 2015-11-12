@@ -7,10 +7,15 @@
 //
 
 #import "NewGameTableViewCell.h"
+#import "Constants.h"
 
 @implementation NewGameTableViewCell
 
 - (void)awakeFromNib {
+    // Загругляем углы
+    self.gameView.layer.cornerRadius = 10.0f;
+    self.gameView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

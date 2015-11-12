@@ -20,8 +20,9 @@
 }
 
 // Инициализиурем ячейку
--(void) initCell:(NSString*) title {
+-(void) initCell:(NSString*) title withImage:(UIImage*)iconImage {
     [self.menuItemTitleLabel setText:title];
+    [self.menuItemIcon setImage:iconImage];
 }
 
 @end

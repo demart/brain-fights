@@ -60,38 +60,25 @@ static NSString * const RatingViewControllerStoryboardID = @"RatingViewControlle
 
 -(void) initDesignScheme {
     
-    // Main
-    UIColor *greenColor =  [UIColor colorWithRed:0.0/255.0f green:176.0/255.0f blue:80.0/255.0f alpha:1.0f];
-//    UIColor *greenColor =  [UIColor colorWithHue:148 saturation:100 brightness:69 alpha:1.0];
-    UIColor *blackColor = [UIColor colorWithRed:31.0/255.0f green:26.0/255.0f blue:23.0/255.0f alpha:1.0f];
-    
-    // Additional
-    UIColor *lighGrayColor = [UIColor colorWithRed:192.0/255.0f green:192.0/255.0f blue:192.0/255.0f alpha:1.0f];
-    UIColor *darkGrayColor = [UIColor colorWithRed:150.0/255.0f green:150.0/255.0f blue:150.0/255.0f alpha:1.0];
-    UIColor *lightGreenColor = [UIColor colorWithRed:138.0/255.0f green:215.0/255.0f blue:95.0/255.0f alpha:1.0f];
-    UIColor *orangeColor = [UIColor colorWithRed:228.0/255.0f green:108.0/255.0f blue:10.0/255.0f alpha:1.0f];
-    UIColor *redColor = [UIColor colorWithRed:192.0/255.0f green:0.0/255.0f blue:0.0/255.0f alpha:1.0f];
-    
-    
-    [[UINavigationBar appearance] setBarTintColor: greenColor];
-    [UINavigationBar appearance].tintColor = [UIColor   whiteColor];
+    [[UINavigationBar appearance] setBarTintColor: [Constants SYSTEM_COLOR_GREEN]];
+    [UINavigationBar appearance].tintColor = [Constants SYSTEM_COLOR_WHITE];
     [UIButton appearance].layer.cornerRadius = 2.0f;
     
     
     [[UINavigationBar appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIColor whiteColor], NSForegroundColorAttributeName,
+      [Constants SYSTEM_COLOR_WHITE], NSForegroundColorAttributeName,
       //[UIFont fontWithName:@"Gill Sans" size:17.0], NSFontAttributeName,
       nil]];
     
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor whiteColor],
+     @{NSForegroundColorAttributeName:[Constants SYSTEM_COLOR_WHITE],
        //NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:17.0]
        } forState:UIControlStateNormal];
     
     
-    [[UISearchBar appearance] setBarTintColor: greenColor];
+    [[UISearchBar appearance] setBarTintColor: [Constants SYSTEM_COLOR_GREEN]];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
     
 }
@@ -104,9 +91,7 @@ static NSString * const RatingViewControllerStoryboardID = @"RatingViewControlle
     self.drawerViewController.centerViewController = self.gameMainViewController;
     self.drawerViewController.animator = self.drawerAnimator;
     
-    
-    UIColor *greenColor =  [UIColor colorWithRed:0.0/255.0f green:176.0/255.0f blue:80.0/255.0f alpha:1.0f];
-    self.drawerViewController.backgroundImage = [AppDelegate imageFromColor:greenColor];
+    self.drawerViewController.backgroundImage = [AppDelegate imageFromColor:[Constants SYSTEM_COLOR_GREEN]];
     
     [self.window makeKeyAndVisible];
 }

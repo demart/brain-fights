@@ -10,9 +10,11 @@
 #import "UserGameModel.h"
 
 @interface GameTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *userPosition;
 @property (weak, nonatomic) IBOutlet UILabel *gameStatus;
+@property (weak, nonatomic) IBOutlet UIView *playGameView;
 
 // Инициализируем ячейку игры
 -(void) initCell:(UserGameModel*) model;

@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *menuItemIcon;
 
 // Инициализиурем ячейку
--(void) initCell:(NSString*) title;
+-(void) initCell:(NSString*) title withImage:(UIImage*)iconImage;
 
 @end

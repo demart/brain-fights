@@ -7,6 +7,7 @@
 //
 
 #import "GameTableViewCell.h"
+#import "UserGameModel.h"
 
 @interface GameTableViewCell()
 
@@ -42,15 +43,44 @@
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
     
-    [self.gameStatus setText:self.gameModel.gamerStatus];
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
+        [self.gameStatus setText:@"Ждем подтвержения"];
+        // Show play icon
+        [self.playGameView setHidden:YES];
+    }
+    
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
+        [self.gameStatus setText:@"Будете играть со мной?"];
+        // Show play icon
+        [self.playGameView setHidden:NO];
+    }
+    
 }
 
 // Инициализируем запущеную игру
 -(void) initStartedGame {
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
+
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
+        [self.gameStatus setText:@"Ваш ход!"];
+        // Show play icon
+        [self.playGameView setHidden:NO];
+    }
     
-    [self.gameStatus setText:self.gameModel.gamerStatus];
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ANSWERS]) {
+        [self.gameStatus setText:@"Ваш ход!"];
+        // Show play icon
+        [self.playGameView setHidden:NO];
+    }
+    
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT]) {
+        [self.gameStatus setText:@"Ждем игрока"];
+        // Hide play icon
+        [self.playGameView setHidden:YES];
+    }
+    
+    
 }
 
 // Инициализируем законченную игру
@@ -58,7 +88,35 @@
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
     
-    [self.gameStatus setText:self.gameModel.gamerStatus];
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_DRAW]) {
+        [self.gameStatus setText:@"Ничья"];
+        // Show play icon
+        [self.playGameView setHidden:YES];
+    }
+
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_LOOSER]) {
+        [self.gameStatus setText:@"Вы проиграли"];
+        // Show play icon
+        [self.playGameView setHidden:YES];
+    }
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
+        [self.gameStatus setText:@"Игрок сдался"];
+        // Show play icon
+        [self.playGameView setHidden:YES];
+    }
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_SURRENDED]) {
+        [self.gameStatus setText:@"Вы сдались"];
+        // Show play icon
+        [self.playGameView setHidden:YES];
+    }
+    
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WINNER]) {
+        [self.gameStatus setText:@"Вы победили!"];
+        // Show play icon
+        [self.playGameView setHidden:YES];
+        // Show triumph
+    }
+    
 }
 
 

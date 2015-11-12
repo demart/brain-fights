@@ -390,22 +390,22 @@ public class GameService {
 		gamesModel.user = UserProfileModel.buildModel(authorizedUser);
 		gamesModel.gameGroups = new ArrayList<>();
 		
-		if (waitingGames.size() > 0) {
+		if (inProgressGames.size() > 0) {
 			UserGameGroupModel model = new UserGameGroupModel();
-			model.status = GameStatus.WAITING;
+			model.status = GameStatus.STARTED;
 			model.games = new ArrayList<>();
-			for (Gamer gamer : waitingGames) {
+			for (Gamer gamer : inProgressGames) {
 				UserGameModel gameModel = UserGameModel.buildModel(authorizedUser, gamer);
 				model.games.add(gameModel);
 			}
 			gamesModel.gameGroups.add(model);
 		}
 		
-		if (inProgressGames.size() > 0) {
+		if (waitingGames.size() > 0) {
 			UserGameGroupModel model = new UserGameGroupModel();
-			model.status = GameStatus.STARTED;
+			model.status = GameStatus.WAITING;
 			model.games = new ArrayList<>();
-			for (Gamer gamer : inProgressGames) {
+			for (Gamer gamer : waitingGames) {
 				UserGameModel gameModel = UserGameModel.buildModel(authorizedUser, gamer);
 				model.games.add(gameModel);
 			}

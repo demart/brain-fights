@@ -12,6 +12,9 @@
 #import "AppDelegate.h"
 #import "NewGameTableViewCell.h"
 #import "GameTableViewCell.h"
+#import "GameGroupHeaderTableViewCell.h"
+
+#import "GameStatusTableViewController.h"
 
 #import "GameService.h"
 #import "UserService.h"
@@ -127,12 +130,44 @@
     return cell;
 }
 
--(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0)
-        return 20;
-    return 40;
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    GameGroupHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameGroupHeaderCell"];
+    if (!cell) {
+        [tableView registerNib:[UINib nibWithNibName:@"GameGroupHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"GameGroupHeaderCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"GameGroupHeaderCell"];
+    }
+    
+    if (section == 0) {
+        [cell initCell:nil];
+        return cell;
+    }
+    
+    if (self.gameGroups[section-1] != nil){
+        UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[section-1];
+        if ([gameGroupModel.status isEqualToString:GAME_STATUS_WAITING]) {
+            [cell  initCell:@"Ожидающие"];
+            return cell;
+        }
+        if ([gameGroupModel.status isEqualToString:GAME_STATUS_STARTED]) {
+            [cell  initCell:@"Активные"];
+            return cell;
+        }
+        if ([gameGroupModel.status isEqualToString:GAME_STATUS_FINISHED]) {
+            [cell  initCell:@"Завершенные"];
+            return cell;
+        }
+    }
+    
+    return cell;
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0)
+        return 10;
+    return 30;
+}
+
+/*
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
    if (section == 0)
        return nil;
@@ -149,6 +184,7 @@
     }
     return nil;
 }
+ */
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
@@ -161,10 +197,26 @@
         [self performSegueWithIdentifier:@"FromGamesToNewGame" sender:self];
     }
     
-    if (indexPath.section == 1) {
-        // Link to profile if it is not a waiting game
+    if (indexPath.section > 0) {
+        // Get Game
+        // Check Status
+        [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
     }
 }
+
+
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     if ([segue.destinationViewController isKindOfClass:[GameStatusTableViewController class]]) {
+         GameStatusTableViewController *viewController = (GameStatusTableViewController*)segue.destinationViewController;
+         
+         viewController
+         
+     }
+ }
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -200,14 +252,6 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -10,4 +10,8 @@
 
 @interface NewGameTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *gameView;
+@property (weak, nonatomic) IBOutlet UILabel *gameLabel;
+
+
 @end
