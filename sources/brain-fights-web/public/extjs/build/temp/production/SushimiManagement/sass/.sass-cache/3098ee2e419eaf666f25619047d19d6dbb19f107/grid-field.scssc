@@ -1,0 +1,669 @@
+3.1.7 (Brainy Betty)
+7008f23ade420668e7caca129e3f15c2ab63c76c
+o:Sass::Tree::RootNode
+:@template"È//*
+ * Vars for fields which are rendered to fit inside grid cells.
+ * This includes cell and row editor fields and fields in widget columns.
+ */
+
+// <editor-fold desc="Grid Editor Base Variables">
+
+/**
+ *  @class Ext.form.field.Base
+ */
+
+/**
+ * @var {number}
+ * The height of text fields rendered in the context of a grid cell.  Defaults to $form-field-height.  If grid row
+ * height is smaller than $form-field-height, defaults to the grid row height.  Grid row
+ * height is calculated by adding $grid-row-cell-line-height to the top and bottom values of
+ * $grid-cell-inner-padding.
+ */
+$grid-cell-field-height: if($grid-row-height < $form-field-height, $grid-row-height, $form-field-height) !default;
+
+/**
+ * @var {number/list}
+ * The padding of grid fields.
+ */
+$grid-cell-field-padding:
+    top($form-field-padding)
+    right($grid-cell-inner-padding) - $form-field-border-width
+    bottom($form-field-padding)
+    left($grid-cell-inner-padding) - $form-field-border-width !default;
+
+/**
+ * @var {number}
+ * The color of the grid field text
+ */
+$grid-cell-field-color: $grid-row-cell-color !default;
+
+/**
+ * @var {number}
+ * The font size of the grid field text
+ */
+$grid-cell-field-font-size: $grid-row-cell-font-size !default;
+
+/**
+ * @var {string}
+ * The font-weight of the grid field text
+ */
+$grid-cell-field-font-weight: $grid-row-cell-font-weight !default;
+
+/**
+ * @var {string}
+ * The font-family of the grid field text
+ */
+$grid-cell-field-font-family: $grid-row-cell-font-family !default;
+
+/**
+ * @var {boolean}
+ * True to include the "grid-cell" form field UIs input fields rendered in the context of a grid cell.
+ *
+ * This defaults to `true`. It is required if either {@link Ext.grid.plugin.Editor grid editors} are being used,
+ * or if a {@link Ext.grid.column.Widget WidgetColumn} is being used to house an input field.
+ */
+$include-grid-cell-field-ui: false !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Grid Editor Text Field Variables">
+
+/**
+ *  @class Ext.form.field.Text
+ */
+
+/**
+ * @var {number}
+ * The height of text fields rendered in the context of a grid cell
+ */
+$grid-cell-text-field-height: $grid-cell-field-height !default;
+
+/**
+ * @var {number}
+ * Font size for text fields rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-font-size: $grid-cell-field-font-size !default;
+
+/**
+ * @var {string}
+ * Font family for text fields rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-font-family: $grid-cell-field-font-family !default;
+
+/**
+ * @var {string}
+ * Font weight for text fields rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-font-weight: $grid-cell-field-font-weight !default;
+
+/**
+ * @var {color}
+ * The color of a text field's input element when rendered in the context of a grid cell
+ */
+$grid-cell-text-field-color: $grid-cell-field-color !default;
+
+/**
+ * @var {color}
+ * The background color of a text field's input element when endered in the context of a grid cell
+ */
+$grid-cell-text-field-background-color: $form-text-field-background-color !default;
+
+/**
+ * @var {number/list}
+ * The border width of text fields endered in the context of a grid cell
+ */
+$grid-cell-text-field-border-width: $form-text-field-border-width !default;
+
+/**
+ * @var {string/list}
+ * The border style of text fields rendered in the context of a grid cell
+ */
+$grid-cell-text-field-border-style: $form-text-field-border-style !default;
+
+/**
+ * @var {color/list}
+ * The border color of text fields rendered in the context of a grid cell
+ */
+$grid-cell-text-field-border-color: $form-text-field-border-color !default;
+
+/**
+ * @var {color/list}
+ * The border color of the focused text fields rendered in the context of a grid cell
+ */
+$grid-cell-text-field-focus-border-color: $form-text-field-focus-border-color !default;
+
+/**
+ * @var {color}
+ * Border color for invalid text fields rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-invalid-border-color: $form-text-field-invalid-border-color !default;
+
+/**
+ * @var {number/list}
+ * Border radius for text fields rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-border-radius: $form-text-field-border-radius !default;
+
+/**
+ * @var {string}
+ * The background image of a text field's input element when rendered in the context of a grid cell
+ */
+$grid-cell-text-field-background-image: $form-text-field-background-image !default;
+
+/**
+ * @var {number/list}
+ * The padding of a text field's input element when rendered in the context of a grid cell
+ */
+$grid-cell-text-field-padding: $grid-cell-field-padding !default;
+
+/**
+ * @var {color}
+ * Text color for empty text fields rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-empty-color: $form-text-field-empty-color !default;
+
+/**
+ * @var {number}
+ * @private
+ * The default width of a text field's body element (the element that contains the input
+ * element and triggers) when the field is  rendered in the context of a grid cell and not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */
+$grid-cell-text-field-body-width: $form-text-field-body-width !default;
+
+/**
+ * @var {color}
+ * Background color of a text field's input element when rendered in the context of a grid cell and the field value is invalid.
+ */
+$grid-cell-text-field-invalid-background-color: $form-text-field-invalid-background-color !default;
+
+/**
+ * @var {string}
+ * Background image of a grid field text field's input element when the field value is invalid.
+ */
+$grid-cell-text-field-invalid-background-image: $form-text-field-invalid-background-image !default;
+
+/**
+ * @var {string}
+ * Background repeat of the grid field text field's input element when the field value is invalid.
+ */
+$grid-cell-text-field-invalid-background-repeat: $form-text-field-invalid-background-repeat !default;
+
+/**
+ * @var {string/list}
+ * Background position of the grid field text field's input element when rendered in the context of a grid cell and the field value is invalid.
+ */
+$grid-cell-text-field-invalid-background-position: $form-text-field-invalid-background-position !default;
+
+/**
+ * @var {boolean}
+ * `true` to use classic-theme styled border for text fields  rendered in the context of a grid cell.
+ */
+$grid-cell-text-field-classic-border: $form-text-field-classic-border !default;
+
+/**
+ * @var {number/string}
+ * The line-height to use for the TextArea's text when rendered in the context of a grid cell
+ */
+$grid-cell-textarea-line-height: $form-textarea-line-height !default;
+
+/**
+ * @var {number}
+ * The default width of the grid field TextArea's body element (the element that
+ * contains the textarea html element when the field is rendered in the context of a grid cell and not sized explicitly using the
+ * {@link #width} config, or sized by it's containing layout.
+ */
+$grid-cell-textarea-body-height: $form-textarea-body-height !default;
+
+/**
+ * @var {color}
+ * Text color for file fields rendered in the context of a grid cell
+ */
+$grid-cell-file-field-color: $form-file-field-color !default;
+
+/**
+ * @var {number}
+ * The width of a text field's trigger element when rendered in the context of a grid cell
+ */
+$grid-cell-field-trigger-width: $form-trigger-width !default;
+
+/**
+ * @var {number/list}
+ * The width of a text field's trigger's border when rendered in the context of a grid cell
+ */
+$grid-cell-field-trigger-border-width: $form-trigger-border-width !default;
+
+/**
+ * @var {color/list}
+ * The color of a text field's trigger's border when rendered in the context of a grid cell
+ */
+$grid-cell-field-trigger-border-color: $form-trigger-border-color !default;
+
+/**
+ * @var {string/list}
+ * The style of a text field's trigger's border when rendered in the context of a grid cell
+ */
+$grid-cell-field-trigger-border-style: $form-trigger-border-style !default;
+
+/**
+ * @var {color}
+ * The color of a text field's trigger's border when  rendered in the context of a grid cell and hovered
+ */
+$grid-cell-field-trigger-border-color-over: $form-trigger-border-color !default;
+
+/**
+ * @var {color}
+ * The color of a text field's trigger's border when  rendered in the context of a grid cell and the field is focused
+ */
+$grid-cell-field-trigger-border-color-focus: $form-trigger-border-color-focus !default;
+
+/**
+ * @var {color}
+ * The color of a text field's trigger's border when rendered in the context of a grid cell and the field is focused and the trigger is hovered
+ */
+$grid-cell-field-trigger-border-color-pressed: $grid-cell-field-trigger-border-color-over !default;
+
+/**
+ * @var {string}
+ * The default background image for text field triggers when rendered in the context of a grid cell
+ */
+$grid-cell-field-trigger-background-image: $form-trigger-background-image !default;
+
+/**
+ * @var {color}
+ * The background color of a text field's trigger element when rendered in the context of a grid cell
+ */
+$grid-cell-field-trigger-background-color: $form-trigger-background-color !default;
+
+/**
+ * @var {boolean}
+ * True to include the "grid-cell" text field UI
+ */
+$include-text-field-grid-ui: $include-grid-cell-field-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Grid Editor Spinner Variables"
+/**
+ * @class Ext.form.field.Spinner
+ */
+
+/**
+ * @var {boolean}
+ * True to use vertically oriented spinner triggers when rendered in the context of a grid cell.
+ */
+$grid-cell-spinner-trigger-vertical: $spinner-trigger-vertical !default;
+
+/**
+ * @var {string}
+ * Background image for vertically oriented grid field spinner triggers when rendered in the context of a grid cell
+ */
+$grid-cell-spinner-trigger-vertical-background-image: $spinner-trigger-vertical-background-image !default;
+
+/**
+ * @var {string}
+ * Background image for the "up" trigger when grid field spinner trigger buttons are  rendered in the context of a grid cell and horizontally aligned
+ */
+$grid-cell-spinner-trigger-up-background-image: $spinner-trigger-up-background-image !default;
+
+/**
+ * @var {string}
+ * Background image for the "down" trigger when grid field spinner trigger buttons are  rendered in the context of a grid cell and horizontally aligned
+ */
+$grid-cell-spinner-trigger-down-background-image: $spinner-trigger-down-background-image !default;
+
+/**
+ * @var {boolean}
+ * True to include the "grid-cell" spinner UI
+ */
+$include-spinner-trigger-grid-ui: $include-grid-cell-field-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Grid Editor Checkbox Variables"
+
+/**
+ * @var {number}
+ * The size of a checkbox when rendered in the context of a grid cell
+ */
+$grid-cell-checkbox-size: $form-checkbox-size !default;
+
+/**
+ * @var {string}
+ * The background-image of a checkbox when rendered in the context of a grid cell
+ */
+$grid-cell-checkbox-background-image: $form-checkbox-background-image !default;
+
+/**
+ * @var {string}
+ * The background-image of a radio button when rendered in the context of a grid cell
+ */
+$grid-cell-radio-background-image: $form-radio-background-image !default;
+
+/**
+ * @var {boolean}
+ * True to include the "grid-cell" checkbox UI
+ */
+$include-checkbox-grid-ui: $include-grid-cell-field-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Grid Editor Display Field Variables">
+
+/**
+ *  @class Ext.form.field.Display
+ */
+
+/**
+ * @var {color}
+ * The text color of display fields rendered in the context of a grid cell
+ */
+$grid-cell-display-field-color: $form-display-field-color !default;
+
+/**
+ * @var {number}
+ * The font-size of display fields rendered in the context of a grid cell
+ */
+$grid-cell-display-field-font-size: $form-display-field-font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of display fields rendered in the context of a grid cell
+ */
+$grid-cell-display-field-font-family: $form-display-field-font-family !default;
+
+/**
+ * @var {string}
+ * The font-weight of display fields rendered in the context of a grid cell
+ */
+$grid-cell-display-field-font-weight: $form-display-field-font-weight !default;
+
+/**
+ * @var {number}
+ * The line-height of display fields rendered in the context of a grid cell
+ */
+$grid-cell-display-field-line-height: $form-display-field-line-height !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" display field UI
+ */
+$include-display-field-grid-ui: $include-grid-cell-field-ui !default;
+
+// </editor-fold>:@has_childrenT:@options{ :@children[o:Sass::Tree::CommentNode;@;	[ :@silent0:@value"ê/*
+ * Vars for fields which are rendered to fit inside grid cells.
+ * This includes cell and row editor fields and fields in widget columns.
+ */:
+@linei:@lines[ :
+@loud0o;
+;@;	[ ;i ;":/* <editor-fold desc="Grid Editor Base Variables"> */;i;[ ;0o;
+;@;	[ ;0;"+/**
+ *  @class Ext.form.field.Base
+ */;i;[ ;0o;
+;@;	[ ;0;"^/**
+ * @var {number}
+ * The height of text fields rendered in the context of a grid cell.  Defaults to $form-field-height.  If grid row
+ * height is smaller than $form-field-height, defaults to the grid row height.  Grid row
+ * height is calculated by adding $grid-row-cell-line-height to the top and bottom values of
+ * $grid-cell-inner-padding.
+ */;i;[ ;0o:Sass::Tree::VariableNode;@:@guarded"!default;	[ :
+@expro:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Variable	:@underscored_name"form_field_height;@;i:
+@name"form-field-height:@operand1o;	;"grid_row_height;@;i;"grid-row-height;i:@operator:lto;	;"grid_row_height;@;i;"grid-row-heighto;	;"form_field_height;@;i;"form-field-height;@;i:@keywords{ ;"if;i;"grid-cell-field-heighto;
+;@;	[ ;0;"A/**
+ * @var {number/list}
+ * The padding of grid fields.
+ */;i;[ ;0o;;@;"!default;	[ ;o:Sass::Script::List	;@;[	o;
+;[o;	;"form_field_padding;@;i;"form-field-padding;@;i;{ ;"topo;
+;@;o;	;"form_field_border_width;@;i ;"form-field-border-width;o;
+;[o;	;"grid_cell_inner_padding;@;i ;"grid-cell-inner-padding;@;i ;{ ;"
+right;i ;:
+minuso;
+;[o;	;"form_field_padding;@;i!;"form-field-padding;@;i!;{ ;"bottomo;
+;@;o;	;"form_field_border_width;@;i";"form-field-border-width;o;
+;[o;	;"grid_cell_inner_padding;@;i";"grid-cell-inner-padding;@;i";{ ;"	left;i";;;i:@separator:
+space;i";"grid-cell-field-paddingo;
+;@;	[ ;0;"A/**
+ * @var {number}
+ * The color of the grid field text
+ */;i$;[ ;0o;;@;"!default;	[ ;o;	;"grid_row_cell_color;@;i(;"grid-row-cell-color;i(;"grid-cell-field-coloro;
+;@;	[ ;0;"E/**
+ * @var {number}
+ * The font size of the grid field text
+ */;i*;[ ;0o;;@;"!default;	[ ;o;	;"grid_row_cell_font_size;@;i.;"grid-row-cell-font-size;i.;"grid-cell-field-font-sizeo;
+;@;	[ ;0;"G/**
+ * @var {string}
+ * The font-weight of the grid field text
+ */;i0;[ ;0o;;@;"!default;	[ ;o;	;"grid_row_cell_font_weight;@;i4;"grid-row-cell-font-weight;i4;" grid-cell-field-font-weighto;
+;@;	[ ;0;"G/**
+ * @var {string}
+ * The font-family of the grid field text
+ */;i6;[ ;0o;;@;"!default;	[ ;o;	;"grid_row_cell_font_family;@;i:;"grid-row-cell-font-family;i:;" grid-cell-field-font-familyo;
+;@;	[ ;0;"R/**
+ * @var {boolean}
+ * True to include the "grid-cell" form field UIs input fields rendered in the context of a grid cell.
+ *
+ * This defaults to `true`. It is required if either {@link Ext.grid.plugin.Editor grid editors} are being used,
+ * or if a {@link Ext.grid.column.Widget WidgetColumn} is being used to house an input field.
+ */;i<;[ ;0o;;@;"!default;	[ ;o:Sass::Script::Bool;@;F;iC;iC;"include-grid-cell-field-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iE;[ ;0o;
+;@;	[ ;i ;"@/* <editor-fold desc="Grid Editor Text Field Variables"> */;iG;[ ;0o;
+;@;	[ ;0;"+/**
+ *  @class Ext.form.field.Text
+ */;iI;[ ;0o;
+;@;	[ ;0;"a/**
+ * @var {number}
+ * The height of text fields rendered in the context of a grid cell
+ */;iM;[ ;0o;;@;"!default;	[ ;o;	;"grid_cell_field_height;@;iQ;"grid-cell-field-height;iQ;" grid-cell-text-field-heighto;
+;@;	[ ;0;"b/**
+ * @var {number}
+ * Font size for text fields rendered in the context of a grid cell.
+ */;iS;[ ;0o;;@;"!default;	[ ;o;	;"grid_cell_field_font_size;@;iW;"grid-cell-field-font-size;iW;"#grid-cell-text-field-font-sizeo;
+;@;	[ ;0;"d/**
+ * @var {string}
+ * Font family for text fields rendered in the context of a grid cell.
+ */;iY;[ ;0o;;@;"!default;	[ ;o;	;" grid_cell_field_font_family;@;i];" grid-cell-field-font-family;i];"%grid-cell-text-field-font-familyo;
+;@;	[ ;0;"d/**
+ * @var {string}
+ * Font weight for text fields rendered in the context of a grid cell.
+ */;i_;[ ;0o;;@;"!default;	[ ;o;	;" grid_cell_field_font_weight;@;ic;" grid-cell-field-font-weight;ic;"%grid-cell-text-field-font-weighto;
+;@;	[ ;0;"u/**
+ * @var {color}
+ * The color of a text field's input element when rendered in the context of a grid cell
+ */;ie;[ ;0o;;@;"!default;	[ ;o;	;"grid_cell_field_color;@;ii;"grid-cell-field-color;ii;"grid-cell-text-field-coloro;
+;@;	[ ;0;"/**
+ * @var {color}
+ * The background color of a text field's input element when endered in the context of a grid cell
+ */;ik;[ ;0o;;@;"!default;	[ ;o;	;"%form_text_field_background_color;@;io;"%form-text-field-background-color;io;"*grid-cell-text-field-background-coloro;
+;@;	[ ;0;"k/**
+ * @var {number/list}
+ * The border width of text fields endered in the context of a grid cell
+ */;iq;[ ;0o;;@;"!default;	[ ;o;	;"!form_text_field_border_width;@;iu;"!form-text-field-border-width;iu;"&grid-cell-text-field-border-widtho;
+;@;	[ ;0;"l/**
+ * @var {string/list}
+ * The border style of text fields rendered in the context of a grid cell
+ */;iw;[ ;0o;;@;"!default;	[ ;o;	;"!form_text_field_border_style;@;i{;"!form-text-field-border-style;i{;"&grid-cell-text-field-border-styleo;
+;@;	[ ;0;"k/**
+ * @var {color/list}
+ * The border color of text fields rendered in the context of a grid cell
+ */;i};[ ;0o;;@;"!default;	[ ;o;	;"!form_text_field_border_color;@;i|;"!form-text-field-border-color;i|;"&grid-cell-text-field-border-coloro;
+;@;	[ ;0;"w/**
+ * @var {color/list}
+ * The border color of the focused text fields rendered in the context of a grid cell
+ */;i~;[ ;0o;;@;"!default;	[ ;o;	;"'form_text_field_focus_border_color;@;iÇ;"'form-text-field-focus-border-color;iÇ;",grid-cell-text-field-focus-border-coloro;
+;@;	[ ;0;"l/**
+ * @var {color}
+ * Border color for invalid text fields rendered in the context of a grid cell.
+ */;iÑ;[ ;0o;;@;"!default;	[ ;o;	;")form_text_field_invalid_border_color;@;ià;")form-text-field-invalid-border-color;ià;".grid-cell-text-field-invalid-border-coloro;
+;@;	[ ;0;"k/**
+ * @var {number/list}
+ * Border radius for text fields rendered in the context of a grid cell.
+ */;iä;[ ;0o;;@;"!default;	[ ;o;	;""form_text_field_border_radius;@;ié;""form-text-field-border-radius;ié;"'grid-cell-text-field-border-radiuso;
+;@;	[ ;0;"|/**
+ * @var {string}
+ * The background image of a text field's input element when rendered in the context of a grid cell
+ */;iê;[ ;0o;;@;"!default;	[ ;o;	;"%form_text_field_background_image;@;iî;"%form-text-field-background-image;iî;"*grid-cell-text-field-background-imageo;
+;@;	[ ;0;"}/**
+ * @var {number/list}
+ * The padding of a text field's input element when rendered in the context of a grid cell
+ */;iñ;[ ;0o;;@;"!default;	[ ;o;	;"grid_cell_field_padding;@;iö;"grid-cell-field-padding;iö;"!grid-cell-text-field-paddingo;
+;@;	[ ;0;"h/**
+ * @var {color}
+ * Text color for empty text fields rendered in the context of a grid cell.
+ */;iú;[ ;0o;;@;"!default;	[ ;o;	;" form_text_field_empty_color;@;i†;" form-text-field-empty-color;i†;"%grid-cell-text-field-empty-coloro;
+;@;	[ ;0;"1/**
+ * @var {number}
+ * @private
+ * The default width of a text field's body element (the element that contains the input
+ * element and triggers) when the field is  rendered in the context of a grid cell and not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */;i¢;[ ;0o;;@;"!default;	[ ;o;	;"form_text_field_body_width;@;i©;"form-text-field-body-width;i©;"$grid-cell-text-field-body-widtho;
+;@;	[ ;0;"ó/**
+ * @var {color}
+ * Background color of a text field's input element when rendered in the context of a grid cell and the field value is invalid.
+ */;i´;[ ;0o;;@;"!default;	[ ;o;	;"-form_text_field_invalid_background_color;@;iØ;"-form-text-field-invalid-background-color;iØ;"2grid-cell-text-field-invalid-background-coloro;
+;@;	[ ;0;"}/**
+ * @var {string}
+ * Background image of a grid field text field's input element when the field value is invalid.
+ */;i±;[ ;0o;;@;"!default;	[ ;o;	;"-form_text_field_invalid_background_image;@;iµ;"-form-text-field-invalid-background-image;iµ;"2grid-cell-text-field-invalid-background-imageo;
+;@;	[ ;0;"{/**
+ * @var {string}
+ * Background repeat of the grid field text field's input element when the field value is invalid.
+ */;i∑;[ ;0o;;@;"!default;	[ ;o;	;".form_text_field_invalid_background_repeat;@;iª;".form-text-field-invalid-background-repeat;iª;"3grid-cell-text-field-invalid-background-repeato;
+;@;	[ ;0;"≠/**
+ * @var {string/list}
+ * Background position of the grid field text field's input element when rendered in the context of a grid cell and the field value is invalid.
+ */;iΩ;[ ;0o;;@;"!default;	[ ;o;	;"0form_text_field_invalid_background_position;@;i¡;"0form-text-field-invalid-background-position;i¡;"5grid-cell-text-field-invalid-background-positiono;
+;@;	[ ;0;"/**
+ * @var {boolean}
+ * `true` to use classic-theme styled border for text fields  rendered in the context of a grid cell.
+ */;i√;[ ;0o;;@;"!default;	[ ;o;	;"#form_text_field_classic_border;@;i«;"#form-text-field-classic-border;i«;"(grid-cell-text-field-classic-bordero;
+;@;	[ ;0;"}/**
+ * @var {number/string}
+ * The line-height to use for the TextArea's text when rendered in the context of a grid cell
+ */;i…;[ ;0o;;@;"!default;	[ ;o;	;"form_textarea_line_height;@;iÕ;"form-textarea-line-height;iÕ;"#grid-cell-textarea-line-heighto;
+;@;	[ ;0;")/**
+ * @var {number}
+ * The default width of the grid field TextArea's body element (the element that
+ * contains the textarea html element when the field is rendered in the context of a grid cell and not sized explicitly using the
+ * {@link #width} config, or sized by it's containing layout.
+ */;iœ;[ ;0o;;@;"!default;	[ ;o;	;"form_textarea_body_height;@;i’;"form-textarea-body-height;i’;"#grid-cell-textarea-body-heighto;
+;@;	[ ;0;"a/**
+ * @var {color}
+ * Text color for file fields rendered in the context of a grid cell
+ */;i◊;[ ;0o;;@;"!default;	[ ;o;	;"form_file_field_color;@;i€;"form-file-field-color;i€;"grid-cell-file-field-coloro;
+;@;	[ ;0;"x/**
+ * @var {number}
+ * The width of a text field's trigger element when rendered in the context of a grid cell
+ */;i›;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_width;@;i·;"form-trigger-width;i·;""grid-cell-field-trigger-widtho;
+;@;	[ ;0;"~/**
+ * @var {number/list}
+ * The width of a text field's trigger's border when rendered in the context of a grid cell
+ */;i„;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_width;@;iÁ;"form-trigger-border-width;iÁ;")grid-cell-field-trigger-border-widtho;
+;@;	[ ;0;"}/**
+ * @var {color/list}
+ * The color of a text field's trigger's border when rendered in the context of a grid cell
+ */;iÈ;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_color;@;iÌ;"form-trigger-border-color;iÌ;")grid-cell-field-trigger-border-coloro;
+;@;	[ ;0;"~/**
+ * @var {string/list}
+ * The style of a text field's trigger's border when rendered in the context of a grid cell
+ */;iÔ;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_style;@;iÛ;"form-trigger-border-style;iÛ;")grid-cell-field-trigger-border-styleo;
+;@;	[ ;0;"Ä/**
+ * @var {color}
+ * The color of a text field's trigger's border when  rendered in the context of a grid cell and hovered
+ */;iı;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_color;@;i˘;"form-trigger-border-color;i˘;".grid-cell-field-trigger-border-color-overo;
+;@;	[ ;0;"ç/**
+ * @var {color}
+ * The color of a text field's trigger's border when  rendered in the context of a grid cell and the field is focused
+ */;i˚;[ ;0o;;@;"!default;	[ ;o;	;"$form_trigger_border_color_focus;@;iˇ;"$form-trigger-border-color-focus;iˇ;"/grid-cell-field-trigger-border-color-focuso;
+;@;	[ ;0;"ß/**
+ * @var {color}
+ * The color of a text field's trigger's border when rendered in the context of a grid cell and the field is focused and the trigger is hovered
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;".grid_cell_field_trigger_border_color_over;@;i;".grid-cell-field-trigger-border-color-over;i;"1grid-cell-field-trigger-border-color-pressedo;
+;@;	[ ;0;"|/**
+ * @var {string}
+ * The default background image for text field triggers when rendered in the context of a grid cell
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;""form_trigger_background_image;@;i;""form-trigger-background-image;i;"-grid-cell-field-trigger-background-imageo;
+;@;	[ ;0;"}/**
+ * @var {color}
+ * The background color of a text field's trigger element when rendered in the context of a grid cell
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;""form_trigger_background_color;@;i;""form-trigger-background-color;i;"-grid-cell-field-trigger-background-coloro;
+;@;	[ ;0;"O/**
+ * @var {boolean}
+ * True to include the "grid-cell" text field UI
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"include_grid_cell_field_ui;@;i;"include-grid-cell-field-ui;i;"include-text-field-grid-uio;
+;@;	[ ;i ;"/* </editor-fold> */;i;[ ;0o;
+;@;	[ ;i ;"</* <editor-fold desc="Grid Editor Spinner Variables" */;i;[ ;0o;
+;@;	[ ;0;"-/**
+ * @class Ext.form.field.Spinner
+ */;i;[ ;0o;
+;@;	[ ;0;"/**
+ * @var {boolean}
+ * True to use vertically oriented spinner triggers when rendered in the context of a grid cell.
+ */;i ;[ ;0o;;@;"!default;	[ ;o;	;"spinner_trigger_vertical;@;i$;"spinner-trigger-vertical;i$;"'grid-cell-spinner-trigger-verticalo;
+;@;	[ ;0;"å/**
+ * @var {string}
+ * Background image for vertically oriented grid field spinner triggers when rendered in the context of a grid cell
+ */;i&;[ ;0o;;@;"!default;	[ ;o;	;".spinner_trigger_vertical_background_image;@;i*;".spinner-trigger-vertical-background-image;i*;"8grid-cell-spinner-trigger-vertical-background-imageo;
+;@;	[ ;0;"Æ/**
+ * @var {string}
+ * Background image for the "up" trigger when grid field spinner trigger buttons are  rendered in the context of a grid cell and horizontally aligned
+ */;i,;[ ;0o;;@;"!default;	[ ;o;	;"(spinner_trigger_up_background_image;@;i0;"(spinner-trigger-up-background-image;i0;"2grid-cell-spinner-trigger-up-background-imageo;
+;@;	[ ;0;"∞/**
+ * @var {string}
+ * Background image for the "down" trigger when grid field spinner trigger buttons are  rendered in the context of a grid cell and horizontally aligned
+ */;i2;[ ;0o;;@;"!default;	[ ;o;	;"*spinner_trigger_down_background_image;@;i6;"*spinner-trigger-down-background-image;i6;"4grid-cell-spinner-trigger-down-background-imageo;
+;@;	[ ;0;"L/**
+ * @var {boolean}
+ * True to include the "grid-cell" spinner UI
+ */;i8;[ ;0o;;@;"!default;	[ ;o;	;"include_grid_cell_field_ui;@;i<;"include-grid-cell-field-ui;i<;"$include-spinner-trigger-grid-uio;
+;@;	[ ;i ;"/* </editor-fold> */;i>;[ ;0o;
+;@;	[ ;i ;"=/* <editor-fold desc="Grid Editor Checkbox Variables" */;i@;[ ;0o;
+;@;	[ ;0;"c/**
+ * @var {number}
+ * The size of a checkbox when rendered in the context of a grid cell
+ */;iB;[ ;0o;;@;"!default;	[ ;o;	;"form_checkbox_size;@;iF;"form-checkbox-size;iF;"grid-cell-checkbox-sizeo;
+;@;	[ ;0;"o/**
+ * @var {string}
+ * The background-image of a checkbox when rendered in the context of a grid cell
+ */;iH;[ ;0o;;@;"!default;	[ ;o;	;"#form_checkbox_background_image;@;iL;"#form-checkbox-background-image;iL;"(grid-cell-checkbox-background-imageo;
+;@;	[ ;0;"s/**
+ * @var {string}
+ * The background-image of a radio button when rendered in the context of a grid cell
+ */;iN;[ ;0o;;@;"!default;	[ ;o;	;" form_radio_background_image;@;iR;" form-radio-background-image;iR;"%grid-cell-radio-background-imageo;
+;@;	[ ;0;"M/**
+ * @var {boolean}
+ * True to include the "grid-cell" checkbox UI
+ */;iT;[ ;0o;;@;"!default;	[ ;o;	;"include_grid_cell_field_ui;@;iX;"include-grid-cell-field-ui;iX;"include-checkbox-grid-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iZ;[ ;0o;
+;@;	[ ;i ;"C/* <editor-fold desc="Grid Editor Display Field Variables"> */;i\;[ ;0o;
+;@;	[ ;0;"./**
+ *  @class Ext.form.field.Display
+ */;i^;[ ;0o;
+;@;	[ ;0;"g/**
+ * @var {color}
+ * The text color of display fields rendered in the context of a grid cell
+ */;ib;[ ;0o;;@;"!default;	[ ;o;	;"form_display_field_color;@;if;"form-display-field-color;if;""grid-cell-display-field-coloro;
+;@;	[ ;0;"g/**
+ * @var {number}
+ * The font-size of display fields rendered in the context of a grid cell
+ */;ih;[ ;0o;;@;"!default;	[ ;o;	;"!form_display_field_font_size;@;il;"!form-display-field-font-size;il;"&grid-cell-display-field-font-sizeo;
+;@;	[ ;0;"i/**
+ * @var {string}
+ * The font-family of display fields rendered in the context of a grid cell
+ */;in;[ ;0o;;@;"!default;	[ ;o;	;"#form_display_field_font_family;@;ir;"#form-display-field-font-family;ir;"(grid-cell-display-field-font-familyo;
+;@;	[ ;0;"i/**
+ * @var {string}
+ * The font-weight of display fields rendered in the context of a grid cell
+ */;it;[ ;0o;;@;"!default;	[ ;o;	;"#form_display_field_font_weight;@;ix;"#form-display-field-font-weight;ix;"(grid-cell-display-field-font-weighto;
+;@;	[ ;0;"i/**
+ * @var {number}
+ * The line-height of display fields rendered in the context of a grid cell
+ */;iz;[ ;0o;;@;"!default;	[ ;o;	;"#form_display_field_line_height;@;i~;"#form-display-field-line-height;i~;"(grid-cell-display-field-line-heighto;
+;@;	[ ;0;"P/**
+ * @var {boolean}
+ * True to include the "default" display field UI
+ */;iÄ;[ ;0o;;@;"!default;	[ ;o;	;"include_grid_cell_field_ui;@;iÑ;"include-grid-cell-field-ui;iÑ;""include-display-field-grid-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iÜ;[ ;0;i

@@ -2,8 +2,30 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Import Secure routes
+*       /                                                       module:secure
+
 # Home page
 GET     /                                       				Application.index
+
+# Admin
+GET		/rest/users/store/read									AdmController.readUserList
+POST	/rest/users/store/update								AdmController.updateUser
+POST	/rest/users/store/create								AdmController.createUser
+POST	/rest/users/store/destroy								AdmController.deleteUser
+GET		/rest/admin/users/store/read							AdmController.readAdminUsers
+POST	/rest/admin/users/store/create							AdmController.createAdminUser
+POST	/rest/admin/users/store/update							AdmController.updateAdminUser
+POST	/rest/admin/users/store/destroy							AdmController.destroyAdminUser
+GET 	/rest/category/store/read								AdmController.readCategoryList
+POST	/rest/category/store/create								AdmController.createNewCategory
+POST	/rest/category/store/update								AdmController.updateCategory
+POST	/rest/category/store/destroy							AdmController.destroyCategory
+POST	/rest/questions/store/create							AdmController.createNewQuestion
+GET		/rest/questions/store/read								AdmController.readQuestions
+POST	/rest/questions/store/update							AdmController.updateQuestion
+POST 	/rest/questions/store/destroy							AdmController.destroyQuestion
+POST	/rest/check/name										AdmController.checkNameAdminInBase
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate
@@ -47,6 +69,7 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
+GET     /*										staticDir:public/extjs
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
