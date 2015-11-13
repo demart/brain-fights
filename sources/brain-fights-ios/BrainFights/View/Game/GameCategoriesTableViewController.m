@@ -1,91 +1,55 @@
 //
-//  GameStatusTableViewController.m
+//  GameCategoriesTableViewController.m
 //  BrainFights
 //
-//  Created by Artem Demidovich on 11/11/15.
+//  Created by Artem Demidovich on 11/12/15.
 //  Copyright © 2015 Aphion Software. All rights reserved.
 //
 
-#import "GameStatusTableViewController.h"
+#import "GameCategoriesTableViewController.h"
 
-#import "GameStatusPlayersTableViewCell.h"
-#import "GameStatusRoundTableViewCell.h"
-#import "GameStatusActionTableViewCell.h"
-
-@interface GameStatusTableViewController ()
-
-@property UserGameModel *gameModel;
+@interface GameCategoriesTableViewController ()
 
 @end
 
-@implementation GameStatusTableViewController
+@implementation GameCategoriesTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-// Инициализруем статус игры
--(void) setUserGameModel:(UserGameModel*)gameModel {
-    self.gameModel = gameModel;
+    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+#warning Incomplete implementation, return the number of sections
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+#warning Incomplete implementation, return the number of rows
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        GameStatusPlayersTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusPlayersCell"];
-        if (!cell) {
-            [tableView registerNib:[UINib nibWithNibName:@"GameStatusPlayersTableViewCell" bundle:nil]forCellReuseIdentifier:@"GameStatusPlayersCell"];
-            cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusPlayersCell"];
-        }
-        
-        return cell;
-    }
-
-    if (indexPath.row > 0 && indexPath.row < 7) {
-        GameStatusRoundTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusRoundCell"];
-        if (!cell) {
-            [tableView registerNib:[UINib nibWithNibName:@"GameStatusRoundTableViewCell" bundle:nil]forCellReuseIdentifier:@"GameStatusRoundCell"];
-            cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusRoundCell"];
-        }
-        
-        return cell;
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    if (indexPath.row == 7) {
-        GameStatusActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusActionCell"];
-        if (!cell) {
-            [tableView registerNib:[UINib nibWithNibName:@"GameStatusActionTableViewCell" bundle:nil]forCellReuseIdentifier:@"GameStatusActionCell"];
-            cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusActionCell"];
-        }
-        
-        return cell;
-    }
+    // Configure the cell...
     
-    return nil;
+    return cell;
 }
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0)
-        return 70;
-    if (indexPath.row == 7)
-        return 70;
-    return 50;
-}
+*/
 
 /*
 // Override to support conditional editing of the table view.
