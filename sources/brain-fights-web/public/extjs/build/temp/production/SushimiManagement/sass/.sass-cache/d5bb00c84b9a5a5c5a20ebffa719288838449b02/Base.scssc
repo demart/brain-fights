@@ -1,0 +1,1916 @@
+3.1.7 (Brainy Betty)
+dd9a6e01d2e182a89ee93cd7401a72284274fc19
+o:Sass::Tree::RootNode
+:@template"¢o// NOTE: this file contains the variables for all types of form fields.  This is done
+// (as opposed to having separate files for Text.scss, Checkbox.scss etc) so that grid
+// editor sass vars (in Editor.scss) can derive from any of the form field vars simply
+// because Ext.grid.plugin.Editing requires Ext.form.field.Base.  Grid editor sass
+// vars cannot live in the same files as normal form field vars because they also derive
+// some of their values from grid vars.
+
+// <editor-fold desc="Base Variables">
+/**
+ * @class Ext.form.field.Base
+ */
+
+/**
+ * @var {number} $form-field-height
+ * Height for form fields.
+ */
+$form-field-height: 24px !default;
+
+/**
+ * @var {number} $form-toolbar-field-height
+ * Height for form fields in toolbar.
+ */
+$form-toolbar-field-height: $form-field-height !default;
+
+/**
+ * @var {number} $form-field-padding
+ * Padding around form fields.
+ */
+$form-field-padding: 1px 3px 2px !default;
+
+/**
+ * @var {number} $form-field-font-size
+ * Font size for form fields.
+ */
+$form-field-font-size: $font-size !default;
+
+/**
+ * @var {string} $form-field-font-family
+ * Font family for form fields.
+ */
+$form-field-font-family: $font-family !default;
+
+/**
+ * @var {string} $form-field-font-weight
+ * Font weight for form fields.
+ */
+$form-field-font-weight: $font-weight !default;
+
+/**
+ * @var {number} $form-toolbar-field-font-size
+ * Font size for toolbar form fields.
+ */
+$form-toolbar-field-font-size: $form-field-font-size !default;
+
+/**
+ * @var {string} $form-toolbar-field-font-family
+ * Font family for toolbar form fields.
+ */
+$form-toolbar-field-font-family: $form-field-font-family !default;
+/**
+ * @var {string} $form-toolbar-field-font-weight
+ * Font weight for toolbar form fields.
+ */
+$form-toolbar-field-font-weight: $form-field-font-weight !default;
+
+/**
+ * @var {color} $form-field-color
+ * Text color for form fields.
+ */
+$form-field-color: $color !default;
+
+/**
+ * @var {color} $form-field-empty-color
+ * Text color for empty form fields.
+ */
+$form-field-empty-color: gray !default;
+
+/**
+ * @var {color} $form-field-border-color
+ * Border color for form fields.
+ */
+$form-field-border-color: $neutral-color !default;
+
+/**
+ * @var {number} $form-field-border-width
+ * Border width for form fields.
+ */
+$form-field-border-width: 1px !default;
+
+/**
+ * @var {string} $form-field-border-style
+ * Border style for form fields.
+ */
+$form-field-border-style: solid !default;
+
+/**
+ * @var {color} $form-field-focus-border-color
+ * Border color for focused form fields.
+ */
+$form-field-focus-border-color: $base-color !default;
+
+/**
+ * @var {color} $form-field-invalid-border-color
+ * Border color for invalid form fields.
+ */
+$form-field-invalid-border-color: #c30 !default;
+
+/**
+ * @var {color} $form-field-background-color
+ * Background color for form fields.
+ */
+$form-field-background-color: #fff !default;
+/**
+ * @var {string} $form-field-background-image
+ * Background image for form fields.
+ */
+$form-field-background-image: 'form/text-bg' !default;
+
+/**
+ * @var {color} $form-field-invalid-background-color
+ * Background color for invalid form fields.
+ */
+$form-field-invalid-background-color: #fff !default;
+/**
+ * @var {string} $form-field-invalid-background-image
+ * Background image for invalid form fields.
+ */
+$form-field-invalid-background-image: 'grid/invalid_line' !default;
+/**
+ * @var {string} $form-field-invalid-background-repeat
+ * Background repeat for invalid form fields.
+ */
+$form-field-invalid-background-repeat: repeat-x !default;
+/**
+ * @var {string/list} $form-field-invalid-background-position
+ * Background position for invalid form fields.
+ */
+$form-field-invalid-background-position: bottom !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" field UI
+ */
+$include-field-default-ui: $include-default-uis !default;
+
+/**
+ * @var {boolean}
+ * True to include the "toolbar" field UI
+ */
+$include-field-toolbar-ui: false !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Labelable Variables">
+/**
+ * @class Ext.form.Labelable
+ */
+
+/**
+ * @var {color}
+ * The text color of form field labels
+ */
+$form-label-font-color: $color !default;
+
+/**
+ * @var {string}
+ * The font-weight of form field labels
+ */
+$form-label-font-weight: $font-weight !default;
+
+/**
+ * @var {number}
+ * The font-size of form field labels
+ */
+$form-label-font-size: $font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of form field labels
+ */
+$form-label-font-family: $font-family !default;
+
+/**
+ * @var {number}
+ * The line-height of form field labels
+ */
+$form-label-line-height: round($form-label-font-size * 1.15) !default;
+
+/**
+ * @var {number}
+ * Horizontal space between the label and the field body when the label is left-aligned.
+ */
+$form-label-horizontal-spacing: 5px !default;
+
+/**
+ * @var {number}
+ * Vertical space between the label and the field body when the label is top-aligned.
+ */
+$form-label-vertical-spacing: 5px !default;
+
+/**
+ * @var {string}
+ * The background image for error icons
+ */
+$form-error-icon-background-image: 'form/exclamation' !default;
+
+/**
+ * @var {number}
+ * Width for form error icons.
+ */
+$form-error-icon-width: 16px !default;
+
+/**
+ * @var {number}
+ * Height for form error icons.
+ */
+$form-error-icon-height: 16px !default;
+
+/**
+ * @var {number/list}
+ * Margin for error icons that are aligned to the side of the field
+ */
+$form-error-icon-side-margin: 0 1px !default;
+
+/**
+ * @var {number}
+ * The space between the icon and the message for errors that display under the field
+ */
+$form-error-under-icon-spacing: 4px !default;
+
+/**
+ * @var {number/list}
+ * The padding on errors that display under the form field
+ */
+$form-error-under-padding: 2px 2px 2px 0 !default;
+
+/**
+ * @var {color}
+ * The text color of form error messages
+ */
+$form-error-msg-color: $form-field-invalid-border-color !default;
+
+/**
+ * @var {string}
+ * The font-weight of form error messages
+ */
+$form-error-msg-font-weight: $font-weight !default;
+
+/**
+ * @var {number}
+ * The font-size of form error messages
+ */
+$form-error-msg-font-size: $font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of form error messages
+ */
+$form-error-msg-font-family: $font-family !default;
+
+/**
+ * @var {number}
+ * The line-height of form error messages
+ */
+$form-error-msg-line-height: $form-error-icon-height !default;
+
+/**
+ * @var {number}
+ * The bottom margin to apply to form items when in auto, anchor, vbox, or table layout.
+ * This value is also used as the default border-spacing in a form-layout.
+ */
+$form-item-margin-bottom: 5px !default;
+
+/**
+ * @var {number}
+ * Opacity of disabled form fields
+ */
+$form-field-disabled-opacity: .3 !default;
+
+/**
+ * @var {color}
+ * The text color of toolbar form field labels
+ */
+$form-toolbar-label-font-color: $color !default;
+
+/**
+ * @var {string}
+ * The font-weight of toolbar form field labels
+ */
+$form-toolbar-label-font-weight: $font-weight !default;
+
+/**
+ * @var {number}
+ * The font-size of toolbar form field labels
+ */
+$form-toolbar-label-font-size: $font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of toolbar form field labels
+ */
+$form-toolbar-label-font-family: $font-family !default;
+
+/**
+ * @var {number}
+ * The line-height of toolbar form field labels
+ */
+$form-toolbar-label-line-height: round($form-toolbar-label-font-size * 1.15) !default;
+
+/**
+ * @var {number}
+ * Horizontal space between the toolbar field's label and the field body when the label is left-aligned.
+ */
+$form-toolbar-label-horizontal-spacing: 5px !default;
+
+/**
+ * @var {number}
+ * Vertical space between the toolbar field's label and the field body when the label is top-aligned.
+ */
+$form-toolbar-label-vertical-spacing: 5px !default;
+
+/**
+ * @var {string}
+ * The background image for toolbar field error icons
+ */
+$form-toolbar-error-icon-background-image: 'form/exclamation' !default;
+
+/**
+ * @var {number}
+ * Width for toolbar field error icons.
+ */
+$form-toolbar-error-icon-width: 16px !default;
+
+/**
+ * @var {number}
+ * Height for toolbar field error icons.
+ */
+$form-toolbar-error-icon-height: 16px !default;
+
+/**
+ * @var {number/list}
+ * Margin for toolbar field error icons that are aligned to the side of the field
+ */
+$form-toolbar-error-icon-side-margin: 0 1px !default;
+
+/**
+ * @var {number}
+ * The space between the icon and the message for errors that display under a toolbar field
+ */
+$form-toolbar-error-under-icon-spacing: 4px !default;
+
+/**
+ * @var {number/list}
+ * The padding on errors that display under the toolbar form field
+ */
+$form-toolbar-error-under-padding: 2px 2px 2px 0 !default;
+
+/**
+ * @var {color}
+ * The text color of toolbar form error messages
+ */
+$form-toolbar-error-msg-color: $form-field-invalid-border-color !default;
+
+/**
+ * @var {string}
+ * The font-weight of toolbar form field error messages
+ */
+$form-toolbar-error-msg-font-weight: $font-weight !default;
+
+/**
+ * @var {number}
+ * The font-size of toolbar form field error messages
+ */
+$form-toolbar-error-msg-font-size: $font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of toolbar form field error messages
+ */
+$form-toolbar-error-msg-font-family: $font-family !default;
+
+/**
+ * @var {number}
+ * The line-height of toolbar form field error messages
+ */
+$form-toolbar-error-msg-line-height: $form-toolbar-error-icon-height !default;
+
+/**
+ * @var {number}
+ * Opacity of disabled toolbar form fields
+ */
+$form-toolbar-field-disabled-opacity: .3 !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" label UI
+ */
+$include-label-default-ui: $include-field-default-ui !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" label UI
+ */
+$include-label-toolbar-ui: $include-field-toolbar-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Text Field Variables">
+/**
+ * @class Ext.form.field.Text
+ */
+
+/**
+ * @var {number}
+ * The height of text fields
+ */
+$form-text-field-height: $form-field-height !default;
+
+/**
+ * @var {number}
+ * Font size for text fields.
+ */
+$form-text-field-font-size: $form-field-font-size !default;
+
+/**
+ * @var {string}
+ * Font family for text fields.
+ */
+$form-text-field-font-family: $form-field-font-family !default;
+
+/**
+ * @var {string}
+ * Font weight for text fields.
+ */
+$form-text-field-font-weight: $form-field-font-weight !default;
+
+/**
+ * @var {color}
+ * The color of the text field's input element
+ */
+$form-text-field-color: $form-field-color !default;
+
+/**
+ * @var {color}
+ * The background color of the text field's input element
+ */
+$form-text-field-background-color: $form-field-background-color !default;
+
+/**
+ * @var {number/list}
+ * The border width of text fields
+ */
+$form-text-field-border-width: $form-field-border-width !default;
+
+/**
+ * @var {string/list}
+ * The border style of text fields
+ */
+$form-text-field-border-style: $form-field-border-style !default;
+
+/**
+ * @var {color/list}
+ * The border color of text fields
+ */
+$form-text-field-border-color: $form-field-border-color !default;
+
+/**
+ * @var {color/list}
+ * The border color of the focused text field
+ */
+$form-text-field-focus-border-color: $form-field-focus-border-color !default;
+
+/**
+ * @var {color}
+ * Border color for invalid text fields.
+ */
+$form-text-field-invalid-border-color: $form-field-invalid-border-color !default;
+
+/**
+ * @var {number/list}
+ * Border radius for text fields
+ */
+$form-text-field-border-radius: 0 !default;
+
+/**
+ * @var {string}
+ * The background image of the text field's input element
+ */
+$form-text-field-background-image: $form-field-background-image !default;
+
+/**
+ * @var {number/list}
+ * The padding of the text field's input element
+ */
+$form-text-field-padding: $form-field-padding !default;
+
+/**
+ * @var {color}
+ * Text color for empty text fields.
+ */
+$form-text-field-empty-color: $form-field-empty-color !default;
+
+/**
+ * @var {number}
+ * The default width of the text field's body element (the element that contains the input
+ * element and triggers) when the field is not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */
+$form-text-field-body-width: 150px !default;
+
+/**
+ * @var {color}
+ * Background color of the text field's input element when the field value is invalid.
+ */
+$form-text-field-invalid-background-color: $form-field-invalid-background-color !default;
+
+/**
+ * @var {string}
+ * Background image of the text field's input element when the field value is invalid.
+ */
+$form-text-field-invalid-background-image: $form-field-invalid-background-image !default;
+
+/**
+ * @var {string}
+ * Background repeat of the text field's input element when the field value is invalid.
+ */
+$form-text-field-invalid-background-repeat: $form-field-invalid-background-repeat !default;
+
+/**
+ * @var {string/list}
+ * Background position of the text field's input element when the field value is invalid.
+ */
+$form-text-field-invalid-background-position: $form-field-invalid-background-position !default;
+
+/**
+ * @var {boolean}
+ * `true` to use classic-theme styled border for text fields.
+ */
+$form-text-field-classic-border: false !default;
+
+/**
+ * @var {number} $form-textarea-line-height
+ * The line-height to use for the TextArea's text
+ */
+// 1.15 is a rough approximation of the ratio of a "normal" line-height to font-size.
+// we use this as opposed to using "normal" so it can be involved in the calculation of
+// $form-textarea-body-height
+$form-textarea-line-height: round($form-text-field-font-size * 1.15) !default;
+
+/**
+ * @var {number} $form-textarea-body-height
+ * The default width of the TextArea's body element (the element that contains the textarea
+ * html element when the field is not sized explicitly using the {@link #width}config, or
+ * sized by it's containing layout.
+ */
+// In 4.x the "rows" config defaulted to "4", so we attempt to preserves roughly the same
+// height using a multiple of line-height.
+$form-textarea-body-height: $form-textarea-line-height * 4 !default;
+
+/**
+ * @var {color}
+ * Text color for file fields
+ */
+$form-file-field-color: $form-field-empty-color !default;
+
+/**
+ * @var {number}
+ * The width of the text field's trigger element
+ */
+$form-trigger-width: 22px !default;
+
+/**
+ * @var {number/list}
+ * The width of the text field's trigger's border
+ */
+$form-trigger-border-width: 0 !default;
+
+/**
+ * @var {color/list}
+ * The color of the text field's trigger's border
+ */
+$form-trigger-border-color: $form-field-border-color !default;
+
+/**
+ * @var {string/list}
+ * The style of the text field's trigger's border
+ */
+$form-trigger-border-style: $form-field-border-style !default;
+
+/**
+ * @var {color}
+ * The color of the text field's trigger's border when hovered
+ */
+$form-trigger-border-color-over: $form-field-border-color !default;
+
+/**
+ * @var {color}
+ * The color of the text field's trigger's border when the field is focused
+ */
+$form-trigger-border-color-focus: $form-field-focus-border-color !default;
+
+/**
+ * @var {color}
+ * The color of the text field's trigger's border when the field is focused and the trigger is hovered
+ */
+$form-trigger-border-color-pressed: $form-trigger-border-color-over !default;
+
+/**
+ * @var {string}
+ * The default background image for text field triggers
+ */
+$form-trigger-background-image: 'form/trigger' !default;
+
+/**
+ * @var {color}
+ * The background color of the text field's trigger element
+ */
+$form-trigger-background-color: $form-field-background-color !default;
+
+/**
+ * @var {number}
+ * The height of toolbar text fields
+ */
+$form-toolbar-text-field-height: $form-toolbar-field-height !default;
+
+/**
+ * @var {number}
+ * Font size for toolbar text fields.
+ */
+$form-toolbar-text-field-font-size: $form-text-field-font-size !default;
+
+/**
+ * @var {string}
+ * Font family for toolbar text fields.
+ */
+$form-toolbar-text-field-font-family: $form-text-field-font-family !default;
+
+/**
+ * @var {string}
+ * Font weight for toolbar text fields.
+ */
+$form-toolbar-text-field-font-weight: $form-text-field-font-weight !default;
+
+/**
+ * @var {color}
+ * The color of the toolbar text field's input element
+ */
+$form-toolbar-text-field-color: $form-text-field-color !default;
+
+/**
+ * @var {color}
+ * The background color of the toolbar text field's input element
+ */
+$form-toolbar-text-field-background-color: $form-text-field-background-color !default;
+
+/**
+ * @var {number/list}
+ * The border width of toolbar text fields
+ */
+$form-toolbar-text-field-border-width: $form-text-field-border-width !default;
+
+/**
+ * @var {string/list}
+ * The border style of toolbar text fields
+ */
+$form-toolbar-text-field-border-style: $form-text-field-border-style !default;
+
+/**
+ * @var {color/list}
+ * The border color of toolbar text fields
+ */
+$form-toolbar-text-field-border-color: $form-text-field-border-color !default;
+
+/**
+ * @var {color/list}
+ * The border color of the focused toolbar text field
+ */
+$form-toolbar-text-field-focus-border-color: $form-text-field-focus-border-color !default;
+
+/**
+ * @var {color} $form-field-invalid-border-color
+ * Border color for invalid toolbar text fields.
+ */
+$form-toolbar-text-field-invalid-border-color: $form-text-field-invalid-border-color !default;
+
+/**
+ * @var {number/list}
+ * Border radius for toolbar text fields
+ */
+$form-toolbar-text-field-border-radius: $form-text-field-border-radius !default;
+
+/**
+ * @var {string}
+ * The background image of the toolbar text field's input element
+ */
+$form-toolbar-text-field-background-image: $form-text-field-background-image !default;
+
+/**
+ * @var {number/list}
+ * The padding of the toolbar text field's input element
+ */
+$form-toolbar-text-field-padding: $form-text-field-padding !default;
+
+/**
+ * @var {color}
+ * Text color for empty toolbar text fields.
+ */
+$form-toolbar-text-field-empty-color: $form-text-field-empty-color !default;
+
+/**
+ * @var {number}
+ * The default width of the toolbar text field's body element (the element that contains the input
+ * element and triggers) when the field is not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */
+$form-toolbar-text-field-body-width: $form-text-field-body-width !default;
+
+/**
+ * @var {color}
+ * Background color of the toolbar text field's input element when the field value is invalid.
+ */
+$form-toolbar-text-field-invalid-background-color: $form-text-field-invalid-background-color !default;
+
+/**
+ * @var {string}
+ * Background image of the toolbar text field's input element when the field value is invalid.
+ */
+$form-toolbar-text-field-invalid-background-image: $form-text-field-invalid-background-image !default;
+
+/**
+ * @var {string}
+ * Background repeat of the toolbar text field's input element when the field value is invalid.
+ */
+$form-toolbar-text-field-invalid-background-repeat: $form-text-field-invalid-background-repeat !default;
+
+/**
+ * @var {string/list}
+ * Background position of the toolbar text field's input element when the field value is invalid.
+ */
+$form-toolbar-text-field-invalid-background-position: $form-text-field-invalid-background-position !default;
+
+/**
+ * @var {boolean}
+ * `true` to use classic-theme styled border for toolbar text fields.
+ */
+$form-toolbar-text-field-classic-border: $form-text-field-classic-border !default;
+
+/**
+ * @var {number/string}
+ * The line-height to use for the toolbar TextArea's text
+ */
+$form-toolbar-textarea-line-height: $form-textarea-line-height !default;
+
+/**
+ * @var {number}
+ * The default width of the toolbar TextArea's body element (the element that contains the
+ * textarea html element when the field is not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */
+$form-toolbar-textarea-body-height: $form-textarea-body-height !default;
+
+/**
+ * @var {color}
+ * Text color for toolbar file fields
+ */
+$form-toolbar-file-field-color: $form-file-field-color !default;
+
+/**
+ * @var {number}
+ * The width of the toolbar text field's trigger element
+ */
+$form-toolbar-trigger-width: $form-trigger-width !default;
+
+/**
+ * @var {number/list}
+ * The width of the toolbar text field's trigger's border
+ */
+$form-toolbar-trigger-border-width: $form-trigger-border-width !default;
+
+/**
+ * @var {color/list}
+ * The color of the toolbar text field's trigger's border
+ */
+$form-toolbar-trigger-border-color: $form-trigger-border-color !default;
+
+/**
+ * @var {string/list}
+ * The style of the toolbar text field's trigger's border
+ */
+$form-toolbar-trigger-border-style: $form-trigger-border-style !default;
+
+/**
+ * @var {color}
+ * The color of the toolbar text field's trigger's border when hovered
+ */
+$form-toolbar-trigger-border-color-over: $form-trigger-border-color !default;
+
+/**
+ * @var {color}
+ * The color of the toolbar text field's trigger's border when the field is focused
+ */
+$form-toolbar-trigger-border-color-focus: $form-trigger-border-color-focus !default;
+
+/**
+ * @var {color}
+ * The color of the toolbar text field's trigger's border when the field is focused and the trigger is hovered
+ */
+$form-toolbar-trigger-border-color-pressed: $form-toolbar-trigger-border-color-over !default;
+
+/**
+ * @var {string}
+ * The default background image for toolbar text field triggers
+ */
+$form-toolbar-trigger-background-image: $form-trigger-background-image !default;
+
+/**
+ * @var {color}
+ * The background color of the toolbar text field's trigger element
+ */
+$form-toolbar-trigger-background-color: $form-text-field-background-color !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" text field UI
+ */
+$include-text-field-default-ui: $include-field-default-ui !default;
+
+/**
+ * @var {boolean}
+ * True to include the "toolbar" text field UI
+ */
+$include-text-field-toolbar-ui: $include-field-toolbar-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Spinner Variables"
+/**
+ * @class Ext.form.field.Spinner
+ */
+
+/**
+ * @var {boolean}
+ * True to use vertically oriented triggers. False to use horizontally oriented triggers.
+ * Themes that set this property to true must also override the {@link #triggerVertical}
+ * config to match. Defaults to true.  When 'vertical' orientation is used, the background image
+ * for both triggers is 'form/spinner'.  When 'horizontal' is used, the triggers use separate
+ * background images - 'form/spinner-up', and 'form/spinner-down'.
+ */
+$spinner-trigger-vertical: true !default;
+
+/**
+ * @var {string}
+ * Background image for vertically oriented spinner triggers
+ */
+$spinner-trigger-vertical-background-image: 'form/spinner' !default;
+
+/**
+ * @var {string}
+ * Background image for the "up" trigger when trigger buttons are horizontally aligned
+ */
+$spinner-trigger-up-background-image: 'form/spinner-up' !default;
+
+/**
+ * @var {string}
+ * Background image for the "down" trigger when trigger buttons are horizontally aligned
+ */
+$spinner-trigger-down-background-image: 'form/spinner-down' !default;
+
+/**
+ * @var {boolean}
+ * `true` to use vertically oriented triggers for fields with the 'toolbar' UI.
+ */
+$spinner-toolbar-trigger-vertical: true !default;
+
+/**
+ * @var {string}
+ * Background image for vertically oriented toolbar spinner triggers
+ */
+$spinner-toolbar-trigger-vertical-background-image: $spinner-trigger-vertical-background-image !default;
+
+/**
+ * @var {string}
+ * Background image for the "up" toolbar trigger when trigger buttons are horizontally aligned
+ */
+$spinner-toolbar-trigger-up-background-image: $spinner-trigger-up-background-image !default;
+
+/**
+ * @var {string}
+ * Background image for the "down" toolbar trigger when trigger buttons are horizontally aligned
+ */
+$spinner-toolbar-trigger-down-background-image: $spinner-trigger-down-background-image !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" spinner UI
+ */
+$include-spinner-trigger-default-ui: $include-default-uis !default;
+
+/**
+ * @var {boolean}
+ * True to include the "toolbar" spinner UI
+ */
+$include-spinner-trigger-toolbar-ui: $include-text-field-toolbar-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Checkbox Variables"
+/**
+ * @class Ext.form.field.Checkbox
+ */
+
+/**
+ * @var {number}
+ * The size of the checkbox
+ */
+$form-checkbox-size: 13px !default;
+
+/**
+ * @var {string}
+ * The background-image of the checkbox
+ */
+$form-checkbox-background-image: 'form/checkbox' !default;
+
+/**
+ * @var {string}
+ * The background-image of the radio button
+ */
+$form-radio-background-image: 'form/radio' !default;
+
+/**
+ * @var {color}
+ * The color of the checkbox's {@link #boxLabel}
+ */
+$form-checkbox-label-color: $form-label-font-color !default;
+
+/**
+ * @var {string}
+ * The font-weight of the checkbox's {@link #boxLabel}
+ */
+$form-checkbox-label-font-weight: $form-label-font-weight !default;
+
+/**
+ * @var {string}
+ * The font-size of the checkbox's {@link #boxLabel}
+ */
+$form-checkbox-label-font-size: $form-label-font-family !default;
+
+/**
+ * @var {string}
+ * The font-family of the checkbox's {@link #boxLabel}
+ */
+$form-checkbox-label-font-family: $form-label-font-family !default;
+
+/**
+ * @var {string}
+ * The line-height of the checkbox's {@link #boxLabel}
+ */
+$form-checkbox-label-line-height: $form-label-line-height !default;
+
+/**
+ * @var {number}
+ * The space between the {@link #boxLabel} and the checkbox.
+ */
+$form-checkbox-label-spacing: 4px !default;
+
+/**
+ * @var {number}
+ * The size of the toolbar checkbox
+ */
+$form-toolbar-checkbox-size: 13px !default;
+
+/**
+ * @var {string}
+ * The background-image of the toolbar checkbox
+ */
+$form-toolbar-checkbox-background-image: 'form/checkbox' !default;
+
+/**
+ * @var {string}
+ * The background-image of the toolbar radio button
+ */
+$form-toolbar-radio-background-image: 'form/radio' !default;
+
+/**
+ * @var {color}
+ * The color of the toolbar checkbox's {@link #boxLabel}
+ */
+$form-toolbar-checkbox-label-color: $form-toolbar-label-font-color !default;
+
+/**
+ * @var {string}
+ * The font-weight of the toolbar checkbox's {@link #boxLabel}
+ */
+$form-toolbar-checkbox-label-font-weight: $form-toolbar-label-font-weight !default;
+
+/**
+ * @var {string}
+ * The font-size of the toolbar checkbox's {@link #boxLabel}
+ */
+$form-toolbar-checkbox-label-font-size: $form-toolbar-label-font-family !default;
+
+/**
+ * @var {string}
+ * The font-family of the toolbar checkbox's {@link #boxLabel}
+ */
+$form-toolbar-checkbox-label-font-family: $form-toolbar-label-font-family !default;
+
+/**
+ * @var {string}
+ * The line-height of the toolbar checkbox's {@link #boxLabel}
+ */
+$form-toolbar-checkbox-label-line-height: $form-toolbar-label-line-height !default;
+
+/**
+ * @var {number}
+ * The space between the {@link #boxLabel} and the toolbar checkbox.
+ */
+$form-toolbar-checkbox-label-spacing: 4px !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" checkbox UI
+ */
+$include-checkbox-default-ui: $include-field-default-ui !default;
+
+/**
+ * @var {boolean}
+ * True to include the "toolbar" checkbox UI
+ */
+$include-checkbox-toolbar-ui: $include-field-toolbar-ui !default;
+
+// </editor-fold>
+
+// <editor-fold desc="Display Field Variables">
+/**
+ * @class Ext.form.field.Display
+ */
+
+/**
+ * @var {color}
+ * The text color of display fields
+ */
+$form-display-field-color: $form-field-color !default;
+
+/**
+ * @var {number}
+ * The font-size of display fields
+ */
+$form-display-field-font-size: $form-field-font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of display fields
+ */
+$form-display-field-font-family: $form-field-font-family !default;
+
+/**
+ * @var {string}
+ * The font-weight of display fields
+ */
+$form-display-field-font-weight: $form-field-font-weight !default;
+
+/**
+ * @var {number}
+ * The line-height of display fields
+ */
+$form-display-field-line-height: round($form-display-field-font-size * 1.15) !default;
+
+/**
+ * @var {color}
+ * The text color of toolbar display fields
+ */
+$form-toolbar-display-field-color: $form-display-field-color !default;
+
+/**
+ * @var {number}
+ * The font-size of toolbar display fields
+ */
+$form-toolbar-display-field-font-size: $form-display-field-font-size !default;
+
+/**
+ * @var {string}
+ * The font-family of toolbar display fields
+ */
+$form-toolbar-display-field-font-family: $form-display-field-font-family !default;
+
+/**
+ * @var {string}
+ * The font-weight of toolbar display fields
+ */
+$form-toolbar-display-field-font-weight: $form-display-field-font-weight !default;
+
+/**
+ * @var {number}
+ * The line-height of toolbar display fields
+ */
+$form-toolbar-display-field-line-height: round($form-toolbar-display-field-font-size * 1.15) !default;
+
+/**
+ * @var {boolean}
+ * True to include the "default" display field UI
+ */
+$include-display-field-default-ui: $include-field-default-ui !default;
+
+/**
+ * @var {boolean}
+ * True to include the "toolbar" display field UI
+ */
+$include-display-field-toolbar-ui: $include-field-toolbar-ui !default;
+
+// </editor-fold>
+
+
+
+
+
+
+:@has_childrenT:@options{ :@children[so:Sass::Tree::CommentNode;@;	[ :@silenti :@value"⁄/* NOTE: this file contains the variables for all types of form fields.  This is done
+ * (as opposed to having separate files for Text.scss, Checkbox.scss etc) so that grid
+ * editor sass vars (in Editor.scss) can derive from any of the form field vars simply
+ * because Ext.grid.plugin.Editing requires Ext.form.field.Base.  Grid editor sass
+ * vars cannot live in the same files as normal form field vars because they also derive
+ * some of their values from grid vars. */:
+@linei:@lines[ :
+@loud0o;
+;@;	[ ;i ;"./* <editor-fold desc="Base Variables"> */;i;[ ;0o;
+;@;	[ ;0;"*/**
+ * @class Ext.form.field.Base
+ */;i;[ ;0o;
+;@;	[ ;0;"K/**
+ * @var {number} $form-field-height
+ * Height for form fields.
+ */;i;[ ;0o:Sass::Tree::VariableNode;@:@guarded"!default;	[ :
+@expro:Sass::Script::Number;@:@original"	24px:@denominator_units[ ;i;i:@numerator_units["px;i:
+@name"form-field-heighto;
+;@;	[ ;0;"^/**
+ * @var {number} $form-toolbar-field-height
+ * Height for form fields in toolbar.
+ */;i;[ ;0o;;@;"!default;	[ ;o:Sass::Script::Variable	:@underscored_name"form_field_height;@;i;"form-field-height;i;"form-toolbar-field-heighto;
+;@;	[ ;0;"P/**
+ * @var {number} $form-field-padding
+ * Padding around form fields.
+ */;i;[ ;0o;;@;"!default;	[ ;o:Sass::Script::List	;@;[o;;@;"1px;[ ;i;i";["pxo;;@;"3px;[ ;i;i";["pxo;;@;"2px;[ ;i;i";["px;i":@separator:
+space;i";"form-field-paddingo;
+;@;	[ ;0;"Q/**
+ * @var {number} $form-field-font-size
+ * Font size for form fields.
+ */;i$;[ ;0o;;@;"!default;	[ ;o;	;"font_size;@;i(;"font-size;i(;"form-field-font-sizeo;
+;@;	[ ;0;"U/**
+ * @var {string} $form-field-font-family
+ * Font family for form fields.
+ */;i*;[ ;0o;;@;"!default;	[ ;o;	;"font_family;@;i.;"font-family;i.;"form-field-font-familyo;
+;@;	[ ;0;"U/**
+ * @var {string} $form-field-font-weight
+ * Font weight for form fields.
+ */;i0;[ ;0o;;@;"!default;	[ ;o;	;"font_weight;@;i4;"font-weight;i4;"form-field-font-weighto;
+;@;	[ ;0;"a/**
+ * @var {number} $form-toolbar-field-font-size
+ * Font size for toolbar form fields.
+ */;i6;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_size;@;i:;"form-field-font-size;i:;"!form-toolbar-field-font-sizeo;
+;@;	[ ;0;"e/**
+ * @var {string} $form-toolbar-field-font-family
+ * Font family for toolbar form fields.
+ */;i<;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_family;@;i@;"form-field-font-family;i@;"#form-toolbar-field-font-familyo;
+;@;	[ ;0;"e/**
+ * @var {string} $form-toolbar-field-font-weight
+ * Font weight for toolbar form fields.
+ */;iA;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_weight;@;iE;"form-field-font-weight;iE;"#form-toolbar-field-font-weighto;
+;@;	[ ;0;"M/**
+ * @var {color} $form-field-color
+ * Text color for form fields.
+ */;iG;[ ;0o;;@;"!default;	[ ;o;	;"
+color;@;iK;"
+color;iK;"form-field-coloro;
+;@;	[ ;0;"Y/**
+ * @var {color} $form-field-empty-color
+ * Text color for empty form fields.
+ */;iM;[ ;0o;;@;"!default;	[ ;o:Sass::Script::Color	:@attrs{	:
+greeniÄ:	blueiÄ:rediÄ:
+alphai;@;0;iQ;iQ;"form-field-empty-coloro;
+;@;	[ ;0;"V/**
+ * @var {color} $form-field-border-color
+ * Border color for form fields.
+ */;iS;[ ;0o;;@;"!default;	[ ;o;	;"neutral_color;@;iW;"neutral-color;iW;"form-field-border-coloro;
+;@;	[ ;0;"W/**
+ * @var {number} $form-field-border-width
+ * Border width for form fields.
+ */;iY;[ ;0o;;@;"!default;	[ ;o;;@;"1px;[ ;i;i];["px;i];"form-field-border-widtho;
+;@;	[ ;0;"W/**
+ * @var {string} $form-field-border-style
+ * Border style for form fields.
+ */;i_;[ ;0o;;@;"!default;	[ ;o:Sass::Script::String	;@:
+@type:identifier;"
+solid;ic;ic;"form-field-border-styleo;
+;@;	[ ;0;"d/**
+ * @var {color} $form-field-focus-border-color
+ * Border color for focused form fields.
+ */;ie;[ ;0o;;@;"!default;	[ ;o;	;"base_color;@;ii;"base-color;ii;""form-field-focus-border-coloro;
+;@;	[ ;0;"f/**
+ * @var {color} $form-field-invalid-border-color
+ * Border color for invalid form fields.
+ */;ik;[ ;0o;;@;"!default;	[ ;o;	;{	;i8; i ;!iÃ;"i;@;0;io;io;"$form-field-invalid-border-coloro;
+;@;	[ ;0;"^/**
+ * @var {color} $form-field-background-color
+ * Background color for form fields.
+ */;iq;[ ;0o;;@;"!default;	[ ;o;	;{	;iˇ; iˇ;!iˇ;"i;@;0;iu;iu;" form-field-background-coloro;
+;@;	[ ;0;"_/**
+ * @var {string} $form-field-background-image
+ * Background image for form fields.
+ */;iv;[ ;0o;;@;"!default;	[ ;o;#	;@;$:string;"form/text-bg;iz;iz;" form-field-background-imageo;
+;@;	[ ;0;"n/**
+ * @var {color} $form-field-invalid-background-color
+ * Background color for invalid form fields.
+ */;i|;[ ;0o;;@;"!default;	[ ;o;	;{	;iˇ; iˇ;!iˇ;"i;@;0;i{;i{;"(form-field-invalid-background-coloro;
+;@;	[ ;0;"o/**
+ * @var {string} $form-field-invalid-background-image
+ * Background image for invalid form fields.
+ */;i|;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"grid/invalid_line;iÄ;iÄ;"(form-field-invalid-background-imageo;
+;@;	[ ;0;"q/**
+ * @var {string} $form-field-invalid-background-repeat
+ * Background repeat for invalid form fields.
+ */;iÅ;[ ;0o;;@;"!default;	[ ;o;#	;@;$;%;"repeat-x;iÖ;iÖ;")form-field-invalid-background-repeato;
+;@;	[ ;0;"z/**
+ * @var {string/list} $form-field-invalid-background-position
+ * Background position for invalid form fields.
+ */;iÜ;[ ;0o;;@;"!default;	[ ;o;#	;@;$;%;"bottom;iä;iä;"+form-field-invalid-background-positiono;
+;@;	[ ;0;"H/**
+ * @var {boolean}
+ * True to include the "default" field UI
+ */;iå;[ ;0o;;@;"!default;	[ ;o;	;"include_default_uis;@;iê;"include-default-uis;iê;"include-field-default-uio;
+;@;	[ ;0;"H/**
+ * @var {boolean}
+ * True to include the "toolbar" field UI
+ */;ií;[ ;0o;;@;"!default;	[ ;o:Sass::Script::Bool;@;F;iñ;iñ;"include-field-toolbar-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iò;[ ;0o;
+;@;	[ ;i ;"3/* <editor-fold desc="Labelable Variables"> */;iö;[ ;0o;
+;@;	[ ;0;")/**
+ * @class Ext.form.Labelable
+ */;iõ;[ ;0o;
+;@;	[ ;0;"C/**
+ * @var {color}
+ * The text color of form field labels
+ */;iü;[ ;0o;;@;"!default;	[ ;o;	;"
+color;@;i£;"
+color;i£;"form-label-font-coloro;
+;@;	[ ;0;"E/**
+ * @var {string}
+ * The font-weight of form field labels
+ */;i•;[ ;0o;;@;"!default;	[ ;o;	;"font_weight;@;i©;"font-weight;i©;"form-label-font-weighto;
+;@;	[ ;0;"C/**
+ * @var {number}
+ * The font-size of form field labels
+ */;i´;[ ;0o;;@;"!default;	[ ;o;	;"font_size;@;iØ;"font-size;iØ;"form-label-font-sizeo;
+;@;	[ ;0;"E/**
+ * @var {string}
+ * The font-family of form field labels
+ */;i±;[ ;0o;;@;"!default;	[ ;o;	;"font_family;@;iµ;"font-family;iµ;"form-label-font-familyo;
+;@;	[ ;0;"E/**
+ * @var {number}
+ * The line-height of form field labels
+ */;i∑;[ ;0o;;@;"!default;	[ ;o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Operation
+;@:@operand2o;;@;"	1.15;[ ;f1.1499999999999999 ff;iª;[ :@operand1o;	;"form_label_font_size;@;iª;"form-label-font-size;iª:@operator:
+times;@;iª:@keywords{ ;"
+round;iª;"form-label-line-heighto;
+;@;	[ ;0;"v/**
+ * @var {number}
+ * Horizontal space between the label and the field body when the label is left-aligned.
+ */;iΩ;[ ;0o;;@;"!default;	[ ;o;;@;"5px;[ ;i
+;i¡;["px;i¡;""form-label-horizontal-spacingo;
+;@;	[ ;0;"s/**
+ * @var {number}
+ * Vertical space between the label and the field body when the label is top-aligned.
+ */;i√;[ ;0o;;@;"!default;	[ ;o;;@;"5px;[ ;i
+;i«;["px;i«;" form-label-vertical-spacingo;
+;@;	[ ;0;"E/**
+ * @var {string}
+ * The background image for error icons
+ */;i…;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/exclamation;iÕ;iÕ;"%form-error-icon-background-imageo;
+;@;	[ ;0;"</**
+ * @var {number}
+ * Width for form error icons.
+ */;iœ;[ ;0o;;@;"!default;	[ ;o;;@;"	16px;[ ;i;i”;["px;i”;"form-error-icon-widtho;
+;@;	[ ;0;"=/**
+ * @var {number}
+ * Height for form error icons.
+ */;i’;[ ;0o;;@;"!default;	[ ;o;;@;"	16px;[ ;i;iŸ;["px;iŸ;"form-error-icon-heighto;
+;@;	[ ;0;"f/**
+ * @var {number/list}
+ * Margin for error icons that are aligned to the side of the field
+ */;i€;[ ;0o;;@;"!default;	[ ;o;	;@;[o;;@;"0;@c;i ;iﬂ;[ o;;@;"1px;[ ;i;iﬂ;["px;iﬂ;;;iﬂ;" form-error-icon-side-margino;
+;@;	[ ;0;"s/**
+ * @var {number}
+ * The space between the icon and the message for errors that display under the field
+ */;i·;[ ;0o;;@;"!default;	[ ;o;;@;"4px;[ ;i	;iÂ;["px;iÂ;""form-error-under-icon-spacingo;
+;@;	[ ;0;"]/**
+ * @var {number/list}
+ * The padding on errors that display under the form field
+ */;iÁ;[ ;0o;;@;"!default;	[ ;o;	;@;[	o;;@;"2px;[ ;i;iÎ;["pxo;;@;"2px;[ ;i;iÎ;["pxo;;@;"2px;[ ;i;iÎ;["pxo;;@;"0;@c;i ;iÎ;[ ;iÎ;;;iÎ;"form-error-under-paddingo;
+;@;	[ ;0;"E/**
+ * @var {color}
+ * The text color of form error messages
+ */;iÌ;[ ;0o;;@;"!default;	[ ;o;	;"$form_field_invalid_border_color;@;iÒ;"$form-field-invalid-border-color;iÒ;"form-error-msg-coloro;
+;@;	[ ;0;"G/**
+ * @var {string}
+ * The font-weight of form error messages
+ */;iÛ;[ ;0o;;@;"!default;	[ ;o;	;"font_weight;@;i˜;"font-weight;i˜;"form-error-msg-font-weighto;
+;@;	[ ;0;"E/**
+ * @var {number}
+ * The font-size of form error messages
+ */;i˘;[ ;0o;;@;"!default;	[ ;o;	;"font_size;@;i˝;"font-size;i˝;"form-error-msg-font-sizeo;
+;@;	[ ;0;"G/**
+ * @var {string}
+ * The font-family of form error messages
+ */;iˇ;[ ;0o;;@;"!default;	[ ;o;	;"font_family;@;i;"font-family;i;"form-error-msg-font-familyo;
+;@;	[ ;0;"G/**
+ * @var {number}
+ * The line-height of form error messages
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_error_icon_height;@;i	;"form-error-icon-height;i	;"form-error-msg-line-heighto;
+;@;	[ ;0;"º/**
+ * @var {number}
+ * The bottom margin to apply to form items when in auto, anchor, vbox, or table layout.
+ * This value is also used as the default border-spacing in a form-layout.
+ */;i;[ ;0o;;@;"!default;	[ ;o;;@;"5px;[ ;i
+;i;["px;i;"form-item-margin-bottomo;
+;@;	[ ;0;"@/**
+ * @var {number}
+ * Opacity of disabled form fields
+ */;i;[ ;0o;;@;"!default;	[ ;o;;@;"0.3;@c;f0.29999999999999999 33;i;[ ;i;" form-field-disabled-opacityo;
+;@;	[ ;0;"K/**
+ * @var {color}
+ * The text color of toolbar form field labels
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"
+color;@;i;"
+color;i;""form-toolbar-label-font-coloro;
+;@;	[ ;0;"M/**
+ * @var {string}
+ * The font-weight of toolbar form field labels
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"font_weight;@;i";"font-weight;i";"#form-toolbar-label-font-weighto;
+;@;	[ ;0;"K/**
+ * @var {number}
+ * The font-size of toolbar form field labels
+ */;i$;[ ;0o;;@;"!default;	[ ;o;	;"font_size;@;i(;"font-size;i(;"!form-toolbar-label-font-sizeo;
+;@;	[ ;0;"M/**
+ * @var {string}
+ * The font-family of toolbar form field labels
+ */;i*;[ ;0o;;@;"!default;	[ ;o;	;"font_family;@;i.;"font-family;i.;"#form-toolbar-label-font-familyo;
+;@;	[ ;0;"M/**
+ * @var {number}
+ * The line-height of toolbar form field labels
+ */;i0;[ ;0o;;@;"!default;	[ ;o;(
+;)[o;*
+;@;+o;;@;"	1.15;@c;f1.1499999999999999 ff;i4;[ ;,o;	;"!form_toolbar_label_font_size;@;i4;"!form-toolbar-label-font-size;i4;-;.;@;i4;/{ ;"
+round;i4;"#form-toolbar-label-line-heighto;
+;@;	[ ;0;"Å/**
+ * @var {number}
+ * Horizontal space between the toolbar field's label and the field body when the label is left-aligned.
+ */;i6;[ ;0o;;@;"!default;	[ ;o;;@;"5px;[ ;i
+;i:;["px;i:;"*form-toolbar-label-horizontal-spacingo;
+;@;	[ ;0;"~/**
+ * @var {number}
+ * Vertical space between the toolbar field's label and the field body when the label is top-aligned.
+ */;i<;[ ;0o;;@;"!default;	[ ;o;;@;"5px;[ ;i
+;i@;["px;i@;"(form-toolbar-label-vertical-spacingo;
+;@;	[ ;0;"S/**
+ * @var {string}
+ * The background image for toolbar field error icons
+ */;iB;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/exclamation;iF;iF;"-form-toolbar-error-icon-background-imageo;
+;@;	[ ;0;"E/**
+ * @var {number}
+ * Width for toolbar field error icons.
+ */;iH;[ ;0o;;@;"!default;	[ ;o;;@;"	16px;[ ;i;iL;["px;iL;""form-toolbar-error-icon-widtho;
+;@;	[ ;0;"F/**
+ * @var {number}
+ * Height for toolbar field error icons.
+ */;iN;[ ;0o;;@;"!default;	[ ;o;;@;"	16px;[ ;i;iR;["px;iR;"#form-toolbar-error-icon-heighto;
+;@;	[ ;0;"t/**
+ * @var {number/list}
+ * Margin for toolbar field error icons that are aligned to the side of the field
+ */;iT;[ ;0o;;@;"!default;	[ ;o;	;@;[o;;@;"0;@c;i ;iX;[ o;;@;"1px;[ ;i;iX;["px;iX;;;iX;"(form-toolbar-error-icon-side-margino;
+;@;	[ ;0;"y/**
+ * @var {number}
+ * The space between the icon and the message for errors that display under a toolbar field
+ */;iZ;[ ;0o;;@;"!default;	[ ;o;;@;"4px;[ ;i	;i^;["px;i^;"*form-toolbar-error-under-icon-spacingo;
+;@;	[ ;0;"e/**
+ * @var {number/list}
+ * The padding on errors that display under the toolbar form field
+ */;i`;[ ;0o;;@;"!default;	[ ;o;	;@;[	o;;@;"2px;[ ;i;id;["pxo;;@;"2px;[ ;i;id;["pxo;;@;"2px;[ ;i;id;["pxo;;@;"0;@c;i ;id;[ ;id;;;id;"%form-toolbar-error-under-paddingo;
+;@;	[ ;0;"M/**
+ * @var {color}
+ * The text color of toolbar form error messages
+ */;if;[ ;0o;;@;"!default;	[ ;o;	;"$form_field_invalid_border_color;@;ij;"$form-field-invalid-border-color;ij;"!form-toolbar-error-msg-coloro;
+;@;	[ ;0;"U/**
+ * @var {string}
+ * The font-weight of toolbar form field error messages
+ */;il;[ ;0o;;@;"!default;	[ ;o;	;"font_weight;@;ip;"font-weight;ip;"'form-toolbar-error-msg-font-weighto;
+;@;	[ ;0;"S/**
+ * @var {number}
+ * The font-size of toolbar form field error messages
+ */;ir;[ ;0o;;@;"!default;	[ ;o;	;"font_size;@;iv;"font-size;iv;"%form-toolbar-error-msg-font-sizeo;
+;@;	[ ;0;"U/**
+ * @var {string}
+ * The font-family of toolbar form field error messages
+ */;ix;[ ;0o;;@;"!default;	[ ;o;	;"font_family;@;i|;"font-family;i|;"'form-toolbar-error-msg-font-familyo;
+;@;	[ ;0;"U/**
+ * @var {number}
+ * The line-height of toolbar form field error messages
+ */;i~;[ ;0o;;@;"!default;	[ ;o;	;"#form_toolbar_error_icon_height;@;iÇ;"#form-toolbar-error-icon-height;iÇ;"'form-toolbar-error-msg-line-heighto;
+;@;	[ ;0;"H/**
+ * @var {number}
+ * Opacity of disabled toolbar form fields
+ */;iÑ;[ ;0o;;@;"!default;	[ ;o;;@;"0.3;@c;f0.29999999999999999 33;ià;[ ;ià;"(form-toolbar-field-disabled-opacityo;
+;@;	[ ;0;"H/**
+ * @var {boolean}
+ * True to include the "default" label UI
+ */;iä;[ ;0o;;@;"!default;	[ ;o;	;"include_field_default_ui;@;ié;"include-field-default-ui;ié;"include-label-default-uio;
+;@;	[ ;0;"H/**
+ * @var {boolean}
+ * True to include the "default" label UI
+ */;iê;[ ;0o;;@;"!default;	[ ;o;	;"include_field_toolbar_ui;@;iî;"include-field-toolbar-ui;iî;"include-label-toolbar-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iñ;[ ;0o;
+;@;	[ ;i ;"4/* <editor-fold desc="Text Field Variables"> */;iò;[ ;0o;
+;@;	[ ;0;"*/**
+ * @class Ext.form.field.Text
+ */;iô;[ ;0o;
+;@;	[ ;0;":/**
+ * @var {number}
+ * The height of text fields
+ */;iù;[ ;0o;;@;"!default;	[ ;o;	;"form_field_height;@;i°;"form-field-height;i°;"form-text-field-heighto;
+;@;	[ ;0;";/**
+ * @var {number}
+ * Font size for text fields.
+ */;i£;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_size;@;iß;"form-field-font-size;iß;"form-text-field-font-sizeo;
+;@;	[ ;0;"=/**
+ * @var {string}
+ * Font family for text fields.
+ */;i©;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_family;@;i≠;"form-field-font-family;i≠;" form-text-field-font-familyo;
+;@;	[ ;0;"=/**
+ * @var {string}
+ * Font weight for text fields.
+ */;iØ;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_weight;@;i≥;"form-field-font-weight;i≥;" form-text-field-font-weighto;
+;@;	[ ;0;"K/**
+ * @var {color}
+ * The color of the text field's input element
+ */;iµ;[ ;0o;;@;"!default;	[ ;o;	;"form_field_color;@;iπ;"form-field-color;iπ;"form-text-field-coloro;
+;@;	[ ;0;"V/**
+ * @var {color}
+ * The background color of the text field's input element
+ */;iª;[ ;0o;;@;"!default;	[ ;o;	;" form_field_background_color;@;iø;" form-field-background-color;iø;"%form-text-field-background-coloro;
+;@;	[ ;0;"E/**
+ * @var {number/list}
+ * The border width of text fields
+ */;i¡;[ ;0o;;@;"!default;	[ ;o;	;"form_field_border_width;@;i≈;"form-field-border-width;i≈;"!form-text-field-border-widtho;
+;@;	[ ;0;"E/**
+ * @var {string/list}
+ * The border style of text fields
+ */;i«;[ ;0o;;@;"!default;	[ ;o;	;"form_field_border_style;@;iÀ;"form-field-border-style;iÀ;"!form-text-field-border-styleo;
+;@;	[ ;0;"D/**
+ * @var {color/list}
+ * The border color of text fields
+ */;iÕ;[ ;0o;;@;"!default;	[ ;o;	;"form_field_border_color;@;i—;"form-field-border-color;i—;"!form-text-field-border-coloro;
+;@;	[ ;0;"O/**
+ * @var {color/list}
+ * The border color of the focused text field
+ */;i”;[ ;0o;;@;"!default;	[ ;o;	;""form_field_focus_border_color;@;i◊;""form-field-focus-border-color;i◊;"'form-text-field-focus-border-coloro;
+;@;	[ ;0;"E/**
+ * @var {color}
+ * Border color for invalid text fields.
+ */;iŸ;[ ;0o;;@;"!default;	[ ;o;	;"$form_field_invalid_border_color;@;i›;"$form-field-invalid-border-color;i›;")form-text-field-invalid-border-coloro;
+;@;	[ ;0;"C/**
+ * @var {number/list}
+ * Border radius for text fields
+ */;iﬂ;[ ;0o;;@;"!default;	[ ;o;;@;"0;@c;i ;i„;[ ;i„;""form-text-field-border-radiuso;
+;@;	[ ;0;"W/**
+ * @var {string}
+ * The background image of the text field's input element
+ */;iÂ;[ ;0o;;@;"!default;	[ ;o;	;" form_field_background_image;@;iÈ;" form-field-background-image;iÈ;"%form-text-field-background-imageo;
+;@;	[ ;0;"S/**
+ * @var {number/list}
+ * The padding of the text field's input element
+ */;iÎ;[ ;0o;;@;"!default;	[ ;o;	;"form_field_padding;@;iÔ;"form-field-padding;iÔ;"form-text-field-paddingo;
+;@;	[ ;0;"A/**
+ * @var {color}
+ * Text color for empty text fields.
+ */;iÒ;[ ;0o;;@;"!default;	[ ;o;	;"form_field_empty_color;@;iı;"form-field-empty-color;iı;" form-text-field-empty-coloro;
+;@;	[ ;0;"˚/**
+ * @var {number}
+ * The default width of the text field's body element (the element that contains the input
+ * element and triggers) when the field is not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */;i˜;[ ;0o;;@;"!default;	[ ;o;;@;"
+150px;[ ;iñ;i˝;["px;i˝;"form-text-field-body-widtho;
+;@;	[ ;0;"s/**
+ * @var {color}
+ * Background color of the text field's input element when the field value is invalid.
+ */;iˇ;[ ;0o;;@;"!default;	[ ;o;	;"(form_field_invalid_background_color;@;i;"(form-field-invalid-background-color;i;"-form-text-field-invalid-background-coloro;
+;@;	[ ;0;"t/**
+ * @var {string}
+ * Background image of the text field's input element when the field value is invalid.
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"(form_field_invalid_background_image;@;i	;"(form-field-invalid-background-image;i	;"-form-text-field-invalid-background-imageo;
+;@;	[ ;0;"u/**
+ * @var {string}
+ * Background repeat of the text field's input element when the field value is invalid.
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;")form_field_invalid_background_repeat;@;i;")form-field-invalid-background-repeat;i;".form-text-field-invalid-background-repeato;
+;@;	[ ;0;"|/**
+ * @var {string/list}
+ * Background position of the text field's input element when the field value is invalid.
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"+form_field_invalid_background_position;@;i;"+form-field-invalid-background-position;i;"0form-text-field-invalid-background-positiono;
+;@;	[ ;0;"\/**
+ * @var {boolean}
+ * `true` to use classic-theme styled border for text fields.
+ */;i;[ ;0o;;@;"!default;	[ ;o;';@;F;i;i;"#form-text-field-classic-bordero;
+;@;	[ ;0;"j/**
+ * @var {number} $form-textarea-line-height
+ * The line-height to use for the TextArea's text
+ */;i;[ ;0o;
+;@;	[ ;i ;"Œ/* 1.15 is a rough approximation of the ratio of a "normal" line-height to font-size.
+ * we use this as opposed to using "normal" so it can be involved in the calculation of
+ * $form-textarea-body-height */;i!;[ ;0o;;@;"!default;	[ ;o;(
+;)[o;*
+;@;+o;;@;"	1.15;@c;f1.1499999999999999 ff;i$;[ ;,o;	;"form_text_field_font_size;@;i$;"form-text-field-font-size;i$;-;.;@;i$;/{ ;"
+round;i$;"form-textarea-line-heighto;
+;@;	[ ;0;"/**
+ * @var {number} $form-textarea-body-height
+ * The default width of the TextArea's body element (the element that contains the textarea
+ * html element when the field is not sized explicitly using the {@link #width}config, or
+ * sized by it's containing layout.
+ */;i&;[ ;0o;
+;@;	[ ;i ;"á/* In 4.x the "rows" config defaulted to "4", so we attempt to preserves roughly the same
+ * height using a multiple of line-height. */;i,;[ ;0o;;@;"!default;	[ ;o;*
+;@;+o;;@;"4;@c;i	;i.;[ ;,o;	;"form_textarea_line_height;@;i.;"form-textarea-line-height;i.;-;.;i.;"form-textarea-body-heighto;
+;@;	[ ;0;":/**
+ * @var {color}
+ * Text color for file fields
+ */;i0;[ ;0o;;@;"!default;	[ ;o;	;"form_field_empty_color;@;i4;"form-field-empty-color;i4;"form-file-field-coloro;
+;@;	[ ;0;"N/**
+ * @var {number}
+ * The width of the text field's trigger element
+ */;i6;[ ;0o;;@;"!default;	[ ;o;;@;"	22px;[ ;i;i:;["px;i:;"form-trigger-widtho;
+;@;	[ ;0;"T/**
+ * @var {number/list}
+ * The width of the text field's trigger's border
+ */;i<;[ ;0o;;@;"!default;	[ ;o;;@;"0;@c;i ;i@;[ ;i@;"form-trigger-border-widtho;
+;@;	[ ;0;"S/**
+ * @var {color/list}
+ * The color of the text field's trigger's border
+ */;iB;[ ;0o;;@;"!default;	[ ;o;	;"form_field_border_color;@;iF;"form-field-border-color;iF;"form-trigger-border-coloro;
+;@;	[ ;0;"T/**
+ * @var {string/list}
+ * The style of the text field's trigger's border
+ */;iH;[ ;0o;;@;"!default;	[ ;o;	;"form_field_border_style;@;iL;"form-field-border-style;iL;"form-trigger-border-styleo;
+;@;	[ ;0;"[/**
+ * @var {color}
+ * The color of the text field's trigger's border when hovered
+ */;iN;[ ;0o;;@;"!default;	[ ;o;	;"form_field_border_color;@;iR;"form-field-border-color;iR;"#form-trigger-border-color-overo;
+;@;	[ ;0;"h/**
+ * @var {color}
+ * The color of the text field's trigger's border when the field is focused
+ */;iT;[ ;0o;;@;"!default;	[ ;o;	;""form_field_focus_border_color;@;iX;""form-field-focus-border-color;iX;"$form-trigger-border-color-focuso;
+;@;	[ ;0;"~/**
+ * @var {color}
+ * The color of the text field's trigger's border when the field is focused and the trigger is hovered
+ */;iZ;[ ;0o;;@;"!default;	[ ;o;	;"#form_trigger_border_color_over;@;i^;"#form-trigger-border-color-over;i^;"&form-trigger-border-color-pressedo;
+;@;	[ ;0;"U/**
+ * @var {string}
+ * The default background image for text field triggers
+ */;i`;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/trigger;id;id;""form-trigger-background-imageo;
+;@;	[ ;0;"X/**
+ * @var {color}
+ * The background color of the text field's trigger element
+ */;if;[ ;0o;;@;"!default;	[ ;o;	;" form_field_background_color;@;ij;" form-field-background-color;ij;""form-trigger-background-coloro;
+;@;	[ ;0;"B/**
+ * @var {number}
+ * The height of toolbar text fields
+ */;il;[ ;0o;;@;"!default;	[ ;o;	;"form_toolbar_field_height;@;ip;"form-toolbar-field-height;ip;"#form-toolbar-text-field-heighto;
+;@;	[ ;0;"C/**
+ * @var {number}
+ * Font size for toolbar text fields.
+ */;ir;[ ;0o;;@;"!default;	[ ;o;	;"form_text_field_font_size;@;iv;"form-text-field-font-size;iv;"&form-toolbar-text-field-font-sizeo;
+;@;	[ ;0;"E/**
+ * @var {string}
+ * Font family for toolbar text fields.
+ */;ix;[ ;0o;;@;"!default;	[ ;o;	;" form_text_field_font_family;@;i|;" form-text-field-font-family;i|;"(form-toolbar-text-field-font-familyo;
+;@;	[ ;0;"E/**
+ * @var {string}
+ * Font weight for toolbar text fields.
+ */;i~;[ ;0o;;@;"!default;	[ ;o;	;" form_text_field_font_weight;@;iÇ;" form-text-field-font-weight;iÇ;"(form-toolbar-text-field-font-weighto;
+;@;	[ ;0;"S/**
+ * @var {color}
+ * The color of the toolbar text field's input element
+ */;iÑ;[ ;0o;;@;"!default;	[ ;o;	;"form_text_field_color;@;ià;"form-text-field-color;ià;""form-toolbar-text-field-coloro;
+;@;	[ ;0;"^/**
+ * @var {color}
+ * The background color of the toolbar text field's input element
+ */;iä;[ ;0o;;@;"!default;	[ ;o;	;"%form_text_field_background_color;@;ié;"%form-text-field-background-color;ié;"-form-toolbar-text-field-background-coloro;
+;@;	[ ;0;"M/**
+ * @var {number/list}
+ * The border width of toolbar text fields
+ */;iê;[ ;0o;;@;"!default;	[ ;o;	;"!form_text_field_border_width;@;iî;"!form-text-field-border-width;iî;")form-toolbar-text-field-border-widtho;
+;@;	[ ;0;"M/**
+ * @var {string/list}
+ * The border style of toolbar text fields
+ */;iñ;[ ;0o;;@;"!default;	[ ;o;	;"!form_text_field_border_style;@;iö;"!form-text-field-border-style;iö;")form-toolbar-text-field-border-styleo;
+;@;	[ ;0;"L/**
+ * @var {color/list}
+ * The border color of toolbar text fields
+ */;iú;[ ;0o;;@;"!default;	[ ;o;	;"!form_text_field_border_color;@;i†;"!form-text-field-border-color;i†;")form-toolbar-text-field-border-coloro;
+;@;	[ ;0;"W/**
+ * @var {color/list}
+ * The border color of the focused toolbar text field
+ */;i¢;[ ;0o;;@;"!default;	[ ;o;	;"'form_text_field_focus_border_color;@;i¶;"'form-text-field-focus-border-color;i¶;"/form-toolbar-text-field-focus-border-coloro;
+;@;	[ ;0;"n/**
+ * @var {color} $form-field-invalid-border-color
+ * Border color for invalid toolbar text fields.
+ */;i®;[ ;0o;;@;"!default;	[ ;o;	;")form_text_field_invalid_border_color;@;i¨;")form-text-field-invalid-border-color;i¨;"1form-toolbar-text-field-invalid-border-coloro;
+;@;	[ ;0;"K/**
+ * @var {number/list}
+ * Border radius for toolbar text fields
+ */;iÆ;[ ;0o;;@;"!default;	[ ;o;	;""form_text_field_border_radius;@;i≤;""form-text-field-border-radius;i≤;"*form-toolbar-text-field-border-radiuso;
+;@;	[ ;0;"_/**
+ * @var {string}
+ * The background image of the toolbar text field's input element
+ */;i¥;[ ;0o;;@;"!default;	[ ;o;	;"%form_text_field_background_image;@;i∏;"%form-text-field-background-image;i∏;"-form-toolbar-text-field-background-imageo;
+;@;	[ ;0;"[/**
+ * @var {number/list}
+ * The padding of the toolbar text field's input element
+ */;i∫;[ ;0o;;@;"!default;	[ ;o;	;"form_text_field_padding;@;iæ;"form-text-field-padding;iæ;"$form-toolbar-text-field-paddingo;
+;@;	[ ;0;"I/**
+ * @var {color}
+ * Text color for empty toolbar text fields.
+ */;i¿;[ ;0o;;@;"!default;	[ ;o;	;" form_text_field_empty_color;@;iƒ;" form-text-field-empty-color;iƒ;"(form-toolbar-text-field-empty-coloro;
+;@;	[ ;0;"/**
+ * @var {number}
+ * The default width of the toolbar text field's body element (the element that contains the input
+ * element and triggers) when the field is not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */;i∆;[ ;0o;;@;"!default;	[ ;o;	;"form_text_field_body_width;@;iÃ;"form-text-field-body-width;iÃ;"'form-toolbar-text-field-body-widtho;
+;@;	[ ;0;"{/**
+ * @var {color}
+ * Background color of the toolbar text field's input element when the field value is invalid.
+ */;iŒ;[ ;0o;;@;"!default;	[ ;o;	;"-form_text_field_invalid_background_color;@;i“;"-form-text-field-invalid-background-color;i“;"5form-toolbar-text-field-invalid-background-coloro;
+;@;	[ ;0;"|/**
+ * @var {string}
+ * Background image of the toolbar text field's input element when the field value is invalid.
+ */;i‘;[ ;0o;;@;"!default;	[ ;o;	;"-form_text_field_invalid_background_image;@;iÿ;"-form-text-field-invalid-background-image;iÿ;"5form-toolbar-text-field-invalid-background-imageo;
+;@;	[ ;0;"}/**
+ * @var {string}
+ * Background repeat of the toolbar text field's input element when the field value is invalid.
+ */;i⁄;[ ;0o;;@;"!default;	[ ;o;	;".form_text_field_invalid_background_repeat;@;iﬁ;".form-text-field-invalid-background-repeat;iﬁ;"6form-toolbar-text-field-invalid-background-repeato;
+;@;	[ ;0;"/**
+ * @var {string/list}
+ * Background position of the toolbar text field's input element when the field value is invalid.
+ */;i‡;[ ;0o;;@;"!default;	[ ;o;	;"0form_text_field_invalid_background_position;@;i‰;"0form-text-field-invalid-background-position;i‰;"8form-toolbar-text-field-invalid-background-positiono;
+;@;	[ ;0;"d/**
+ * @var {boolean}
+ * `true` to use classic-theme styled border for toolbar text fields.
+ */;iÊ;[ ;0o;;@;"!default;	[ ;o;	;"#form_text_field_classic_border;@;iÍ;"#form-text-field-classic-border;iÍ;"+form-toolbar-text-field-classic-bordero;
+;@;	[ ;0;"^/**
+ * @var {number/string}
+ * The line-height to use for the toolbar TextArea's text
+ */;iÏ;[ ;0o;;@;"!default;	[ ;o;	;"form_textarea_line_height;@;i;"form-textarea-line-height;i;"&form-toolbar-textarea-line-heighto;
+;@;	[ ;0;"˚/**
+ * @var {number}
+ * The default width of the toolbar TextArea's body element (the element that contains the
+ * textarea html element when the field is not sized explicitly using the {@link #width}
+ * config, or sized by it's containing layout.
+ */;iÚ;[ ;0o;;@;"!default;	[ ;o;	;"form_textarea_body_height;@;i¯;"form-textarea-body-height;i¯;"&form-toolbar-textarea-body-heighto;
+;@;	[ ;0;"B/**
+ * @var {color}
+ * Text color for toolbar file fields
+ */;i˙;[ ;0o;;@;"!default;	[ ;o;	;"form_file_field_color;@;i˛;"form-file-field-color;i˛;""form-toolbar-file-field-coloro;
+;@;	[ ;0;"V/**
+ * @var {number}
+ * The width of the toolbar text field's trigger element
+ */;i ;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_width;@;i;"form-trigger-width;i;"form-toolbar-trigger-widtho;
+;@;	[ ;0;"\/**
+ * @var {number/list}
+ * The width of the toolbar text field's trigger's border
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_width;@;i
+;"form-trigger-border-width;i
+;"&form-toolbar-trigger-border-widtho;
+;@;	[ ;0;"[/**
+ * @var {color/list}
+ * The color of the toolbar text field's trigger's border
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_color;@;i;"form-trigger-border-color;i;"&form-toolbar-trigger-border-coloro;
+;@;	[ ;0;"\/**
+ * @var {string/list}
+ * The style of the toolbar text field's trigger's border
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_style;@;i;"form-trigger-border-style;i;"&form-toolbar-trigger-border-styleo;
+;@;	[ ;0;"c/**
+ * @var {color}
+ * The color of the toolbar text field's trigger's border when hovered
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_trigger_border_color;@;i;"form-trigger-border-color;i;"+form-toolbar-trigger-border-color-overo;
+;@;	[ ;0;"p/**
+ * @var {color}
+ * The color of the toolbar text field's trigger's border when the field is focused
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"$form_trigger_border_color_focus;@;i";"$form-trigger-border-color-focus;i";",form-toolbar-trigger-border-color-focuso;
+;@;	[ ;0;"Ü/**
+ * @var {color}
+ * The color of the toolbar text field's trigger's border when the field is focused and the trigger is hovered
+ */;i$;[ ;0o;;@;"!default;	[ ;o;	;"+form_toolbar_trigger_border_color_over;@;i(;"+form-toolbar-trigger-border-color-over;i(;".form-toolbar-trigger-border-color-pressedo;
+;@;	[ ;0;"]/**
+ * @var {string}
+ * The default background image for toolbar text field triggers
+ */;i*;[ ;0o;;@;"!default;	[ ;o;	;""form_trigger_background_image;@;i.;""form-trigger-background-image;i.;"*form-toolbar-trigger-background-imageo;
+;@;	[ ;0;"`/**
+ * @var {color}
+ * The background color of the toolbar text field's trigger element
+ */;i0;[ ;0o;;@;"!default;	[ ;o;	;"%form_text_field_background_color;@;i4;"%form-text-field-background-color;i4;"*form-toolbar-trigger-background-coloro;
+;@;	[ ;0;"M/**
+ * @var {boolean}
+ * True to include the "default" text field UI
+ */;i6;[ ;0o;;@;"!default;	[ ;o;	;"include_field_default_ui;@;i:;"include-field-default-ui;i:;""include-text-field-default-uio;
+;@;	[ ;0;"M/**
+ * @var {boolean}
+ * True to include the "toolbar" text field UI
+ */;i<;[ ;0o;;@;"!default;	[ ;o;	;"include_field_toolbar_ui;@;i@;"include-field-toolbar-ui;i@;""include-text-field-toolbar-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iB;[ ;0o;
+;@;	[ ;i ;"0/* <editor-fold desc="Spinner Variables" */;iD;[ ;0o;
+;@;	[ ;0;"-/**
+ * @class Ext.form.field.Spinner
+ */;iE;[ ;0o;
+;@;	[ ;0;"Œ/**
+ * @var {boolean}
+ * True to use vertically oriented triggers. False to use horizontally oriented triggers.
+ * Themes that set this property to true must also override the {@link #triggerVertical}
+ * config to match. Defaults to true.  When 'vertical' orientation is used, the background image
+ * for both triggers is 'form/spinner'.  When 'horizontal' is used, the triggers use separate
+ * background images - 'form/spinner-up', and 'form/spinner-down'.
+ */;iI;[ ;0o;;@;"!default;	[ ;o;';@;T;iQ;iQ;"spinner-trigger-verticalo;
+;@;	[ ;0;"Z/**
+ * @var {string}
+ * Background image for vertically oriented spinner triggers
+ */;iS;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/spinner;iW;iW;".spinner-trigger-vertical-background-imageo;
+;@;	[ ;0;"t/**
+ * @var {string}
+ * Background image for the "up" trigger when trigger buttons are horizontally aligned
+ */;iY;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/spinner-up;i];i];"(spinner-trigger-up-background-imageo;
+;@;	[ ;0;"v/**
+ * @var {string}
+ * Background image for the "down" trigger when trigger buttons are horizontally aligned
+ */;i_;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/spinner-down;ic;ic;"*spinner-trigger-down-background-imageo;
+;@;	[ ;0;"n/**
+ * @var {boolean}
+ * `true` to use vertically oriented triggers for fields with the 'toolbar' UI.
+ */;ie;[ ;0o;;@;"!default;	[ ;o;';@;T;ii;ii;"%spinner-toolbar-trigger-verticalo;
+;@;	[ ;0;"b/**
+ * @var {string}
+ * Background image for vertically oriented toolbar spinner triggers
+ */;ik;[ ;0o;;@;"!default;	[ ;o;	;".spinner_trigger_vertical_background_image;@;io;".spinner-trigger-vertical-background-image;io;"6spinner-toolbar-trigger-vertical-background-imageo;
+;@;	[ ;0;"|/**
+ * @var {string}
+ * Background image for the "up" toolbar trigger when trigger buttons are horizontally aligned
+ */;iq;[ ;0o;;@;"!default;	[ ;o;	;"(spinner_trigger_up_background_image;@;iu;"(spinner-trigger-up-background-image;iu;"0spinner-toolbar-trigger-up-background-imageo;
+;@;	[ ;0;"~/**
+ * @var {string}
+ * Background image for the "down" toolbar trigger when trigger buttons are horizontally aligned
+ */;iw;[ ;0o;;@;"!default;	[ ;o;	;"*spinner_trigger_down_background_image;@;i{;"*spinner-trigger-down-background-image;i{;"2spinner-toolbar-trigger-down-background-imageo;
+;@;	[ ;0;"J/**
+ * @var {boolean}
+ * True to include the "default" spinner UI
+ */;i};[ ;0o;;@;"!default;	[ ;o;	;"include_default_uis;@;iÅ;"include-default-uis;iÅ;"'include-spinner-trigger-default-uio;
+;@;	[ ;0;"J/**
+ * @var {boolean}
+ * True to include the "toolbar" spinner UI
+ */;iÉ;[ ;0o;;@;"!default;	[ ;o;	;""include_text_field_toolbar_ui;@;iá;""include-text-field-toolbar-ui;iá;"'include-spinner-trigger-toolbar-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iâ;[ ;0o;
+;@;	[ ;i ;"1/* <editor-fold desc="Checkbox Variables" */;iã;[ ;0o;
+;@;	[ ;0;"./**
+ * @class Ext.form.field.Checkbox
+ */;iå;[ ;0o;
+;@;	[ ;0;"9/**
+ * @var {number}
+ * The size of the checkbox
+ */;iê;[ ;0o;;@;"!default;	[ ;o;;@;"	13px;[ ;i;iî;["px;iî;"form-checkbox-sizeo;
+;@;	[ ;0;"E/**
+ * @var {string}
+ * The background-image of the checkbox
+ */;iñ;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/checkbox;iö;iö;"#form-checkbox-background-imageo;
+;@;	[ ;0;"I/**
+ * @var {string}
+ * The background-image of the radio button
+ */;iú;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/radio;i†;i†;" form-radio-background-imageo;
+;@;	[ ;0;"M/**
+ * @var {color}
+ * The color of the checkbox's {@link #boxLabel}
+ */;i¢;[ ;0o;;@;"!default;	[ ;o;	;"form_label_font_color;@;i¶;"form-label-font-color;i¶;"form-checkbox-label-coloro;
+;@;	[ ;0;"T/**
+ * @var {string}
+ * The font-weight of the checkbox's {@link #boxLabel}
+ */;i®;[ ;0o;;@;"!default;	[ ;o;	;"form_label_font_weight;@;i¨;"form-label-font-weight;i¨;"$form-checkbox-label-font-weighto;
+;@;	[ ;0;"R/**
+ * @var {string}
+ * The font-size of the checkbox's {@link #boxLabel}
+ */;iÆ;[ ;0o;;@;"!default;	[ ;o;	;"form_label_font_family;@;i≤;"form-label-font-family;i≤;""form-checkbox-label-font-sizeo;
+;@;	[ ;0;"T/**
+ * @var {string}
+ * The font-family of the checkbox's {@link #boxLabel}
+ */;i¥;[ ;0o;;@;"!default;	[ ;o;	;"form_label_font_family;@;i∏;"form-label-font-family;i∏;"$form-checkbox-label-font-familyo;
+;@;	[ ;0;"T/**
+ * @var {string}
+ * The line-height of the checkbox's {@link #boxLabel}
+ */;i∫;[ ;0o;;@;"!default;	[ ;o;	;"form_label_line_height;@;iæ;"form-label-line-height;iæ;"$form-checkbox-label-line-heighto;
+;@;	[ ;0;"Z/**
+ * @var {number}
+ * The space between the {@link #boxLabel} and the checkbox.
+ */;i¿;[ ;0o;;@;"!default;	[ ;o;;@;"4px;[ ;i	;iƒ;["px;iƒ;" form-checkbox-label-spacingo;
+;@;	[ ;0;"A/**
+ * @var {number}
+ * The size of the toolbar checkbox
+ */;i∆;[ ;0o;;@;"!default;	[ ;o;;@;"	13px;[ ;i;i ;["px;i ;"form-toolbar-checkbox-sizeo;
+;@;	[ ;0;"M/**
+ * @var {string}
+ * The background-image of the toolbar checkbox
+ */;iÃ;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/checkbox;i–;i–;"+form-toolbar-checkbox-background-imageo;
+;@;	[ ;0;"Q/**
+ * @var {string}
+ * The background-image of the toolbar radio button
+ */;i“;[ ;0o;;@;"!default;	[ ;o;#	;@;$;&;"form/radio;i÷;i÷;"(form-toolbar-radio-background-imageo;
+;@;	[ ;0;"U/**
+ * @var {color}
+ * The color of the toolbar checkbox's {@link #boxLabel}
+ */;iÿ;[ ;0o;;@;"!default;	[ ;o;	;""form_toolbar_label_font_color;@;i‹;""form-toolbar-label-font-color;i‹;"&form-toolbar-checkbox-label-coloro;
+;@;	[ ;0;"\/**
+ * @var {string}
+ * The font-weight of the toolbar checkbox's {@link #boxLabel}
+ */;iﬁ;[ ;0o;;@;"!default;	[ ;o;	;"#form_toolbar_label_font_weight;@;i‚;"#form-toolbar-label-font-weight;i‚;",form-toolbar-checkbox-label-font-weighto;
+;@;	[ ;0;"Z/**
+ * @var {string}
+ * The font-size of the toolbar checkbox's {@link #boxLabel}
+ */;i‰;[ ;0o;;@;"!default;	[ ;o;	;"#form_toolbar_label_font_family;@;iË;"#form-toolbar-label-font-family;iË;"*form-toolbar-checkbox-label-font-sizeo;
+;@;	[ ;0;"\/**
+ * @var {string}
+ * The font-family of the toolbar checkbox's {@link #boxLabel}
+ */;iÍ;[ ;0o;;@;"!default;	[ ;o;	;"#form_toolbar_label_font_family;@;iÓ;"#form-toolbar-label-font-family;iÓ;",form-toolbar-checkbox-label-font-familyo;
+;@;	[ ;0;"\/**
+ * @var {string}
+ * The line-height of the toolbar checkbox's {@link #boxLabel}
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"#form_toolbar_label_line_height;@;iÙ;"#form-toolbar-label-line-height;iÙ;",form-toolbar-checkbox-label-line-heighto;
+;@;	[ ;0;"b/**
+ * @var {number}
+ * The space between the {@link #boxLabel} and the toolbar checkbox.
+ */;iˆ;[ ;0o;;@;"!default;	[ ;o;;@;"4px;[ ;i	;i˙;["px;i˙;"(form-toolbar-checkbox-label-spacingo;
+;@;	[ ;0;"K/**
+ * @var {boolean}
+ * True to include the "default" checkbox UI
+ */;i¸;[ ;0o;;@;"!default;	[ ;o;	;"include_field_default_ui;@;i ;"include-field-default-ui;i ;" include-checkbox-default-uio;
+;@;	[ ;0;"K/**
+ * @var {boolean}
+ * True to include the "toolbar" checkbox UI
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"include_field_toolbar_ui;@;i;"include-field-toolbar-ui;i;" include-checkbox-toolbar-uio;
+;@;	[ ;i ;"/* </editor-fold> */;i;[ ;0o;
+;@;	[ ;i ;"7/* <editor-fold desc="Display Field Variables"> */;i
+;[ ;0o;
+;@;	[ ;0;"-/**
+ * @class Ext.form.field.Display
+ */;i;[ ;0o;
+;@;	[ ;0;"@/**
+ * @var {color}
+ * The text color of display fields
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_field_color;@;i;"form-field-color;i;"form-display-field-coloro;
+;@;	[ ;0;"@/**
+ * @var {number}
+ * The font-size of display fields
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_size;@;i;"form-field-font-size;i;"!form-display-field-font-sizeo;
+;@;	[ ;0;"B/**
+ * @var {string}
+ * The font-family of display fields
+ */;i;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_family;@;i;"form-field-font-family;i;"#form-display-field-font-familyo;
+;@;	[ ;0;"B/**
+ * @var {string}
+ * The font-weight of display fields
+ */;i!;[ ;0o;;@;"!default;	[ ;o;	;"form_field_font_weight;@;i%;"form-field-font-weight;i%;"#form-display-field-font-weighto;
+;@;	[ ;0;"B/**
+ * @var {number}
+ * The line-height of display fields
+ */;i';[ ;0o;;@;"!default;	[ ;o;(
+;)[o;*
+;@;+o;;@;"	1.15;@c;f1.1499999999999999 ff;i+;[ ;,o;	;"!form_display_field_font_size;@;i+;"!form-display-field-font-size;i+;-;.;@;i+;/{ ;"
+round;i+;"#form-display-field-line-heighto;
+;@;	[ ;0;"H/**
+ * @var {color}
+ * The text color of toolbar display fields
+ */;i-;[ ;0o;;@;"!default;	[ ;o;	;"form_display_field_color;@;i1;"form-display-field-color;i1;"%form-toolbar-display-field-coloro;
+;@;	[ ;0;"H/**
+ * @var {number}
+ * The font-size of toolbar display fields
+ */;i3;[ ;0o;;@;"!default;	[ ;o;	;"!form_display_field_font_size;@;i7;"!form-display-field-font-size;i7;")form-toolbar-display-field-font-sizeo;
+;@;	[ ;0;"J/**
+ * @var {string}
+ * The font-family of toolbar display fields
+ */;i9;[ ;0o;;@;"!default;	[ ;o;	;"#form_display_field_font_family;@;i=;"#form-display-field-font-family;i=;"+form-toolbar-display-field-font-familyo;
+;@;	[ ;0;"J/**
+ * @var {string}
+ * The font-weight of toolbar display fields
+ */;i?;[ ;0o;;@;"!default;	[ ;o;	;"#form_display_field_font_weight;@;iC;"#form-display-field-font-weight;iC;"+form-toolbar-display-field-font-weighto;
+;@;	[ ;0;"J/**
+ * @var {number}
+ * The line-height of toolbar display fields
+ */;iE;[ ;0o;;@;"!default;	[ ;o;(
+;)[o;*
+;@;+o;;@;"	1.15;@c;f1.1499999999999999 ff;iI;[ ;,o;	;")form_toolbar_display_field_font_size;@;iI;")form-toolbar-display-field-font-size;iI;-;.;@;iI;/{ ;"
+round;iI;"+form-toolbar-display-field-line-heighto;
+;@;	[ ;0;"P/**
+ * @var {boolean}
+ * True to include the "default" display field UI
+ */;iK;[ ;0o;;@;"!default;	[ ;o;	;"include_field_default_ui;@;iO;"include-field-default-ui;iO;"%include-display-field-default-uio;
+;@;	[ ;0;"P/**
+ * @var {boolean}
+ * True to include the "toolbar" display field UI
+ */;iQ;[ ;0o;;@;"!default;	[ ;o;	;"include_field_toolbar_ui;@;iU;"include-field-toolbar-ui;iU;"%include-display-field-toolbar-uio;
+;@;	[ ;i ;"/* </editor-fold> */;iW;[ ;0;i

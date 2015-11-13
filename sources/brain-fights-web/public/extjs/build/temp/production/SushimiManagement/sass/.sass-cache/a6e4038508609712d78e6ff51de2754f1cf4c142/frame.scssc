@@ -1,0 +1,1281 @@
+3.1.7 (Brainy Betty)
+341c44079a1b0816a28a4e570fa223d0fd195a6a
+o:Sass::Tree::RootNode
+:@template"ED@function pad($radius) {
+    $radius: boxmax($radius);
+    $radius: parseint($radius);
+    @if $radius >= 10 {
+        @return $radius;
+    }
+    @else {
+        @return "0" + $radius;
+    }
+}
+
+@function nopx ($value) {
+    @if $value == 0 {
+        @return 0;
+    }
+    @return $value / 1px;
+}
+
+@mixin x-frame(
+    $cls,
+    $ui: null,
+    $border-radius: 0px,
+    $border-width: 0px,
+    $padding: null,
+    $background-color: null,
+    $background-gradient: null,
+    $table: false,
+    $background-direction: top,
+    $include-frame-rtl: false,
+    $background-stretch: null,
+    $ignore-frame-padding: false
+) {
+    $cls-ui: $cls;
+    $cls-ui: null;
+    @if $ui != null {
+        $cls-ui: $cls + '-' + $ui;
+    }
+
+    $vertical: false;
+    @if not is-null($background-gradient) and ($background-direction == left or $background-direction == right) {
+        $vertical: true;
+    }
+
+    $background-stretch-position: null;
+    @if is-null($background-stretch) {
+        @if $background-direction == top {
+            $background-stretch: bottom;
+        } @else if $background-direction == right {
+            $background-stretch: left;
+        } @else if $background-direction == bottom {
+            $background-stretch: top;
+        } @else if $background-direction == left {
+            $background-stretch: right;
+        }
+    }
+
+    @if $background-stretch == top {
+        $background-stretch-position: bottom;
+    } @else if $background-stretch == bottom {
+        $background-stretch-position: top;
+    } @else if $background-stretch == left {
+        $background-stretch-position: right;
+    } @else if $background-stretch == right {
+        $background-stretch-position: left;
+    }
+
+    @if not is-null($background-gradient) {
+        $stretch: slicer-background-stretch($cls-ui, $background-stretch);
+    }
+
+    // We use the border-radius of the two corners on each edge to determine the "edge's
+    // border-radius". For IE, the framing elements need to be as large as the larger of
+    // the border-radius and the border-width on each edge. These values are passed on to
+    // JavaScript using an encoded background-image url and the equivalent operations are
+    // handled by Renderable.js.
+    //
+    $frame-top:    max(top($border-width),    max(top($border-radius),    right($border-radius)));
+    $frame-right:  max(right($border-width),  max(right($border-radius),  bottom($border-radius)));
+    $frame-bottom: max(bottom($border-width), max(bottom($border-radius), left($border-radius)));
+    $frame-left:   max(left($border-width),   max(left($border-radius),   top($border-radius)));
+    $frame-max:    max(max($frame-top, $frame-bottom), max($frame-left, $frame-right));
+
+    $padding-top: 0;
+    $padding-right: 0;
+    $padding-bottom: 0;
+    $padding-left: 0;
+
+    $frame-info-padding-top: 0;
+    $frame-info-padding-right: 0;
+    $frame-info-padding-bottom: 0;
+    $frame-info-padding-left: 0;
+
+    // For CSS3 browsers, if the border-radius is larger than the border-width, we need to
+    // apply padding to inset the content. These values can never be 0 because frame-xxx
+    // includes border-xxx in its max.
+    //
+    @if not $ignore-frame-padding {
+        $padding-top:    $frame-top    - top($border-width);
+        $padding-right:  $frame-right  - right($border-width);
+        $padding-bottom: $frame-bottom - bottom($border-width);
+        $padding-left:   $frame-left   - left($border-width);
+    } @else {
+        // In nocss3 browsers we can never ignore frame padding, because the framing elements
+        // cannot be overlapped by the content.
+        $frame-info-padding-top:    $frame-top    - top($border-width);
+        $frame-info-padding-right:  $frame-right  - right($border-width);
+        $frame-info-padding-bottom: $frame-bottom - bottom($border-width);
+        $frame-info-padding-left:   $frame-left   - left($border-width);
+    }
+
+    // If there is additional padding, this is understood to be a request to ensure that
+    // the content is **at least** this far from the inside of the border. If the framing
+    // requires more padding, that wins. This is the amount of padding you need in CSS3
+    // browsers.
+    //
+    @if not is-null($padding) {
+        $padding-top:    max($padding-top,    top($padding));
+        $padding-right:  max($padding-right,  right($padding));
+        $padding-bottom: max($padding-bottom, bottom($padding));
+        $padding-left:   max($padding-left,   left($padding));
+    }
+
+    // For IE, the framing elements are sized by frame-xxx and the "-mc" will carry the
+    // extra-padding-xxx.
+    //
+    $extra-padding-top:    max(top($border-width)    + $padding-top    - $frame-top, 0);
+    $extra-padding-right:  max(right($border-width)  + $padding-right  - $frame-right, 0);
+    $extra-padding-bottom: max(bottom($border-width) + $padding-bottom - $frame-bottom, 0);
+    $extra-padding-left:   max(left($border-width)   + $padding-left   - $frame-left, 0);
+
+    $framing-info: '';
+
+    @if $table == true {
+        $framing-info: $framing-info + 't';
+    } @else {
+        $framing-info: $framing-info + 'd';
+    }
+    @if $vertical == true {
+        $framing-info: $framing-info + 'v';
+    } @else {
+        $framing-info: $framing-info + 'h';
+    }
+
+    $framing-info: $framing-info + '-' +
+           nopx(top($border-radius)) + '-' +
+           nopx(right($border-radius)) + '-' +
+           nopx(bottom($border-radius)) + '-' +
+           nopx(left($border-radius)) + '-' +
+           nopx(top($border-width)) + '-' +
+           nopx(right($border-width)) + '-' +
+           nopx(bottom($border-width)) + '-' +
+           nopx(left($border-width)) + '-' +
+           if($ignore-frame-padding, $frame-info-padding-top, nopx($padding-top)) + '-' +
+           if($ignore-frame-padding, $frame-info-padding-right, nopx($padding-right)) + '-' +
+           if($ignore-frame-padding, $frame-info-padding-bottom, nopx($padding-bottom)) + '-' +
+           if($ignore-frame-padding, $frame-info-padding-left, nopx($padding-left)) + '-';
+
+    .#{$prefix}#{$cls-ui} {
+        @if length($border-radius) == 2 {
+            @include border-top-left-radius(nth($border-radius, 1));
+            @include border-top-right-radius(nth($border-radius, 2));
+        } @else if length($border-radius) == 3 {
+            @include border-top-left-radius(nth($border-radius, 1));
+            @include border-top-right-radius(nth($border-radius, 2));
+            @include border-bottom-right-radius(nth($border-radius, 3));
+        } @else if length($border-radius) == 4 {
+            @include border-top-left-radius(nth($border-radius, 1));
+            @include border-top-right-radius(nth($border-radius, 2));
+            @include border-bottom-right-radius(nth($border-radius, 3));
+            @include border-bottom-left-radius(nth($border-radius, 4));
+        } @else {
+            @include border-radius($border-radius);
+        }
+
+        padding: $padding-top $padding-right $padding-bottom $padding-left;
+        border-width: $border-width;
+        border-style: solid;
+
+        @if not is-null($background-color) {
+            @if not is-null($background-gradient) {
+                @include background-gradient($background-color, $background-gradient, $background-direction);
+            }
+            @else {
+                background-color: $background-color;
+            }
+        }
+    }
+
+    @if $include-frame-rtl {
+        @if $background-direction == left {
+            $background-direction: right;
+        } @else if $background-direction == right {
+            $background-direction: left;
+        }
+
+        @if $background-direction == left or $background-direction == right {
+            .#{$prefix}rtl.#{$prefix}#{$cls-ui} {
+                @include background-gradient(
+                    $background-color,
+                    $background-gradient,
+                    $background-direction
+                );
+            }
+        }
+    }
+
+    @if $include-slicer-border-radius {
+        .#{$prefix}#{$cls-ui}-mc {
+            @if not is-null($background-gradient) {
+                background-image: slicer-frame-background-image($cls-ui, '#{$cls}/#{$cls-ui}-fbg');
+
+                @if $vertical {
+                    background-position: $background-stretch-position 0;
+                    background-repeat: repeat-y;
+                } @else {
+                    background-position: 0 $background-stretch-position;
+                }
+            }
+            @if not is-null($background-color) {
+                background-color: $background-color;
+            }
+        }
+
+        @if $include-frame-rtl and not is-null($background-gradient) {
+            .#{$prefix}rtl.#{$prefix}#{$cls-ui}-mc {
+                background-image: slicer-frame-background-image-rtl($cls-ui, '#{$cls}/#{$cls-ui}-fbg-rtl');
+                background-position: rtl-background-position($background-stretch-position 0);
+            }
+        }
+    }
+
+    @if $include-slicer-gradient and not is-null($background-gradient) {
+        .#{$prefix}nlg {
+            .#{$prefix}#{$cls-ui} {
+                background-image: slicer-background-image($cls-ui, '#{$cls}/#{$cls-ui}-bg');
+
+                @if $vertical {
+                    background-position: $background-stretch-position 0;
+                } @else {
+                    background-position: 0 $background-stretch-position;
+                }
+            }
+
+            @if $include-frame-rtl {
+                .#{$prefix}rtl.#{$prefix}#{$cls-ui} {
+                    background-image: slicer-background-image-rtl($cls-ui, '#{$cls}/#{$cls-ui}-bg-rtl');
+                    background-position: rtl-background-position($background-stretch-position 0);
+                }
+            }
+        }
+    }
+
+    @if $include-slicer-border-radius {
+        .#{$prefix}nbr {
+            // This rule must be in x-nbr to avoid matching on CSS3 browsers.
+            .#{$prefix}#{$cls-ui} {
+                padding: 0 !important;
+                border-width: 0 !important;
+                @include border-radius(0px);
+                @if not is-null($background-color) {
+                    background-color: transparent !important;
+                } @else {
+                    background: #fff;
+                }
+                @if not is-null($background-gradient) {
+                    background-image: none;
+                }
+            }
+        }
+
+        .#{$prefix}#{$cls-ui}-frameInfo {
+            // Pass along Div/Table, Horz/Vert, border-radius and border-width
+            // Here we're encoding the framing information in an arbitrary fashion so
+            // it can be parsed by the component and get information about the framing.
+            // Originally, this tried to embed the information using a background image
+            // pointing to about:blank#info however in IE with SSL, this would trigger
+            // the insecure content warning. We also tried encoding the info using a
+            // filter as follows (where framing-info is a string containing the encoded data):
+            // filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=false, src="ext-frame#{$framing-info}");
+            // However the filter property can only be read by IE, making it impossible
+            // to debug nocss3 mode in modern browsers. Font-family meets all the
+            // requirements for tunneling data to JavaScript. It can contain an
+            // arbitrary string value, which can be read in JS in any browser, and it
+            // does not trigger any network interactions.
+            font-family: #{$framing-info};
+        }
+
+        // These rules apply to elements that are not rendered on CSS3 browsers so we do
+        // not need to force the browser to walk to the root of the document searching
+        // for x-nbr!
+
+        @if $vertical {
+            // vertical framing element background positions
+            .#{$prefix}#{$cls-ui}-tl {
+                background-position: 0 0;
+            }
+
+            .#{$prefix}#{$cls-ui}-tr {
+                background-position: 0 (-$frame-max);
+            }
+
+            .#{$prefix}#{$cls-ui}-bl {
+                background-position: 0 (-$frame-max * 2);
+            }
+
+            .#{$prefix}#{$cls-ui}-br {
+                background-position: 0 (-$frame-max * 3);
+            }
+
+            .#{$prefix}#{$cls-ui}-ml {
+                background-position: (-$frame-max) 0;
+            }
+
+            .#{$prefix}#{$cls-ui}-mr {
+                background-position: right 0;
+            }
+
+            .#{$prefix}#{$cls-ui}-tc {
+                background-position: $background-stretch-position 0;
+            }
+
+            .#{$prefix}#{$cls-ui}-bc {
+                background-position: $background-stretch-position (-$frame-max);
+            }
+
+            @if $include-frame-rtl {
+                .#{$prefix}rtl.#{$prefix}#{$cls-ui}-tc {
+                    background-position: rtl-background-position($background-stretch-position 0);
+                }
+
+                .#{$prefix}rtl.#{$prefix}#{$cls-ui}-bc {
+                    background-position: rtl-background-position($background-stretch-position (-$frame-max));
+                }
+            }
+        } @else {
+            // horizontal framing element background positions
+            .#{$prefix}#{$cls-ui}-tl {
+                background-position: 0 (-$frame-max * 2);
+            }
+
+            .#{$prefix}#{$cls-ui}-tr {
+                background-position: right (-$frame-max * 3);
+            }
+
+            .#{$prefix}#{$cls-ui}-bl {
+                background-position: 0 (-$frame-max * 4);
+            }
+
+            .#{$prefix}#{$cls-ui}-br {
+                background-position: right (-$frame-max * 5);
+            }
+
+            .#{$prefix}#{$cls-ui}-ml {
+                @if $background-stretch-position == 'right' or $background-stretch-position == 'left' {
+                    background-position: $background-stretch-position 0;
+                } @else {
+                    background-position: 0 $background-stretch-position;
+                }
+            }
+
+            .#{$prefix}#{$cls-ui}-mr {
+                @if $background-stretch-position == 'right' or $background-stretch-position == 'left' {
+                    background-position: $background-stretch-position 0;
+                } @else {
+                    background-position: right $background-stretch-position;
+                }
+            }
+
+            .#{$prefix}#{$cls-ui}-tc {
+                background-position: 0 0;
+            }
+
+            .#{$prefix}#{$cls-ui}-bc {
+                background-position: 0 (-$frame-max);
+            }
+        }
+
+        .#{$prefix}#{$cls-ui}-tr,
+        .#{$prefix}#{$cls-ui}-br,
+        .#{$prefix}#{$cls-ui}-mr {
+            padding-right: $frame-right;
+        }
+
+        .#{$prefix}#{$cls-ui}-tl,
+        .#{$prefix}#{$cls-ui}-bl,
+        .#{$prefix}#{$cls-ui}-ml {
+            padding-left: $frame-left;
+        }
+
+        .#{$prefix}#{$cls-ui}-tc {
+            height: $frame-top;
+        }
+        .#{$prefix}#{$cls-ui}-bc {
+            height: $frame-bottom;
+        }
+
+        .#{$prefix}#{$cls-ui}-tl,
+        .#{$prefix}#{$cls-ui}-bl,
+        .#{$prefix}#{$cls-ui}-tr,
+        .#{$prefix}#{$cls-ui}-br,
+        .#{$prefix}#{$cls-ui}-tc,
+        .#{$prefix}#{$cls-ui}-bc,
+        .#{$prefix}#{$cls-ui}-ml,
+        .#{$prefix}#{$cls-ui}-mr {
+            @if $background-color != transparent {
+                background-image: slicer-corner-sprite($cls-ui, '#{$cls}/#{$cls-ui}-corners');
+            }
+        }
+
+        @if $background-color != transparent {
+            @if $include-frame-rtl {
+                .#{$prefix}rtl {
+                    &.#{$prefix}#{$cls-ui}-tl,
+                    &.#{$prefix}#{$cls-ui}-ml,
+                    &.#{$prefix}#{$cls-ui}-bl,
+                    &.#{$prefix}#{$cls-ui}-tr,
+                    &.#{$prefix}#{$cls-ui}-mr,
+                    &.#{$prefix}#{$cls-ui}-br {
+                        background-image: slicer-corner-sprite-rtl($cls-ui, '#{$cls}/#{$cls-ui}-corners-rtl');
+                    }
+                }
+            }
+        }
+
+        @if $vertical == true {
+            .#{$prefix}#{$cls-ui}-tc,
+            .#{$prefix}#{$cls-ui}-bc {
+                @if $background-color != transparent {
+                    background-image: slicer-sides-sprite($cls-ui, '#{$cls}/#{$cls-ui}-sides');
+                    background-repeat: repeat-x;
+                }
+            }
+
+            @if $include-frame-rtl and $background-color != transparent {
+                .#{$prefix}rtl {
+                    &.#{$prefix}#{$cls-ui}-tc,
+                    &.#{$prefix}#{$cls-ui}-bc {
+                        background-image: slicer-sides-sprite-rtl($cls-ui, '#{$cls}/#{$cls-ui}-sides-rtl');
+                    }
+                }
+            }
+        } @else {
+            .#{$prefix}#{$cls-ui}-ml,
+            .#{$prefix}#{$cls-ui}-mr {
+                @if $background-color != transparent {
+                    background-image: slicer-sides-sprite($cls-ui, '#{$cls}/#{$cls-ui}-sides');
+                    @if is-null($background-gradient) {
+                        background-repeat: repeat-y;
+                    }
+                }
+            }
+        }
+
+        .#{$prefix}#{$cls-ui}-mc {
+            padding: $extra-padding-top $extra-padding-right $extra-padding-bottom $extra-padding-left;
+        }
+    }
+
+    @include x-slicer($cls-ui);
+}
+:@has_childrenT:@options{ :@children[o:Sass::Tree::FunctionNode:
+@args[[o:Sass::Script::Variable:@underscored_name"radius;@:
+@name"radius0;T;@;	[o:Sass::Tree::VariableNode;@:@guarded0;	[ :
+@expro:Sass::Script::Funcall
+;[o;	;"radius;@:
+@linei;"radius;@;i:@keywords{ ;"boxmax;i;"radiuso;;@;0;	[ ;o;
+;[o;	;"radius;@;i;"radius;@;i;{ ;"parseint;i;"radiusu:Sass::Tree::IfNodeî[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"10:@denominator_units[ :@valuei:
+@linei	:@numerator_units[ :@operand1o:Sass::Script::Variable	:@underscored_name"radius;@;i	:
+@name"radius;i	:@operator:gteu:Sass::Tree::IfNode[00[o:Sass::Tree::ReturnNode	:@options{ :@children[ :
+@expro:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Variable	:@underscored_name"radius;@:
+@linei:
+@name"radius:@operand1o:Sass::Script::String	;@:
+@type:string:@value"0;i;i:@operator:	plus;i[o:Sass::Tree::ReturnNode	;@:@children[ :
+@expro;	;"radius;@;i
+;"radius;i
+;i;"pado;
+;[[o;;"
+value;@;"
+value0;T;@;	[u;[[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"0:@denominator_units[ :@valuei :
+@linei:@numerator_units[ :@operand1o:Sass::Script::Variable	:@underscored_name"
+value;@;i:
+@name"
+value;i:@operator:eq0[o:Sass::Tree::ReturnNode	;@:@children[ :
+@expro;;@;	"0;
+@
+;i ;i;[ ;io:Sass::Tree::ReturnNode	;@;	[ ;o:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Number;@:@original"1px:@denominator_units[ :@valuei;i:@numerator_units["px:@operand1o;	;"
+value;@;i;"
+value;i:@operator:div;i;i;"	nopxo:Sass::Tree::MixinDefNode;[[o;;"cls;{ ;"cls0[o;;"ui;@?;"uio:Sass::Script::String	;@?:
+@type:identifier;"	null;i[o;;"border_radius;@?;"border-radiuso;;@?;"0px;[ ;i ;i;["px[o;;"border_width;@?;"border-widtho;;@?;"0px;[ ;i ;i;["px[o;;"padding;@?;"paddingo;"	;@?;#;$;"	null;i[o;;"background_color;@?;"background-coloro;"	;@?;#;$;"	null;i[o;;"background_gradient;@?;"background-gradiento;"	;@?;#;$;"	null;i[o;;"
+table;@?;"
+tableo:Sass::Script::Bool;@?;F;i [o;;"background_direction;@?;"background-directiono;"	;@?;#;$;"top;i![o;;"include_frame_rtl;@?;"include-frame-rtlo;%;@?;F;i"[o;;"background_stretch;@?;"background-stretcho;"	;@?;#;$;"	null;i#[o;;"ignore_frame_padding;@?;"ignore-frame-paddingo;%;@?;F;i$;T;@;	[/o;;@;0;	[ ;o;	;"cls;@;i&;"cls;i&;"cls-uio;;@;0;	[ ;o;"	;@;#;$;"	null;i';i';"cls-uiu;®[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"	null:
+@linei(:@operand1o:Sass::Script::Variable	:@underscored_name"ui;@;i(:
+@name"ui;i(:@operator:neq0[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro; 
+;@;o;	;"ui;@;i);"ui;o; 
+;@;o;	;@;	:string;"-;i);o;	;"cls;@;i);"cls;i);:	plus;i);;;i);"cls-uio;;@;0;	[ ;o;%;@;F;i,;i,;"verticalu;¿[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o; 
+;@;o:Sass::Script::String	;@:
+@type:identifier:@value"
+right:
+@linei-:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;i-:
+@name"background-direction;i-:@operator:eq;o; 
+;@;o;	;@;	;
+;"	left;i-;o;	;"background_direction;@;i-;"background-direction;i-;;;i-;:or;o:!Sass::Script::UnaryOperation	;@:@operando:Sass::Script::Funcall
+:
+@args[o;	;"background_gradient;@;i-;"background-gradient;@;i-:@keywords{ ;"is-null;i-;:not;i-;:and0[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro:Sass::Script::Bool;@;T;i.;i.;"verticalo;;@;0;	[ ;o;"	;@;#;$;"	null;i1;i1;" background-stretch-positionu;Û[o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_stretch:@options{ :
+@linei2:
+@name"background-stretch;	@
+;
+i2:@keywords{ ;"is-null0[u:Sass::Tree::IfNode![o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"top:
+@linei3:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;i3:
+@name"background-direction;i3:@operator:equ:Sass::Tree::IfNodeì[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"
+right:
+@linei5:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;i5:
+@name"background-direction;i5:@operator:equ:Sass::Tree::IfNode[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"bottom:
+@linei7:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;i7:
+@name"background-direction;i7:@operator:equ:Sass::Tree::IfNodew[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"	left:
+@linei9:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;i9:
+@name"background-direction;i9:@operator:eq0[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"
+right;i:;i:;"background-stretch[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"top;i8;i8;"background-stretch[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"	left;i6;i6;"background-stretch[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"bottom;i4;i4;"background-stretchu;5[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"top:
+@linei>:@operand1o:Sass::Script::Variable	:@underscored_name"background_stretch;@;i>:
+@name"background-stretch;i>:@operator:equ:Sass::Tree::IfNode¢[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"bottom:
+@linei@:@operand1o:Sass::Script::Variable	:@underscored_name"background_stretch;@;i@:
+@name"background-stretch;i@:@operator:equ:Sass::Tree::IfNode[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"	left:
+@lineiB:@operand1o:Sass::Script::Variable	:@underscored_name"background_stretch;@;iB:
+@name"background-stretch;iB:@operator:equ:Sass::Tree::IfNode|[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"
+right:
+@lineiD:@operand1o:Sass::Script::Variable	:@underscored_name"background_stretch;@;iD:
+@name"background-stretch;iD:@operator:eq0[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"	left;iE;iE;" background-stretch-position[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"
+right;iC;iC;" background-stretch-position[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"top;iA;iA;" background-stretch-position[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"bottom;i?;i?;" background-stretch-positionu;’[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient;@:
+@lineiH:
+@name"background-gradient;@;iH:@keywords{ ;"is-null;iH:@operator:not0[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;
+;	[o;
+	;"cls_ui;@;iI;"cls-uio;
+	;"background_stretch;@;iI;"background-stretch;@;iI;{ ;"slicer-background-stretch;iI;"stretcho:Sass::Tree::CommentNode;@;	[ :@silenti ;"x/* We use the border-radius of the two corners on each edge to determine the "edge's
+ * border-radius". For IE, the framing elements need to be as large as the larger of
+ * the border-radius and the border-width on each edge. These values are passed on to
+ * JavaScript using an encoded background-image url and the equivalent operations are
+ * handled by Renderable.js.
+ * */;iL:@lines[ :
+@loud0o;;@;0;	[ ;o;
+;[o;
+;[o;	;"border_width;@;iR;"border-width;@;iR;{ ;"topo;
+;[o;
+;[o;	;"border_radius;@;iR;"border-radius;@;iR;{ ;"topo;
+;[o;	;"border_radius;@;iR;"border-radius;@;iR;{ ;"
+right;@;iR;{ ;"max;@;iR;{ ;"max;iR;"frame-topo;;@;0;	[ ;o;
+;[o;
+;[o;	;"border_width;@;iS;"border-width;@;iS;{ ;"
+righto;
+;[o;
+;[o;	;"border_radius;@;iS;"border-radius;@;iS;{ ;"
+righto;
+;[o;	;"border_radius;@;iS;"border-radius;@;iS;{ ;"bottom;@;iS;{ ;"max;@;iS;{ ;"max;iS;"frame-righto;;@;0;	[ ;o;
+;[o;
+;[o;	;"border_width;@;iT;"border-width;@;iT;{ ;"bottomo;
+;[o;
+;[o;	;"border_radius;@;iT;"border-radius;@;iT;{ ;"bottomo;
+;[o;	;"border_radius;@;iT;"border-radius;@;iT;{ ;"	left;@;iT;{ ;"max;@;iT;{ ;"max;iT;"frame-bottomo;;@;0;	[ ;o;
+;[o;
+;[o;	;"border_width;@;iU;"border-width;@;iU;{ ;"	lefto;
+;[o;
+;[o;	;"border_radius;@;iU;"border-radius;@;iU;{ ;"	lefto;
+;[o;	;"border_radius;@;iU;"border-radius;@;iU;{ ;"top;@;iU;{ ;"max;@;iU;{ ;"max;iU;"frame-lefto;;@;0;	[ ;o;
+;[o;
+;[o;	;"frame_top;@;iV;"frame-topo;	;"frame_bottom;@;iV;"frame-bottom;@;iV;{ ;"maxo;
+;[o;	;"frame_left;@;iV;"frame-lefto;	;"frame_right;@;iV;"frame-right;@;iV;{ ;"max;@;iV;{ ;"max;iV;"frame-maxo;;@;0;	[ ;o;;@;"0;[ ;i ;iX;[ ;iX;"padding-topo;;@;0;	[ ;o;;@;"0;@>;i ;iY;[ ;iY;"padding-righto;;@;0;	[ ;o;;@;"0;@>;i ;iZ;[ ;iZ;"padding-bottomo;;@;0;	[ ;o;;@;"0;@>;i ;i[;[ ;i[;"padding-lefto;;@;0;	[ ;o;;@;"0;@>;i ;i];[ ;i];"frame-info-padding-topo;;@;0;	[ ;o;;@;"0;@>;i ;i^;[ ;i^;"frame-info-padding-righto;;@;0;	[ ;o;;@;"0;@>;i ;i_;[ ;i_;"frame-info-padding-bottomo;;@;0;	[ ;o;;@;"0;@>;i ;i`;[ ;i`;"frame-info-padding-lefto;&;@;	[ ;'i ;"‘/* For CSS3 browsers, if the border-radius is larger than the border-width, we need to
+ * apply padding to inset the content. These values can never be 0 because frame-xxx
+ * includes border-xxx in its max.
+ * */;ib;([ ;)0u;p[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Variable	:@underscored_name"ignore_frame_padding;@:
+@lineif:
+@name"ignore-frame-padding;
+if:@operator:notu:Sass::Tree::IfNodep[00[
+o:Sass::Tree::CommentNode:@options{ :@children[ :@silenti :@value"Ä/* In nocss3 browsers we can never ignore frame padding, because the framing elements
+ * cannot be overlapped by the content. */:
+@lineil:@lines[ :
+@loud0o:Sass::Tree::VariableNode;@:@guarded0;[ :
+@expro:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"border_width;@;
+in:
+@name"border-width;@;
+in:@keywords{ ;"top:@operand1o;	;"frame_top;@;
+in;"frame-top;
+in:@operator:
+minus;
+in;"frame-info-padding-topo;;@;0;[ ;o;
+;@;o;
+;[o;	;"border_width;@;
+io;"border-width;@;
+io;{ ;"
+right;o;	;"frame_right;@;
+io;"frame-right;
+io;;;
+io;"frame-info-padding-righto;;@;0;[ ;o;
+;@;o;
+;[o;	;"border_width;@;
+ip;"border-width;@;
+ip;{ ;"bottom;o;	;"frame_bottom;@;
+ip;"frame-bottom;
+ip;;;
+ip;"frame-info-padding-bottomo;;@;0;[ ;o;
+;@;o;
+;[o;	;"border_width;@;
+iq;"border-width;@;
+iq;{ ;"	left;o;	;"frame_left;@;
+iq;"frame-left;
+iq;;;
+iq;"frame-info-padding-left[	o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Funcall
+:
+@args[o;	;	"border_width;@;
+ig;"border-width;@;
+ig:@keywords{ ;"top:@operand1o;	;	"frame_top;@;
+ig;"frame-top;
+ig;:
+minus;
+ig;"padding-topo;;@;0;[ ;o;
+;@;o;
+;[o;	;	"border_width;@;
+ih;"border-width;@;
+ih;{ ;"
+right;o;	;	"frame_right;@;
+ih;"frame-right;
+ih;;;
+ih;"padding-righto;;@;0;[ ;o;
+;@;o;
+;[o;	;	"border_width;@;
+ii;"border-width;@;
+ii;{ ;"bottom;o;	;	"frame_bottom;@;
+ii;"frame-bottom;
+ii;;;
+ii;"padding-bottomo;;@;0;[ ;o;
+;@;o;
+;[o;	;	"border_width;@;
+ij;"border-width;@;
+ij;{ ;"	left;o;	;	"frame_left;@;
+ij;"frame-left;
+ij;;;
+ij;"padding-lefto;&;@;	[ ;'i ;"/* If there is additional padding, this is understood to be a request to ensure that
+ * the content is **at least** this far from the inside of the border. If the framing
+ * requires more padding, that wins. This is the amount of padding you need in CSS3
+ * browsers.
+ * */;it;([ ;)0u;ƒ[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"padding;@:
+@lineiy:
+@name"padding;@;iy:@keywords{ ;"is-null;iy:@operator:not0[	o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;
+;	[o;
+	;"padding_top;@;iz;"padding-topo;
+;	[o;
+	;"padding;@;iz;"padding;@;iz;{ ;"top;@;iz;{ ;"max;iz;"padding-topo;;@;0;[ ;o;
+;	[o;
+	;"padding_right;@;i{;"padding-righto;
+;	[o;
+	;"padding;@;i{;"padding;@;i{;{ ;"
+right;@;i{;{ ;"max;i{;"padding-righto;;@;0;[ ;o;
+;	[o;
+	;"padding_bottom;@;i|;"padding-bottomo;
+;	[o;
+	;"padding;@;i|;"padding;@;i|;{ ;"bottom;@;i|;{ ;"max;i|;"padding-bottomo;;@;0;[ ;o;
+;	[o;
+	;"padding_left;@;i};"padding-lefto;
+;	[o;
+	;"padding;@;i};"padding;@;i};{ ;"	left;@;i};{ ;"max;i};"padding-lefto;&;@;	[ ;'i ;"t/* For IE, the framing elements are sized by frame-xxx and the "-mc" will carry the
+ * extra-padding-xxx.
+ * */;i{;([ ;)0o;;@;0;	[ ;o;
+;[o;
+;@;o;	;"frame_top;@;i~;"frame-top;o;
+;@;o;	;"padding_top;@;i~;"padding-top;o;
+;[o;	;"border_width;@;i~;"border-width;@;i~;{ ;"top;i~;:	plus;i~;:
+minuso;;@;"0;@>;i ;i~;[ ;@;i~;{ ;"max;i~;"extra-padding-topo;;@;0;	[ ;o;
+;[o;
+;@;o;	;"frame_right;@;i;"frame-right;o;
+;@;o;	;"padding_right;@;i;"padding-right;o;
+;[o;	;"border_width;@;i;"border-width;@;i;{ ;"
+right;i;;*;i;;+o;;@;"0;@>;i ;i;[ ;@;i;{ ;"max;i;"extra-padding-righto;;@;0;	[ ;o;
+;[o;
+;@;o;	;"frame_bottom;@;iÄ;"frame-bottom;o;
+;@;o;	;"padding_bottom;@;iÄ;"padding-bottom;o;
+;[o;	;"border_width;@;iÄ;"border-width;@;iÄ;{ ;"bottom;iÄ;;*;iÄ;;+o;;@;"0;@>;i ;iÄ;[ ;@;iÄ;{ ;"max;iÄ;"extra-padding-bottomo;;@;0;	[ ;o;
+;[o;
+;@;o;	;"frame_left;@;iÅ;"frame-left;o;
+;@;o;	;"padding_left;@;iÅ;"padding-left;o;
+;[o;	;"border_width;@;iÅ;"border-width;@;iÅ;{ ;"	left;iÅ;;*;iÅ;;+o;;@;"0;@>;i ;iÅ;[ ;@;iÅ;{ ;"max;iÅ;"extra-padding-lefto;;@;0;	[ ;o;"	;@;#:string;" ;iÉ;iÉ;"framing-infou;˛[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Bool;@:@valueT:
+@lineiÖ:@operand1o:Sass::Script::Variable	:@underscored_name"
+table;@;
+iÖ:
+@name"
+table;
+iÖ:@operator:equ:Sass::Tree::IfNodeH[00[o:Sass::Tree::VariableNode:@options{ :@guarded0:@children[ :
+@expro:Sass::Script::Operation
+;@:@operand2o:Sass::Script::String	;@:
+@type:string:@value"d:
+@lineià:@operand1o:Sass::Script::Variable	:@underscored_name"framing_info;@;ià:
+@name"framing-info;ià:@operator:	plus;ià;"framing-info[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro; 
+;@;o:Sass::Script::String	;@:
+@type:string;	"t;
+iÜ;o;	;"framing_info;@;
+iÜ;"framing-info;
+iÜ;:	plus;
+iÜ;"framing-infou;[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Bool;@:@valueT:
+@lineiä:@operand1o:Sass::Script::Variable	:@underscored_name"vertical;@;
+iä:
+@name"vertical;
+iä:@operator:equ:Sass::Tree::IfNodeH[00[o:Sass::Tree::VariableNode:@options{ :@guarded0:@children[ :
+@expro:Sass::Script::Operation
+;@:@operand2o:Sass::Script::String	;@:
+@type:string:@value"h:
+@lineiç:@operand1o:Sass::Script::Variable	:@underscored_name"framing_info;@;iç:
+@name"framing-info;iç:@operator:	plus;iç;"framing-info[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro; 
+;@;o:Sass::Script::String	;@:
+@type:string;	"v;
+iã;o;	;"framing_info;@;
+iã;"framing-info;
+iã;:	plus;
+iã;"framing-infoo;;@;0;	[ ;o;
+;@;o;"	;@;#;,;"-;iú;o;
+;@;o;
+;[o;	;"ignore_frame_padding;@;iú;"ignore-frame-paddingo;	;"frame_info_padding_left;@;iú;"frame-info-padding-lefto;
+;[o;	;"padding_left;@;iú;"padding-left;@;iú;{ ;"	nopx;@;iú;{ ;"if;o;
+;@;o;"	;@;#;,;"-;iõ;o;
+;@;o;
+;[o;	;"ignore_frame_padding;@;iõ;"ignore-frame-paddingo;	;"frame_info_padding_bottom;@;iõ;"frame-info-padding-bottomo;
+;[o;	;"padding_bottom;@;iõ;"padding-bottom;@;iõ;{ ;"	nopx;@;iõ;{ ;"if;o;
+;@;o;"	;@;#;,;"-;iö;o;
+;@;o;
+;[o;	;"ignore_frame_padding;@;iö;"ignore-frame-paddingo;	;"frame_info_padding_right;@;iö;"frame-info-padding-righto;
+;[o;	;"padding_right;@;iö;"padding-right;@;iö;{ ;"	nopx;@;iö;{ ;"if;o;
+;@;o;"	;@;#;,;"-;iô;o;
+;@;o;
+;[o;	;"ignore_frame_padding;@;iô;"ignore-frame-paddingo;	;"frame_info_padding_top;@;iô;"frame-info-padding-topo;
+;[o;	;"padding_top;@;iô;"padding-top;@;iô;{ ;"	nopx;@;iô;{ ;"if;o;
+;@;o;"	;@;#;,;"-;iò;o;
+;@;o;
+;[o;
+;[o;	;"border_width;@;iò;"border-width;@;iò;{ ;"	left;@;iò;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;ió;o;
+;@;o;
+;[o;
+;[o;	;"border_width;@;ió;"border-width;@;ió;{ ;"bottom;@;ió;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;iñ;o;
+;@;o;
+;[o;
+;[o;	;"border_width;@;iñ;"border-width;@;iñ;{ ;"
+right;@;iñ;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;iï;o;
+;@;o;
+;[o;
+;[o;	;"border_width;@;iï;"border-width;@;iï;{ ;"top;@;iï;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;iî;o;
+;@;o;
+;[o;
+;[o;	;"border_radius;@;iî;"border-radius;@;iî;{ ;"	left;@;iî;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;iì;o;
+;@;o;
+;[o;
+;[o;	;"border_radius;@;iì;"border-radius;@;iì;{ ;"bottom;@;iì;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;ií;o;
+;@;o;
+;[o;
+;[o;	;"border_radius;@;ií;"border-radius;@;ií;{ ;"
+right;@;ií;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;ië;o;
+;@;o;
+;[o;
+;[o;	;"border_radius;@;ië;"border-radius;@;ië;{ ;"top;@;ië;{ ;"	nopx;o;
+;@;o;"	;@;#;,;"-;iê;o;	;"framing_info;@;iê;"framing-info;iê;;*;ië;;*;ië;;*;ií;;*;ií;;*;iì;;*;iì;;*;iî;;*;iî;;*;iï;;*;iï;;*;iñ;;*;iñ;;*;ió;;*;ió;;*;iò;;*;iò;;*;iô;;*;iô;;*;iö;;*;iö;;*;iõ;;*;iõ;;*;iú;;*;iú;;*;iú;"framing-infoo:Sass::Tree::RuleNode;T:
+@rule[".o;	;"prefix;@;iû;"prefixo;	;"cls_ui;@;iû;"cls-ui;@;	[
+u;[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"2:@denominator_units[ :@valuei:
+@lineiü:@numerator_units[ :@operand1o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"border_radius;@;iü:
+@name"border-radius;@;iü:@keywords{ ;"length;iü:@operator:equ:Sass::Tree::IfNode:[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"3:@denominator_units[ :@valuei:
+@linei¢:@numerator_units[ :@operand1o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"border_radius;@;i¢:
+@name"border-radius;@;i¢:@keywords{ ;"length;i¢:@operator:equ:Sass::Tree::IfNodeœ[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"4:@denominator_units[ :@valuei	:
+@linei¶:@numerator_units[ :@operand1o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"border_radius;@;i¶:
+@name"border-radius;@;i¶:@keywords{ ;"length;i¶:@operator:equ:Sass::Tree::IfNode∆[00[o:Sass::Tree::MixinNode:
+@args[o:Sass::Script::Variable	:@underscored_name"border_radius:@options{ :
+@linei¨:
+@name"border-radius;	@:@children[ ;
+i¨:@keywords{ ;"border-radius[	o:Sass::Tree::MixinNode;[o;
+;[o;	;"border_radius;@;iß;"border-radiuso;;@;	"1;
+@
+;i;iß;[ ;@;iß;{ ;"nth;@:@children[ ;iß;{ ;"border-top-left-radiuso;;[o;
+;[o;	;"border_radius;@;i®;"border-radiuso;;@;	"2;
+@
+;i;i®;[ ;@;i®;{ ;"nth;@;[ ;i®;{ ;"border-top-right-radiuso;;[o;
+;[o;	;"border_radius;@;i©;"border-radiuso;;@;	"3;
+@
+;i;i©;[ ;@;i©;{ ;"nth;@;[ ;i©;{ ;"border-bottom-right-radiuso;;[o;
+;[o;	;"border_radius;@;i™;"border-radiuso;;@;	"4;
+@
+;i	;i™;[ ;@;i™;{ ;"nth;@;[ ;i™;{ ;"border-bottom-left-radius[o:Sass::Tree::MixinNode;[o;
+;[o;	;"border_radius;@;i£;"border-radiuso;;@;	"1;
+@
+;i;i£;[ ;@;i£;{ ;"nth;@:@children[ ;i£;{ ;"border-top-left-radiuso;;[o;
+;[o;	;"border_radius;@;i§;"border-radiuso;;@;	"2;
+@
+;i;i§;[ ;@;i§;{ ;"nth;@;[ ;i§;{ ;"border-top-right-radiuso;;[o;
+;[o;	;"border_radius;@;i•;"border-radiuso;;@;	"3;
+@
+;i;i•;[ ;@;i•;{ ;"nth;@;[ ;i•;{ ;"border-bottom-right-radius[o:Sass::Tree::MixinNode;[o;
+;[o;	;"border_radius;@;i†;"border-radiuso;;@;	"1;
+@
+;i;i†;[ ;@;i†;{ ;"nth;@:@children[ ;i†;{ ;"border-top-left-radiuso;;[o;
+;[o;	;"border_radius;@;i°;"border-radiuso;;@;	"2;
+@
+;i;i°;[ ;@;i°;{ ;"nth;@;[ ;i°;{ ;"border-top-right-radiuso:Sass::Tree::PropNode;@:@prop_syntax:new;	[ ;o:Sass::Script::List	;@;[	o;	;"padding_top;@;iØ;"padding-topo;	;"padding_right;@;iØ;"padding-righto;	;"padding_bottom;@;iØ;"padding-bottomo;	;"padding_left;@;iØ;"padding-left;iØ:@separator:
+space;iØ:
+@tabsi ;["paddingo;/;@;0;1;	[ ;o;	;"border_width;@;i∞;"border-width;i∞;5i ;["border-widtho;/;@;0;1;	[ ;o;";@;#;$;"
+solid;i±;5i ;["border-styleu;[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_color;@:
+@linei≥:
+@name"background-color;@;i≥:@keywords{ ;"is-null;i≥:@operator:not0[u:Sass::Tree::IfNode[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient;@:
+@linei¥:
+@name"background-gradient;@;i¥:@keywords{ ;"is-null;i¥:@operator:notu:Sass::Tree::IfNodeﬁ[00[o:Sass::Tree::PropNode:@options{ :@prop_syntax:new:@children[ :@valueo:Sass::Script::Variable	:@underscored_name"background_color;@:
+@linei∏:
+@name"background-color;i∏:
+@tabsi ;["background-color[o:Sass::Tree::MixinNode;	[o;
+	;"background_color;@;iµ;"background-coloro;
+	;"background_gradient;@;iµ;"background-gradiento;
+	;"background_direction;@;iµ;"background-direction;@:@children[ ;iµ;{ ;"background-gradient;iû;5i u;Ô[o:Sass::Script::Variable	:@underscored_name"include_frame_rtl:@options{ :
+@lineiΩ:
+@name"include-frame-rtl0[u:Sass::Tree::IfNode[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"	left:
+@lineiæ:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;iæ:
+@name"background-direction;iæ:@operator:equ:Sass::Tree::IfNode~[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"
+right:
+@linei¿:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;i¿:
+@name"background-direction;i¿:@operator:eq0[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"	left;i¡;i¡;"background-direction[o:Sass::Tree::VariableNode;@:@guarded0:@children[ :
+@expro;	;@;	;
+;"
+right;iø;iø;"background-directionu;
+G[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::String	;@:
+@type:identifier:@value"
+right:
+@lineiƒ:@operand1o:Sass::Script::Variable	:@underscored_name"background_direction;@;iƒ:
+@name"background-direction;iƒ:@operator:eq;o; 
+;@;o;	;@;	;
+;"	left;iƒ;o;	;"background_direction;@;iƒ;"background-direction;iƒ;;;iƒ;:or0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[
+".o;	;"prefix;@;i≈;"prefix"	rtl.o;	;"prefix;@;i≈;"prefixo;	;"cls_ui;@;i≈;"cls-ui;@:@children[o:Sass::Tree::MixinNode:
+@args[o;	;"background_color;@;i«;"background-coloro;	;"background_gradient;@;i»;"background-gradiento;	;"background_direction;@;i…;"background-direction;@;[ ;i :@keywords{ ;"background-gradient;i≈:
+@tabsi u;ö[o:Sass::Script::Variable	:@underscored_name"!include_slicer_border_radius:@options{ :
+@lineiœ:
+@name"!include-slicer-border-radius0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[	".o; 	;"prefix;@;i–;	"prefixo; 	;"cls_ui;@;i–;	"cls-ui"-mc;@:@children[u:Sass::Tree::IfNodeã[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient;@:
+@linei—:
+@name"background-gradient;@;i—:@keywords{ ;"is-null;i—:@operator:not0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ :@valueo;
+;	[o;
+	;"cls_ui;@;i“;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;@:
+@type:string;" ;i“;@:@aftero;
+;o;	;@;;;"/;i“;@;o;	;@;;;"	-fbg;i“;i“:	@mido;
+	;"cls_ui;@;i“;"cls-ui;i“;o;
+	;"cls;@;i“;"cls;@;i“;{ ;""slicer-frame-background-image;i“:
+@tabsi ;["background-imageu:Sass::Tree::IfNodeº[o:Sass::Script::Variable	:@underscored_name"vertical:@options{ :
+@linei‘:
+@name"verticalu:Sass::Tree::IfNodeä[00[o:Sass::Tree::PropNode:@options{ :@prop_syntax:new:@children[ :@valueo:Sass::Script::List	;@;
+[o:Sass::Script::Number;@:@original"0:@denominator_units[ ;
+i :
+@lineiÿ:@numerator_units[ o:Sass::Script::Variable	:@underscored_name" background_stretch_position;@;iÿ:
+@name" background-stretch-position;iÿ:@separator:
+space;iÿ:
+@tabsi ;["background-position[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ :@valueo:Sass::Script::List	;@;[o; 	;" background_stretch_position;@;i’;	" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;i’:@numerator_units[ ;i’:@separator:
+space;i’:
+@tabsi ;	["background-positiono;;@;;;[ ;o:Sass::Script::String;@:
+@type:identifier;"repeat-y;i÷;i ;	["background-repeatu;ò[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_color;@:
+@linei€:
+@name"background-color;@;i€:@keywords{ ;"is-null;i€:@operator:not0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ :@valueo;
+	;"background_color;@;i‹;"background-color;i‹:
+@tabsi ;["background-color;i–:
+@tabsi u;,[o:Sass::Script::Operation
+:@options{ :@operand2o:!Sass::Script::UnaryOperation	;@:@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient;@:
+@linei‡:
+@name"background-gradient;@;i‡:@keywords{ ;"is-null;i‡:@operator:not:@operand1o;	;"include_frame_rtl;@;i‡;"include-frame-rtl;i‡;:and0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o;	;"prefix;@;i·;"prefix"	rtl.o;	;"prefix;@;i·;"prefixo;	;"cls_ui;@;i·;"cls-ui"-mc;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo;
+
+;[o;	;"cls_ui;@;i‚;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;@:
+@type:string;" ;i‚;@:@aftero;
+;o;	;@; ;!;"/;i‚;@;"o;	;@; ;!;"-fbg-rtl;i‚;i‚:	@mido;	;"cls_ui;@;i‚;"cls-ui;i‚;#o;	;"cls;@;i‚;"cls;@;i‚;{ ;"&slicer-frame-background-image-rtl;i‚:
+@tabsi ;["background-imageo;;@;;;[ ;o;
+
+;[o:Sass::Script::List	;@;[o;	;" background_stretch_position;@;i„;" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;i„:@numerator_units[ ;i„:@separator:
+space;@;i„;{ ;"rtl-background-position;i„;$i ;["background-position;i·;$i u;Æ[o:Sass::Script::Operation
+:@options{ :@operand2o:!Sass::Script::UnaryOperation	;@:@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient;@:
+@lineiË:
+@name"background-gradient;@;iË:@keywords{ ;"is-null;iË:@operator:not:@operand1o;	;"include_slicer_gradient;@;iË;"include-slicer-gradient;iË;:and0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o;	;"prefix;@;iÈ;"prefix"nlg;@:@children[o;;T;[".o;	;"prefix;@;iÍ;"prefixo;	;"cls_ui;@;iÍ;"cls-ui;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo;
+
+;[o;	;"cls_ui;@;iÎ;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;@:
+@type:string;" ;iÎ;@:@aftero;
+;o;	;@; ;!;"/;iÎ;@;"o;	;@; ;!;"-bg;iÎ;iÎ:	@mido;	;"cls_ui;@;iÎ;"cls-ui;iÎ;#o;	;"cls;@;iÎ;"cls;@;iÎ;{ ;"slicer-background-image;iÎ:
+@tabsi ;["background-imageu:Sass::Tree::IfNodeO[o:Sass::Script::Variable	:@underscored_name"vertical:@options{ :
+@lineiÌ:
+@name"verticalu:Sass::Tree::IfNodeä[00[o:Sass::Tree::PropNode:@options{ :@prop_syntax:new:@children[ :@valueo:Sass::Script::List	;@;
+[o:Sass::Script::Number;@:@original"0:@denominator_units[ ;
+i :
+@linei:@numerator_units[ o:Sass::Script::Variable	:@underscored_name" background_stretch_position;@;i:
+@name" background-stretch-position;i:@separator:
+space;i:
+@tabsi ;["background-position[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ :@valueo:Sass::Script::List	;@;[o; 	;" background_stretch_position;@;iÓ;	" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;iÓ:@numerator_units[ ;iÓ:@separator:
+space;iÓ:
+@tabsi ;	["background-position;iÍ;$i u;%A[o:Sass::Script::Variable	:@underscored_name"include_frame_rtl:@options{ :
+@lineiÙ:
+@name"include-frame-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[
+".o; 	;"prefix;@;iı;	"prefix"	rtl.o; 	;"prefix;@;iı;	"prefixo; 	;"cls_ui;@;iı;	"cls-ui;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o; 	;"cls_ui;@;iˆ;	"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;@:
+@type:string;" ;iˆ;@:@aftero;
+;o;	;@;;;"/;iˆ;@;o;	;@;;;"-bg-rtl;iˆ;iˆ:	@mido; 	;"cls_ui;@;iˆ;	"cls-ui;iˆ;o; 	;"cls;@;iˆ;	"cls;@;iˆ:@keywords{ ;	" slicer-background-image-rtl;iˆ:
+@tabsi ;	["background-imageo;;@;;;[ ;o;
+;[o:Sass::Script::List	;@;[o; 	;" background_stretch_position;@;i˜;	" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;i˜:@numerator_units[ ;i˜:@separator:
+space;@;i˜;{ ;	"rtl-background-position;i˜;i ;	["background-position;iı;i ;iÈ;$i u;ëP[o:Sass::Script::Variable	:@underscored_name"!include_slicer_border_radius:@options{ :
+@linei˝:
+@name"!include-slicer-border-radius0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;i˛;	"prefix"nbr;@:@children[o:Sass::Tree::CommentNode;@;[ :@silenti :@value"I/* This rule must be in x-nbr to avoid matching on CSS3 browsers. */;iˇ:@lines[ :
+@loud0o;
+;T;[".o; 	;"prefix;@;i ;	"prefixo; 	;"cls_ui;@;i ;	"cls-ui;@;[
+o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o:Sass::Script::String;@:
+@type:identifier;"0 !important;i:
+@tabsi ;	["paddingo;;@;;;[ ;o;;@;;;"0 !important;i;i ;	["border-widtho:Sass::Tree::MixinNode:
+@args[o:Sass::Script::Number;@:@original"0px:@denominator_units[ ;i ;i:@numerator_units["px;@;[ ;i:@keywords{ ;	"border-radiusu:Sass::Tree::IfNodez[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_color;@:
+@linei:
+@name"background-color;@;i:@keywords{ ;"is-null;i:@operator:notu:Sass::Tree::IfNode¥[00[o:Sass::Tree::PropNode:@options{ :@prop_syntax:new:@children[ :@valueo:Sass::Script::String;@:
+@type:identifier;
+"	#fff:
+@linei:
+@tabsi :
+@name["background[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ :@valueo:Sass::Script::String;@:
+@type:identifier;"transparent !important;i:
+@tabsi ;["background-coloru;!§[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient;@:
+@linei	:
+@name"background-gradient;@;i	:@keywords{ ;"is-null;i	:@operator:not0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ :@valueo:Sass::Script::String;@:
+@type:identifier;"	none;i
+:
+@tabsi ;["background-image;i ;i ;i˛;i o;
+;T;[	".o; 	;"prefix;@;i;	"prefixo; 	;"cls_ui;@;i;	"cls-ui"-frameInfo;@;[o;;@;[ ;i ;"À/* Pass along Div/Table, Horz/Vert, border-radius and border-width
+ * Here we're encoding the framing information in an arbitrary fashion so
+ * it can be parsed by the component and get information about the framing.
+ * Originally, this tried to embed the information using a background image
+ * pointing to about:blank#info however in IE with SSL, this would trigger
+ * the insecure content warning. We also tried encoding the info using a
+ * filter as follows (where framing-info is a string containing the encoded data):
+ * filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=false, src="ext-frame#{$framing-info}");
+ * However the filter property can only be read by IE, making it impossible
+ * to debug nocss3 mode in modern browsers. Font-family meets all the
+ * requirements for tunneling data to JavaScript. It can contain an
+ * arbitrary string value, which can be read in JS in any browser, and it
+ * does not trigger any network interactions. */;i;[ ;0o;;@;;;[ ;o: Sass::Script::Interpolation:@whitespace_after0:@before0;@:@whitespace_beforeiV-:@after0;i:@originally_textF:	@mido; 	;"framing_info;@;i;	"framing-info;i;i ;	["font-family;i;i o;;@;[ ;i ;"∞/* These rules apply to elements that are not rendered on CSS3 browsers so we do
+ * not need to force the browser to walk to the root of the document searching
+ * for x-nbr! */;i ;[ ;0u;!"[o:Sass::Script::Variable	:@underscored_name"vertical:@options{ :
+@linei$:
+@name"verticalu:Sass::Tree::IfNodeƒ[00[o:Sass::Tree::CommentNode:@options{ :@children[ :@silenti :@value":/* horizontal framing element background positions */:
+@lineiP:@lines[ :
+@loud0o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[	".o:Sass::Script::Variable	:@underscored_name"prefix;@;
+iQ:
+@name"prefixo;	;"cls_ui;@;
+iQ;"cls-ui"-tl;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;	o:Sass::Script::List	;@;	[o:Sass::Script::Number;@:@original"0:@denominator_units[ ;	i ;
+iR:@numerator_units[ o:Sass::Script::Operation
+;@:@operand2o;;@;"2;@;	i;
+iR;[ :@operand1o:!Sass::Script::UnaryOperation	;@:@operando;	;"frame_max;@;
+iR;"frame-max;
+iR:@operator:
+minus;
+iR; :
+times;
+iR:@separator:
+space;
+iR:
+@tabsi ;["background-position;
+iQ;%i o;;T;[	".o;	;"prefix;@;
+iU;"prefixo;	;"cls_ui;@;
+iU;"cls-ui"-tr;@;[o;;@;;;[ ;	o;	;@;	[o:Sass::Script::String	;@:
+@type:identifier;	"
+right;
+iVo;
+;@;o;;@;"3;@;	i;
+iV;[ ;o;	;@;o;	;"frame_max;@;
+iV;"frame-max;
+iV; ;!;
+iV; ;";
+iV;#;$;
+iV;%i ;["background-position;
+iU;%i o;;T;[	".o;	;"prefix;@;
+iY;"prefixo;	;"cls_ui;@;
+iY;"cls-ui"-bl;@;[o;;@;;;[ ;	o;	;@;	[o;;@;"0;@;	i ;
+iZ;[ o;
+;@;o;;@;"4;@;	i	;
+iZ;[ ;o;	;@;o;	;"frame_max;@;
+iZ;"frame-max;
+iZ; ;!;
+iZ; ;";
+iZ;#;$;
+iZ;%i ;["background-position;
+iY;%i o;;T;[	".o;	;"prefix;@;
+i];"prefixo;	;"cls_ui;@;
+i];"cls-ui"-br;@;[o;;@;;;[ ;	o;	;@;	[o;&	;@;';(;	"
+right;
+i^o;
+;@;o;;@;"5;@;	i
+;
+i^;[ ;o;	;@;o;	;"frame_max;@;
+i^;"frame-max;
+i^; ;!;
+i^; ;";
+i^;#;$;
+i^;%i ;["background-position;
+i];%i o;;T;[	".o;	;"prefix;@;
+ia;"prefixo;	;"cls_ui;@;
+ia;"cls-ui"-ml;@;[u:Sass::Tree::IfNodeñ[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::String	;@:
+@type:string:@value"	left:
+@lineib:@operand1o:Sass::Script::Variable	:@underscored_name" background_stretch_position;@;ib:
+@name" background-stretch-position;ib:@operator:eq;o; 
+;@;o;	;@;	;
+;"
+right;ib;o;	;" background_stretch_position;@;ib;" background-stretch-position;ib;;;ib;:oru:Sass::Tree::IfNodeé[00[o:Sass::Tree::PropNode:@options{ :@prop_syntax:new:@children[ :@valueo:Sass::Script::List	;@;
+[o:Sass::Script::Number;@:@original"0:@denominator_units[ ;
+i :
+@lineie:@numerator_units[ o:Sass::Script::Variable	:@underscored_name" background_stretch_position;@;ie:
+@name" background-stretch-position;ie:@separator:
+space;ie:
+@tabsi ;["background-position[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ ;o:Sass::Script::List	;@;[o;	;" background_stretch_position;@;ic;" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;ic:@numerator_units[ ;ic:@separator:
+space;ic:
+@tabsi ;["background-position;
+ia;%i o;;T;[	".o;	;"prefix;@;
+ii;"prefixo;	;"cls_ui;@;
+ii;"cls-ui"-mr;@;[u;)v[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::String	;@:
+@type:string:@value"	left:
+@lineij:@operand1o:Sass::Script::Variable	:@underscored_name" background_stretch_position;@;ij:
+@name" background-stretch-position;ij:@operator:eq;o; 
+;@;o;	;@;	;
+;"
+right;ij;o;	;" background_stretch_position;@;ij;" background-stretch-position;ij;;;ij;:oru:Sass::Tree::IfNoden[00[o:Sass::Tree::PropNode:@options{ :@prop_syntax:new:@children[ :@valueo:Sass::Script::List	;@;
+[o:Sass::Script::String	;@:
+@type:identifier;
+"
+right:
+@lineimo:Sass::Script::Variable	:@underscored_name" background_stretch_position;@;im:
+@name" background-stretch-position;im:@separator:
+space;im:
+@tabsi ;["background-position[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ ;o:Sass::Script::List	;@;[o;	;" background_stretch_position;@;ik;" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;ik:@numerator_units[ ;ik:@separator:
+space;ik:
+@tabsi ;["background-position;
+ii;%i o;;T;[	".o;	;"prefix;@;
+iq;"prefixo;	;"cls_ui;@;
+iq;"cls-ui"-tc;@;[o;;@;;;[ ;	o;&;@;';(;	"0 0;
+ir;%i ;["background-position;
+iq;%i o;;T;[	".o;	;"prefix;@;
+iu;"prefixo;	;"cls_ui;@;
+iu;"cls-ui"-bc;@;[o;;@;;;[ ;	o;	;@;	[o;;@;"0;@;	i ;
+iv;[ o;	;@;o;	;"frame_max;@;
+iv;"frame-max;
+iv; ;!;
+iv;#;$;
+iv;%i ;["background-position;
+iu;%i [o:Sass::Tree::CommentNode;@:@children[ :@silenti :@value"8/* vertical framing element background positions */;i%:@lines[ :
+@loud0o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[	".o; 	;"prefix;@;i&;	"prefixo; 	;"cls_ui;@;i&;	"cls-ui"-tl;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o:Sass::Script::String;@:
+@type:identifier;"0 0;i':
+@tabsi ;	["background-position;i&;i o;;T;[	".o; 	;"prefix;@;i*;	"prefixo; 	;"cls_ui;@;i*;	"cls-ui"-tr;@;[o;;@;;;[ ;o:Sass::Script::List	;@;[o:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;i+:@numerator_units[ o:!Sass::Script::UnaryOperation	;@:@operando; 	;"frame_max;@;i+;	"frame-max;i+:@operator:
+minus;i+:@separator:
+space;i+;i ;	["background-position;i*;i o;;T;[	".o; 	;"prefix;@;i.;	"prefixo; 	;"cls_ui;@;i.;	"cls-ui"-bl;@;[o;;@;;;[ ;o;	;@;[o;;@;"0;@2;i ;i/;[ o:Sass::Script::Operation
+;@:@operand2o;;@;"2;@2;i;i/;[ :@operand1o; 	;@;!o; 	;"frame_max;@;i/;	"frame-max;i/;";#;i/;":
+times;i/;$;%;i/;i ;	["background-position;i.;i o;;T;[	".o; 	;"prefix;@;i2;	"prefixo; 	;"cls_ui;@;i2;	"cls-ui"-br;@;[o;;@;;;[ ;o;	;@;[o;;@;"0;@2;i ;i3;[ o;&
+;@;'o;;@;"3;@2;i;i3;[ ;(o; 	;@;!o; 	;"frame_max;@;i3;	"frame-max;i3;";#;i3;";);i3;$;%;i3;i ;	["background-position;i2;i o;;T;[	".o; 	;"prefix;@;i6;	"prefixo; 	;"cls_ui;@;i6;	"cls-ui"-ml;@;[o;;@;;;[ ;o;	;@;[o; 	;@;!o; 	;"frame_max;@;i7;	"frame-max;i7;";#o;;@;"0;@2;i ;i7;[ ;i7;$;%;i7;i ;	["background-position;i6;i o;;T;[	".o; 	;"prefix;@;i:;	"prefixo; 	;"cls_ui;@;i:;	"cls-ui"-mr;@;[o;;@;;;[ ;o;;@;;;"right 0;i;;i ;	["background-position;i:;i o;;T;[	".o; 	;"prefix;@;i>;	"prefixo; 	;"cls_ui;@;i>;	"cls-ui"-tc;@;[o;;@;;;[ ;o;	;@;[o; 	;" background_stretch_position;@;i?;	" background-stretch-positiono;;@;"0;@2;i ;i?;[ ;i?;$;%;i?;i ;	["background-position;i>;i o;;T;[	".o; 	;"prefix;@;iB;	"prefixo; 	;"cls_ui;@;iB;	"cls-ui"-bc;@;[o;;@;;;[ ;o;	;@;[o; 	;" background_stretch_position;@;iC;	" background-stretch-positiono; 	;@;!o; 	;"frame_max;@;iC;	"frame-max;iC;";#;iC;$;%;iC;i ;	["background-position;iB;i u;
+ó[o:Sass::Script::Variable	:@underscored_name"include_frame_rtl:@options{ :
+@lineiF:
+@name"include-frame-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;iG;	"prefix"	rtl.o; 	;"prefix;@;iG;	"prefixo; 	;"cls_ui;@;iG;	"cls-ui"-tc;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o:Sass::Script::List	;@;[o; 	;" background_stretch_position;@;iH;	" background-stretch-positiono:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;iH:@numerator_units[ ;iH:@separator:
+space;@;iH:@keywords{ ;	"rtl-background-position;iH:
+@tabsi ;	["background-position;iG;i o;
+;T;[".o; 	;"prefix;@;iK;	"prefix"	rtl.o; 	;"prefix;@;iK;	"prefixo; 	;"cls_ui;@;iK;	"cls-ui"-bc;@;[o;;@;;;[ ;o;
+;[o;	;@;[o; 	;" background_stretch_position;@;iL;	" background-stretch-positiono:!Sass::Script::UnaryOperation	;@:@operando; 	;"frame_max;@;iL;	"frame-max;iL:@operator:
+minus;iL;;;@;iL;{ ;	"rtl-background-position;iL;i ;	["background-position;iK;i o;
+;T;[".o; 	;"prefix;@;iz;	"prefixo; 	;"cls_ui;@;iz;	"cls-ui"-tr,
+        .o; 	;"prefix;@;i{;	"prefixo; 	;"cls_ui;@;i{;	"cls-ui"-br,
+        .o; 	;"prefix;@;i|;	"prefixo; 	;"cls_ui;@;i|;	"cls-ui"-mr;@;[o;;@;;;[ ;o; 	;"frame_right;@;i};	"frame-right;i};i ;	["padding-right;i|;i o;
+;T;[".o; 	;"prefix;@;iÄ;	"prefixo; 	;"cls_ui;@;iÄ;	"cls-ui"-tl,
+        .o; 	;"prefix;@;iÅ;	"prefixo; 	;"cls_ui;@;iÅ;	"cls-ui"-bl,
+        .o; 	;"prefix;@;iÇ;	"prefixo; 	;"cls_ui;@;iÇ;	"cls-ui"-ml;@;[o;;@;;;[ ;o; 	;"frame_left;@;iÉ;	"frame-left;iÉ;i ;	["padding-left;iÇ;i o;
+;T;[	".o; 	;"prefix;@;iÜ;	"prefixo; 	;"cls_ui;@;iÜ;	"cls-ui"-tc;@;[o;;@;;;[ ;o; 	;"frame_top;@;iá;	"frame-top;iá;i ;	["height;iÜ;i o;
+;T;[	".o; 	;"prefix;@;iâ;	"prefixo; 	;"cls_ui;@;iâ;	"cls-ui"-bc;@;[o;;@;;;[ ;o; 	;"frame_bottom;@;iä;	"frame-bottom;iä;i ;	["height;iâ;i o;
+;T;[".o; 	;"prefix;@;iç;	"prefixo; 	;"cls_ui;@;iç;	"cls-ui"-tl,
+        .o; 	;"prefix;@;ié;	"prefixo; 	;"cls_ui;@;ié;	"cls-ui"-bl,
+        .o; 	;"prefix;@;iè;	"prefixo; 	;"cls_ui;@;iè;	"cls-ui"-tr,
+        .o; 	;"prefix;@;iê;	"prefixo; 	;"cls_ui;@;iê;	"cls-ui"-br,
+        .o; 	;"prefix;@;ië;	"prefixo; 	;"cls_ui;@;ië;	"cls-ui"-tc,
+        .o; 	;"prefix;@;ií;	"prefixo; 	;"cls_ui;@;ií;	"cls-ui"-bc,
+        .o; 	;"prefix;@;iì;	"prefixo; 	;"cls_ui;@;iì;	"cls-ui"-ml,
+        .o; 	;"prefix;@;iî;	"prefixo; 	;"cls_ui;@;iî;	"cls-ui"-mr;@;[u;! [o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"transparent:
+@lineiï:@operand1o:Sass::Script::Variable	:@underscored_name"background_color;@;iï:
+@name"background-color;iï:@operator:neq0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ ;o:Sass::Script::Funcall
+:
+@args[o;	;"cls_ui;@;iñ;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo;	;@;	:string;" ;iñ;@:@aftero;
+;o;	;@;	;;"/;iñ;@;o;	;@;	;;"-corners;iñ;iñ:	@mido;	;"cls_ui;@;iñ;"cls-ui;iñ;o;	;"cls;@;iñ;"cls;@;iñ:@keywords{ ;"slicer-corner-sprite;iñ:
+@tabsi ;["background-image;iî;i u;!=[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"transparent:
+@lineiö:@operand1o:Sass::Script::Variable	:@underscored_name"background_color;@;iö:
+@name"background-color;iö:@operator:neq0[u:Sass::Tree::IfNode[o:Sass::Script::Variable	:@underscored_name"include_frame_rtl:@options{ :
+@lineiõ:
+@name"include-frame-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;iú;	"prefix"rtl;@:@children[o;
+;T;["&.o; 	;"prefix;@;iù;	"prefixo; 	;"cls_ui;@;iù;	"cls-ui" -tl,
+                    &.o; 	;"prefix;@;iû;	"prefixo; 	;"cls_ui;@;iû;	"cls-ui" -ml,
+                    &.o; 	;"prefix;@;iü;	"prefixo; 	;"cls_ui;@;iü;	"cls-ui" -bl,
+                    &.o; 	;"prefix;@;i†;	"prefixo; 	;"cls_ui;@;i†;	"cls-ui" -tr,
+                    &.o; 	;"prefix;@;i°;	"prefixo; 	;"cls_ui;@;i°;	"cls-ui" -mr,
+                    &.o; 	;"prefix;@;i¢;	"prefixo; 	;"cls_ui;@;i¢;	"cls-ui"-br;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o; 	;"cls_ui;@;i£;	"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;@:
+@type:string;" ;i£;@:@aftero;
+;o;	;@;;;"/;i£;@;o;	;@;;;"-corners-rtl;i£;i£:	@mido; 	;"cls_ui;@;i£;	"cls-ui;i£;o; 	;"cls;@;i£;	"cls;@;i£:@keywords{ ;	"slicer-corner-sprite-rtl;i£:
+@tabsi ;	["background-image;i¢;i ;iú;i u;!Ì[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Bool;@:@valueT:
+@linei©:@operand1o:Sass::Script::Variable	:@underscored_name"vertical;@;
+i©:
+@name"vertical;
+i©:@operator:equ:Sass::Tree::IfNodeí[00[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o:Sass::Script::Variable	:@underscored_name"prefix:@options{ :
+@lineiª:
+@name"prefixo;	;	"cls_ui;
+@;iª;"cls-ui"-ml,
+            .o;	;	"prefix;
+@;iº;"prefixo;	;	"cls_ui;
+@;iº;"cls-ui"-mr;
+@:@children[u:Sass::Tree::IfNodeD[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"transparent:
+@lineiΩ:@operand1o:Sass::Script::Variable	:@underscored_name"background_color;@;iΩ:
+@name"background-color;iΩ:@operator:neq0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ ;o:Sass::Script::Funcall
+:
+@args[o;	;"cls_ui;@;iæ;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo;	;@;	:string;" ;iæ;@:@aftero;
+;o;	;@;	;;"/;iæ;@;o;	;@;	;;"-sides;iæ;iæ:	@mido;	;"cls_ui;@;iæ;"cls-ui;iæ;o;	;"cls;@;iæ;"cls;@;iæ:@keywords{ ;"slicer-sides-sprite;iæ:
+@tabsi ;["background-imageu:Sass::Tree::IfNodee[o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"background_gradient:@options{ :
+@lineiø:
+@name"background-gradient;	@
+;
+iø:@keywords{ ;"is-null0[o:Sass::Tree::PropNode;	@
+:@prop_syntax:new:@children[ :@valueo:Sass::Script::String;	@
+:
+@type:identifier;"repeat-y;
+i¿:
+@tabsi ;["background-repeat;iº:
+@tabsi [o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o;	;"prefix;@;
+i™;"prefixo;	;"cls_ui;@;
+i™;"cls-ui"-tc,
+            .o;	;"prefix;@;
+i´;"prefixo;	;"cls_ui;@;
+i´;"cls-ui"-bc;@:@children[u;[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::String	;@:
+@type:identifier:@value"transparent:
+@linei¨:@operand1o:Sass::Script::Variable	:@underscored_name"background_color;@;i¨:
+@name"background-color;i¨:@operator:neq0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ ;o:Sass::Script::Funcall
+:
+@args[o;	;"cls_ui;@;i≠;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo;	;@;	:string;" ;i≠;@:@aftero;
+;o;	;@;	;;"/;i≠;@;o;	;@;	;;"-sides;i≠;i≠:	@mido;	;"cls_ui;@;i≠;"cls-ui;i≠;o;	;"cls;@;i≠;"cls;@;i≠:@keywords{ ;"slicer-sides-sprite;i≠:
+@tabsi ;["background-imageo;;@;;;[ ;o;;@;	;
+;"repeat-x;iÆ;i ;["background-repeat;
+i´:
+@tabsi u;X[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::String	;@:
+@type:identifier:@value"transparent:
+@linei≤:@operand1o:Sass::Script::Variable	:@underscored_name"background_color;@;i≤:
+@name"background-color;i≤:@operator:neq;o;	;"include_frame_rtl;@;i≤;"include-frame-rtl;i≤;:and0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o;	;"prefix;@;i≥;"prefix"rtl;@:@children[o;;T;["&.o;	;"prefix;@;i¥;"prefixo;	;"cls_ui;@;i¥;"cls-ui" -tc,
+                    &.o;	;"prefix;@;iµ;"prefixo;	;"cls_ui;@;iµ;"cls-ui"-bc;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o:Sass::Script::Funcall
+:
+@args[o;	;"cls_ui;@;i∂;"cls-uio:&Sass::Script::StringInterpolation
+:@beforeo;	;@;	:string;" ;i∂;@:@aftero;
+;o;	;@;	;;"/;i∂;@; o;	;@;	;;"-sides-rtl;i∂;i∂:	@mido;	;"cls_ui;@;i∂;"cls-ui;i∂;!o;	;"cls;@;i∂;"cls;@;i∂:@keywords{ ;"slicer-sides-sprite-rtl;i∂:
+@tabsi ;["background-image;iµ;#i ;i≥;#i o;
+;T;[	".o; 	;"prefix;@;i∆;	"prefixo; 	;"cls_ui;@;i∆;	"cls-ui"-mc;@;[o;;@;;;[ ;o:Sass::Script::List	;@;[	o; 	;"extra_padding_top;@;i«;	"extra-padding-topo; 	;"extra_padding_right;@;i«;	"extra-padding-righto; 	;"extra_padding_bottom;@;i«;	"extra-padding-bottomo; 	;"extra_padding_left;@;i«;	"extra-padding-left;i«:@separator:
+space;i«;i ;	["padding;i∆;i o:Sass::Tree::MixinNode;[o;	;"cls_ui;@;iÀ;"cls-ui;@;	[ ;iÀ;{ ;"x-slicer;i%;"x-frame;i
