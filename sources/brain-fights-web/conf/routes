@@ -26,6 +26,7 @@ GET		/rest/questions/store/read								AdmController.readQuestions
 POST	/rest/questions/store/update							AdmController.updateQuestion
 POST 	/rest/questions/store/destroy							AdmController.destroyQuestion
 POST	/rest/check/name										AdmController.checkNameAdminInBase
+GET		/rest/search/question/store/read						AdmController.searchQuestion
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

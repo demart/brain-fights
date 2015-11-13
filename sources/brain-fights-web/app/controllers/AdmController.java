@@ -386,7 +386,24 @@ public class AdmController extends Controller {
 			return 0l;
 	}
 	
+	public static void searchQuestion (String name) throws PlatformException {
+		Logger.info("Search Question. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		if (status == true) {
+			
+			List<Question> list = AdmService.searchQuestions(name);
+			ArrayList<QuestionModel> models = AdmService.createQuestionsList(list);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountQuestionsNotDeleted(null).intValue());
+			renderJSON(wrapper);
 
+		}
+	}
 	
 }
 

@@ -376,13 +376,16 @@ public class AdmService {
 			Question question = Question.findById(model.getId());
 			if (question == null)
 				throw new PlatformException("0", "Question not found");
+			System.out.println("Cat: " + model.getCategoryId());
 			
-			if (model.getCategoryId() != null || model.getCategoryId() != 0) {
+			if (model.getCategoryId() != null && model.getCategoryId() != 0) {
 				Category category = Category.findById(model.getCategoryId());
-				question.setCategory(category);
+				if (category != null)
+					question.setCategory(category);
+				else 
+					throw new PlatformException("0", "Category not found");
 			}
-			else 
-				throw new PlatformException("0", "Category not found");
+
 				
 			question.setImageUrl("0");
 			question.setType(QuestionType.TEXT);
@@ -486,5 +489,11 @@ public class AdmService {
 			models.add(question);
 		}
 		return models;
+	}
+	
+	public static List<Question> searchQuestions(String name) {
+			return JPA.em().createQuery("from Question where lower(text) like lower(:name) and deleted = 'FALSE' order by id")
+				.setParameter("name", "%" + name + "%").getResultList();
+
 	}
 }

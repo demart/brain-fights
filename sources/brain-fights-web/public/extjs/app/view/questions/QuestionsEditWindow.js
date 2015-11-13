@@ -83,7 +83,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
 	            name: 'id',
 	            //itemId: '',
 	            id: 'categoryComboForQuestions',
-	            value: '0',
+	            value: 'Не указана',
 	            afterLabelTextTpl: [
 	            	                '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>'
 	            	            ],
@@ -161,7 +161,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
                 queryMode: 'remote',
 	            name: 'answerTrue',
 	            itemId: 'answerTrue',
-	            value: '0',
+	            value: 'Не указан',
 	            afterLabelTextTpl: [
 	            	                '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>'
 	            	            ],

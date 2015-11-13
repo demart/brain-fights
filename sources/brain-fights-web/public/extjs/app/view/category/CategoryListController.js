@@ -78,7 +78,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
     	if (Ext.getCmp('categoryNameEditForm').getValue() == "")
        		Ext.Msg.alert('Внимание', 'Пожалуйста, введите название категории!'); 
     	
-    	if (Ext.getCmp('categoryColorEditWindow').getValue() == 0)
+    	if (Ext.getCmp('categoryColorEditWindow').getValue() == "Не указан")
        		Ext.Msg.alert('Внимание', 'Пожалуйста, выберите цвет категории!'); 
     	
     	else {

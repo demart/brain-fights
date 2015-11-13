@@ -30,13 +30,15 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 collapsible: false,
                 region: 'north',
                 margin: '0 0 0 0',
-                height: '10%',
-                
+               // height: '10%',
+
+             
                 items: [
                         {
                         	xtype: 'panel',
                         	layout: 'fit',
                         	bodyPadding: 5,
+                            width: 500,
                         	items: [{
                 	            reference: 'categoryCombo',
                 	            flex: 1,
@@ -97,12 +99,63 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 }]
                 
    
-            }],
+            },
+            {
+            	xtype: 'panel',
+            	layout: 'fit',
+            	bodyPadding: 5,
+            	items: [{
+            		xtype: 'fieldcontainer',
+            		fieldLabel: 'Поиск по вопросу',
+            		labelWidth: 130,
+            		combineErrors: true,
+            		msgTarget : 'side',
+            		layout: 'hbox',
+            		defaults: {
+            			flex: 1,
+            			hideLabel: false,
+            			labelWidth: 60,
+            		},
+            		items: [{
+            			xtype: 'textfield',
+            			id:'searchQuestionField',
+            			name: 'searchingQuestion',
+            			margin: '0 15 0 0',
+            			width: 150,
+            			listeners:{
+            				specialkey: function(f,o){
+            					if(o.getKey()==13){
+            						Ext.getCmp('searchButton').fireEvent('click');
+            					}
+            				}
+            			},  
+            		}, 
+
+            		{
+            			region: 'center',
+            			items: [{
+            				id: 'searchButton',
+            				region: 'east',
+            				xtype: 'button',
+                			margin: '0 15 0 0',
+            				text: 'Найти',
+            				listeners: {
+                				click : 'searchQuestion' 
+                			},
+            			},
+    
+            			        ]
+            		},],
+            	}],
+    },
+                        
+                        
+                        ],
              },
             {
             	//title: 'Вопросы',
                 region: 'west',
-                width: 600,
+                flex: 2,
                 //minHeight: 100,
                 //maxHeight: 250,
                 items: [{
@@ -198,16 +251,20 @@ bbar:            	 {
 {
 region: 'center',
 title: 'Просмотр информации о вопросе',
+flex: 1,
 id: 'viewQuestionInformationId',
 items: [
 {
     defaultType: 'textfield',
     style: 'margin: 10px',
     style: 'margin: 10px',
-    width: 500,
+    //width: 500,
     defaults: {
     	labelWidth: 140,
-    },
+    	width: 370,
+       	grow      : true,
+       	growMin: 230,
+     },
 
 	items: [
 				{
@@ -273,6 +330,7 @@ items: [
 		            xtype: 'textfield',
 		           // labelWidth: 200,
 		            id: 'nameQuestionText',
+
 		            hidden: true,
 		            afterLabelTextTpl: [
 		                '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>'
@@ -407,6 +465,7 @@ items: [
 					xtype: 'button',
 					text: 'Редактировать',
 					hidden: true,
+					width: 130,
         			margin: '10 15 0 80',
 					id: 'editButtonQuestion',
 					handler: 'onEditButtonQuestionClick',
@@ -415,6 +474,7 @@ items: [
 					xtype: 'button',
 					text: 'Сохранить',
         			margin: '10 15 0 80',
+					width: 130,
 					hidden: true,
 					id: 'saveButtonQuestion',
 					handler: 'onSaveButtonQuestionClick',
@@ -423,6 +483,7 @@ items: [
 					xtype: 'button',
 					text: 'Отменить',
         			margin: '10 15 0 0',
+					width: 130,
 					hidden: true,
 					id: 'cancelButtonQuestion',
 					handler: 'onCancelButtonQuestionClick',
