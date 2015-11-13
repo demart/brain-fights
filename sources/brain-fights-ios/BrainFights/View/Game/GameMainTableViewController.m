@@ -212,7 +212,11 @@
      if ([segue.destinationViewController isKindOfClass:[GameStatusTableViewController class]]) {
          GameStatusTableViewController *viewController = (GameStatusTableViewController*)segue.destinationViewController;
          // TODO add Back button title
-         [self.navigationController pushViewController:viewController animated:YES];
+         NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+         
+         UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+         UserGameModel *gameModel = gameGroupModel.games[indexPath.row];
+         [viewController setUserGameModel:gameModel];
      }
  }
 
