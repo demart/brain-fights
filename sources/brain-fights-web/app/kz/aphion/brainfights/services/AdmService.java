@@ -491,9 +491,35 @@ public class AdmService {
 		return models;
 	}
 	
+	/**
+	 * Поиск вопроса в базе данных
+	 * @param name
+	 * @return
+	 */
 	public static List<Question> searchQuestions(String name) {
 			return JPA.em().createQuery("from Question where lower(text) like lower(:name) and deleted = 'FALSE' order by id")
 				.setParameter("name", "%" + name + "%").getResultList();
+
+	}
+
+	public static ArrayList<CategoryModel> createCategoryComboList(List<Category> listBase) throws PlatformException{
+		ArrayList<CategoryModel> models = new ArrayList<CategoryModel>();
+		CategoryModel firstCategory = new CategoryModel();
+		firstCategory.setId(0l);
+		firstCategory.setName("Все категории");
+		models.add(firstCategory);
+		for (Category model: listBase) {
+			CategoryModel category = new CategoryModel();
+			category.setId(model.getId());
+			category.setName(model.getName());
+			category.setImage(model.getImageUrl());
+			category.setQuestionsCount(AdmService.getCountQuestionsInCategory(model.getId()));
+			category.setCreatedDate(model.getCreatedDate().getTime());
+			category.setModifiedDate(model.getModifiedDate().getTime());
+			category.setColor(model.getColor());
+			models.add(category);
+		}
+		return models;
 
 	}
 }

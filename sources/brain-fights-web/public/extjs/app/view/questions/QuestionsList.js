@@ -49,7 +49,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                                 anchor: '-15',
                                 labelWidth: 130,
                                 autoRender: true,
-                                store: 'CategoryStore',
+                                store: 'CategoryComboStore',
                                 minChars: 5,
                                 queryParam: 'q',
                                 queryMode: 'remote',
@@ -67,8 +67,16 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                         	    
                         	    select: function () {
                             		var questionsGrid = Ext.getCmp('questionsGridId');
+                            		
+                            		if (Ext.getCmp('categoryComboId').getValue() == 0) {
+                            			questionsGrid.store.proxy.api.read = 'rest/questions/store/read';
+                                		questionsGrid.getStore().reload();
+                            		}
+                            			
+                            		else {
                            			questionsGrid.store.proxy.api.read = 'rest/questions/store/read?categoryId=' + Ext.getCmp('categoryComboId').getValue();
                             		questionsGrid.getStore().reload();
+                            		}
                         	    	//console.log (record.data.id);
                             		
                     		        Ext.getCmp('questionName').setVisible(false);
@@ -133,7 +141,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
 
             		{
             			region: 'center',
-            			items: [{
+            			items: [
+            			        {
             				id: 'searchButton',
             				region: 'east',
             				xtype: 'button',
@@ -141,6 +150,16 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
             				text: 'Найти',
             				listeners: {
                 				click : 'searchQuestion' 
+                			},
+            			},
+            			{
+            				id: 'refreshButton',
+            				region: 'east',
+            				xtype: 'button',
+                			margin: '0 15 0 0',
+            				text: 'Сбросить фильтр',
+            				listeners: {
+                				click : 'showAllQuestion' 
                 			},
             			},
     
@@ -169,7 +188,6 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 	
                 	tbar: [
                 	       { text: 'Добавить новый вопрос', handler: 'showAddWindow' },
-                	       { text: 'Показать все вопросы', handler: 'showAllQuestion'},
                 	       { text: 'Удалить вопрос', handler: 'deleteQuestion'},
         	        ],
                 	
