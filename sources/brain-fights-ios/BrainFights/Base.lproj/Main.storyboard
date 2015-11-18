@@ -6,9 +6,40 @@
     </dependencies>
     <scenes>
         <!--Table View Controller-->
+        <scene sceneID="mtj-c5-8Uf">
+            <objects>
+                <tableViewController id="RU2-ge-tDO" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xDU-eQ-WwE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QUW-cf-PYe">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QUW-cf-PYe" id="zu9-ig-SgD">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="RU2-ge-tDO" id="5Cd-OT-JDg"/>
+                            <outlet property="delegate" destination="RU2-ge-tDO" id="7Er-S7-E8r"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fxh-BF-dfe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3941" y="-792"/>
+        </scene>
+        <!--Game Status Table View Controller-->
         <scene sceneID="1gr-uq-LOi">
             <objects>
-                <tableViewController id="Dfp-tP-J4a" sceneMemberID="viewController">
+                <tableViewController id="Dfp-tP-J4a" customClass="GameStatusTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="RgM-1F-zOo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,10 +62,13 @@
                             <outlet property="delegate" destination="Dfp-tP-J4a" id="zh9-AW-fAV"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="RU2-ge-tDO" kind="show" identifier="FromGameStatusToCategories" id="FKk-6k-r7H"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uuK-zl-TAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2158" y="-254"/>
+            <point key="canvasLocation" x="3065" y="-318"/>
         </scene>
         <!--Мои игры-->
         <scene sceneID="2Q3-Z8-0km">
@@ -121,7 +155,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aKX-IG-h1M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3011" y="-254"/>
+            <point key="canvasLocation" x="3065" y="475"/>
         </scene>
         <!--Организация-->
         <scene sceneID="XUU-NI-RT0">
@@ -156,7 +190,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1t-z6-2iw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3887" y="-519"/>
+            <point key="canvasLocation" x="3941" y="25"/>
         </scene>
         <!--Поиск-->
         <scene sceneID="fgt-au-ISO">
@@ -191,7 +225,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9Y-5n-oyf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3887" y="260"/>
+            <point key="canvasLocation" x="3941" y="824"/>
         </scene>
         <!--Профиль-->
         <scene sceneID="D3w-sh-Rib">
@@ -232,7 +266,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W2h-Si-ndL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2158" y="1248"/>
+            <point key="canvasLocation" x="2167" y="1434"/>
         </scene>
         <!--Рейтинг-->
         <scene sceneID="pjH-Yd-gwM">
@@ -273,7 +307,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MG0-IN-NTm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2158" y="2014"/>
+            <point key="canvasLocation" x="2167" y="2295"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="urY-IL-AOK">
@@ -290,7 +324,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDv-hV-ZIh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1337" y="2013"/>
+            <point key="canvasLocation" x="1337" y="2295"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MSP-so-BGl">
@@ -362,6 +396,6 @@
         <image name="leftMenuIcon" width="19" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sai-gM-uzF"/>
+        <segue reference="9j8-6g-2lj"/>
     </inferredMetricsTieBreakers>
 </document>

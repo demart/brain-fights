@@ -1,0 +1,1802 @@
+3.1.7 (Brainy Betty)
+24ea6cc0ed88cc793119b0bf2e5b7b96f8f55f5e
+o:Sass::Tree::RootNode
+:@template"≤ó/**
+ * Creates a visual theme for a Tab Bar
+ *
+ * Note: When creating a tab bar UI with the extjs-tab-bar-ui mixin, 
+ * you will need to create a corresponding tab-ui of the same name.  
+ * This will ensure that the tabs render properly in your theme. 
+ * Not creating a matching tab theme may result in unpredictable 
+ * tab rendering.
+ *
+ * See `Ext.tab.Tab-css_mixin-extjs-tab-ui`
+ * 
+ * @param {string} $ui
+ * The name of the UI being created. Can not included spaces or special punctuation
+ * (used in CSS class names).
+ *
+ * @param {number} [$ui-strip-height=$tabbar-strip-height]
+ * The height of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-strip-border-width=$tabbar-strip-border-width]
+ * The border-width of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-border-color=$tabbar-strip-border-color]
+ * The border-color of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-background-color=$tabbar-strip-background-color]
+ * The background-color of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-border-width=$tabbar-border-width]
+ * The border-width of the Tab Bar
+ *
+ * @param {color} [$ui-border-color=$tabbar-border-color]
+ * The border-color of the Tab Bar
+ *
+ * @param {number/list} [$ui-padding=$tabbar-padding]
+ * The padding of the Tab Bar
+ *
+ * @param {color} [$ui-background-color=$tabbar-background-color]
+ * The background color of the  Tab Bar
+ *
+ * @param {string/list} [$ui-background-gradient=$tabbar-background-gradient]
+ * The background-gradient of the Tab Bar. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {number} [$ui-scroller-width=$tabbar-scroller-width]
+ * The width of the Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-height=$tabbar-scroller-height]
+ * The height of the Tab Bar scrollers
+ *
+ * @param {number/list} [$ui-scroller-top-margin=$tabbar-scroller-top-margin]
+ * The margin of "top" scroller buttons
+ *
+ * @param {number/list} [$ui-scroller-right-margin=$tabbar-scroller-right-margin]
+ * The margin of "right" scroller buttons
+ *
+ * @param {number/list} [$ui-scroller-bottom-margin=$tabbar-scroller-bottom-margin]
+ * The margin of "bottom" scroller buttons
+ *
+ * @param {number/list} [$ui-scroller-left-margin=$tabbar-scroller-left-margin]
+ * The margin of "left" scroller buttons
+ *
+ * @param {string} [$ui-scroller-cursor=$tabbar-scroller-cursor]
+ * The cursor of the Tab Bar scrollers
+ *
+ * @param {string} [$ui-scroller-cursor-disabled=$tabbar-scroller-cursor-disabled]
+ * The cursor of disabled Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity=$tabbar-scroller-opacity]
+ * The opacity of Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity-over=$tabbar-scroller-opacity-over]
+ * The opacity of hovered Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity-pressed=$tabbar-scroller-opacity-pressed]
+ * The opacity of pressed Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity-disabled=$tabbar-scroller-opacity-disabled]
+ * The opacity of disabled Tab Bar scrollers
+ *
+ * @param {boolean} [$ui-classic-scrollers=$tabbar-classic-scrollers]
+ * `true` to use classic-style scroller buttons.  When `true` scroller buttons are given
+ * their hover state by changing their background-position,  When `false` scroller buttons
+ * are given their hover state by applying opacity.
+ *
+ * @param {number} [$ui-tab-height]
+ * The minimum height of tabs that will be used in this tabbar UI. The tabbar body is given
+ * a min-height so that it does not collapse when it does not contain any tabs, but it
+ * is allowed to expand to be larger than the default tab height if it contains a tab
+ * that's larger than the default height.
+ *
+ * @member Ext.tab.Bar
+ */ 
+@mixin extjs-tab-bar-ui(
+    $ui,
+    
+    $ui-strip-height: $tabbar-strip-height,
+    $ui-strip-border-width: $tabbar-strip-border-width,
+    $ui-strip-border-color: $tabbar-strip-border-color,
+    $ui-strip-background-color: $tabbar-strip-background-color,
+
+    $ui-border-width: $tabbar-border-width,
+    $ui-border-color: $tabbar-border-color,
+    $ui-padding: $tabbar-padding,
+    $ui-background-color: $tabbar-base-color,
+    $ui-background-gradient: $tabbar-background-gradient,
+    $ui-scroller-width: $tabbar-scroller-width,
+    $ui-scroller-height: $tabbar-scroller-height,
+    $ui-scroller-top-margin: $tabbar-scroller-top-margin,
+    $ui-scroller-right-margin: $tabbar-scroller-right-margin,
+    $ui-scroller-bottom-margin: $tabbar-scroller-bottom-margin,
+    $ui-scroller-left-margin: $tabbar-scroller-left-margin,
+    $ui-scroller-cursor: $tabbar-scroller-cursor,
+    $ui-scroller-cursor-disabled: $tabbar-scroller-cursor-disabled,
+    $ui-scroller-opacity: $tabbar-scroller-opacity,
+    $ui-scroller-opacity-over: $tabbar-scroller-opacity-over,
+    $ui-scroller-opacity-pressed: $tabbar-scroller-opacity-pressed,
+    $ui-scroller-opacity-disabled: $tabbar-scroller-opacity-disabled,
+    $ui-classic-scrollers: $tabbar-classic-scrollers,
+    $ui-tab-height:
+        if($tabbar-strip-height > 0, top($ui-strip-border-width), vertical($tab-border-width)) +
+        max($tab-icon-height, $tab-line-height) + vertical($tab-padding)
+) {
+    $ui-strip-plain-border-width:
+        top($ui-strip-border-width)
+        max(right($ui-strip-border-width), left($ui-border-width))
+        bottom($ui-strip-border-width)
+        max(left($ui-strip-border-width), left($ui-border-width));
+
+    .#{$prefix}tab-bar-#{$ui} {
+        background-color: $ui-background-color;
+        @if $ui-border-width != 0 {
+            border-style: solid;
+            border-color: $ui-border-color;
+        }
+    }
+
+    @if $ui-border-width != 0 {
+        .#{$prefix}tab-bar-#{$ui}-top {
+            border-width: $ui-border-width;
+        }
+    
+        .#{$prefix}tab-bar-#{$ui}-bottom {
+            border-width: flip-vertical($ui-border-width);
+        }
+    
+        .#{$prefix}tab-bar-#{$ui}-left {
+            border-width: rotate270($ui-border-width);
+        }
+    
+        @if $include-rtl {
+            .#{$prefix}rtl.#{$prefix}tab-bar-#{$ui}-left {
+                border-width: rtl(rotate270($ui-border-width));
+            }
+        }
+    
+        .#{$prefix}tab-bar-#{$ui}-right {
+            border-width: rotate90($ui-border-width);
+        }
+    
+        @if $include-rtl {
+            .#{$prefix}rtl.#{$prefix}tab-bar-#{$ui}-right {
+                border-width: rtl(rotate90($ui-border-width));
+            }
+        }
+    }
+    
+    .#{$prefix}tab-bar-body-#{$ui} {
+        .#{$prefix}tab-bar-#{$ui}-top > & {
+            padding: $ui-padding;
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-bottom > & {
+            padding: flip-vertical($ui-padding);
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-left > & {
+            padding: rotate270($ui-padding);
+        }
+
+        @if $include-rtl {
+            .#{$prefix}rtl.#{$prefix}tab-bar-#{$ui}-left > & {
+                padding: rtl(rotate270($ui-padding));
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-right > & {
+            padding: rotate90($ui-padding);
+        }
+
+        @if $include-rtl {
+            .#{$prefix}rtl.#{$prefix}tab-bar-#{$ui}-right > & {
+                padding: rtl(rotate90($ui-padding));
+            }
+        } 
+    }
+
+    .#{$prefix}tab-bar-plain {
+        &.#{$prefix}tab-bar-#{$ui}-horizontal {
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+
+        &.#{$prefix}tab-bar-#{$ui}-vertical {
+            border-right-color: transparent;
+            border-left-color: transparent;
+            border-top-width: 0;
+            border-bottom-width: 0;
+        }
+    }
+
+    $strip-size: max($ui-strip-height - vertical($ui-strip-border-width), 0);
+
+    @if $strip-size != 0 {
+        .#{$prefix}tab-bar-body-#{$ui} {
+            .#{$prefix}tab-bar-top > & {
+                padding-bottom: $strip-size;
+            }
+
+            .#{$prefix}tab-bar-bottom > & {
+                padding-top: $strip-size;
+            }
+
+            .#{$prefix}tab-bar-left > & {
+                padding-right: $strip-size;
+
+                @if $include-rtl {
+                    &.#{$prefix}rtl {
+                        padding-right: 0;
+                        padding-left: $strip-size;
+                    }
+                }
+            }
+
+            .#{$prefix}tab-bar-right > & {
+                padding-left: $strip-size;
+
+                @if $include-rtl {
+                    &.#{$prefix}rtl {
+                        padding-left: 0;
+                        padding-right: $strip-size;
+                    }
+                }
+            }
+        }
+
+        .#{$prefix}tab-bar-strip-#{$ui} {
+            border-style: solid;
+            border-color: $ui-strip-border-color;
+            background-color: $ui-strip-background-color;
+        }
+
+        .#{$prefix}tab-bar-top {
+            > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: $ui-strip-border-width;
+                height: $ui-strip-height;
+            }
+            &.#{$prefix}tab-bar-plain > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: $ui-strip-plain-border-width;
+            }
+        }
+
+        .#{$prefix}tab-bar-bottom {
+            > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: flip-vertical($ui-strip-border-width);
+                height: $ui-strip-height;
+            }
+            &.#{$prefix}tab-bar-plain > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: flip-vertical($ui-strip-plain-border-width);
+            }
+        }
+
+        .#{$prefix}tab-bar-left {
+            > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: rotate270($ui-strip-border-width);
+                width: $ui-strip-height;
+                @if $include-rtl {
+                    &.#{$prefix}rtl {
+                        border-width: rtl(rotate270($ui-strip-border-width));
+                    }
+                }
+            }
+            &.#{$prefix}tab-bar-plain > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: rotate270($ui-strip-plain-border-width);
+                @if $include-rtl {
+                    &.#{$prefix}rtl {
+                        border-width: rtl(rotate270($ui-strip-plain-border-width));
+                    }
+                }
+            }
+        }
+
+        .#{$prefix}tab-bar-right {
+            > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: rotate90($ui-strip-border-width);
+                width: $ui-strip-height;
+                @if $include-rtl {
+                    &.#{$prefix}rtl {
+                        border-width: rtl(rotate90($ui-strip-border-width));
+                    }
+                }
+            }
+            &.#{$prefix}tab-bar-plain > .#{$prefix}tab-bar-strip-#{$ui} {
+                border-width: rotate90($ui-strip-plain-border-width);
+                @if $include-rtl {
+                    &.#{$prefix}rtl {
+                        border-width: rtl(rotate90($ui-strip-plain-border-width));
+                    }
+                }
+            }
+        }
+    }
+
+    // tabbars need a min-height/width so that horizontal tabbars don't lose height and
+    // vertical tabbars don't lose width when all tabs are closed.
+    $ui-body-height: $ui-tab-height + $ui-strip-height - top($ui-strip-border-width);
+
+    .#{$prefix}tab-bar-horizontal > .#{$prefix}tab-bar-body-#{$ui} {
+        min-height: $ui-body-height;
+
+        .#{$prefix}ie9m & {
+            // border-box model is busted in IE9m when min-height is used
+            min-height: $ui-body-height - $strip-size;
+        }
+    }
+
+    .#{$prefix}tab-bar-vertical > .#{$prefix}tab-bar-body-#{$ui} {
+        min-width: $ui-body-height;
+
+        .#{$prefix}ie9m & {
+            // border-box model is busted in IE9m when min-width is used
+            min-width: $ui-body-height - $strip-size;
+        }
+    }
+
+    @if not is-null($ui-background-gradient) {
+        .#{$prefix}tab-bar-#{$ui}-top {
+            @include background-gradient($ui-background-color, $ui-background-gradient, top);
+
+            @if $include-slicer-gradient {
+                .#{$prefix}nlg & {
+                    background: slicer-background-image(tab-bar-#{$ui}-top, 'tab-bar/tab-bar-#{$ui}-top-bg');
+                }
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-bottom {
+            @include background-gradient($ui-background-color, $ui-background-gradient, bottom);
+
+            @if $include-slicer-gradient {
+                .#{$prefix}nlg & {
+                    background: slicer-background-image(tab-bar-#{$ui}-bottom, 'tab-bar/tab-bar-#{$ui}-bottom-bg') bottom 0;
+                }
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-left {
+            @include background-gradient($ui-background-color, $ui-background-gradient, left);
+
+            @if $include-slicer-gradient {
+                .#{$prefix}nlg & {
+                    background: slicer-background-image(tab-bar-#{$ui}-left, 'tab-bar/tab-bar-#{$ui}-left-bg');
+                }
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-right {
+            @include background-gradient($ui-background-color, $ui-background-gradient, right);
+
+            @if $include-slicer-gradient {
+                .#{$prefix}nlg & {
+                    background: slicer-background-image(tab-bar-#{$ui}-right, 'tab-bar/tab-bar-#{$ui}-right-bg') 0 right;
+                }
+            }
+        }
+    }
+
+    @if $include-ext-layout-container-boxoverflow-scroller {
+        @include extjs-box-scroller-ui(
+            $ui: $ui,
+            $type: 'tab-bar',
+            $horizontal-width: $ui-scroller-width,
+            $horizontal-height: $ui-scroller-height,
+            $vertical-width: $ui-scroller-height,
+            $vertical-height: $ui-scroller-width,
+            $top-margin: $ui-scroller-top-margin,
+            $right-margin: $ui-scroller-right-margin,
+            $bottom-margin: $ui-scroller-bottom-margin,
+            $left-margin: $ui-scroller-left-margin,
+            $container-padding: $ui-padding,
+            $cursor: $ui-scroller-cursor,
+            $cursor-disabled: $ui-scroller-cursor-disabled,
+            $align: if($ui-classic-scrollers, stretch, middle),
+            $opacity: $ui-scroller-opacity,
+            $opacity-over: $ui-scroller-opacity-over,
+            $opacity-pressed: $ui-scroller-opacity-pressed,
+            $opacity-disabled: $ui-scroller-opacity-disabled,
+            $classic: $ui-classic-scrollers,
+            $include-background-images: $tabbar-scroller-symmetrical-icons
+        );
+    }
+
+    @if $ui-classic-scrollers {
+        .#{$prefix}tab-bar-#{$ui}-right {
+            .#{$prefix}box-scroller-top {
+                background-position: right (-$ui-scroller-width);
+
+                &.#{$prefix}box-scroller-hover {
+                    background-position: right 0;
+                }
+            }
+
+            .#{$prefix}box-scroller-bottom {
+                background-position: right 0;
+
+                &.#{$prefix}box-scroller-hover {
+                    background-position: right (-$ui-scroller-width);
+                }
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-bottom {
+            .#{$prefix}box-scroller-left {
+                background-position: -$ui-scroller-width bottom;
+
+                &.#{$prefix}box-scroller-hover {
+                    background-position: 0 bottom;
+                }
+            }
+
+            .#{$prefix}box-scroller-right {
+                background-position: 0 bottom;
+
+                &.#{$prefix}box-scroller-hover {
+                    background-position: -$ui-scroller-width bottom;
+                }
+            }
+        }
+    } @else {
+        $ui-scroller-top-left-offset: -(floor($ui-scroller-height / 2) + floor($ui-strip-height / 2));
+        $ui-scroller-bottom-right-offset: -(floor($ui-scroller-height / 2) - floor($ui-strip-height / 2));
+
+        .#{$prefix}box-scroller-tab-bar-#{$ui} {
+            .#{$prefix}tab-bar-#{$ui}-top & {
+                margin-top: $ui-scroller-top-left-offset;
+            }
+
+            .#{$prefix}tab-bar-#{$ui}-right & {
+                margin-left: $ui-scroller-bottom-right-offset;
+            }
+
+            .#{$prefix}tab-bar-#{$ui}-bottom & {
+                margin-top: $ui-scroller-bottom-right-offset;
+            }
+
+            .#{$prefix}tab-bar-#{$ui}-left & {
+                margin-left: $ui-scroller-top-left-offset;
+            }
+        }
+    }
+
+    @if (($ui-scroller-opacity != 1 or $ui-scroller-opacity-over != 1 or
+        $ui-scroller-opacity-pressed != 1) and is-null($ui-background-gradient)) {
+
+        .#{$prefix}box-scroller-tab-bar-#{$ui} {
+            // EXTJSIV-8846: partially transparent png images do not display correctly
+            // in winXP/IE8 when the image element has a transparent background.
+            // to fix this, we give the element the same background-color as the tabbar.
+            background-color: $ui-background-color;
+
+            .#{$prefix}ie8 .#{$prefix}box-scroller-plain {
+                // plain tabbars have transparent backgrounds, so we use a white bg to overcome
+                // the png transparency issues. See EXTJSIV-8846
+                background-color: #fff;
+            }
+        }
+    }
+
+    @if $tabbar-scroller-symmetrical-icons {
+        @if $tabbar-scroller-include-plain-icon {
+            .#{$prefix}box-scroller-plain.#{$prefix}box-scroller-tab-bar-#{$ui} {
+                &.#{$prefix}box-scroller-left {
+                    background-image: theme-background-image('tab-bar/#{$ui}-plain-scroll-left');
+                }
+
+                &.#{$prefix}box-scroller-right {
+                    background-image: theme-background-image('tab-bar/#{$ui}-plain-scroll-right');
+                }
+
+                &.#{$prefix}box-scroller-top {
+                    background-image: theme-background-image('tab-bar/#{$ui}-plain-scroll-top');
+                }
+
+                &.#{$prefix}box-scroller-bottom {
+                    background-image: theme-background-image('tab-bar/#{$ui}-plain-scroll-bottom');
+                }
+            }
+        }
+    } @else {
+        .#{$prefix}tab-bar-#{$ui}-top {
+            .#{$prefix}box-scroller-left {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-left-top');
+            }
+            .#{$prefix}box-scroller-right {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-right-top');
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-bottom {
+            .#{$prefix}box-scroller-left {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-left-bottom');
+            }
+            .#{$prefix}box-scroller-right {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-right-bottom');
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-left {
+            .#{$prefix}box-scroller-top {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-top-left');
+            }
+            .#{$prefix}box-scroller-bottom {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-bottom-left');
+            }
+        }
+
+        .#{$prefix}tab-bar-#{$ui}-right {
+            .#{$prefix}box-scroller-top {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-top-right');
+            }
+            .#{$prefix}box-scroller-bottom {
+                background-image: theme-background-image('tab-bar/#{$ui}-scroll-bottom-right');
+            }
+        }
+    }
+            
+    $stretch: slicer-background-stretch(tab-bar-#{$ui}-top, bottom);
+    $stretch: slicer-background-stretch(tab-bar-#{$ui}-bottom, top);
+    $stretch: slicer-background-stretch(tab-bar-#{$ui}-left, right);
+    $stretch: slicer-background-stretch(tab-bar-#{$ui}-right, left);
+
+    @include x-slicer(tab-bar-#{$ui}-top);
+    @include x-slicer(tab-bar-#{$ui}-bottom);
+    @include x-slicer(tab-bar-#{$ui}-left);
+    @include x-slicer(tab-bar-#{$ui}-right);
+}
+
+/**
+ * Creates a visual theme for a Tab Panel
+ *
+ * @param {string} $ui
+ * The name of the UI being created. Can not included spaces or special punctuation
+ * (used in CSS class names).
+ *
+ * @param {color} [$ui-tab-background-color=$tab-base-color]
+ * The background-color of Tabs
+ *
+ * @param {color} [$ui-tab-background-color-over=$tab-base-color-over]
+ * The background-color of hovered Tabs
+ *
+ * @param {color} [$ui-tab-background-color-active=$tab-base-color-active]
+ * The background-color of the active Tab
+ *
+ * @param {color} [$ui-tab-background-color-disabled=$tab-base-color-disabled]
+ * The background-color of disabled Tabs
+ *
+ * @param {list} [$ui-tab-border-radius=$tab-border-radius]
+ * The border-radius of Tabs
+ *
+ * @param {number} [$ui-tab-border-width=$tab-border-width]
+ * The border-width of Tabs
+ *
+ * @param {number/list} [$ui-tab-margin=$tab-margin]
+ * The border-width of Tabs
+ *
+ * @param {number/list} [$ui-tab-padding=$tab-padding]
+ * The padding of Tabs
+ *
+ * @param {number/list} [$ui-tab-text-padding=$tab-text-padding]
+ * The padding of the Tab's text element
+ *
+ * @param {color} [$ui-tab-border-color=$tab-border-color]
+ * The border-color of Tabs
+ *
+ * @param {color} [$ui-tab-border-color-over=$tab-border-color-over]
+ * The border-color of hovered Tabs
+ *
+ * @param {color} [$ui-tab-border-color-active=$tab-border-color-active]
+ * The border-color of the active Tab
+ *
+ * @param {color} [$ui-tab-border-color-disabled=$tab-border-color-disabled]
+ * The border-color of disabled Tabs
+ *
+ * @param {string} [$ui-tab-cursor=$tab-cursor]
+ * The Tab cursor
+ *
+ * @param {string} [$ui-tab-cursor-disabled=$tab-cursor-disabled]
+ * The cursor of disabled Tabs
+ *
+ * @param {number} [$ui-tab-font-size=$tab-font-size]
+ * The font-size of Tabs
+ *
+ * @param {number} [$ui-tab-font-size-over=$tab-font-size-over]
+ * The font-size of hovered Tabs
+ *
+ * @param {number} [$ui-tab-font-size-active=$tab-font-size-active]
+ * The font-size of the active Tab
+ *
+ * @param {number} [$ui-tab-font-size-disabled=$tab-font-size-disabled]
+ * The font-size of disabled Tabs
+ *
+ * @param {string} [$ui-tab-font-weight=$tab-font-weight]
+ * The font-weight of Tabs
+ *
+ * @param {string} [$ui-tab-font-weight-over=$tab-font-weight-over]
+ * The font-weight of hovered Tabs
+ *
+ * @param {string} [$ui-tab-font-weight-active=$tab-font-weight-active]
+ * The font-weight of the active Tab
+ *
+ * @param {string} [$ui-tab-font-weight-disabled=$tab-font-weight-disabled]
+ * The font-weight of disabled Tabs
+ *
+ * @param {string} [$ui-tab-font-family=$tab-font-family]
+ * The font-family of Tabs
+ *
+ * @param {string} [$ui-tab-font-family-over=$tab-font-family-over]
+ * The font-family of hovered Tabs
+ *
+ * @param {string} [$ui-tab-font-family-active=$tab-font-family-active]
+ * The font-family of the active Tab
+ *
+ * @param {string} [$ui-tab-font-family-disabled=$tab-font-family-disabled]
+ * The font-family of disabled Tabs
+ *
+ * @param {number} [$ui-tab-line-height=$tab-line-height]
+ * The line-height of Tabs
+ *
+ * @param {color} [$ui-tab-color=$tab-color]
+ * The text color of Tabs
+ *
+ * @param {color} [$ui-tab-color-over=$tab-color-over]
+ * The text color of hovered Tabs
+ *
+ * @param {color} [$ui-tab-color-active=$tab-color-active]
+ * The text color of the active Tab
+ *
+ * @param {color} [$ui-tab-color-disabled=$tab-color-disabled]
+ * The text color of disabled Tabs
+ *
+ * @param {string/list} [$ui-tab-background-gradient=$tab-background-gradient]
+ * The background-gradient for Tabs. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {string/list} [$ui-tab-background-gradient-over=$tab-background-gradient-over]
+ * The background-gradient for hovered Tabs. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {string/list} [$ui-tab-background-gradient-active=$tab-background-gradient-active]
+ * The background-gradient for the active Tab. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {string/list} [$ui-tab-background-gradient-disabled=$tab-background-gradient-disabled]
+ * The background-gradient for disabled Tabs. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {number} [$ui-tab-inner-border-width=$tab-inner-border-width]
+ * The inner border-width of Tabs
+ *
+ * @param {color} [$ui-tab-inner-border-color=$tab-inner-border-color]
+ * The inner border-color of Tabs
+ *
+ * @param {number} [$ui-tab-icon-width=$tab-icon-width]
+ * The width of the Tab close icon
+ *
+ * @param {number} [$ui-tab-icon-height=$tab-icon-height]
+ * The height of the Tab close icon
+ *
+ * @param {number} [$ui-tab-icon-spacing=$tab-icon-spacing]
+ * the space in between the text and the close button
+ *
+ * @param {list} [$ui-tab-icon-background-position=$tab-icon-background-position]
+ * The background-position of Tab icons
+ *
+ * @param {color} [$ui-tab-glyph-color=$tab-glyph-color]
+ * The color of Tab glyph icons
+ *
+ * @param {color} [$ui-tab-glyph-color-over=$tab-glyph-color-over]
+ * The color of a Tab glyph icon when the Tab is hovered
+ *
+ * @param {color} [$ui-tab-glyph-color-active=$tab-glyph-color-active]
+ * The color of a Tab glyph icon when the Tab is active
+ *
+ * @param {color} [$ui-tab-glyph-color-disabled=$tab-glyph-color-disabled]
+ * The color of a Tab glyph icon when the Tab is disabled
+ *
+ * @param {number} [$ui-tab-glyph-opacity=$tab-glyph-opacity]
+ * The opacity of a Tab glyph icon
+ *
+ * @param {number} [$ui-tab-glyph-opacity-disabled=$tab-glyph-opacity-disabled]
+ * The opacity of a Tab glyph icon when the Tab is disabled
+ *
+ * @param {number} [$ui-tab-opacity-disabled=$tab-opacity-disabled]
+ * opacity to apply to the tab's main element when the tab is disabled
+ *
+ * @param {number} [$ui-tab-text-opacity-disabled=$tab-text-opacity-disabled]
+ * opacity to apply to the tab's text element when the tab is disabled
+ *
+ * @param {number} [$ui-tab-icon-opacity-disabled=$tab-icon-opacity-disabled]
+ * opacity to apply to the tab's icon element when the tab is disabled
+ *
+ * @param {number} [$ui-strip-height=$tabbar-strip-height]
+ * The height of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-strip-border-width=$tabbar-strip-border-width]
+ * The border-width of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-border-color=$tabbar-strip-border-color]
+ * The border-color of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-background-color=$tabbar-strip-background-color]
+ * The background-color of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-bar-border-width=$tabbar-border-width]
+ * The border-width of the Tab Bar
+ *
+ * @param {color} [$ui-bar-border-color=$tabbar-border-color]
+ * The border-color of the Tab Bar
+ *
+ * @param {number/list} [$ui-bar-padding=$tabbar-padding]
+ * The padding of the Tab Bar
+ *
+ * @param {color} [$ui-bar-background-color=$tabbar-background-color]
+ * The background color of the  Tab Bar
+ *
+ * @param {string/list} [$ui-bar-background-gradient=$tabbar-background-gradient]
+ * The background-gradient of the Tab Bar. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {number} [$ui-bar-scroller-width=$tabbar-scroller-width]
+ * The width of the Tab Bar scrollers
+ *
+ * @param {string} [$ui-bar-scroller-cursor=$tabbar-scroller-cursor]
+ * The cursor of the Tab Bar scrollers
+ *
+ * @param {string} [$ui-bar-scroller-cursor-disabled=$tabbar-scroller-cursor-disabled]
+ * The cursor of disabled Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity=$tabbar-scroller-opacity]
+ * The opacity of Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity-over=$tabbar-scroller-opacity-over]
+ * The opacity of hovered Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity-pressed=$tabbar-scroller-opacity-pressed]
+ * The opacity of pressed Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity-disabled=$tabbar-scroller-opacity-disabled]
+ * The opacity of disabled Tab Bar scrollers
+ *
+ * @param {number} [$ui-tab-closable-icon-width=$tab-closable-icon-width]
+ * The width of the Tab close icon
+ *
+ * @param {number} [$ui-tab-closable-icon-height=$tab-closable-icon-height]
+ * The height of the Tab close icon
+ *
+ * @param {number} [$ui-tab-closable-icon-top=$tab-closable-icon-top]
+ * The distance to offset the Tab close icon from the top of the tab
+ *
+ * @param {number} [$ui-tab-closable-icon-right=$tab-closable-icon-right]
+ * The distance to offset the Tab close icon from the right of the tab
+ *
+ * @param {number} [$ui-tab-closable-icon-spacing=$tab-closable-icon-spacing]
+ * the space in between the text and the close button
+ *
+ * @member Ext.tab.Panel
+ */ 
+@mixin extjs-tab-panel-ui(
+    $ui,
+    
+    $ui-tab-background-color: $tab-base-color,
+    $ui-tab-background-color-over: $tab-base-color-over,
+    $ui-tab-background-color-active: $tab-base-color-active,
+    $ui-tab-background-color-disabled: $tab-base-color-disabled,
+    $ui-tab-border-radius: $tab-border-radius,
+    $ui-tab-border-width: $tab-border-width,
+    $ui-tab-margin: $tab-margin,
+    $ui-tab-padding: $tab-padding,
+    $ui-tab-text-padding: $tab-text-padding,
+    $ui-tab-border-color: $tab-border-color,
+    $ui-tab-border-color-over: $tab-border-color-over,
+    $ui-tab-border-color-active: $tab-border-color-active,
+    $ui-tab-border-color-disabled: $tab-border-color-disabled,
+    $ui-tab-cursor: $tab-cursor,
+    $ui-tab-cursor-disabled: $tab-cursor-disabled,
+    $ui-tab-font-size: $tab-font-size,
+    $ui-tab-font-size-over: $tab-font-size-over,
+    $ui-tab-font-size-active: $tab-font-size-active,
+    $ui-tab-font-size-disabled: $tab-font-size-disabled,
+    $ui-tab-font-weight: $tab-font-weight,
+    $ui-tab-font-weight-over: $tab-font-weight-over,
+    $ui-tab-font-weight-active: $tab-font-weight-active,
+    $ui-tab-font-weight-disabled: $tab-font-weight-disabled,
+    $ui-tab-font-family: $tab-font-family,
+    $ui-tab-font-family-over: $tab-font-family-over,
+    $ui-tab-font-family-active: $tab-font-family-active,
+    $ui-tab-font-family-disabled: $tab-font-family-disabled,
+    $ui-tab-line-height: $tab-line-height,
+    $ui-tab-color: $tab-color,
+    $ui-tab-color-over: $tab-color-over,
+    $ui-tab-color-active: $tab-color-active,
+    $ui-tab-color-disabled: $tab-color-disabled,
+    $ui-tab-background-gradient: $tab-background-gradient,
+    $ui-tab-background-gradient-over: $tab-background-gradient-over,
+    $ui-tab-background-gradient-active: $tab-background-gradient-active,
+    $ui-tab-background-gradient-disabled: $tab-background-gradient-disabled,
+
+    $ui-tab-inner-border-width: $tab-inner-border-width,
+    $ui-tab-inner-border-color: $tab-inner-border-color,
+
+    $ui-tab-icon-width: $tab-icon-width,
+    $ui-tab-icon-height: $tab-icon-height,
+    $ui-tab-icon-spacing: $tab-icon-spacing,
+    $ui-tab-icon-background-position: $tab-icon-background-position,
+
+    $ui-tab-glyph-color: $tab-glyph-color,
+    $ui-tab-glyph-color-over: $tab-glyph-color-over,
+    $ui-tab-glyph-color-active: $tab-glyph-color-active,
+    $ui-tab-glyph-color-disabled: $tab-glyph-color-disabled,
+    $ui-tab-glyph-opacity: $tab-glyph-opacity,
+    $ui-tab-glyph-opacity-disabled: $tab-glyph-opacity-disabled,
+
+    $ui-tab-opacity-disabled: $tab-opacity-disabled,
+    $ui-tab-text-opacity-disabled: $tab-text-opacity-disabled,
+    $ui-tab-icon-opacity-disabled: $tab-icon-opacity-disabled,
+
+    $ui-strip-height: $tabbar-strip-height,
+    $ui-strip-border-width: $tabbar-strip-border-width,
+    $ui-strip-border-color: $tabbar-strip-border-color,
+    $ui-strip-background-color: $tabbar-strip-background-color,
+
+    $ui-bar-border-width: $tabbar-border-width,
+    $ui-bar-border-color: $tabbar-border-color,
+    $ui-bar-padding: $tabbar-padding,
+    $ui-bar-background-color: $tabbar-base-color,
+    $ui-bar-background-gradient: $tabbar-background-gradient,
+    $ui-bar-scroller-width: $tabbar-scroller-width,
+
+    $ui-bar-scroller-cursor: $tabbar-scroller-cursor,
+    $ui-bar-scroller-cursor-disabled: $tabbar-scroller-cursor-disabled,
+    $ui-bar-scroller-opacity: $tabbar-scroller-opacity,
+    $ui-bar-scroller-opacity-over: $tabbar-scroller-opacity-over,
+    $ui-bar-scroller-opacity-pressed: $tabbar-scroller-opacity-pressed,
+    $ui-bar-scroller-opacity-disabled: $tabbar-scroller-opacity-disabled,
+
+    $ui-tab-closable-icon-width: $tab-closable-icon-width,
+    $ui-tab-closable-icon-height: $tab-closable-icon-height,
+    $ui-tab-closable-icon-top: $tab-closable-icon-top,
+    $ui-tab-closable-icon-right: $tab-closable-icon-right,
+    $ui-tab-closable-icon-spacing: $tab-closable-icon-spacing
+) {
+    @if $include-tab-default-ui or $ui != 'default' {
+        @include extjs-tab-ui(
+            $ui: $ui,
+            
+            $ui-background-color: $ui-tab-background-color,
+            $ui-background-color-over: $ui-tab-background-color-over,
+            $ui-background-color-active: $ui-tab-background-color-active,
+            $ui-background-color-disabled: $ui-tab-background-color-disabled,
+            $ui-border-radius: $ui-tab-border-radius,
+            $ui-border-width: $ui-tab-border-width,
+            $ui-margin: $ui-tab-margin,
+            $ui-padding: $ui-tab-padding,
+            $ui-text-padding: $ui-tab-text-padding,
+            $ui-border-color: $ui-tab-border-color,
+            $ui-border-color-over: $ui-tab-border-color-over,
+            $ui-border-color-active: $ui-tab-border-color-active,
+            $ui-border-color-disabled: $ui-tab-border-color-disabled,
+            $ui-cursor: $ui-tab-cursor,
+            $ui-cursor-disabled: $ui-tab-cursor-disabled,
+            $ui-font-size: $ui-tab-font-size,
+            $ui-font-size-over: $ui-tab-font-size-over,
+            $ui-font-size-active: $ui-tab-font-size-active,
+            $ui-font-size-disabled: $ui-tab-font-size-disabled,
+            $ui-font-weight: $ui-tab-font-weight,
+            $ui-font-weight-over: $ui-tab-font-weight-over,
+            $ui-font-weight-active: $ui-tab-font-weight-active,
+            $ui-font-weight-disabled: $ui-tab-font-weight-disabled,
+            $ui-font-family: $ui-tab-font-family,
+            $ui-font-family-over: $ui-tab-font-family-over,
+            $ui-font-family-active: $ui-tab-font-family-active,
+            $ui-font-family-disabled: $ui-tab-font-family-disabled,
+            $ui-line-height: $ui-tab-line-height,
+            $ui-color: $ui-tab-color,
+            $ui-color-over: $ui-tab-color-over,
+            $ui-color-active: $ui-tab-color-active,
+            $ui-color-disabled: $ui-tab-color-disabled,
+            $ui-background-gradient: $ui-tab-background-gradient,
+            $ui-background-gradient-over: $ui-tab-background-gradient-over,
+            $ui-background-gradient-active: $ui-tab-background-gradient-active,
+            $ui-background-gradient-disabled: $ui-tab-background-gradient-disabled,
+
+            $ui-inner-border-width: $ui-tab-inner-border-width,
+            $ui-inner-border-color: $ui-tab-inner-border-color,
+
+            $ui-icon-width: $ui-tab-icon-width,
+            $ui-icon-height: $ui-tab-icon-height,
+            $ui-icon-spacing: $ui-tab-icon-spacing,
+            $ui-icon-background-position: $ui-tab-icon-background-position,
+
+            $ui-glyph-color: $ui-tab-glyph-color,
+            $ui-glyph-color-over: $ui-tab-glyph-color-over,
+            $ui-glyph-color-active: $ui-tab-glyph-color-active,
+            $ui-glyph-color-disabled: $ui-tab-glyph-color-disabled,
+            $ui-glyph-opacity: $ui-tab-glyph-opacity,
+            $ui-glyph-opacity-disabled: $ui-tab-glyph-opacity-disabled,
+
+            $ui-opacity-disabled: $ui-tab-opacity-disabled,
+            $ui-text-opacity-disabled: $ui-tab-text-opacity-disabled,
+            $ui-icon-opacity-disabled: $ui-tab-icon-opacity-disabled,
+
+            $ui-closable-icon-width: $ui-tab-closable-icon-width,
+            $ui-closable-icon-height: $ui-tab-closable-icon-height,
+            $ui-closable-icon-top: $ui-tab-closable-icon-top,
+            $ui-closable-icon-right: $ui-tab-closable-icon-right,
+            $ui-closable-icon-spacing: $ui-tab-closable-icon-spacing,
+
+            $ui-border-bottom-color: $ui-strip-border-color
+        );
+    }
+
+    // When the tab border/background is the same color as the background color of the
+    // tabbar (crisp) darker corners show up when the tab is rotated vertically in IE8.
+    // Removing the background-image on the corners of the framing prevents this.
+    @if $include-slicer-border-radius and
+            ($ui-bar-background-color == $ui-tab-border-color) and
+            ($ui-tab-border-color == $ui-tab-background-color) {
+        .#{$prefix}tab-default-tl,
+        .#{$prefix}tab-default-tc,
+        .#{$prefix}tab-default-tr,
+        .#{$prefix}tab-default-bl,
+        .#{$prefix}tab-default-bc,
+        .#{$prefix}tab-default-br {
+            background-image: none;
+        }
+    }
+
+    @if $include-tabbar-default-ui or $ui != 'default' {
+        @include extjs-tab-bar-ui(
+            $ui: $ui,
+
+            $ui-strip-height: $ui-strip-height,
+            $ui-strip-border-width: $ui-strip-border-width,
+            $ui-strip-border-color: $ui-strip-border-color,
+            $ui-strip-background-color: $ui-strip-background-color,
+
+            $ui-border-width: $ui-bar-border-width,
+            $ui-border-color: $ui-bar-border-color,
+            $ui-padding: $ui-bar-padding,
+            $ui-background-color: $ui-bar-background-color,
+            $ui-background-gradient: $ui-bar-background-gradient,
+            $ui-scroller-width: $ui-bar-scroller-width,
+
+            $ui-scroller-cursor: $ui-bar-scroller-cursor,
+            $ui-scroller-cursor-disabled: $ui-bar-scroller-cursor-disabled,
+            $ui-scroller-opacity: $ui-bar-scroller-opacity,
+            $ui-scroller-opacity-over: $ui-bar-scroller-opacity-over,
+            $ui-scroller-opacity-pressed: $ui-bar-scroller-opacity-pressed,
+            $ui-scroller-opacity-disabled: $ui-bar-scroller-opacity-disabled,
+            $ui-tab-height:
+                if($ui-strip-height > 0, top($ui-strip-border-width), vertical($ui-tab-border-width)) +
+                max($ui-tab-icon-height, $ui-tab-line-height) + vertical($ui-tab-padding)
+        );
+    }
+}
+
+@include extjs-tab-panel-ui(
+    $ui: 'default'
+);
+
+:@has_childrenT:@options{ :@children[
+o:Sass::Tree::CommentNode;@;	[ :@silent0:@value"¬/**
+ * Creates a visual theme for a Tab Bar
+ *
+ * Note: When creating a tab bar UI with the extjs-tab-bar-ui mixin, 
+ * you will need to create a corresponding tab-ui of the same name.  
+ * This will ensure that the tabs render properly in your theme. 
+ * Not creating a matching tab theme may result in unpredictable 
+ * tab rendering.
+ *
+ * See `Ext.tab.Tab-css_mixin-extjs-tab-ui`
+ * 
+ * @param {string} $ui
+ * The name of the UI being created. Can not included spaces or special punctuation
+ * (used in CSS class names).
+ *
+ * @param {number} [$ui-strip-height=$tabbar-strip-height]
+ * The height of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-strip-border-width=$tabbar-strip-border-width]
+ * The border-width of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-border-color=$tabbar-strip-border-color]
+ * The border-color of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-background-color=$tabbar-strip-background-color]
+ * The background-color of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-border-width=$tabbar-border-width]
+ * The border-width of the Tab Bar
+ *
+ * @param {color} [$ui-border-color=$tabbar-border-color]
+ * The border-color of the Tab Bar
+ *
+ * @param {number/list} [$ui-padding=$tabbar-padding]
+ * The padding of the Tab Bar
+ *
+ * @param {color} [$ui-background-color=$tabbar-background-color]
+ * The background color of the  Tab Bar
+ *
+ * @param {string/list} [$ui-background-gradient=$tabbar-background-gradient]
+ * The background-gradient of the Tab Bar. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {number} [$ui-scroller-width=$tabbar-scroller-width]
+ * The width of the Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-height=$tabbar-scroller-height]
+ * The height of the Tab Bar scrollers
+ *
+ * @param {number/list} [$ui-scroller-top-margin=$tabbar-scroller-top-margin]
+ * The margin of "top" scroller buttons
+ *
+ * @param {number/list} [$ui-scroller-right-margin=$tabbar-scroller-right-margin]
+ * The margin of "right" scroller buttons
+ *
+ * @param {number/list} [$ui-scroller-bottom-margin=$tabbar-scroller-bottom-margin]
+ * The margin of "bottom" scroller buttons
+ *
+ * @param {number/list} [$ui-scroller-left-margin=$tabbar-scroller-left-margin]
+ * The margin of "left" scroller buttons
+ *
+ * @param {string} [$ui-scroller-cursor=$tabbar-scroller-cursor]
+ * The cursor of the Tab Bar scrollers
+ *
+ * @param {string} [$ui-scroller-cursor-disabled=$tabbar-scroller-cursor-disabled]
+ * The cursor of disabled Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity=$tabbar-scroller-opacity]
+ * The opacity of Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity-over=$tabbar-scroller-opacity-over]
+ * The opacity of hovered Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity-pressed=$tabbar-scroller-opacity-pressed]
+ * The opacity of pressed Tab Bar scrollers
+ *
+ * @param {number} [$ui-scroller-opacity-disabled=$tabbar-scroller-opacity-disabled]
+ * The opacity of disabled Tab Bar scrollers
+ *
+ * @param {boolean} [$ui-classic-scrollers=$tabbar-classic-scrollers]
+ * `true` to use classic-style scroller buttons.  When `true` scroller buttons are given
+ * their hover state by changing their background-position,  When `false` scroller buttons
+ * are given their hover state by applying opacity.
+ *
+ * @param {number} [$ui-tab-height]
+ * The minimum height of tabs that will be used in this tabbar UI. The tabbar body is given
+ * a min-height so that it does not collapse when it does not contain any tabs, but it
+ * is allowed to expand to be larger than the default tab height if it contains a tab
+ * that's larger than the default height.
+ *
+ * @member Ext.tab.Bar
+ */:
+@linei:@lines[ :
+@loud0o:Sass::Tree::MixinDefNode:
+@args[[o:Sass::Script::Variable:@underscored_name"ui;{ :
+@name"ui0[o;;"ui_strip_height;@;"ui-strip-heighto;	;"tabbar_strip_height;@;if;"tabbar-strip-height[o;;"ui_strip_border_width;@;"ui-strip-border-widtho;	;"tabbar_strip_border_width;@;ig;"tabbar-strip-border-width[o;;"ui_strip_border_color;@;"ui-strip-border-coloro;	;"tabbar_strip_border_color;@;ih;"tabbar-strip-border-color[o;;"ui_strip_background_color;@;"ui-strip-background-coloro;	;""tabbar_strip_background_color;@;ii;""tabbar-strip-background-color[o;;"ui_border_width;@;"ui-border-widtho;	;"tabbar_border_width;@;ik;"tabbar-border-width[o;;"ui_border_color;@;"ui-border-coloro;	;"tabbar_border_color;@;il;"tabbar-border-color[o;;"ui_padding;@;"ui-paddingo;	;"tabbar_padding;@;im;"tabbar-padding[o;;"ui_background_color;@;"ui-background-coloro;	;"tabbar_base_color;@;in;"tabbar-base-color[o;;"ui_background_gradient;@;"ui-background-gradiento;	;"tabbar_background_gradient;@;io;"tabbar-background-gradient[o;;"ui_scroller_width;@;"ui-scroller-widtho;	;"tabbar_scroller_width;@;ip;"tabbar-scroller-width[o;;"ui_scroller_height;@;"ui-scroller-heighto;	;"tabbar_scroller_height;@;iq;"tabbar-scroller-height[o;;"ui_scroller_top_margin;@;"ui-scroller-top-margino;	;"tabbar_scroller_top_margin;@;ir;"tabbar-scroller-top-margin[o;;"ui_scroller_right_margin;@;"ui-scroller-right-margino;	;"!tabbar_scroller_right_margin;@;is;"!tabbar-scroller-right-margin[o;;"ui_scroller_bottom_margin;@;"ui-scroller-bottom-margino;	;""tabbar_scroller_bottom_margin;@;it;""tabbar-scroller-bottom-margin[o;;"ui_scroller_left_margin;@;"ui-scroller-left-margino;	;" tabbar_scroller_left_margin;@;iu;" tabbar-scroller-left-margin[o;;"ui_scroller_cursor;@;"ui-scroller-cursoro;	;"tabbar_scroller_cursor;@;iv;"tabbar-scroller-cursor[o;;" ui_scroller_cursor_disabled;@;" ui-scroller-cursor-disabledo;	;"$tabbar_scroller_cursor_disabled;@;iw;"$tabbar-scroller-cursor-disabled[o;;"ui_scroller_opacity;@;"ui-scroller-opacityo;	;"tabbar_scroller_opacity;@;ix;"tabbar-scroller-opacity[o;;"ui_scroller_opacity_over;@;"ui-scroller-opacity-overo;	;"!tabbar_scroller_opacity_over;@;iy;"!tabbar-scroller-opacity-over[o;;" ui_scroller_opacity_pressed;@;" ui-scroller-opacity-pressedo;	;"$tabbar_scroller_opacity_pressed;@;iz;"$tabbar-scroller-opacity-pressed[o;;"!ui_scroller_opacity_disabled;@;"!ui-scroller-opacity-disabledo;	;"%tabbar_scroller_opacity_disabled;@;i{;"%tabbar-scroller-opacity-disabled[o;;"ui_classic_scrollers;@;"ui-classic-scrollerso;	;"tabbar_classic_scrollers;@;i|;"tabbar-classic-scrollers[o;;"ui_tab_height;@;"ui-tab-heighto:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Funcall
+;[o;	;"tab_padding;@;i;"tab-padding;@;i:@keywords{ ;"vertical:@operand1o;
+;@;o;
+;[o;	;"tab_icon_height;@;i;"tab-icon-heighto;	;"tab_line_height;@;i;"tab-line-height;@;i;{ ;"max;o;
+;[o;
+;@;o:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;i~:@numerator_units[ ;o;	;"tabbar_strip_height;@;i~;"tabbar-strip-height;i~:@operator:gto;
+;[o;	;"ui_strip_border_width;@;i~;"ui-strip-border-width;@;i~;{ ;"topo;
+;[o;	;"tab_border_width;@;i~;"tab-border-width;@;i~;{ ;"vertical;@;i~;{ ;"if;i;:	plus;i;; ;T;@;	[o:Sass::Tree::VariableNode;@:@guarded0;	[ :
+@expro:Sass::Script::List	;@;[	o;
+;[o;	;"ui_strip_border_width;@;i};"ui-strip-border-width;@;i};{ ;"topo;
+;[o;
+;[o;	;"ui_strip_border_width;@;i~;"ui-strip-border-width;@;i~;{ ;"
+righto;
+;[o;	;"ui_border_width;@;i~;"ui-border-width;@;i~;{ ;"	left;@;i~;{ ;"maxo;
+;[o;	;"ui_strip_border_width;@;i;"ui-strip-border-width;@;i;{ ;"bottomo;
+;[o;
+;[o;	;"ui_strip_border_width;@;iÄ;"ui-strip-border-width;@;iÄ;{ ;"	lefto;
+;[o;	;"ui_border_width;@;iÄ;"ui-border-width;@;iÄ;{ ;"	left;@;iÄ;{ ;"max;i}:@separator:
+space;iÄ;" ui-strip-plain-border-widtho:Sass::Tree::RuleNode;T:
+@rule[	".o;	;"prefix;@;iÇ;"prefix"tab-bar-o;	;"ui;@;iÇ;"ui;@;	[o:Sass::Tree::PropNode;@:@prop_syntax:new;	[ ;o;	;"ui_background_color;@;iÉ;"ui-background-color;iÉ:
+@tabsi ;["background-coloru:Sass::Tree::IfNode[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"0:@denominator_units[ :@valuei :
+@lineiÑ:@numerator_units[ :@operand1o:Sass::Script::Variable	:@underscored_name"ui_border_width;@;iÑ:
+@name"ui-border-width;iÑ:@operator:neq0[o:Sass::Tree::PropNode;@:@prop_syntax:new:@children[ ;o:Sass::Script::String;@:
+@type:identifier;"
+solid;iÖ:
+@tabsi ;["border-styleo;;@;;;[ ;o;	;"ui_border_color;@;iÜ;"ui-border-color;iÜ;i ;["border-color;iÇ;,i u;-	[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"0:@denominator_units[ :@valuei :
+@lineiä:@numerator_units[ :@operand1o:Sass::Script::Variable	:@underscored_name"ui_border_width;@;iä:
+@name"ui-border-width;iä:@operator:neq0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[
+".o;	;"prefix;@;iã;"prefix"tab-bar-o;	;"ui;@;iã;"ui"	-top;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o;	;"ui_border_width;@;iå;"ui-border-width;iå:
+@tabsi ;["border-width;iã;i o;;T;[
+".o;	;"prefix;@;iè;"prefix"tab-bar-o;	;"ui;@;iè;"ui"-bottom;@;[o;;@;;;[ ;o:Sass::Script::Funcall
+:
+@args[o;	;"ui_border_width;@;iê;"ui-border-width;@;iê:@keywords{ ;"flip-vertical;iê;i ;["border-width;iè;i o;;T;[
+".o;	;"prefix;@;iì;"prefix"tab-bar-o;	;"ui;@;iì;"ui"
+-left;@;[o;;@;;;[ ;o;
+;[o;	;"ui_border_width;@;iî;"ui-border-width;@;iî;{ ;"rotate270;iî;i ;["border-width;iì;i u:Sass::Tree::IfNode[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@lineió:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;iò;	"prefix"	rtl.o; 	;"prefix;@;iò;	"prefix"tab-bar-o; 	;"ui;@;iò;	"ui"
+-left;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;"ui_border_width;@;iô;	"ui-border-width;@;iô:@keywords{ ;	"rotate270;@;iô;{ ;	"rtl;iô:
+@tabsi ;	["border-width;iò;i o;;T;[
+".o;	;"prefix;@;iù;"prefix"tab-bar-o;	;"ui;@;iù;"ui"-right;@;[o;;@;;;[ ;o;
+;[o;	;"ui_border_width;@;iû;"ui-border-width;@;iû;{ ;"rotate90;iû;i ;["border-width;iù;i u;[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@linei°:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;i¢;	"prefix"	rtl.o; 	;"prefix;@;i¢;	"prefix"tab-bar-o; 	;"ui;@;i¢;	"ui"-right;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;"ui_border_width;@;i£;	"ui-border-width;@;i£:@keywords{ ;	"rotate90;@;i£;{ ;	"rtl;i£:
+@tabsi ;	["border-width;i¢;i o;';T;([	".o;	;"prefix;@;i®;"prefix"tab-bar-body-o;	;"ui;@;i®;"ui;@;	[o;';T;([
+".o;	;"prefix;@;i©;"prefix"tab-bar-o;	;"ui;@;i©;"ui"-top > &;@;	[o;);@;*;+;	[ ;o;	;"ui_padding;@;i™;"ui-padding;i™;,i ;["padding;i©;,i o;';T;([
+".o;	;"prefix;@;i≠;"prefix"tab-bar-o;	;"ui;@;i≠;"ui"-bottom > &;@;	[o;);@;*;+;	[ ;o;
+;[o;	;"ui_padding;@;iÆ;"ui-padding;@;iÆ;{ ;"flip-vertical;iÆ;,i ;["padding;i≠;,i o;';T;([
+".o;	;"prefix;@;i±;"prefix"tab-bar-o;	;"ui;@;i±;"ui"-left > &;@;	[o;);@;*;+;	[ ;o;
+;[o;	;"ui_padding;@;i≤;"ui-padding;@;i≤;{ ;"rotate270;i≤;,i ;["padding;i±;,i u;-[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@lineiµ:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;i∂;	"prefix"	rtl.o; 	;"prefix;@;i∂;	"prefix"tab-bar-o; 	;"ui;@;i∂;	"ui"-left > &;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;"ui_padding;@;i∑;	"ui-padding;@;i∑:@keywords{ ;	"rotate270;@;i∑;{ ;	"rtl;i∑:
+@tabsi ;	["padding;i∂;i o;';T;([
+".o;	;"prefix;@;iª;"prefix"tab-bar-o;	;"ui;@;iª;"ui"-right > &;@;	[o;);@;*;+;	[ ;o;
+;[o;	;"ui_padding;@;iº;"ui-padding;@;iº;{ ;"rotate90;iº;,i ;["padding;iª;,i u;-[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@lineiø:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;i¿;	"prefix"	rtl.o; 	;"prefix;@;i¿;	"prefix"tab-bar-o; 	;"ui;@;i¿;	"ui"-right > &;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;"ui_padding;@;i¡;	"ui-padding;@;i¡:@keywords{ ;	"rotate90;@;i¡;{ ;	"rtl;i¡:
+@tabsi ;	["padding;i¿;i ;i®;,i o;';T;([".o;	;"prefix;@;i∆;"prefix"tab-bar-plain;@;	[o;';T;([
+"&.o;	;"prefix;@;i«;"prefix"tab-bar-o;	;"ui;@;i«;"ui"-horizontal;@;	[	o;);@;*;+;	[ ;o:Sass::Script::String;@:
+@type:identifier;"transparent;i»;,i ;["border-top-coloro;);@;*;+;	[ ;o;.;@;/;0;"transparent;i…;,i ;["border-bottom-coloro;);@;*;+;	[ ;o;.;@;/;0;"0;i ;,i ;["border-left-widtho;);@;*;+;	[ ;o;.;@;/;0;"0;iÀ;,i ;["border-right-width;i«;,i o;';T;([
+"&.o;	;"prefix;@;iŒ;"prefix"tab-bar-o;	;"ui;@;iŒ;"ui"-vertical;@;	[	o;);@;*;+;	[ ;o;.;@;/;0;"transparent;iœ;,i ;["border-right-coloro;);@;*;+;	[ ;o;.;@;/;0;"transparent;i–;,i ;["border-left-coloro;);@;*;+;	[ ;o;.;@;/;0;"0;i—;,i ;["border-top-widtho;);@;*;+;	[ ;o;.;@;/;0;"0;i“;,i ;["border-bottom-width;iŒ;,i ;i∆;,i o;!;@;"0;	[ ;#o;
+;[o;
+;@;o;
+;[o;	;"ui_strip_border_width;@;i÷;"ui-strip-border-width;@;i÷;{ ;"vertical;o;	;"ui_strip_height;@;i÷;"ui-strip-height;i÷;:
+minuso;;@;"0;@≈;i ;i÷;[ ;@;i÷;{ ;"max;i÷;"strip-sizeu;-[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Number;@:@original"0:@denominator_units[ :@valuei :
+@lineiÿ:@numerator_units[ :@operand1o:Sass::Script::Variable	:@underscored_name"strip_size;@;iÿ:
+@name"strip-size;iÿ:@operator:neq0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[	".o;	;"prefix;@;iŸ;"prefix"tab-bar-body-o;	;"ui;@;iŸ;"ui;@:@children[	o;;T;[".o;	;"prefix;@;i⁄;"prefix"tab-bar-top > &;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o;	;"strip_size;@;i€;"strip-size;i€:
+@tabsi ;["padding-bottom;i⁄;i o;;T;[".o;	;"prefix;@;iﬁ;"prefix"tab-bar-bottom > &;@;[o;;@;;;[ ;o;	;"strip_size;@;iﬂ;"strip-size;iﬂ;i ;["padding-top;iﬁ;i o;;T;[".o;	;"prefix;@;i‚;"prefix"tab-bar-left > &;@;[o;;@;;;[ ;o;	;"strip_size;@;i„;"strip-size;i„;i ;["padding-rightu:Sass::Tree::IfNode∆[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@lineiÂ:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule["&.o; 	;"prefix;@;iÊ;	"prefix"rtl;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::String;@:
+@type:identifier;"0;iÁ:
+@tabsi ;	["padding-righto;;@;;;[ ;o; 	;"strip_size;@;iË;	"strip-size;iË;i ;	["padding-left;iÊ;i ;i‚;i o;;T;[".o;	;"prefix;@;iÌ;"prefix"tab-bar-right > &;@;[o;;@;;;[ ;o;	;"strip_size;@;iÓ;"strip-size;iÓ;i ;["padding-leftu;∆[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@linei:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule["&.o; 	;"prefix;@;iÒ;	"prefix"rtl;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::String;@:
+@type:identifier;"0;iÚ:
+@tabsi ;	["padding-lefto;;@;;;[ ;o; 	;"strip_size;@;iÛ;	"strip-size;iÛ;i ;	["padding-right;iÒ;i ;iÌ;i ;iŸ;i o;;T;[	".o;	;"prefix;@;i˘;"prefix"tab-bar-strip-o;	;"ui;@;i˘;"ui;@;[o;;@;;;[ ;o:Sass::Script::String;@:
+@type:identifier;"
+solid;i˙;i ;["border-styleo;;@;;;[ ;o;	;"ui_strip_border_color;@;i˚;"ui-strip-border-color;i˚;i ;["border-coloro;;@;;;[ ;o;	;"ui_strip_background_color;@;i¸;"ui-strip-background-color;i¸;i ;["background-color;i˘;i o;;T;[".o;	;"prefix;@;iˇ;"prefix"tab-bar-top;@;[o;;T;[	"> .o;	;"prefix;@;i ;"prefix"tab-bar-strip-o;	;"ui;@;i ;"ui;@;[o;;@;;;[ ;o;	;"ui_strip_border_width;@;i;"ui-strip-border-width;i;i ;["border-widtho;;@;;;[ ;o;	;"ui_strip_height;@;i;"ui-strip-height;i;i ;["height;i ;i o;;T;["&.o;	;"prefix;@;i;"prefix"tab-bar-plain > .o;	;"prefix;@;i;"prefix"tab-bar-strip-o;	;"ui;@;i;"ui;@;[o;;@;;;[ ;o;	;" ui_strip_plain_border_width;@;i;" ui-strip-plain-border-width;i;i ;["border-width;i;i ;iˇ;i o;;T;[".o;	;"prefix;@;i	;"prefix"tab-bar-bottom;@;[o;;T;[	"> .o;	;"prefix;@;i
+;"prefix"tab-bar-strip-o;	;"ui;@;i
+;"ui;@;[o;;@;;;[ ;o:Sass::Script::Funcall
+:
+@args[o;	;"ui_strip_border_width;@;i;"ui-strip-border-width;@;i:@keywords{ ;"flip-vertical;i;i ;["border-widtho;;@;;;[ ;o;	;"ui_strip_height;@;i;"ui-strip-height;i;i ;["height;i
+;i o;;T;["&.o;	;"prefix;@;i;"prefix"tab-bar-plain > .o;	;"prefix;@;i;"prefix"tab-bar-strip-o;	;"ui;@;i;"ui;@;[o;;@;;;[ ;o; 
+;![o;	;" ui_strip_plain_border_width;@;i;" ui-strip-plain-border-width;@;i;"{ ;"flip-vertical;i;i ;["border-width;i;i ;i	;i o;;T;[".o;	;"prefix;@;i;"prefix"tab-bar-left;@;[o;;T;[	"> .o;	;"prefix;@;i;"prefix"tab-bar-strip-o;	;"ui;@;i;"ui;@;[o;;@;;;[ ;o; 
+;![o;	;"ui_strip_border_width;@;i;"ui-strip-border-width;@;i;"{ ;"rotate270;i;i ;["border-widtho;;@;;;[ ;o;	;"ui_strip_height;@;i;"ui-strip-height;i;i ;["
+widthu;‚[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@linei:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule["&.o; 	;"prefix;@;i;	"prefix"rtl;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;"ui_strip_border_width;@;i;	"ui-strip-border-width;@;i:@keywords{ ;	"rotate270;@;i;{ ;	"rtl;i:
+@tabsi ;	["border-width;i;i ;i;i o;;T;["&.o;	;"prefix;@;i;"prefix"tab-bar-plain > .o;	;"prefix;@;i;"prefix"tab-bar-strip-o;	;"ui;@;i;"ui;@;[o;;@;;;[ ;o; 
+;![o;	;" ui_strip_plain_border_width;@;i;" ui-strip-plain-border-width;@;i;"{ ;"rotate270;i;i ;["border-widthu;Ó[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@linei:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule["&.o; 	;"prefix;@;i ;	"prefix"rtl;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;" ui_strip_plain_border_width;@;i!;	" ui-strip-plain-border-width;@;i!:@keywords{ ;	"rotate270;@;i!;{ ;	"rtl;i!:
+@tabsi ;	["border-width;i ;i ;i;i ;i;i o;;T;[".o;	;"prefix;@;i';"prefix"tab-bar-right;@;[o;;T;[	"> .o;	;"prefix;@;i(;"prefix"tab-bar-strip-o;	;"ui;@;i(;"ui;@;[o;;@;;;[ ;o; 
+;![o;	;"ui_strip_border_width;@;i);"ui-strip-border-width;@;i);"{ ;"rotate90;i);i ;["border-widtho;;@;;;[ ;o;	;"ui_strip_height;@;i*;"ui-strip-height;i*;i ;["
+widthu;·[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@linei+:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule["&.o; 	;"prefix;@;i,;	"prefix"rtl;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;"ui_strip_border_width;@;i-;	"ui-strip-border-width;@;i-:@keywords{ ;	"rotate90;@;i-;{ ;	"rtl;i-:
+@tabsi ;	["border-width;i,;i ;i(;i o;;T;["&.o;	;"prefix;@;i1;"prefix"tab-bar-plain > .o;	;"prefix;@;i1;"prefix"tab-bar-strip-o;	;"ui;@;i1;"ui;@;[o;;@;;;[ ;o; 
+;![o;	;" ui_strip_plain_border_width;@;i2;" ui-strip-plain-border-width;@;i2;"{ ;"rotate90;i2;i ;["border-widthu;Ì[o:Sass::Script::Variable	:@underscored_name"include_rtl:@options{ :
+@linei3:
+@name"include-rtl0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule["&.o; 	;"prefix;@;i4;	"prefix"rtl;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o;
+;[o; 	;" ui_strip_plain_border_width;@;i5;	" ui-strip-plain-border-width;@;i5:@keywords{ ;	"rotate90;@;i5;{ ;	"rtl;i5:
+@tabsi ;	["border-width;i4;i ;i1;i ;i';i o;
+;@;	[ ;i ;"ï/* tabbars need a min-height/width so that horizontal tabbars don't lose height and
+ * vertical tabbars don't lose width when all tabs are closed. */;i<;[ ;0o;!;@;"0;	[ ;#o;
+;@;o;
+;[o;	;"ui_strip_border_width;@;i>;"ui-strip-border-width;@;i>;{ ;"top;o;
+;@;o;	;"ui_strip_height;@;i>;"ui-strip-height;o;	;"ui_tab_height;@;i>;"ui-tab-height;i>;; ;i>;;1;i>;"ui-body-heighto;';T;([".o;	;"prefix;@;i@;"prefix"tab-bar-horizontal > .o;	;"prefix;@;i@;"prefix"tab-bar-body-o;	;"ui;@;i@;"ui;@;	[o;);@;*;+;	[ ;o;	;"ui_body_height;@;iA;"ui-body-height;iA;,i ;["min-heighto;';T;([".o;	;"prefix;@;iC;"prefix"ie9m &;@;	[o;
+;@;	[ ;i ;"E/* border-box model is busted in IE9m when min-height is used */;iD;[ ;0o;);@;*;+;	[ ;o;
+;@;o;	;"strip_size;@;iE;"strip-size;o;	;"ui_body_height;@;iE;"ui-body-height;iE;;1;iE;,i ;["min-height;iC;,i ;i@;,i o;';T;([".o;	;"prefix;@;iI;"prefix"tab-bar-vertical > .o;	;"prefix;@;iI;"prefix"tab-bar-body-o;	;"ui;@;iI;"ui;@;	[o;);@;*;+;	[ ;o;	;"ui_body_height;@;iJ;"ui-body-height;iJ;,i ;["min-widtho;';T;([".o;	;"prefix;@;iL;"prefix"ie9m &;@;	[o;
+;@;	[ ;i ;"D/* border-box model is busted in IE9m when min-width is used */;iM;[ ;0o;);@;*;+;	[ ;o;
+;@;o;	;"strip_size;@;iN;"strip-size;o;	;"ui_body_height;@;iN;"ui-body-height;iN;;1;iN;,i ;["min-width;iL;,i ;iI;,i u;-ª[o:!Sass::Script::UnaryOperation	:@options{ :@operando:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"ui_background_gradient;@:
+@lineiR:
+@name"ui-background-gradient;@;iR:@keywords{ ;"is-null;iR:@operator:not0[	o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[
+".o;
+	;"prefix;@;iS;"prefix"tab-bar-o;
+	;"ui;@;iS;"ui"	-top;@:@children[o:Sass::Tree::MixinNode;	[o;
+	;"ui_background_color;@;iT;"ui-background-coloro;
+	;"ui_background_gradient;@;iT;"ui-background-gradiento:Sass::Script::String	;@:
+@type:identifier:@value"top;iT;@;[ ;iT;{ ;"background-gradientu:Sass::Tree::IfNode3[o:Sass::Script::Variable	:@underscored_name"include_slicer_gradient:@options{ :
+@lineiV:
+@name"include-slicer-gradient0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;iW;	"prefix"
+nlg &;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o: Sass::Script::Interpolation:@whitespace_after0:@beforeo:Sass::Script::String	;@:
+@type:identifier;"tab-bar-;iX;@:@whitespace_before0:@aftero;	;@;;;"	-top;iX;iX:@originally_textF:	@mido; 	;"ui;@;iX;	"uio:&Sass::Script::StringInterpolation
+;o;	;@;:string;"tab-bar/tab-bar-;iX;@;o;	;@;;;"-top-bg;iX;iX;o; 	;"ui;@;iX;	"ui;@;iX:@keywords{ ;	"slicer-background-image;iX:
+@tabsi ;	["background;iW;!i ;iS:
+@tabsi o;;T;[
+".o;
+	;"prefix;@;i];"prefix"tab-bar-o;
+	;"ui;@;i];"ui"-bottom;@;[o;;	[o;
+	;"ui_background_color;@;i^;"ui-background-coloro;
+	;"ui_background_gradient;@;i^;"ui-background-gradiento;	;@;;;"bottom;i^;@;[ ;i^;{ ;"background-gradientu;Í[o:Sass::Script::Variable	:@underscored_name"include_slicer_gradient:@options{ :
+@linei`:
+@name"include-slicer-gradient0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;ia;	"prefix"
+nlg &;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::List	;@;[o:Sass::Script::Funcall
+:
+@args[o: Sass::Script::Interpolation:@whitespace_after0:@beforeo:Sass::Script::String	;@:
+@type:identifier;"tab-bar-;ib;@:@whitespace_before0:@aftero;	;@;;;"-bottom;ib;ib:@originally_textF:	@mido; 	;"ui;@;ib;	"uio:&Sass::Script::StringInterpolation
+;o;	;@;:string;"tab-bar/tab-bar-;ib;@;o;	;@;; ;"-bottom-bg;ib;ib;o; 	;"ui;@;ib;	"ui;@;ib:@keywords{ ;	"slicer-background-imageo;	;@;;;"bottom;ibo:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;ib:@numerator_units[ ;ib:@separator:
+space;ib:
+@tabsi ;	["background;ia;(i ;i];i o;;T;[
+".o;
+	;"prefix;@;ig;"prefix"tab-bar-o;
+	;"ui;@;ig;"ui"
+-left;@;[o;;	[o;
+	;"ui_background_color;@;ih;"ui-background-coloro;
+	;"ui_background_gradient;@;ih;"ui-background-gradiento;	;@;;;"	left;ih;@;[ ;ih;{ ;"background-gradientu;5[o:Sass::Script::Variable	:@underscored_name"include_slicer_gradient:@options{ :
+@lineij:
+@name"include-slicer-gradient0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;ik;	"prefix"
+nlg &;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o: Sass::Script::Interpolation:@whitespace_after0:@beforeo:Sass::Script::String	;@:
+@type:identifier;"tab-bar-;il;@:@whitespace_before0:@aftero;	;@;;;"
+-left;il;il:@originally_textF:	@mido; 	;"ui;@;il;	"uio:&Sass::Script::StringInterpolation
+;o;	;@;:string;"tab-bar/tab-bar-;il;@;o;	;@;;;"-left-bg;il;il;o; 	;"ui;@;il;	"ui;@;il:@keywords{ ;	"slicer-background-image;il:
+@tabsi ;	["background;ik;!i ;ig;i o;;T;[
+".o;
+	;"prefix;@;iq;"prefix"tab-bar-o;
+	;"ui;@;iq;"ui"-right;@;[o;;	[o;
+	;"ui_background_color;@;ir;"ui-background-coloro;
+	;"ui_background_gradient;@;ir;"ui-background-gradiento;	;@;;;"
+right;ir;@;[ ;ir;{ ;"background-gradientu;Á[o:Sass::Script::Variable	:@underscored_name"include_slicer_gradient:@options{ :
+@lineit:
+@name"include-slicer-gradient0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;iu;	"prefix"
+nlg &;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::List	;@;[o:Sass::Script::Funcall
+:
+@args[o: Sass::Script::Interpolation:@whitespace_after0:@beforeo:Sass::Script::String	;@:
+@type:identifier;"tab-bar-;iv;@:@whitespace_before0:@aftero;	;@;;;"-right;iv;iv:@originally_textF:	@mido; 	;"ui;@;iv;	"uio:&Sass::Script::StringInterpolation
+;o;	;@;:string;"tab-bar/tab-bar-;iv;@;o;	;@;; ;"-right-bg;iv;iv;o; 	;"ui;@;iv;	"ui;@;iv:@keywords{ ;	"slicer-background-imageo:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;iv:@numerator_units[ o;	;@;;;"
+right;iv;iv:@separator:
+space;iv:
+@tabsi ;	["background;iu;(i ;iq;i u;-ñ[o:Sass::Script::Variable	:@underscored_name"6include_ext_layout_container_boxoverflow_scroller:@options{ :
+@linei|:
+@name"6include-ext-layout-container-boxoverflow-scroller0[o:Sass::Tree::MixinNode:
+@args[ ;@:@children[ ;ií:@keywords{"horizontal_heighto; 	;"ui_scroller_height;@;iÅ;	"ui-scroller-height"cursoro; 	;"ui_scroller_cursor;@;iâ;	"ui-scroller-cursor"include_background_imageso; 	;"&tabbar_scroller_symmetrical_icons;@;ië;	"&tabbar-scroller-symmetrical-icons"opacity_overo; 	;"ui_scroller_opacity_over;@;iç;	"ui-scroller-opacity-over"opacity_disabledo; 	;"!ui_scroller_opacity_disabled;@;iè;	"!ui-scroller-opacity-disabled"
+aligno:Sass::Script::Funcall
+;[o; 	;"ui_classic_scrollers;@;iã;	"ui-classic-scrollerso:Sass::Script::String	;@:
+@type:identifier:@value"stretch;ião;	;@;;;"middle;iã;@;iã;{ ;	"if"classico; 	;"ui_classic_scrollers;@;iê;	"ui-classic-scrollers"bottom_margino; 	;"ui_scroller_bottom_margin;@;iÜ;	"ui-scroller-bottom-margin"horizontal_widtho; 	;"ui_scroller_width;@;iÄ;	"ui-scroller-width"vertical_heighto; 	;"ui_scroller_width;@;iÉ;	"ui-scroller-width"opacity_pressedo; 	;" ui_scroller_opacity_pressed;@;ié;	" ui-scroller-opacity-pressed"left_margino; 	;"ui_scroller_left_margin;@;iá;	"ui-scroller-left-margin"opacityo; 	;"ui_scroller_opacity;@;iå;	"ui-scroller-opacity"uio; 	;"ui;@;i~;	"ui"vertical_widtho; 	;"ui_scroller_height;@;iÇ;	"ui-scroller-height"	typeo;	;@;:string;"tab-bar;i"right_margino; 	;"ui_scroller_right_margin;@;iÖ;	"ui-scroller-right-margin"container_paddingo; 	;"ui_padding;@;ià;	"ui-padding"top_margino; 	;"ui_scroller_top_margin;@;iÑ;	"ui-scroller-top-margin"cursor_disabledo; 	;" ui_scroller_cursor_disabled;@;iä;	" ui-scroller-cursor-disabled;	"extjs-box-scroller-uiu;-ç[o:Sass::Script::Variable	:@underscored_name"ui_classic_scrollers:@options{ :
+@lineiï:
+@name"ui-classic-scrollersu:Sass::Tree::IfNodeö[00[o:Sass::Tree::VariableNode:@options{ :@guarded0:@children[ :
+@expro:!Sass::Script::UnaryOperation	;@:@operando:Sass::Script::Operation
+;@:@operand2o:Sass::Script::Funcall
+:
+@args[o;
+;@;o:Sass::Script::Number;@:@original"2:@denominator_units[ :@valuei:
+@linei∫:@numerator_units[ :@operand1o:Sass::Script::Variable	:@underscored_name"ui_strip_height;@;i∫:
+@name"ui-strip-height;i∫:@operator:div;@;i∫:@keywords{ ;"
+floor;o;
+;[o;
+;@;o;;@;"2;@;i;i∫;[ ;o;	;"ui_scroller_height;@;i∫;"ui-scroller-height;i∫;;;@;i∫;{ ;"
+floor;i∫;:	plus;i∫;:
+minus;i∫;" ui-scroller-top-left-offseto; ;@;0;[ ;	o;
+	;@;o;
+;@;o;
+;[o;
+;@;o;;@;"2;@;i;iª;[ ;o;	;"ui_strip_height;@;iª;"ui-strip-height;iª;;;@;iª;{ ;"
+floor;o;
+;[o;
+;@;o;;@;"2;@;i;iª;[ ;o;	;"ui_scroller_height;@;iª;"ui-scroller-height;iª;;;@;iª;{ ;"
+floor;iª;;;iª;;;iª;"$ui-scroller-bottom-right-offseto:Sass::Tree::RuleNode:@has_childrenT:
+@rule[	".o;	;"prefix;@;iΩ;"prefix"box-scroller-tab-bar-o;	;"ui;@;iΩ;"ui;@;[	o;; T;![
+".o;	;"prefix;@;iæ;"prefix"tab-bar-o;	;"ui;@;iæ;"ui"-top &;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o;	;" ui_scroller_top_left_offset;@;iø;" ui-scroller-top-left-offset;iø:
+@tabsi ;["margin-top;iæ;%i o;; T;![
+".o;	;"prefix;@;i¬;"prefix"tab-bar-o;	;"ui;@;i¬;"ui"-right &;@;[o;";@;#;$;[ ;o;	;"$ui_scroller_bottom_right_offset;@;i√;"$ui-scroller-bottom-right-offset;i√;%i ;["margin-left;i¬;%i o;; T;![
+".o;	;"prefix;@;i∆;"prefix"tab-bar-o;	;"ui;@;i∆;"ui"-bottom &;@;[o;";@;#;$;[ ;o;	;"$ui_scroller_bottom_right_offset;@;i«;"$ui-scroller-bottom-right-offset;i«;%i ;["margin-top;i∆;%i o;; T;![
+".o;	;"prefix;@;i ;"prefix"tab-bar-o;	;"ui;@;i ;"ui"-left &;@;[o;";@;#;$;[ ;o;	;" ui_scroller_top_left_offset;@;iÀ;" ui-scroller-top-left-offset;iÀ;%i ;["margin-left;i ;%i ;iΩ;%i [o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[
+".o; 	;"prefix;@;iñ;	"prefix"tab-bar-o; 	;"ui;@;iñ;	"ui"-right;@:@children[o;;T;[".o; 	;"prefix;@;ió;	"prefix"box-scroller-top;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::List	;@;[o:Sass::Script::String	;@:
+@type:identifier;"
+right;iòo:!Sass::Script::UnaryOperation	;@:@operando; 	;"ui_scroller_width;@;iò;	"ui-scroller-width;iò:@operator:
+minus;iò:@separator:
+space;iò:
+@tabsi ;	["background-positiono;;T;["&.o; 	;"prefix;@;iö;	"prefix"box-scroller-hover;@;[o;;@;;;[ ;o;;@;;;"right 0;iõ;i ;	["background-position;iö;i ;ió;i o;;T;[".o; 	;"prefix;@;iü;	"prefix"box-scroller-bottom;@;[o;;@;;;[ ;o;;@;;;"right 0;i†;i ;	["background-positiono;;T;["&.o; 	;"prefix;@;i¢;	"prefix"box-scroller-hover;@;[o;;@;;;[ ;o;	;@;[o;	;@;;;"
+right;i£o;	;@;o; 	;"ui_scroller_width;@;i£;	"ui-scroller-width;i£;;;i£;;;i£;i ;	["background-position;i¢;i ;iü;i ;iñ;i o;;T;[
+".o; 	;"prefix;@;i®;	"prefix"tab-bar-o; 	;"ui;@;i®;	"ui"-bottom;@;[o;;T;[".o; 	;"prefix;@;i©;	"prefix"box-scroller-left;@;[o;;@;;;[ ;o;	;@;[o;	;@;o; 	;"ui_scroller_width;@;i™;	"ui-scroller-width;i™;;o;	;@;;;"bottom;i™;i™;;;i™;i ;	["background-positiono;;T;["&.o; 	;"prefix;@;i¨;	"prefix"box-scroller-hover;@;[o;;@;;;[ ;o;;@;;;"0 bottom;i≠;i ;	["background-position;i¨;i ;i©;i o;;T;[".o; 	;"prefix;@;i±;	"prefix"box-scroller-right;@;[o;;@;;;[ ;o;;@;;;"0 bottom;i≤;i ;	["background-positiono;;T;["&.o; 	;"prefix;@;i¥;	"prefix"box-scroller-hover;@;[o;;@;;;[ ;o;	;@;[o;	;@;o; 	;"ui_scroller_width;@;iµ;	"ui-scroller-width;iµ;;o;	;@;;;"bottom;iµ;iµ;;;iµ;i ;	["background-position;i¥;i ;i±;i ;i®;i u;-„[o:Sass::Script::Operation
+:@options{ :@operand2o:Sass::Script::Funcall
+:
+@args[o:Sass::Script::Variable	:@underscored_name"ui_background_gradient;@:
+@linei—:
+@name"ui-background-gradient;@;i—:@keywords{ ;"is-null:@operand1o; 
+;@;o; 
+;@;o:Sass::Script::Number;@:@original"1:@denominator_units[ :@valuei;i—:@numerator_units[ ;o;
+	;" ui_scroller_opacity_pressed;@;i—;" ui-scroller-opacity-pressed;i—:@operator:neq;o; 
+;@;o; 
+;@;o;;@;"1;@;i;i–;[ ;o;
+	;"ui_scroller_opacity_over;@;i–;"ui-scroller-opacity-over;i–;;;o; 
+;@;o;;@;"1;@;i;i–;[ ;o;
+	;"ui_scroller_opacity;@;i–;"ui-scroller-opacity;i–;;;i–;:or;i—;;;i—;:and0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[	".o;
+	;"prefix;@;i”;"prefix"box-scroller-tab-bar-o;
+	;"ui;@;i”;"ui;@:@children[o:Sass::Tree::CommentNode;@;[ :@silenti ;"ﬂ/* EXTJSIV-8846: partially transparent png images do not display correctly
+ * in winXP/IE8 when the image element has a transparent background.
+ * to fix this, we give the element the same background-color as the tabbar. */;i‘:@lines[ :
+@loud0o:Sass::Tree::PropNode;@:@prop_syntax:new;[ ;o;
+	;"ui_background_color;@;i◊;"ui-background-color;i◊:
+@tabsi ;["background-coloro;;T;[
+".o;
+	;"prefix;@;iŸ;"prefix"
+ie8 .o;
+	;"prefix;@;iŸ;"prefix"box-scroller-plain;@;[o;;@;[ ;i ;"É/* plain tabbars have transparent backgrounds, so we use a white bg to overcome
+ * the png transparency issues. See EXTJSIV-8846 */;i⁄;[ ; 0o;!;@;";#;[ ;o:Sass::Script::String;@:
+@type:identifier;"	#fff;i‹;$i ;["background-color;iŸ;$i ;i”;$i u;-¢[o:Sass::Script::Variable	:@underscored_name"&tabbar_scroller_symmetrical_icons:@options{ :
+@linei·:
+@name"&tabbar-scroller-symmetrical-iconsu:Sass::Tree::IfNode$[00[	o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[
+".o:Sass::Script::Variable	:@underscored_name"prefix:@options{ :
+@lineiˆ:
+@name"prefix"tab-bar-o;	;	"ui;
+@;iˆ;"ui"	-top;
+@:@children[o; ;T;[".o;	;	"prefix;
+@;i˜;"prefix"box-scroller-left;
+@;[o:Sass::Tree::PropNode;
+@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;
+@:
+@type:string;"tab-bar/;i¯;
+@:@aftero;	;
+@;;;"-scroll-left-top;i¯;i¯:	@mido;	;	"ui;
+@;i¯;"ui;
+@;i¯:@keywords{ ;"theme-background-image;i¯:
+@tabsi ;["background-image;i˜;i o; ;T;[".o;	;	"prefix;
+@;i˙;"prefix"box-scroller-right;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i˚;
+@;o;	;
+@;;;"-scroll-right-top;i˚;i˚;o;	;	"ui;
+@;i˚;"ui;
+@;i˚;{ ;"theme-background-image;i˚;i ;["background-image;i˙;i ;iˆ;i o; ;T;[
+".o;	;	"prefix;
+@;iˇ;"prefix"tab-bar-o;	;	"ui;
+@;iˇ;"ui"-bottom;
+@;[o; ;T;[".o;	;	"prefix;
+@;i ;"prefix"box-scroller-left;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i;
+@;o;	;
+@;;;"-scroll-left-bottom;i;i;o;	;	"ui;
+@;i;"ui;
+@;i;{ ;"theme-background-image;i;i ;["background-image;i ;i o; ;T;[".o;	;	"prefix;
+@;i;"prefix"box-scroller-right;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i;
+@;o;	;
+@;;;"-scroll-right-bottom;i;i;o;	;	"ui;
+@;i;"ui;
+@;i;{ ;"theme-background-image;i;i ;["background-image;i;i ;iˇ;i o; ;T;[
+".o;	;	"prefix;
+@;i;"prefix"tab-bar-o;	;	"ui;
+@;i;"ui"
+-left;
+@;[o; ;T;[".o;	;	"prefix;
+@;i	;"prefix"box-scroller-top;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i
+;
+@;o;	;
+@;;;"-scroll-top-left;i
+;i
+;o;	;	"ui;
+@;i
+;"ui;
+@;i
+;{ ;"theme-background-image;i
+;i ;["background-image;i	;i o; ;T;[".o;	;	"prefix;
+@;i;"prefix"box-scroller-bottom;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i;
+@;o;	;
+@;;;"-scroll-bottom-left;i;i;o;	;	"ui;
+@;i;"ui;
+@;i;{ ;"theme-background-image;i;i ;["background-image;i;i ;i;i o; ;T;[
+".o;	;	"prefix;
+@;i;"prefix"tab-bar-o;	;	"ui;
+@;i;"ui"-right;
+@;[o; ;T;[".o;	;	"prefix;
+@;i;"prefix"box-scroller-top;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i;
+@;o;	;
+@;;;"-scroll-top-right;i;i;o;	;	"ui;
+@;i;"ui;
+@;i;{ ;"theme-background-image;i;i ;["background-image;i;i o; ;T;[".o;	;	"prefix;
+@;i;"prefix"box-scroller-bottom;
+@;[o;;
+@;;;[ ;o;
+;[o;
+;o;	;
+@;;;"tab-bar/;i;
+@;o;	;
+@;;;"-scroll-bottom-right;i;i;o;	;	"ui;
+@;i;"ui;
+@;i;{ ;"theme-background-image;i;i ;["background-image;i;i ;i;i [u;
+…[o:Sass::Script::Variable	:@underscored_name"'tabbar_scroller_include_plain_icon:@options{ :
+@linei‚:
+@name"'tabbar-scroller-include-plain-icon0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o; 	;"prefix;@;i„;	"prefix"box-scroller-plain.o; 	;"prefix;@;i„;	"prefix"box-scroller-tab-bar-o; 	;"ui;@;i„;	"ui;@:@children[	o;
+;T;["&.o; 	;"prefix;@;i‰;	"prefix"box-scroller-left;@;[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::Funcall
+:
+@args[o:&Sass::Script::StringInterpolation
+:@beforeo:Sass::Script::String	;@:
+@type:string;"tab-bar/;iÂ;@:@aftero;	;@;;;"-plain-scroll-left;iÂ;iÂ:	@mido; 	;"ui;@;iÂ;	"ui;@;iÂ:@keywords{ ;	"theme-background-image;iÂ:
+@tabsi ;	["background-image;i‰;i o;
+;T;["&.o; 	;"prefix;@;iË;	"prefix"box-scroller-right;@;[o;;@;;;[ ;o;
+;[o;
+;o;	;@;;;"tab-bar/;iÈ;@;o;	;@;;;"-plain-scroll-right;iÈ;iÈ;o; 	;"ui;@;iÈ;	"ui;@;iÈ;{ ;	"theme-background-image;iÈ;i ;	["background-image;iË;i o;
+;T;["&.o; 	;"prefix;@;iÏ;	"prefix"box-scroller-top;@;[o;;@;;;[ ;o;
+;[o;
+;o;	;@;;;"tab-bar/;iÌ;@;o;	;@;;;"-plain-scroll-top;iÌ;iÌ;o; 	;"ui;@;iÌ;	"ui;@;iÌ;{ ;	"theme-background-image;iÌ;i ;	["background-image;iÏ;i o;
+;T;["&.o; 	;"prefix;@;i;	"prefix"box-scroller-bottom;@;[o;;@;;;[ ;o;
+;[o;
+;o;	;@;;;"tab-bar/;iÒ;@;o;	;@;;;"-plain-scroll-bottom;iÒ;iÒ;o; 	;"ui;@;iÒ;	"ui;@;iÒ;{ ;	"theme-background-image;iÒ;i ;	["background-image;i;i ;i„;i o;!;@;"0;	[ ;#o;
+;[o: Sass::Script::Interpolation:@whitespace_after0:@beforeo;.	;@;/;0;"tab-bar-;i;@:@whitespace_before0:@aftero;.	;@;/;0;"	-top;i;i:@originally_textF:	@mido;	;"ui;@;i;"uio;.	;@;/;0;"bottom;i;@;i;{ ;"slicer-background-stretch;i;"stretcho;!;@;"0;	[ ;#o;
+;[o;2;30;4o;.	;@;/;0;"tab-bar-;i;@;50;6o;.	;@;/;0;"-bottom;i;i;7F;8o;	;"ui;@;i;"uio;.	;@;/;0;"top;i;@;i;{ ;"slicer-background-stretch;i;"stretcho;!;@;"0;	[ ;#o;
+;[o;2;30;4o;.	;@;/;0;"tab-bar-;i;@;50;6o;.	;@;/;0;"
+-left;i;i;7F;8o;	;"ui;@;i;"uio;.	;@;/;0;"
+right;i;@;i;{ ;"slicer-background-stretch;i;"stretcho;!;@;"0;	[ ;#o;
+;[o;2;30;4o;.	;@;/;0;"tab-bar-;i;@;50;6o;.	;@;/;0;"-right;i;i;7F;8o;	;"ui;@;i;"uio;.	;@;/;0;"	left;i;@;i;{ ;"slicer-background-stretch;i;"stretcho:Sass::Tree::MixinNode;[o;2;30;4o;.	;@;/;0;"tab-bar-;i ;@;50;6o;.	;@;/;0;"	-top;i ;i ;7F;8o;	;"ui;@;i ;"ui;@;	[ ;i ;{ ;"x-slicero;9;[o;2;30;4o;.	;@;/;0;"tab-bar-;i!;@;50;6o;.	;@;/;0;"-bottom;i!;i!;7F;8o;	;"ui;@;i!;"ui;@;	[ ;i!;{ ;"x-slicero;9;[o;2;30;4o;.	;@;/;0;"tab-bar-;i";@;50;6o;.	;@;/;0;"
+-left;i";i";7F;8o;	;"ui;@;i";"ui;@;	[ ;i";{ ;"x-slicero;9;[o;2;30;4o;.	;@;/;0;"tab-bar-;i#;@;50;6o;.	;@;/;0;"-right;i#;i#;7F;8o;	;"ui;@;i#;"ui;@;	[ ;i#;{ ;"x-slicer;i{;"extjs-tab-bar-uio;
+;@;	[ ;0;"n#/**
+ * Creates a visual theme for a Tab Panel
+ *
+ * @param {string} $ui
+ * The name of the UI being created. Can not included spaces or special punctuation
+ * (used in CSS class names).
+ *
+ * @param {color} [$ui-tab-background-color=$tab-base-color]
+ * The background-color of Tabs
+ *
+ * @param {color} [$ui-tab-background-color-over=$tab-base-color-over]
+ * The background-color of hovered Tabs
+ *
+ * @param {color} [$ui-tab-background-color-active=$tab-base-color-active]
+ * The background-color of the active Tab
+ *
+ * @param {color} [$ui-tab-background-color-disabled=$tab-base-color-disabled]
+ * The background-color of disabled Tabs
+ *
+ * @param {list} [$ui-tab-border-radius=$tab-border-radius]
+ * The border-radius of Tabs
+ *
+ * @param {number} [$ui-tab-border-width=$tab-border-width]
+ * The border-width of Tabs
+ *
+ * @param {number/list} [$ui-tab-margin=$tab-margin]
+ * The border-width of Tabs
+ *
+ * @param {number/list} [$ui-tab-padding=$tab-padding]
+ * The padding of Tabs
+ *
+ * @param {number/list} [$ui-tab-text-padding=$tab-text-padding]
+ * The padding of the Tab's text element
+ *
+ * @param {color} [$ui-tab-border-color=$tab-border-color]
+ * The border-color of Tabs
+ *
+ * @param {color} [$ui-tab-border-color-over=$tab-border-color-over]
+ * The border-color of hovered Tabs
+ *
+ * @param {color} [$ui-tab-border-color-active=$tab-border-color-active]
+ * The border-color of the active Tab
+ *
+ * @param {color} [$ui-tab-border-color-disabled=$tab-border-color-disabled]
+ * The border-color of disabled Tabs
+ *
+ * @param {string} [$ui-tab-cursor=$tab-cursor]
+ * The Tab cursor
+ *
+ * @param {string} [$ui-tab-cursor-disabled=$tab-cursor-disabled]
+ * The cursor of disabled Tabs
+ *
+ * @param {number} [$ui-tab-font-size=$tab-font-size]
+ * The font-size of Tabs
+ *
+ * @param {number} [$ui-tab-font-size-over=$tab-font-size-over]
+ * The font-size of hovered Tabs
+ *
+ * @param {number} [$ui-tab-font-size-active=$tab-font-size-active]
+ * The font-size of the active Tab
+ *
+ * @param {number} [$ui-tab-font-size-disabled=$tab-font-size-disabled]
+ * The font-size of disabled Tabs
+ *
+ * @param {string} [$ui-tab-font-weight=$tab-font-weight]
+ * The font-weight of Tabs
+ *
+ * @param {string} [$ui-tab-font-weight-over=$tab-font-weight-over]
+ * The font-weight of hovered Tabs
+ *
+ * @param {string} [$ui-tab-font-weight-active=$tab-font-weight-active]
+ * The font-weight of the active Tab
+ *
+ * @param {string} [$ui-tab-font-weight-disabled=$tab-font-weight-disabled]
+ * The font-weight of disabled Tabs
+ *
+ * @param {string} [$ui-tab-font-family=$tab-font-family]
+ * The font-family of Tabs
+ *
+ * @param {string} [$ui-tab-font-family-over=$tab-font-family-over]
+ * The font-family of hovered Tabs
+ *
+ * @param {string} [$ui-tab-font-family-active=$tab-font-family-active]
+ * The font-family of the active Tab
+ *
+ * @param {string} [$ui-tab-font-family-disabled=$tab-font-family-disabled]
+ * The font-family of disabled Tabs
+ *
+ * @param {number} [$ui-tab-line-height=$tab-line-height]
+ * The line-height of Tabs
+ *
+ * @param {color} [$ui-tab-color=$tab-color]
+ * The text color of Tabs
+ *
+ * @param {color} [$ui-tab-color-over=$tab-color-over]
+ * The text color of hovered Tabs
+ *
+ * @param {color} [$ui-tab-color-active=$tab-color-active]
+ * The text color of the active Tab
+ *
+ * @param {color} [$ui-tab-color-disabled=$tab-color-disabled]
+ * The text color of disabled Tabs
+ *
+ * @param {string/list} [$ui-tab-background-gradient=$tab-background-gradient]
+ * The background-gradient for Tabs. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {string/list} [$ui-tab-background-gradient-over=$tab-background-gradient-over]
+ * The background-gradient for hovered Tabs. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {string/list} [$ui-tab-background-gradient-active=$tab-background-gradient-active]
+ * The background-gradient for the active Tab. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {string/list} [$ui-tab-background-gradient-disabled=$tab-background-gradient-disabled]
+ * The background-gradient for disabled Tabs. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {number} [$ui-tab-inner-border-width=$tab-inner-border-width]
+ * The inner border-width of Tabs
+ *
+ * @param {color} [$ui-tab-inner-border-color=$tab-inner-border-color]
+ * The inner border-color of Tabs
+ *
+ * @param {number} [$ui-tab-icon-width=$tab-icon-width]
+ * The width of the Tab close icon
+ *
+ * @param {number} [$ui-tab-icon-height=$tab-icon-height]
+ * The height of the Tab close icon
+ *
+ * @param {number} [$ui-tab-icon-spacing=$tab-icon-spacing]
+ * the space in between the text and the close button
+ *
+ * @param {list} [$ui-tab-icon-background-position=$tab-icon-background-position]
+ * The background-position of Tab icons
+ *
+ * @param {color} [$ui-tab-glyph-color=$tab-glyph-color]
+ * The color of Tab glyph icons
+ *
+ * @param {color} [$ui-tab-glyph-color-over=$tab-glyph-color-over]
+ * The color of a Tab glyph icon when the Tab is hovered
+ *
+ * @param {color} [$ui-tab-glyph-color-active=$tab-glyph-color-active]
+ * The color of a Tab glyph icon when the Tab is active
+ *
+ * @param {color} [$ui-tab-glyph-color-disabled=$tab-glyph-color-disabled]
+ * The color of a Tab glyph icon when the Tab is disabled
+ *
+ * @param {number} [$ui-tab-glyph-opacity=$tab-glyph-opacity]
+ * The opacity of a Tab glyph icon
+ *
+ * @param {number} [$ui-tab-glyph-opacity-disabled=$tab-glyph-opacity-disabled]
+ * The opacity of a Tab glyph icon when the Tab is disabled
+ *
+ * @param {number} [$ui-tab-opacity-disabled=$tab-opacity-disabled]
+ * opacity to apply to the tab's main element when the tab is disabled
+ *
+ * @param {number} [$ui-tab-text-opacity-disabled=$tab-text-opacity-disabled]
+ * opacity to apply to the tab's text element when the tab is disabled
+ *
+ * @param {number} [$ui-tab-icon-opacity-disabled=$tab-icon-opacity-disabled]
+ * opacity to apply to the tab's icon element when the tab is disabled
+ *
+ * @param {number} [$ui-strip-height=$tabbar-strip-height]
+ * The height of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-strip-border-width=$tabbar-strip-border-width]
+ * The border-width of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-border-color=$tabbar-strip-border-color]
+ * The border-color of the Tab Bar strip
+ *
+ * @param {color} [$ui-strip-background-color=$tabbar-strip-background-color]
+ * The background-color of the Tab Bar strip
+ *
+ * @param {number/list} [$ui-bar-border-width=$tabbar-border-width]
+ * The border-width of the Tab Bar
+ *
+ * @param {color} [$ui-bar-border-color=$tabbar-border-color]
+ * The border-color of the Tab Bar
+ *
+ * @param {number/list} [$ui-bar-padding=$tabbar-padding]
+ * The padding of the Tab Bar
+ *
+ * @param {color} [$ui-bar-background-color=$tabbar-background-color]
+ * The background color of the  Tab Bar
+ *
+ * @param {string/list} [$ui-bar-background-gradient=$tabbar-background-gradient]
+ * The background-gradient of the Tab Bar. Can be either the name of a predefined gradient
+ * or a list of color stops. Used as the `$type` parameter for 
+ * {@link Global_CSS#background-gradient}.
+ *
+ * @param {number} [$ui-bar-scroller-width=$tabbar-scroller-width]
+ * The width of the Tab Bar scrollers
+ *
+ * @param {string} [$ui-bar-scroller-cursor=$tabbar-scroller-cursor]
+ * The cursor of the Tab Bar scrollers
+ *
+ * @param {string} [$ui-bar-scroller-cursor-disabled=$tabbar-scroller-cursor-disabled]
+ * The cursor of disabled Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity=$tabbar-scroller-opacity]
+ * The opacity of Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity-over=$tabbar-scroller-opacity-over]
+ * The opacity of hovered Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity-pressed=$tabbar-scroller-opacity-pressed]
+ * The opacity of pressed Tab Bar scrollers
+ *
+ * @param {number} [$ui-bar-scroller-opacity-disabled=$tabbar-scroller-opacity-disabled]
+ * The opacity of disabled Tab Bar scrollers
+ *
+ * @param {number} [$ui-tab-closable-icon-width=$tab-closable-icon-width]
+ * The width of the Tab close icon
+ *
+ * @param {number} [$ui-tab-closable-icon-height=$tab-closable-icon-height]
+ * The height of the Tab close icon
+ *
+ * @param {number} [$ui-tab-closable-icon-top=$tab-closable-icon-top]
+ * The distance to offset the Tab close icon from the top of the tab
+ *
+ * @param {number} [$ui-tab-closable-icon-right=$tab-closable-icon-right]
+ * The distance to offset the Tab close icon from the right of the tab
+ *
+ * @param {number} [$ui-tab-closable-icon-spacing=$tab-closable-icon-spacing]
+ * the space in between the text and the close button
+ *
+ * @member Ext.tab.Panel
+ */;i&;[ ;0o;;[N[o;;"ui;{ ;"ui0[o;;"ui_tab_background_color;@Ë;"ui-tab-background-coloro;	;"tab_base_color;@Ë;i;"tab-base-color[o;;"!ui_tab_background_color_over;@Ë;"!ui-tab-background-color-overo;	;"tab_base_color_over;@Ë;i;"tab-base-color-over[o;;"#ui_tab_background_color_active;@Ë;"#ui-tab-background-color-activeo;	;"tab_base_color_active;@Ë;i;"tab-base-color-active[o;;"%ui_tab_background_color_disabled;@Ë;"%ui-tab-background-color-disabledo;	;"tab_base_color_disabled;@Ë;i;"tab-base-color-disabled[o;;"ui_tab_border_radius;@Ë;"ui-tab-border-radiuso;	;"tab_border_radius;@Ë;i;"tab-border-radius[o;;"ui_tab_border_width;@Ë;"ui-tab-border-widtho;	;"tab_border_width;@Ë;i;"tab-border-width[o;;"ui_tab_margin;@Ë;"ui-tab-margino;	;"tab_margin;@Ë;i;"tab-margin[o;;"ui_tab_padding;@Ë;"ui-tab-paddingo;	;"tab_padding;@Ë;i;"tab-padding[o;;"ui_tab_text_padding;@Ë;"ui-tab-text-paddingo;	;"tab_text_padding;@Ë;i;"tab-text-padding[o;;"ui_tab_border_color;@Ë;"ui-tab-border-coloro;	;"tab_border_color;@Ë;i;"tab-border-color[o;;"ui_tab_border_color_over;@Ë;"ui-tab-border-color-overo;	;"tab_border_color_over;@Ë;i;"tab-border-color-over[o;;"ui_tab_border_color_active;@Ë;"ui-tab-border-color-activeo;	;"tab_border_color_active;@Ë;i;"tab-border-color-active[o;;"!ui_tab_border_color_disabled;@Ë;"!ui-tab-border-color-disabledo;	;"tab_border_color_disabled;@Ë;i ;"tab-border-color-disabled[o;;"ui_tab_cursor;@Ë;"ui-tab-cursoro;	;"tab_cursor;@Ë;i!;"tab-cursor[o;;"ui_tab_cursor_disabled;@Ë;"ui-tab-cursor-disabledo;	;"tab_cursor_disabled;@Ë;i";"tab-cursor-disabled[o;;"ui_tab_font_size;@Ë;"ui-tab-font-sizeo;	;"tab_font_size;@Ë;i#;"tab-font-size[o;;"ui_tab_font_size_over;@Ë;"ui-tab-font-size-overo;	;"tab_font_size_over;@Ë;i$;"tab-font-size-over[o;;"ui_tab_font_size_active;@Ë;"ui-tab-font-size-activeo;	;"tab_font_size_active;@Ë;i%;"tab-font-size-active[o;;"ui_tab_font_size_disabled;@Ë;"ui-tab-font-size-disabledo;	;"tab_font_size_disabled;@Ë;i&;"tab-font-size-disabled[o;;"ui_tab_font_weight;@Ë;"ui-tab-font-weighto;	;"tab_font_weight;@Ë;i';"tab-font-weight[o;;"ui_tab_font_weight_over;@Ë;"ui-tab-font-weight-overo;	;"tab_font_weight_over;@Ë;i(;"tab-font-weight-over[o;;"ui_tab_font_weight_active;@Ë;"ui-tab-font-weight-activeo;	;"tab_font_weight_active;@Ë;i);"tab-font-weight-active[o;;" ui_tab_font_weight_disabled;@Ë;" ui-tab-font-weight-disabledo;	;"tab_font_weight_disabled;@Ë;i*;"tab-font-weight-disabled[o;;"ui_tab_font_family;@Ë;"ui-tab-font-familyo;	;"tab_font_family;@Ë;i+;"tab-font-family[o;;"ui_tab_font_family_over;@Ë;"ui-tab-font-family-overo;	;"tab_font_family_over;@Ë;i,;"tab-font-family-over[o;;"ui_tab_font_family_active;@Ë;"ui-tab-font-family-activeo;	;"tab_font_family_active;@Ë;i-;"tab-font-family-active[o;;" ui_tab_font_family_disabled;@Ë;" ui-tab-font-family-disabledo;	;"tab_font_family_disabled;@Ë;i.;"tab-font-family-disabled[o;;"ui_tab_line_height;@Ë;"ui-tab-line-heighto;	;"tab_line_height;@Ë;i/;"tab-line-height[o;;"ui_tab_color;@Ë;"ui-tab-coloro;	;"tab_color;@Ë;i0;"tab-color[o;;"ui_tab_color_over;@Ë;"ui-tab-color-overo;	;"tab_color_over;@Ë;i1;"tab-color-over[o;;"ui_tab_color_active;@Ë;"ui-tab-color-activeo;	;"tab_color_active;@Ë;i2;"tab-color-active[o;;"ui_tab_color_disabled;@Ë;"ui-tab-color-disabledo;	;"tab_color_disabled;@Ë;i3;"tab-color-disabled[o;;"ui_tab_background_gradient;@Ë;"ui-tab-background-gradiento;	;"tab_background_gradient;@Ë;i4;"tab-background-gradient[o;;"$ui_tab_background_gradient_over;@Ë;"$ui-tab-background-gradient-overo;	;"!tab_background_gradient_over;@Ë;i5;"!tab-background-gradient-over[o;;"&ui_tab_background_gradient_active;@Ë;"&ui-tab-background-gradient-activeo;	;"#tab_background_gradient_active;@Ë;i6;"#tab-background-gradient-active[o;;"(ui_tab_background_gradient_disabled;@Ë;"(ui-tab-background-gradient-disabledo;	;"%tab_background_gradient_disabled;@Ë;i7;"%tab-background-gradient-disabled[o;;"ui_tab_inner_border_width;@Ë;"ui-tab-inner-border-widtho;	;"tab_inner_border_width;@Ë;i9;"tab-inner-border-width[o;;"ui_tab_inner_border_color;@Ë;"ui-tab-inner-border-coloro;	;"tab_inner_border_color;@Ë;i:;"tab-inner-border-color[o;;"ui_tab_icon_width;@Ë;"ui-tab-icon-widtho;	;"tab_icon_width;@Ë;i<;"tab-icon-width[o;;"ui_tab_icon_height;@Ë;"ui-tab-icon-heighto;	;"tab_icon_height;@Ë;i=;"tab-icon-height[o;;"ui_tab_icon_spacing;@Ë;"ui-tab-icon-spacingo;	;"tab_icon_spacing;@Ë;i>;"tab-icon-spacing[o;;"$ui_tab_icon_background_position;@Ë;"$ui-tab-icon-background-positiono;	;"!tab_icon_background_position;@Ë;i?;"!tab-icon-background-position[o;;"ui_tab_glyph_color;@Ë;"ui-tab-glyph-coloro;	;"tab_glyph_color;@Ë;iA;"tab-glyph-color[o;;"ui_tab_glyph_color_over;@Ë;"ui-tab-glyph-color-overo;	;"tab_glyph_color_over;@Ë;iB;"tab-glyph-color-over[o;;"ui_tab_glyph_color_active;@Ë;"ui-tab-glyph-color-activeo;	;"tab_glyph_color_active;@Ë;iC;"tab-glyph-color-active[o;;" ui_tab_glyph_color_disabled;@Ë;" ui-tab-glyph-color-disabledo;	;"tab_glyph_color_disabled;@Ë;iD;"tab-glyph-color-disabled[o;;"ui_tab_glyph_opacity;@Ë;"ui-tab-glyph-opacityo;	;"tab_glyph_opacity;@Ë;iE;"tab-glyph-opacity[o;;""ui_tab_glyph_opacity_disabled;@Ë;""ui-tab-glyph-opacity-disabledo;	;"tab_glyph_opacity_disabled;@Ë;iF;"tab-glyph-opacity-disabled[o;;"ui_tab_opacity_disabled;@Ë;"ui-tab-opacity-disabledo;	;"tab_opacity_disabled;@Ë;iH;"tab-opacity-disabled[o;;"!ui_tab_text_opacity_disabled;@Ë;"!ui-tab-text-opacity-disabledo;	;"tab_text_opacity_disabled;@Ë;iI;"tab-text-opacity-disabled[o;;"!ui_tab_icon_opacity_disabled;@Ë;"!ui-tab-icon-opacity-disabledo;	;"tab_icon_opacity_disabled;@Ë;iJ;"tab-icon-opacity-disabled[o;;"ui_strip_height;@Ë;"ui-strip-heighto;	;"tabbar_strip_height;@Ë;iL;"tabbar-strip-height[o;;"ui_strip_border_width;@Ë;"ui-strip-border-widtho;	;"tabbar_strip_border_width;@Ë;iM;"tabbar-strip-border-width[o;;"ui_strip_border_color;@Ë;"ui-strip-border-coloro;	;"tabbar_strip_border_color;@Ë;iN;"tabbar-strip-border-color[o;;"ui_strip_background_color;@Ë;"ui-strip-background-coloro;	;""tabbar_strip_background_color;@Ë;iO;""tabbar-strip-background-color[o;;"ui_bar_border_width;@Ë;"ui-bar-border-widtho;	;"tabbar_border_width;@Ë;iQ;"tabbar-border-width[o;;"ui_bar_border_color;@Ë;"ui-bar-border-coloro;	;"tabbar_border_color;@Ë;iR;"tabbar-border-color[o;;"ui_bar_padding;@Ë;"ui-bar-paddingo;	;"tabbar_padding;@Ë;iS;"tabbar-padding[o;;"ui_bar_background_color;@Ë;"ui-bar-background-coloro;	;"tabbar_base_color;@Ë;iT;"tabbar-base-color[o;;"ui_bar_background_gradient;@Ë;"ui-bar-background-gradiento;	;"tabbar_background_gradient;@Ë;iU;"tabbar-background-gradient[o;;"ui_bar_scroller_width;@Ë;"ui-bar-scroller-widtho;	;"tabbar_scroller_width;@Ë;iV;"tabbar-scroller-width[o;;"ui_bar_scroller_cursor;@Ë;"ui-bar-scroller-cursoro;	;"tabbar_scroller_cursor;@Ë;iX;"tabbar-scroller-cursor[o;;"$ui_bar_scroller_cursor_disabled;@Ë;"$ui-bar-scroller-cursor-disabledo;	;"$tabbar_scroller_cursor_disabled;@Ë;iY;"$tabbar-scroller-cursor-disabled[o;;"ui_bar_scroller_opacity;@Ë;"ui-bar-scroller-opacityo;	;"tabbar_scroller_opacity;@Ë;iZ;"tabbar-scroller-opacity[o;;"!ui_bar_scroller_opacity_over;@Ë;"!ui-bar-scroller-opacity-overo;	;"!tabbar_scroller_opacity_over;@Ë;i[;"!tabbar-scroller-opacity-over[o;;"$ui_bar_scroller_opacity_pressed;@Ë;"$ui-bar-scroller-opacity-pressedo;	;"$tabbar_scroller_opacity_pressed;@Ë;i\;"$tabbar-scroller-opacity-pressed[o;;"%ui_bar_scroller_opacity_disabled;@Ë;"%ui-bar-scroller-opacity-disabledo;	;"%tabbar_scroller_opacity_disabled;@Ë;i];"%tabbar-scroller-opacity-disabled[o;;"ui_tab_closable_icon_width;@Ë;"ui-tab-closable-icon-widtho;	;"tab_closable_icon_width;@Ë;i_;"tab-closable-icon-width[o;;" ui_tab_closable_icon_height;@Ë;" ui-tab-closable-icon-heighto;	;"tab_closable_icon_height;@Ë;i`;"tab-closable-icon-height[o;;"ui_tab_closable_icon_top;@Ë;"ui-tab-closable-icon-topo;	;"tab_closable_icon_top;@Ë;ia;"tab-closable-icon-top[o;;"ui_tab_closable_icon_right;@Ë;"ui-tab-closable-icon-righto;	;"tab_closable_icon_right;@Ë;ib;"tab-closable-icon-right[o;;"!ui_tab_closable_icon_spacing;@Ë;"!ui-tab-closable-icon-spacingo;	;"tab_closable_icon_spacing;@Ë;ic;"tab-closable-icon-spacing;T;@;	[	u;-©[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::String	;@:
+@type:string:@value"default:
+@lineie:@operand1o:Sass::Script::Variable	:@underscored_name"ui;@;ie:
+@name"ui;ie:@operator:neq;o;	;"include_tab_default_ui;@;ie;"include-tab-default-ui;ie;:or0[o:Sass::Tree::MixinNode:
+@args[ ;@:@children[ ;i®:@keywords{?"ui_border_color_overo;	;"ui_tab_border_color_over;@;is;"ui-tab-border-color-over"ui_font_weight_overo;	;"ui_tab_font_weight_over;@;i};"ui-tab-font-weight-over"ui_glyph_opacityo;	;"ui_tab_glyph_opacity;@;iö;"ui-tab-glyph-opacity"ui_font_familyo;	;"ui_tab_font_family;@;iÄ;"ui-tab-font-family"ui_font_sizeo;	;"ui_tab_font_size;@;ix;"ui-tab-font-size"ui_paddingo;	;"ui_tab_padding;@;ip;"ui-tab-padding"ui_background_color_overo;	;"!ui_tab_background_color_over;@;ij;"!ui-tab-background-color-over"ui_glyph_color_activeo;	;"ui_tab_glyph_color_active;@;iò;"ui-tab-glyph-color-active"ui_closable_icon_widtho;	;"ui_tab_closable_icon_width;@;i°;"ui-tab-closable-icon-width" ui_icon_background_positiono;	;"$ui_tab_icon_background_position;@;iî;"$ui-tab-icon-background-position"ui_color_disabledo;	;"ui_tab_color_disabled;@;ià;"ui-tab-color-disabled"ui_background_color_activeo;	;"#ui_tab_background_color_active;@;ik;"#ui-tab-background-color-active"ui_coloro;	;"ui_tab_color;@;iÖ;"ui-tab-color"ui_icon_widtho;	;"ui_tab_icon_width;@;ië;"ui-tab-icon-width"ui_icon_spacingo;	;"ui_tab_icon_spacing;@;iì;"ui-tab-icon-spacing"ui_closable_icon_topo;	;"ui_tab_closable_icon_top;@;i£;"ui-tab-closable-icon-top"ui_inner_border_coloro;	;"ui_tab_inner_border_color;@;iè;"ui-tab-inner-border-color"ui_color_overo;	;"ui_tab_color_over;@;iÜ;"ui-tab-color-over"ui_line_heighto;	;"ui_tab_line_height;@;iÑ;"ui-tab-line-height"ui_border_coloro;	;"ui_tab_border_color;@;ir;"ui-tab-border-color"ui_border_radiuso;	;"ui_tab_border_radius;@;im;"ui-tab-border-radius"ui_color_activeo;	;"ui_tab_color_active;@;iá;"ui-tab-color-active"ui_glyph_color_overo;	;"ui_tab_glyph_color_over;@;ió;"ui-tab-glyph-color-over"ui_border_color_activeo;	;"ui_tab_border_color_active;@;it;"ui-tab-border-color-active"ui_border_color_disabledo;	;"!ui_tab_border_color_disabled;@;iu;"!ui-tab-border-color-disabled"ui_font_size_disabledo;	;"ui_tab_font_size_disabled;@;i{;"ui-tab-font-size-disabled"ui_icon_opacity_disabledo;	;"!ui_tab_icon_opacity_disabled;@;iü;"!ui-tab-icon-opacity-disabled"ui_closable_icon_heighto;	;" ui_tab_closable_icon_height;@;i¢;" ui-tab-closable-icon-height"ui_icon_heighto;	;"ui_tab_icon_height;@;ií;"ui-tab-icon-height"ui_font_weighto;	;"ui_tab_font_weight;@;i|;"ui-tab-font-weight"ui_border_widtho;	;"ui_tab_border_width;@;in;"ui-tab-border-width"ui_background_coloro;	;"ui_tab_background_color;@;ii;"ui-tab-background-color"ui_text_paddingo;	;"ui_tab_text_padding;@;iq;"ui-tab-text-padding"$ui_background_gradient_disabledo;	;"(ui_tab_background_gradient_disabled;@;iå;"(ui-tab-background-gradient-disabled" ui_background_gradient_overo;	;"$ui_tab_background_gradient_over;@;iä;"$ui-tab-background-gradient-over"ui_font_family_activeo;	;"ui_tab_font_family_active;@;iÇ;"ui-tab-font-family-active"ui_text_opacity_disabledo;	;"!ui_tab_text_opacity_disabled;@;iû;"!ui-tab-text-opacity-disabled"ui_glyph_opacity_disabledo;	;""ui_tab_glyph_opacity_disabled;@;iõ;""ui-tab-glyph-opacity-disabled"ui_glyph_color_disabledo;	;" ui_tab_glyph_color_disabled;@;iô;" ui-tab-glyph-color-disabled"uio;	;"ui;@;ig;"ui"ui_cursor_disabledo;	;"ui_tab_cursor_disabled;@;iw;"ui-tab-cursor-disabled"ui_font_family_overo;	;"ui_tab_font_family_over;@;iÅ;"ui-tab-font-family-over"ui_closable_icon_righto;	;"ui_tab_closable_icon_right;@;i§;"ui-tab-closable-icon-right"!ui_background_color_disabledo;	;"%ui_tab_background_color_disabled;@;il;"%ui-tab-background-color-disabled"ui_margino;	;"ui_tab_margin;@;io;"ui-tab-margin""ui_background_gradient_activeo;	;"&ui_tab_background_gradient_active;@;iã;"&ui-tab-background-gradient-active"ui_glyph_coloro;	;"ui_tab_glyph_color;@;iñ;"ui-tab-glyph-color"ui_opacity_disabledo;	;"ui_tab_opacity_disabled;@;iù;"ui-tab-opacity-disabled"ui_border_bottom_coloro;	;"ui_strip_border_color;@;iß;"ui-strip-border-color"ui_cursoro;	;"ui_tab_cursor;@;iv;"ui-tab-cursor"ui_font_weight_disabledo;	;" ui_tab_font_weight_disabled;@;i;" ui-tab-font-weight-disabled"ui_font_family_disabledo;	;" ui_tab_font_family_disabled;@;iÉ;" ui-tab-font-family-disabled"ui_font_size_overo;	;"ui_tab_font_size_over;@;iy;"ui-tab-font-size-over"ui_background_gradiento;	;"ui_tab_background_gradient;@;iâ;"ui-tab-background-gradient"ui_inner_border_widtho;	;"ui_tab_inner_border_width;@;ié;"ui-tab-inner-border-width"ui_closable_icon_spacingo;	;"!ui_tab_closable_icon_spacing;@;i•;"!ui-tab-closable-icon-spacing"ui_font_weight_activeo;	;"ui_tab_font_weight_active;@;i~;"ui-tab-font-weight-active"ui_font_size_activeo;	;"ui_tab_font_size_active;@;iz;"ui-tab-font-size-active;"extjs-tab-uio;
+;@;	[ ;i ;"˜/* When the tab border/background is the same color as the background color of the
+ * tabbar (crisp) darker corners show up when the tab is rotated vertically in IE8.
+ * Removing the background-image on the corners of the framing prevents this. */;i´;[ ;0u;-f[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::Variable	:@underscored_name"ui_tab_background_color;@:
+@linei∞:
+@name"ui-tab-background-color:@operand1o;	;	"ui_tab_border_color;@;
+i∞;"ui-tab-border-color;
+i∞:@operator:eq;o; 
+;@;o; 
+;@;o;	;	"ui_tab_border_color;@;
+iØ;"ui-tab-border-color;o;	;	"ui_bar_background_color;@;
+iØ;"ui-bar-background-color;
+iØ;;;o;	;	"!include_slicer_border_radius;@;
+iÆ;"!include-slicer-border-radius;
+iØ;:and;
+i∞;;0[o:Sass::Tree::RuleNode:@has_childrenT:
+@rule[".o;	;	"prefix;@;
+i±;"prefix"tab-default-tl,
+        .o;	;	"prefix;@;
+i≤;"prefix"tab-default-tc,
+        .o;	;	"prefix;@;
+i≥;"prefix"tab-default-tr,
+        .o;	;	"prefix;@;
+i¥;"prefix"tab-default-bl,
+        .o;	;	"prefix;@;
+iµ;"prefix"tab-default-bc,
+        .o;	;	"prefix;@;
+i∂;"prefix"tab-default-br;@:@children[o:Sass::Tree::PropNode;@:@prop_syntax:new;[ :@valueo:Sass::Script::String;@:
+@type:identifier;"	none;
+i∑:
+@tabsi ;["background-image;
+i∂;i u;-"
+[o:Sass::Script::Operation
+:@options{ :@operand2o; 
+;@;o:Sass::Script::String	;@:
+@type:string:@value"default:
+@lineiª:@operand1o:Sass::Script::Variable	:@underscored_name"ui;@;iª:
+@name"ui;iª:@operator:neq;o;	;"include_tabbar_default_ui;@;iª;"include-tabbar-default-ui;iª;:or0[o:Sass::Tree::MixinNode:
+@args[ ;@:@children[ ;i‘:@keywords{"ui_paddingo;	;"ui_bar_padding;@;i∆;"ui-bar-padding"ui_strip_border_coloro;	;"ui_strip_border_color;@;i¡;"ui-strip-border-color"ui_scroller_widtho;	;"ui_bar_scroller_width;@;i…;"ui-bar-scroller-width"ui_strip_background_coloro;	;"ui_strip_background_color;@;i¬;"ui-strip-background-color" ui_scroller_opacity_pressedo;	;"$ui_bar_scroller_opacity_pressed;@;iœ;"$ui-bar-scroller-opacity-pressed"ui_border_coloro;	;"ui_bar_border_color;@;i≈;"ui-bar-border-color"ui_scroller_cursoro;	;"ui_bar_scroller_cursor;@;iÀ;"ui-bar-scroller-cursor"ui_tab_heighto; 
+;@;o:Sass::Script::Funcall
+;[o;	;"ui_tab_padding;@;i”;"ui-tab-padding;@;i”;{ ;"vertical;o; 
+;@;o;
+;[o;	;"ui_tab_icon_height;@;i”;"ui-tab-icon-heighto;	;"ui_tab_line_height;@;i”;"ui-tab-line-height;@;i”;{ ;"max;o;
+;[o; 
+;@;o:Sass::Script::Number;@:@original"0:@denominator_units[ ;i ;i“:@numerator_units[ ;o;	;"ui_strip_height;@;i“;"ui-strip-height;i“;:gto;
+;[o;	;"ui_strip_border_width;@;i“;"ui-strip-border-width;@;i“;{ ;"topo;
+;[o;	;"ui_tab_border_width;@;i“;"ui-tab-border-width;@;i“;{ ;"vertical;@;i“;{ ;"if;i”;:	plus;i”;;"ui_border_widtho;	;"ui_bar_border_width;@;iƒ;"ui-bar-border-width"ui_scroller_opacityo;	;"ui_bar_scroller_opacity;@;iÕ;"ui-bar-scroller-opacity"ui_background_coloro;	;"ui_bar_background_color;@;i«;"ui-bar-background-color"ui_scroller_opacity_overo;	;"!ui_bar_scroller_opacity_over;@;iŒ;"!ui-bar-scroller-opacity-over" ui_scroller_cursor_disabledo;	;"$ui_bar_scroller_cursor_disabled;@;iÃ;"$ui-bar-scroller-cursor-disabled"uio;	;"ui;@;iΩ;"ui"ui_strip_border_widtho;	;"ui_strip_border_width;@;i¿;"ui-strip-border-width"ui_strip_heighto;	;"ui_strip_height;@;iø;"ui-strip-height"ui_background_gradiento;	;"ui_bar_background_gradient;@;i»;"ui-bar-background-gradient"!ui_scroller_opacity_disabledo;	;"%ui_bar_scroller_opacity_disabled;@;i–;"%ui-bar-scroller-opacity-disabled;"extjs-tab-bar-ui;id;"extjs-tab-panel-uio;9;[ ;@;	[ ;i⁄;{"uio;.	;@;/:string;"default;iŸ;"extjs-tab-panel-ui;i

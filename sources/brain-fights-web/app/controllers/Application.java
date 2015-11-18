@@ -5,9 +5,9 @@ import play.mvc.*;
 
 import java.util.*;
 
-import models.*;
+//import models.*;
 
-public class Application extends Controller {
+public class Application extends SecuredController {
 
     public static void index() {
         render();
