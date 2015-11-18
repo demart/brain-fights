@@ -35,5 +35,10 @@ Ext.define('BrainFightsConsole.view.main.MainController', {
     	this.redirectTo('question');
     },
     
+    //Выход
+    onLogoutClick: function() {
+    	console.log('Logout clicked');
+    	this.redirectTo('logout');
+    },
  
 });

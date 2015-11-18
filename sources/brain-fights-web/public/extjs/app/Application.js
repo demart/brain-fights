@@ -22,6 +22,7 @@ Ext.define('BrainFightsConsole.Application', {
              'AdminUsersStore',
              'CategoryStore',
              'QuestionStore',
+             'CategoryComboStore',
         
     ],
     
