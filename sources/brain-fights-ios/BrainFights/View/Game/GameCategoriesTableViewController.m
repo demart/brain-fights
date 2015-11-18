@@ -7,8 +7,14 @@
 //
 
 #import "GameCategoriesTableViewController.h"
+#import "CategoryTableViewCell.h"
+#import "GameQuestionViewController.h"
 
 @interface GameCategoriesTableViewController ()
+
+@property GameModel* model;
+@property UITableViewController* gameStatusController;
+
 
 @end
 
@@ -16,40 +22,62 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void) initViewController:(GameModel*)gameModel fromGameStatus:(UITableViewController*) gameStatusController {
+    self.model = gameModel;
+    self.gameStatusController = gameStatusController;
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+    if (self.model != nil && self.model.categories != nil)
+        return 1;
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
+    if (self.model != nil && self.model.categories != nil)
+        return [self.model.categories count];
     return 0;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 170;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    CategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
+    if (!cell) {
+        [tableView registerNib:[UINib nibWithNibName:@"CategoryTableViewCell" bundle:nil]forCellReuseIdentifier:@"CategoryCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
+    }
     
-    // Configure the cell...
+    [cell initCell:self.model.categories[indexPath.row]];
     
     return cell;
 }
-*/
+
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    GameQuestionViewController *gameQuestionViewController = [[[AppDelegate globalDelegate] drawersStoryboard] instantiateViewControllerWithIdentifier:@"GameQuestionViewController"];
+    [gameQuestionViewController initView:self.gameStatusController];
+    [self presentViewController:gameQuestionViewController animated:YES completion:nil];
+
+    /*
+    GameQuestionViewController *destinationController = [[GameQuestionViewController alloc] init];
+    [destinationController initView:self.gameStatusController];
+    [self presentViewController:destinationController animated:YES completion:^{
+    }];
+     */
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -118,6 +118,17 @@
     return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
 }
 
+// URL для получения детальной информации об игре
++ (NSString*) gameInformationUrl:(NSInteger)gameId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+}
+
+// URL для создания нового раунда
++ (NSString*) gameCreateRoundUrl:(NSUInteger)gameId withSelectedCategoryId:(NSInteger)categoryId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li/round/generate/%li?authToken=%@", UrlHelper.baseUrl, (long)gameId, (long)categoryId, [self authToken]];
+}
+
+
 
 +(NSString*) authToken {
     return [AuthorizationService getAuthToken];

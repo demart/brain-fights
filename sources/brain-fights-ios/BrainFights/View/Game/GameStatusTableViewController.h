@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "AppDelegate.h"
 #import "UserGameModel.h"
+#import "GameModel.h"
+#import "GameService.h"
 
 @interface GameStatusTableViewController : UITableViewController
 

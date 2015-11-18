@@ -149,4 +149,65 @@
     [objectRequestOperation start];
 }
 
+
++ (void) retrieveGameInformation:(NSInteger)gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameInformationUrl:gameId]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForGameInformation];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
+
+// Создает новый раунд для игроков
++ (void) genereateGameRound:(NSUInteger)gameId withSelectedCategory:(NSInteger)categoryId  onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameCreateRoundUrl:gameId withSelectedCategoryId:categoryId]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForCreatedGameRound];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
 @end

@@ -21,6 +21,9 @@
                         <state key="normal" title="Играть">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="playAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nBs-cA-TFp"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Laj-Nu-5ur">
                         <rect key="frame" x="234" y="20" width="70" height="28"/>
@@ -30,6 +33,9 @@
                         <state key="normal" title="В друзья">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="addToFrindsAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="U51-O4-dbb"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-rS-wkC">
                         <rect key="frame" x="17" y="20" width="70" height="28"/>
@@ -39,11 +45,19 @@
                         <state key="normal" title="Сдаться">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="surrenderAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uUr-AR-C3d"/>
+                        </connections>
                     </button>
                 </subviews>
                 <animations/>
             </tableViewCellContentView>
             <animations/>
+            <connections>
+                <outlet property="addToFriendsButton" destination="Laj-Nu-5ur" id="hFT-ti-WYT"/>
+                <outlet property="playButton" destination="jVp-Gb-Tru" id="saD-Av-ySY"/>
+                <outlet property="surrenderActionButton" destination="xq7-rS-wkC" id="I77-Ro-UCm"/>
+            </connections>
             <point key="canvasLocation" x="252" y="264"/>
         </tableViewCell>
     </objects>

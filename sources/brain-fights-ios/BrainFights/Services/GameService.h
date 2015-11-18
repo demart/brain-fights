@@ -28,4 +28,10 @@
 + (void) acceptGameInvitation:(NSInteger)gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
 
 
+// Получаем детальную информацию по игре
++ (void) retrieveGameInformation:(NSInteger)gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
+
+// Создает новый раунд для игроков
++ (void) genereateGameRound:(NSUInteger)gameId withSelectedCategory:(NSInteger)categoryId  onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
+
 @end

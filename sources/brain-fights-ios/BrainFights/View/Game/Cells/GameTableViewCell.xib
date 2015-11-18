@@ -96,7 +96,7 @@
                 <outlet property="userName" destination="85D-S2-3Wx" id="3Z3-hU-6LT"/>
                 <outlet property="userPosition" destination="LO8-tt-LEB" id="pOi-53-ZD9"/>
             </connections>
-            <point key="canvasLocation" x="252" y="270"/>
+            <point key="canvasLocation" x="276" y="248"/>
         </tableViewCell>
     </objects>
     <resources>

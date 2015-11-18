@@ -473,10 +473,14 @@ public class GameService {
 					usedCategoryIds.add(gameRound.getCategory().id);
 				}
 			
+			// Fox for first calls
+			if (usedCategoryIds.size() == 0)
+				usedCategoryIds.add(-1l);
+			
 			// Получаем список категорий, крое использованных
 			List<Category> result = JPA.em().createQuery("from Category where deleted = false and id not in (:ids) order by RANDOM()")
-					.setMaxResults(3)
 					.setParameter("ids", usedCategoryIds)
+					.setMaxResults(3)
 					.getResultList();
 			
 			for (Category category : result) {

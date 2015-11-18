@@ -12,9 +12,13 @@
 #import "GameStatusRoundTableViewCell.h"
 #import "GameStatusActionTableViewCell.h"
 
+#import "GameCategoriesTableViewController.h"
+#import "GameQuestionViewController.h"
+
 @interface GameStatusTableViewController ()
 
 @property UserGameModel *gameModel;
+@property GameModel *model;
 
 @end
 
@@ -24,8 +28,28 @@
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // Show loading
+    [GameService retrieveGameInformation:self.gameModel.id onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            self.model = (GameModel*)response.data;
+            [self.tableView reloadData];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            // Show Authorization View
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            // TODO
+        }
+    } onFailure:^(NSError *error) {
+
+    }];
 }
 
 // Инициализруем статус игры
@@ -72,11 +96,56 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusActionCell"];
         }
         
+        [cell initCell:self.gameModel onPlayAction:^{
+            [self onPlayAction];
+        } onSurrenderAction:^{
+            [self onSurrenderAction];
+        } onAddToFriendsAction:^{
+            [self onAddToFriendsAction];
+        } onRevancheAction:^{
+            [self onRevancheAction];
+        }];
+        
+        
         return cell;
     }
     
     return nil;
 }
+
+
+-(void) onPlayAction {
+    NSLog(@"onPlayAction invoked");
+
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
+        // Начинаем новый раунд
+        GameCategoriesTableViewController *destinationController = [[GameCategoriesTableViewController alloc] init];
+        [destinationController initViewController:self.model fromGameStatus:self];
+        [self.navigationController pushViewController:destinationController animated:YES];
+    }
+    
+    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ANSWERS]) {
+        // Ожидаем ответов игрока
+        // Начинаем новый раунд
+        GameQuestionViewController *gameQuestionViewController = [[[AppDelegate globalDelegate] drawersStoryboard] instantiateViewControllerWithIdentifier:@"GameQuestionViewController"];
+        [gameQuestionViewController initView:self];
+        [self presentViewController:gameQuestionViewController animated:YES completion:nil];
+    }
+    
+}
+
+-(void) onSurrenderAction {
+    NSLog(@"onSurrenderAction invoked");
+}
+
+-(void) onAddToFriendsAction {
+    NSLog(@"onAddToFriendsAction invoked");
+}
+
+-(void) onRevancheAction {
+    NSLog(@"onRevancheAction invoked");
+}
+
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,6 +154,11 @@
     if (indexPath.row == 7)
         return 70;
     return 50;
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 /*

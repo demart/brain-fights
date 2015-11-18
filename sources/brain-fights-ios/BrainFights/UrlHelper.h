@@ -68,6 +68,12 @@
 // URL для принятия приглашения сыграть в игру
 + (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId;
 
+// URL для получения детальной информации об игре
++ (NSString*) gameInformationUrl:(NSInteger)gameId;
+
+// URL для создания нового раунда
++ (NSString*) gameCreateRoundUrl:(NSUInteger)gameId withSelectedCategoryId:(NSInteger)categoryId;
+
 // Базовый URL для API по игре
 + (NSString*) gameBaseUrl;
 

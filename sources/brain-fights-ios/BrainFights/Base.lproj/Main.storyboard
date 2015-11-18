@@ -5,10 +5,39 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Game Question View Controller-->
+        <scene sceneID="oO2-zf-bIe">
+            <objects>
+                <viewController storyboardIdentifier="GameQuestionViewController" id="z8W-k9-DJO" customClass="GameQuestionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SaN-xI-teu"/>
+                        <viewControllerLayoutGuide type="bottom" id="ilT-wg-aU5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6rX-QQ-N0B">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEz-bG-QQz">
+                                <rect key="frame" x="84" y="84" width="105" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Dismiss View"/>
+                                <connections>
+                                    <action selector="dismissView:" destination="z8W-k9-DJO" eventType="touchUpInside" id="mz6-0c-t6O"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ObX-BP-Vnc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3075" y="-1137"/>
+        </scene>
+        <!--Game Categories Table View Controller-->
         <scene sceneID="mtj-c5-8Uf">
             <objects>
-                <tableViewController id="RU2-ge-tDO" sceneMemberID="viewController">
+                <tableViewController id="RU2-ge-tDO" customClass="GameCategoriesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xDU-eQ-WwE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

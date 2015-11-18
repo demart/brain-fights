@@ -31,4 +31,10 @@
 // Строит маппинг для результата отправки приглашения пользователю
 + (RKResponseDescriptor*) buildResponseDescriptorForAcceptInvitation;
 
+// Строит маппинг для получения деталей по игре
++ (RKResponseDescriptor*) buildResponseDescriptorForGameInformation;
+
+// Строит маппинг для получения ответа с вопросами на запрос создания нового раунда
++ (RKResponseDescriptor*) buildResponseDescriptorForCreatedGameRound;
+
 @end
