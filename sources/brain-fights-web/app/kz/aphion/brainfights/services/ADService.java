@@ -24,7 +24,8 @@ import java.util.List;
  */
 public class ADService {
     public static final String CONTEXT_FACTORY="com.sun.jndi.ldap.LdapCtxFactory";
-    public static final String LDAP_URL = "ldap://169.254.148.46:389";
+//    public static final String LDAP_URL = "ldap://169.254.148.46:389";
+    public static final String LDAP_URL = "ldap://alimjanns.ddns.net:390";
     public static final String LDAP_AUTH_TYPE = "simple";
     public static final String LDAP_DOMAIN = "transtelecom.kz";
     public static final String LDAP_SECURITY_PRINCIPAL = "cn=Alimjan Nurpeissov,cn=users,dc=transtelecom,dc=kz";
