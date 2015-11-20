@@ -37,15 +37,15 @@ public class ADService {
     private static DirContext ldapContext=null;
 
     public static DirContext getLDAPContext() throws NamingException {
-//        if(ldapContext==null){            //TODO: Проверка состояния соединения
+//        if(ldapContext==null){            //TODO: РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ СЃРѕРµРґРёРЅРµРЅРёСЏ
             ldapContext = initLDAPContext();
 //        }
         return ldapContext;
     }
 
     public static void updateAllFromLdap() throws NamingException {
-        List<Department> departments = getLdapDepartments();   //Вся структура
-//        List<Department> departments = new ArrayList<Department>();  //Только там где пользователи
+        List<Department> departments = getLdapDepartments();   //Р’СЃСЏ СЃС‚СЂСѓРєС‚СѓСЂР°
+//        List<Department> departments = new ArrayList<Department>();  //РўРѕР»СЊРєРѕ С‚Р°Рј РіРґРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё
         List<User> users = getUsers();
         for (User user:users){
             NamingEnumeration<SearchResult> response = findUserInLDAP(user.getLogin());
@@ -95,7 +95,7 @@ public class ADService {
                     SearchResult result = response.next();
                     user = new User();
                     user.setLogin(login);
-                    user.setPassword(password);//TODO: Надо удалить сохранение пароля
+                    user.setPassword(password);//TODO: РќР°РґРѕ СѓРґР°Р»РёС‚СЊ СЃРѕС…СЂР°РЅРµРЅРёРµ РїР°СЂРѕР»СЏ
                     user = setUserDataFromResult(user,result.getAttributes());
                     user.setScore(0);
                     user.setLastActivityTime(Calendar.getInstance());
