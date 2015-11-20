@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */; };
+		8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */; };
 		8D920EFD1BFBE3B900BA29BC /* GameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920EFC1BFBE3B900BA29BC /* GameModel.m */; };
 		8D920F001BFBE44A00BA29BC /* GameRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920EFF1BFBE44A00BA29BC /* GameRoundModel.m */; };
 		8D920F031BFBE48000BA29BC /* GameRoundQuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F021BFBE48000BA29BC /* GameRoundQuestionModel.m */; };
@@ -17,6 +18,7 @@
 		8D920F101BFBEFC900BA29BC /* CategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F0E1BFBEFC900BA29BC /* CategoryTableViewCell.m */; };
 		8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920F0F1BFBEFC900BA29BC /* CategoryTableViewCell.xib */; };
 		8D920F141BFBF88800BA29BC /* GameQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F131BFBF88800BA29BC /* GameQuestionViewController.m */; };
+		8DB535351BFD28C0000EC8CF /* GameRoundStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB535341BFD28C0000EC8CF /* GameRoundStatus.m */; };
 		8DB8AA0A1BEBEFCC005B7508 /* AuthorizationCheckedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */; };
 		8DB8AA0D1BEBF0BA005B7508 /* AuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA0C1BEBF0BA005B7508 /* AuthorizationService.m */; };
 		8DB8AA121BECCE37005B7508 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA111BECCE37005B7508 /* SignInViewController.m */; };
@@ -87,6 +89,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D355F011BFE93E700FF12FD /* GamerQuestionAnswerResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamerQuestionAnswerResultModel.h; path = Data/ServerModels/GamerQuestionAnswerResultModel.h; sourceTree = "<group>"; };
+		8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamerQuestionAnswerResultModel.m; path = Data/ServerModels/GamerQuestionAnswerResultModel.m; sourceTree = "<group>"; };
 		8D920EFB1BFBE3B900BA29BC /* GameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModel.h; path = Data/ServerModels/GameModel.h; sourceTree = "<group>"; };
 		8D920EFC1BFBE3B900BA29BC /* GameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameModel.m; path = Data/ServerModels/GameModel.m; sourceTree = "<group>"; };
 		8D920EFE1BFBE44A00BA29BC /* GameRoundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundModel.h; path = Data/ServerModels/GameRoundModel.h; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 		8D920F0F1BFBEFC900BA29BC /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoryTableViewCell.xib; path = View/Game/Cells/CategoryTableViewCell.xib; sourceTree = "<group>"; };
 		8D920F121BFBF88800BA29BC /* GameQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameQuestionViewController.h; path = View/Game/GameQuestionViewController.h; sourceTree = "<group>"; };
 		8D920F131BFBF88800BA29BC /* GameQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameQuestionViewController.m; path = View/Game/GameQuestionViewController.m; sourceTree = "<group>"; };
+		8DB535331BFD28C0000EC8CF /* GameRoundStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundStatus.h; path = Data/ServerModels/GameRoundStatus.h; sourceTree = "<group>"; };
+		8DB535341BFD28C0000EC8CF /* GameRoundStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoundStatus.m; path = Data/ServerModels/GameRoundStatus.m; sourceTree = "<group>"; };
 		8DB8AA081BEBEFCC005B7508 /* AuthorizationCheckedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationCheckedViewController.h; path = View/Authorization/AuthorizationCheckedViewController.h; sourceTree = "<group>"; };
 		8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationCheckedViewController.m; path = View/Authorization/AuthorizationCheckedViewController.m; sourceTree = "<group>"; };
 		8DB8AA0B1BEBF0BA005B7508 /* AuthorizationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationService.h; path = Services/AuthorizationService.h; sourceTree = "<group>"; };
@@ -417,6 +423,10 @@
 				8D920F081BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m */,
 				8D920F0A1BFBE5FC00BA29BC /* GameRoundCategoryModel.h */,
 				8D920F0B1BFBE5FC00BA29BC /* GameRoundCategoryModel.m */,
+				8DB535331BFD28C0000EC8CF /* GameRoundStatus.h */,
+				8DB535341BFD28C0000EC8CF /* GameRoundStatus.m */,
+				8D355F011BFE93E700FF12FD /* GamerQuestionAnswerResultModel.h */,
+				8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -714,6 +724,7 @@
 				8D920EFD1BFBE3B900BA29BC /* GameModel.m in Sources */,
 				8DF18E6E1BF1E4EF0046C27B /* DepartmentTableViewCell.m in Sources */,
 				8DF18E221BEF98370046C27B /* RatingTableViewController.m in Sources */,
+				8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */,
 				8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */,
 				8DB8AA2A1BECFE45005B7508 /* GameMainTableViewController.m in Sources */,
 				8DF18E621BF10EC30046C27B /* UserHelper.m in Sources */,
@@ -732,6 +743,7 @@
 				8DF18E2D1BEF9FF80046C27B /* UserGamesModel.m in Sources */,
 				8DF18E3D1BEFB3830046C27B /* NewGameTableViewCell.m in Sources */,
 				8DF18E8B1BF4ECB80046C27B /* GameStatusRoundTableViewCell.m in Sources */,
+				8DB535351BFD28C0000EC8CF /* GameRoundStatus.m in Sources */,
 				8D920F101BFBEFC900BA29BC /* CategoryTableViewCell.m in Sources */,
 				8DF18E7E1BF36CE30046C27B /* Constants.m in Sources */,
 				8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */,

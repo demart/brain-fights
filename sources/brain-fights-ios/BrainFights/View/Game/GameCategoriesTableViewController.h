@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GameModel.h"
 #import "AppDelegate.h"
+#import "GameService.h"
 
 @interface GameCategoriesTableViewController : UITableViewController
 

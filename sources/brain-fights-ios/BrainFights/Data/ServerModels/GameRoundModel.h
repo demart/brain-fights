@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "GameRoundQuestionModel.h"
+#import "GameRoundStatus.h"
+#import "GameRoundCategoryModel.h"
 
 @interface GameRoundModel : NSObject
 /**
@@ -16,8 +18,23 @@
 @property NSUInteger id;
 
 /**
+ * Название категории
+ */
+@property NSString* categoryName;
+
+/**
+ * Статус раунда
+ */
+@property NSString* status;
+
+/**
  * Вопросы в раунде
  */
 @property NSMutableArray* questions;
+
+/**
+ * Категория вопросов раунда
+ */
+@property GameRoundCategoryModel* category;
 
 @end

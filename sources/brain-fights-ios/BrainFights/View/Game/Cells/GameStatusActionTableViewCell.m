@@ -26,6 +26,9 @@
 
 
 - (void)awakeFromNib {
+    self.surrenderActionButton.layer.cornerRadius = 5.0;
+    self.playButton.layer.cornerRadius = 5.0;
+    self.addToFriendsButton.layer.cornerRadius = 5.0;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -74,21 +77,17 @@
 
 
 - (IBAction)surrenderAction:(id)sender {
-    NSLog(@"surrender action invoked");
     self.surrenderActionBlock();
 }
 
 - (IBAction)addToFrindsAction:(UIButton *)sender {
-    NSLog(@"addToFriends action invoked");
     self.addToFriendsActionBlock();
 }
 
 - (IBAction)playAction:(UIButton *)sender {
     if ([self.model.gameStatus isEqualToString:GAME_STATUS_FINISHED]){
-        NSLog(@"revanche action invoked");
         self.revancheActionBlock();
     } else {
-        NSLog(@"play action invoked");
         self.playActionBlock();
     }
 }

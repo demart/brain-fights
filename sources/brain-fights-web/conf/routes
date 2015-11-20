@@ -63,9 +63,10 @@ GET		/game/list/grouped																GameController.getUserGamesGrouped
 GET		/game/{gameId}																	GameController.getGameInformation
 GET		/game/{gameId}/																	GameController.getGameInformation
 GET		/game/{gameId}/round/generate/{categoryId}										GameController.generateGameRound
-GET		/game/{gameId}/round/questions													GameController.getRoundQuestions
+GET		/game/{gameId}/round/question													GameController.getRoundQuestions
+GET		/game/{gameId}/round/{roundId}/questions										GameController.getRoundQuestions
 GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			GameController.answerQuestion
-
+GET		/game/{gameId}/surrender														GameController.surrenderGame
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

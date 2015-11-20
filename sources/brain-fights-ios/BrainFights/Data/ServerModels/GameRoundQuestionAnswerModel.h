@@ -25,4 +25,9 @@
  */
 @property Boolean isCorrect;
 
+/**
+ * Отсутсвтует ответ на вопрос
+ */
+@property Boolean isMissingAnswer;
+
 @end

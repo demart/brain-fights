@@ -251,6 +251,24 @@ public class GameController extends Controller {
 		}
 	}
 	
+	
+	public static void surrenderGame(String authToken, Long gameId) {
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	GameModel model = GameService.surrenderGame(user, gameId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+	    	
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
+	}
 
 	
 }

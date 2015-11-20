@@ -16,6 +16,7 @@
 #import "UserGamesModel.h"
 #import "UserGameModel.h"
 #import "GamerModel.h"
+#import "GamerQuestionAnswerResultModel.h"
 
 #import "GameModel.h"
 
@@ -45,6 +46,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -140,6 +143,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -245,6 +250,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -331,6 +338,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -340,8 +349,7 @@
                                                            @"loosingGames": @"loosingGames",
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
-                                                           @"gamePosition": @"gamePosition",
-                                                           @"type": @"type",
+                                                           @"gamePosition": @"gamePosition"
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -419,6 +427,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -428,8 +438,7 @@
                                                            @"loosingGames": @"loosingGames",
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
-                                                           @"gamePosition": @"gamePosition",
-                                                           @"type": @"type",
+                                                           @"gamePosition": @"gamePosition"
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -455,7 +464,8 @@
     [gameRoundQuestionAnswerModel addAttributeMappingsFromDictionary:@{
                                                                  @"id": @"id",
                                                                  @"text": @"text",
-                                                                 @"isCorrect":@"isCorrect"
+                                                                 @"isCorrect":@"isCorrect",
+                                                                 @"isMissingAnswer":@"isMissingAnswer",
                                                                  }];
     
     
@@ -484,20 +494,29 @@
                                                          @"id": @"id",
                                                          @"name": @"name",
                                                          @"color": @"color",
+                                                         @"imageUrl": @"imageUrl",
+                                                         @"imageUrlBase64": @"imageUrlBase64",
                                                          }];
     [gameRoundCategoryModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"questions"
                                                                                    toKeyPath:@"questions"
                                                                                  withMapping:gameRoundQuestionModel]];
     
+    
+    
     RKObjectMapping* gameRoundModel = [RKObjectMapping mappingForClass:[GameRoundModel class]];
     [gameRoundModel addAttributeMappingsFromDictionary:@{
                                                     @"id": @"id",
+                                                    @"categoryName": @"categoryName",
+                                                    @"status": @"status",
                                                     }];
     
     [gameRoundModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"questions"
                                                                               toKeyPath:@"questions"
                                                                             withMapping:gameRoundQuestionModel]];
     
+    [gameRoundModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"category"
+                                                                                   toKeyPath:@"category"
+                                                                                 withMapping:gameRoundCategoryModel]];
 
     
     RKObjectMapping* gameModel = [RKObjectMapping mappingForClass:[GameModel class]];
@@ -552,7 +571,8 @@
     [gameRoundQuestionAnswerModel addAttributeMappingsFromDictionary:@{
                                                                        @"id": @"id",
                                                                        @"text": @"text",
-                                                                       @"isCorrect":@"isCorrect"
+                                                                       @"isCorrect":@"isCorrect",
+                                                                       @"isMissingAnswer":@"isMissingAnswer"
                                                                        }];
     
     
@@ -577,15 +597,30 @@
                                                                                          withMapping:gameRoundQuestionAnswerModel]];
     
     
+    RKObjectMapping* gameRoundCategoryModel = [RKObjectMapping mappingForClass:[GameRoundCategoryModel class]];
+    [gameRoundCategoryModel addAttributeMappingsFromDictionary:@{
+                                                                 @"id": @"id",
+                                                                 @"name": @"name",
+                                                                 @"color": @"color",
+                                                                 @"imageUrl": @"imageUrl",
+                                                                 @"imageUrlBase64": @"imageUrlBase64",
+                                                                 }];
+
+    
     RKObjectMapping* gameRoundModel = [RKObjectMapping mappingForClass:[GameRoundModel class]];
     [gameRoundModel addAttributeMappingsFromDictionary:@{
                                                          @"id": @"id",
+                                                         @"categoryName": @"categoryName",
+                                                         @"status": @"status",
                                                          }];
     
     [gameRoundModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"questions"
                                                                                    toKeyPath:@"questions"
                                                                                  withMapping:gameRoundQuestionModel]];
     
+    [gameRoundModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"category"
+                                                                                   toKeyPath:@"category"
+                                                                                 withMapping:gameRoundModel]];
     
     RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
     [wrapperMapping addAttributeMappingsFromDictionary:@{
@@ -601,6 +636,43 @@
     RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
     
     return responseWrapperDescriptor;
+}
+
+// Строит маппинг для получения списка вопросов в раунде
++ (RKResponseDescriptor*)  buildResponseDescriptorForGameRoundQuestions {
+    return [GameHelper buildResponseDescriptorForCreatedGameRound];
+}
+
+// Строит маппинг для получения списка вопросов в раунде
++ (RKResponseDescriptor*)  buildResponseDescriptorForGameAnswerOnQuestion {
+    RKObjectMapping* gamerQuestionAnswerResult = [RKObjectMapping mappingForClass:[GamerQuestionAnswerResultModel class]];
+    [gamerQuestionAnswerResult addAttributeMappingsFromDictionary:@{
+                                                         @"gameStatus": @"gameStatus",
+                                                         @"gameRoundStatus": @"gameRoundStatus",
+                                                         @"gamerStatus": @"gamerStatus",
+                                                         @"gamerScore": @"gamerScore",
+                                                         }];
+    
+    RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
+    [wrapperMapping addAttributeMappingsFromDictionary:@{
+                                                         @"status": @"status",
+                                                         @"errorCode": @"errorCode",
+                                                         @"errorMessage": @"errorMessage"
+                                                         }];
+    
+    [wrapperMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"data"
+                                                                                   toKeyPath:@"data"
+                                                                                 withMapping:gamerQuestionAnswerResult]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
+    
+    return responseWrapperDescriptor;
+}
+
+
+// Строит маппинг для получения ответа на запрос "Сдаться"
++ (RKResponseDescriptor*) buildResponseDescriptorForGameSurrender {
+    return [GameHelper buildResponseDescriptorForGameInformation];
 }
 
 

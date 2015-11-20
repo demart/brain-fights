@@ -61,16 +61,36 @@
 
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    GameQuestionViewController *gameQuestionViewController = [[[AppDelegate globalDelegate] drawersStoryboard] instantiateViewControllerWithIdentifier:@"GameQuestionViewController"];
-    [gameQuestionViewController initView:self.gameStatusController];
-    [self presentViewController:gameQuestionViewController animated:YES completion:nil];
-
-    /*
-    GameQuestionViewController *destinationController = [[GameQuestionViewController alloc] init];
-    [destinationController initView:self.gameStatusController];
-    [self presentViewController:destinationController animated:YES completion:^{
+    
+    GameRoundCategoryModel *categoryModel = (GameRoundCategoryModel*)self.model.categories[indexPath.row];
+    
+    // SHOW LOADING
+    // Call API to retrieve Questions
+    [GameService genereateGameRound:self.model.id withSelectedCategory:categoryModel.id onSuccess:^(ResponseWrapperModel *response) {
+        // Check data and refresh table
+        if ([response.status isEqualToString:SUCCESS]) {
+            GameRoundModel *gameRoundModel = (GameRoundModel*)response.data;
+            
+            // Начинаем новый раунд
+            GameQuestionViewController *gameQuestionViewController = [[[AppDelegate globalDelegate] drawersStoryboard] instantiateViewControllerWithIdentifier:@"GameQuestionViewController"];
+            [gameQuestionViewController initView:self.gameStatusController withGameModel:self.model withGameRoundModel:gameRoundModel];
+            [self presentViewController:gameQuestionViewController animated:YES completion:nil];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            // Show Authorization View
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            // TODO
+        }
+    } onFailure:^(NSError *error) {
+        // SHOW ERROR
+        
     }];
-     */
+    
 }
 
 

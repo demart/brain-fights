@@ -26,6 +26,16 @@
 @property NSString* color;
 
 /**
+ *  URL для скачивания картинки вопроса
+ */
+@property NSString* imageUrl;
+
+/**
+ * Картинка вопроса Base64
+ */
+@property NSString* imageUrlBase64;
+
+/**
  * Список вопросовов в категории
  */
 @property NSMutableArray* questions;

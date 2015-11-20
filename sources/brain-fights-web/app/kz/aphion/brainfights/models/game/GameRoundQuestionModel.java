@@ -83,16 +83,16 @@ public class GameRoundQuestionModel {
 		
 		// Читаем список уже отвеченных ответов на вопросы
 		if (gameRoundQuestion.getQuestionAnswers() != null)
-			for (GameRoundQuestionAnswer exitstingsQuestionAnswers : gameRoundQuestion.getQuestionAnswers()) {
+			for (GameRoundQuestionAnswer exitstingsQuestionAnswer : gameRoundQuestion.getQuestionAnswers()) {
 				// Найдет ответ игрока
-				if (exitstingsQuestionAnswers.getGamer().id == gamer.id) {
-					GameRoundQuestionAnswerModel answer =  GameRoundQuestionAnswerModel.buildModel(exitstingsQuestionAnswers.getAnswer());
+				if (exitstingsQuestionAnswer.getGamer().id == gamer.id) {
+					GameRoundQuestionAnswerModel answer =  GameRoundQuestionAnswerModel.buildModel(exitstingsQuestionAnswer);
 					model.answer = answer; 
 				}
 				
 				// Найден ответ опонента
-				if (exitstingsQuestionAnswers.getGamer().id == oponent.id) {
-					GameRoundQuestionAnswerModel answer =  GameRoundQuestionAnswerModel.buildModel(exitstingsQuestionAnswers.getAnswer());
+				if (exitstingsQuestionAnswer.getGamer().id == oponent.id) {
+					GameRoundQuestionAnswerModel answer =  GameRoundQuestionAnswerModel.buildModel(exitstingsQuestionAnswer);
 					model.oponentAnswer = answer;
 				}
 			}

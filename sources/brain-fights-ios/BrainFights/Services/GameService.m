@@ -210,4 +210,96 @@
     [objectRequestOperation start];
 }
 
+
+
+// Возвращает список вопросов к раунду
++ (void) getRoundQuestions:(NSUInteger)gameId withRound:(NSUInteger)roundId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameRoundQuestionsUrl:gameId withRoundId:roundId ]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForGameRoundQuestions];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
+// Отправляет ответ на вопрос на сервер
++ (void) answerOnQuestion:(NSUInteger)gameId withRound:(NSUInteger)roundId withQuestionId:(NSUInteger)questionId withAnswer:(NSUInteger)answerId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameAnswerOnQuestion:gameId withRoundId:roundId withQuestionId:questionId withAnswerId:answerId]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForGameAnswerOnQuestion];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
+// Сдаться в указанной игре
++ (void) surrenderGame:(NSUInteger) gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameSurrenderUrl:gameId]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForGameSurrender];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
 @end

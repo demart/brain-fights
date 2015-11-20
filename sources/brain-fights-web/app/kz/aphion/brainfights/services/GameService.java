@@ -82,7 +82,7 @@ public class GameService {
 		// TODO Send PUSH notification to oponent
 		Gamer gamer = null;
 		for (Gamer gamerObject : game.getGamers())
-			if (gamer.getUser().id == authorizedUser.id)
+			if (gamerObject.getUser().id == authorizedUser.id)
 				gamer = gamerObject;
 		
 		// PUSH уведомление
@@ -701,20 +701,30 @@ public class GameService {
 			}
 		
 		// Фиксируем ответ игрока
-		Answer answer = Answer.findById(answerId);
-		if (answer == null)
-			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer not found");
-
-		if (answer.getQuestion().id != gameRoundQuestion.getQuestion().id)
-			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer doesn't belong to the question");
-		
 		// Добавляем ответ
 		GameRoundQuestionAnswer gamerAnswer = new GameRoundQuestionAnswer();
 		gamerAnswer.setGamer(gamer);
 		gamerAnswer.setGameRoundQuestion(gameRoundQuestion);
-		gamerAnswer.setAnswer(answer);
-		gamerAnswer.setIsCorrectAnswer(answer.getCorrect());
+		
+		// Проверка на то, что прислали ответ от пользователя который не успел ответить
+		if (answerId == -1) {
+			gamerAnswer.setAnswer(null);
+			gamerAnswer.setIsCorrectAnswer(false);
+			gamerAnswer.setIsMissingAnswer(true);
+		} else {
+			Answer answer = Answer.findById(answerId);
+			if (answer == null)
+				throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer not found");
+			if (answer.getQuestion().id != gameRoundQuestion.getQuestion().id)
+				throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer doesn't belong to the question");
+			
+			gamerAnswer.setAnswer(answer);
+			gamerAnswer.setIsCorrectAnswer(answer.getCorrect());
+			gamerAnswer.setIsMissingAnswer(false);
+		}
+		
 		gamerAnswer.save();
+		
 		
 		if (gameRoundQuestion.getQuestionAnswers() == null)
 			gameRoundQuestion.setQuestionAnswers(new ArrayList<GameRoundQuestionAnswer>());
@@ -877,6 +887,69 @@ public class GameService {
 		model.gamerScore = 0;
 		model.gameRoundStatus = gameRound.getStatus();
 		
+		return model;
+	}
+
+	/**
+	 * Медот пользоваляет пользователям сдаться в игре
+	 * @param user 
+	 * @param gameId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GameModel surrenderGame(User user, Long gameId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user is null");
+		if (user.getDeleted())
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user was deleted");
+		
+		// Проверяем игру
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
+		
+		// Получаем список игроков
+		Gamer gamer = null;
+		Gamer oponent = null;
+		for (Gamer gamerObject : game.getGamers()) {
+			if (gamerObject.getUser().id == user.id) {
+				gamer = gamerObject;
+				oponent = gamer.getOponent();
+			}
+		}
+		// TODO Завершить игру
+		game.setStatus(GameStatus.FINISHED);
+		game.setGameFinishedDate(Calendar.getInstance());
+		
+		for (GameRound gameRound : game.getRounds()) {
+			if (gameRound.getStatus() == GameRoundStatus.WAITING_ANSWER) {
+				gameRound.setStatus(GameRoundStatus.COMPLETED);
+				gameRound.save();
+			}
+			
+		}
+		
+		gamer.setStatus(GamerStatus.SURRENDED);
+		// TODO Calculate score
+		gamer.setScore(0);
+		gamer.getUser().setScore(gamer.getScore());
+		gamer.getUser().save();
+		
+		oponent.setStatus(GamerStatus.OPONENT_SURRENDED);
+		// TODO Calculate score
+		oponent.setScore(18);
+		oponent.getUser().setScore(gamer.getScore());
+		oponent.getUser().save();
+		
+		gamer.save();
+		oponent.save();
+		
+		game.save();
+		
+		// Строим модель игры
+		GameModel model = GameModel.buildModel(game, gamer, oponent, null);  
 		return model;
 	}
 
