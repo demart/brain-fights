@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */; };
+		8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */; };
+		8D920EFD1BFBE3B900BA29BC /* GameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920EFC1BFBE3B900BA29BC /* GameModel.m */; };
+		8D920F001BFBE44A00BA29BC /* GameRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920EFF1BFBE44A00BA29BC /* GameRoundModel.m */; };
+		8D920F031BFBE48000BA29BC /* GameRoundQuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F021BFBE48000BA29BC /* GameRoundQuestionModel.m */; };
+		8D920F061BFBE50900BA29BC /* QuestionType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F051BFBE50900BA29BC /* QuestionType.m */; };
+		8D920F091BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F081BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m */; };
+		8D920F0C1BFBE5FC00BA29BC /* GameRoundCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F0B1BFBE5FC00BA29BC /* GameRoundCategoryModel.m */; };
+		8D920F101BFBEFC900BA29BC /* CategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F0E1BFBEFC900BA29BC /* CategoryTableViewCell.m */; };
+		8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920F0F1BFBEFC900BA29BC /* CategoryTableViewCell.xib */; };
+		8D920F141BFBF88800BA29BC /* GameQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F131BFBF88800BA29BC /* GameQuestionViewController.m */; };
+		8DB535351BFD28C0000EC8CF /* GameRoundStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB535341BFD28C0000EC8CF /* GameRoundStatus.m */; };
 		8DB8AA0A1BEBEFCC005B7508 /* AuthorizationCheckedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */; };
 		8DB8AA0D1BEBF0BA005B7508 /* AuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA0C1BEBF0BA005B7508 /* AuthorizationService.m */; };
 		8DB8AA121BECCE37005B7508 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA111BECCE37005B7508 /* SignInViewController.m */; };
@@ -78,6 +89,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D355F011BFE93E700FF12FD /* GamerQuestionAnswerResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamerQuestionAnswerResultModel.h; path = Data/ServerModels/GamerQuestionAnswerResultModel.h; sourceTree = "<group>"; };
+		8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamerQuestionAnswerResultModel.m; path = Data/ServerModels/GamerQuestionAnswerResultModel.m; sourceTree = "<group>"; };
+		8D920EFB1BFBE3B900BA29BC /* GameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModel.h; path = Data/ServerModels/GameModel.h; sourceTree = "<group>"; };
+		8D920EFC1BFBE3B900BA29BC /* GameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameModel.m; path = Data/ServerModels/GameModel.m; sourceTree = "<group>"; };
+		8D920EFE1BFBE44A00BA29BC /* GameRoundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundModel.h; path = Data/ServerModels/GameRoundModel.h; sourceTree = "<group>"; };
+		8D920EFF1BFBE44A00BA29BC /* GameRoundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoundModel.m; path = Data/ServerModels/GameRoundModel.m; sourceTree = "<group>"; };
+		8D920F011BFBE48000BA29BC /* GameRoundQuestionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundQuestionModel.h; path = Data/ServerModels/GameRoundQuestionModel.h; sourceTree = "<group>"; };
+		8D920F021BFBE48000BA29BC /* GameRoundQuestionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoundQuestionModel.m; path = Data/ServerModels/GameRoundQuestionModel.m; sourceTree = "<group>"; };
+		8D920F041BFBE50900BA29BC /* QuestionType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionType.h; path = Data/ServerModels/QuestionType.h; sourceTree = "<group>"; };
+		8D920F051BFBE50900BA29BC /* QuestionType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionType.m; path = Data/ServerModels/QuestionType.m; sourceTree = "<group>"; };
+		8D920F071BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundQuestionAnswerModel.h; path = Data/ServerModels/GameRoundQuestionAnswerModel.h; sourceTree = "<group>"; };
+		8D920F081BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoundQuestionAnswerModel.m; path = Data/ServerModels/GameRoundQuestionAnswerModel.m; sourceTree = "<group>"; };
+		8D920F0A1BFBE5FC00BA29BC /* GameRoundCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundCategoryModel.h; path = Data/ServerModels/GameRoundCategoryModel.h; sourceTree = "<group>"; };
+		8D920F0B1BFBE5FC00BA29BC /* GameRoundCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoundCategoryModel.m; path = Data/ServerModels/GameRoundCategoryModel.m; sourceTree = "<group>"; };
+		8D920F0D1BFBEFC900BA29BC /* CategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryTableViewCell.h; path = View/Game/Cells/CategoryTableViewCell.h; sourceTree = "<group>"; };
+		8D920F0E1BFBEFC900BA29BC /* CategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryTableViewCell.m; path = View/Game/Cells/CategoryTableViewCell.m; sourceTree = "<group>"; };
+		8D920F0F1BFBEFC900BA29BC /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoryTableViewCell.xib; path = View/Game/Cells/CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		8D920F121BFBF88800BA29BC /* GameQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameQuestionViewController.h; path = View/Game/GameQuestionViewController.h; sourceTree = "<group>"; };
+		8D920F131BFBF88800BA29BC /* GameQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameQuestionViewController.m; path = View/Game/GameQuestionViewController.m; sourceTree = "<group>"; };
+		8DB535331BFD28C0000EC8CF /* GameRoundStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundStatus.h; path = Data/ServerModels/GameRoundStatus.h; sourceTree = "<group>"; };
+		8DB535341BFD28C0000EC8CF /* GameRoundStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRoundStatus.m; path = Data/ServerModels/GameRoundStatus.m; sourceTree = "<group>"; };
 		8DB8AA081BEBEFCC005B7508 /* AuthorizationCheckedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationCheckedViewController.h; path = View/Authorization/AuthorizationCheckedViewController.h; sourceTree = "<group>"; };
 		8DB8AA091BEBEFCC005B7508 /* AuthorizationCheckedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationCheckedViewController.m; path = View/Authorization/AuthorizationCheckedViewController.m; sourceTree = "<group>"; };
 		8DB8AA0B1BEBF0BA005B7508 /* AuthorizationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationService.h; path = Services/AuthorizationService.h; sourceTree = "<group>"; };
@@ -225,6 +257,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8D920EFA1BFBE2C000BA29BC /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8D920F0D1BFBEFC900BA29BC /* CategoryTableViewCell.h */,
+				8D920F0E1BFBEFC900BA29BC /* CategoryTableViewCell.m */,
+				8D920F0F1BFBEFC900BA29BC /* CategoryTableViewCell.xib */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		8DB8AA071BEBEF8E005B7508 /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +339,8 @@
 				8DF18E801BF372050046C27B /* GameStatusTableViewController.m */,
 				8DF18E921BF4F87A0046C27B /* GameCategoriesTableViewController.h */,
 				8DF18E931BF4F87A0046C27B /* GameCategoriesTableViewController.m */,
+				8D920F121BFBF88800BA29BC /* GameQuestionViewController.h */,
+				8D920F131BFBF88800BA29BC /* GameQuestionViewController.m */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -335,6 +379,7 @@
 		8DF18E231BEF9A030046C27B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				8D920EFA1BFBE2C000BA29BC /* Categories */,
 				8DF18E821BF4E46A0046C27B /* Status */,
 				8DF18E3A1BEFB3830046C27B /* NewGameTableViewCell.h */,
 				8DF18E3B1BEFB3830046C27B /* NewGameTableViewCell.m */,
@@ -366,6 +411,22 @@
 				8DF18E401BEFBFED0046C27B /* UserGamesGroupedModel.m */,
 				8DF18E421BEFC0350046C27B /* UserGameGroupModel.h */,
 				8DF18E431BEFC0350046C27B /* UserGameGroupModel.m */,
+				8D920EFB1BFBE3B900BA29BC /* GameModel.h */,
+				8D920EFC1BFBE3B900BA29BC /* GameModel.m */,
+				8D920EFE1BFBE44A00BA29BC /* GameRoundModel.h */,
+				8D920EFF1BFBE44A00BA29BC /* GameRoundModel.m */,
+				8D920F011BFBE48000BA29BC /* GameRoundQuestionModel.h */,
+				8D920F021BFBE48000BA29BC /* GameRoundQuestionModel.m */,
+				8D920F041BFBE50900BA29BC /* QuestionType.h */,
+				8D920F051BFBE50900BA29BC /* QuestionType.m */,
+				8D920F071BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.h */,
+				8D920F081BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m */,
+				8D920F0A1BFBE5FC00BA29BC /* GameRoundCategoryModel.h */,
+				8D920F0B1BFBE5FC00BA29BC /* GameRoundCategoryModel.m */,
+				8DB535331BFD28C0000EC8CF /* GameRoundStatus.h */,
+				8DB535341BFD28C0000EC8CF /* GameRoundStatus.m */,
+				8D355F011BFE93E700FF12FD /* GamerQuestionAnswerResultModel.h */,
+				8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -609,6 +670,7 @@
 				8DF18E8C1BF4ECB80046C27B /* GameStatusRoundTableViewCell.xib in Resources */,
 				8DF18E7B1BF33C520046C27B /* GameGroupHeaderTableViewCell.xib in Resources */,
 				8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */,
+				8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */,
 				8DF18E871BF4E50C0046C27B /* GameStatusPlayersTableViewCell.xib in Resources */,
 				8DF18E911BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib in Resources */,
 				8DF18E151BEE7F250046C27B /* MenuProfileCellTableViewCell.xib in Resources */,
@@ -659,8 +721,10 @@
 				8DF18E141BEE7F250046C27B /* MenuProfileCellTableViewCell.m in Sources */,
 				8DF18E291BEF9F5D0046C27B /* GameHelper.m in Sources */,
 				8DB8AA181BECD9B7005B7508 /* AuthorizationResponseModel.m in Sources */,
+				8D920EFD1BFBE3B900BA29BC /* GameModel.m in Sources */,
 				8DF18E6E1BF1E4EF0046C27B /* DepartmentTableViewCell.m in Sources */,
 				8DF18E221BEF98370046C27B /* RatingTableViewController.m in Sources */,
+				8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */,
 				8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */,
 				8DB8AA2A1BECFE45005B7508 /* GameMainTableViewController.m in Sources */,
 				8DF18E621BF10EC30046C27B /* UserHelper.m in Sources */,
@@ -679,14 +743,18 @@
 				8DF18E2D1BEF9FF80046C27B /* UserGamesModel.m in Sources */,
 				8DF18E3D1BEFB3830046C27B /* NewGameTableViewCell.m in Sources */,
 				8DF18E8B1BF4ECB80046C27B /* GameStatusRoundTableViewCell.m in Sources */,
+				8DB535351BFD28C0000EC8CF /* GameRoundStatus.m in Sources */,
+				8D920F101BFBEFC900BA29BC /* CategoryTableViewCell.m in Sources */,
 				8DF18E7E1BF36CE30046C27B /* Constants.m in Sources */,
 				8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */,
 				8DF18E6A1BF1C73C0046C27B /* DepartmentSearchResultModel.m in Sources */,
+				8D920F031BFBE48000BA29BC /* GameRoundQuestionModel.m in Sources */,
 				8DF18E561BF0B3E60046C27B /* UserType.m in Sources */,
 				8DF18E4E1BF09D040046C27B /* SearchByNameTableViewController.m in Sources */,
 				8DF18E481BF09CB40046C27B /* NewGameTableViewController.m in Sources */,
 				8DF18E761BF269170046C27B /* SearchByNameResultsTableViewController.m in Sources */,
 				8DB8AA1C1BECD9F0005B7508 /* UserProfileModel.m in Sources */,
+				8D920F091BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m in Sources */,
 				8DF18E901BF4EFCF0046C27B /* GameStatusActionTableViewCell.m in Sources */,
 				8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */,
 				8DB8AA0A1BEBEFCC005B7508 /* AuthorizationCheckedViewController.m in Sources */,
@@ -695,6 +763,8 @@
 				8DB8AA331BED4D04005B7508 /* UrlHelper.m in Sources */,
 				8DF18E941BF4F87A0046C27B /* GameCategoriesTableViewController.m in Sources */,
 				8DB8AA121BECCE37005B7508 /* SignInViewController.m in Sources */,
+				8D920F0C1BFBE5FC00BA29BC /* GameRoundCategoryModel.m in Sources */,
+				8D920F141BFBF88800BA29BC /* GameQuestionViewController.m in Sources */,
 				8DF18E361BEFA23E0046C27B /* GamerStatus.m in Sources */,
 				8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */,
 				8DF18E261BEF9E960046C27B /* GameService.m in Sources */,
@@ -703,7 +773,9 @@
 				8DF18E301BEFA0EE0046C27B /* UserGameModel.m in Sources */,
 				8DF18E391BEFA3CA0046C27B /* GamerModel.m in Sources */,
 				8DF18E411BEFBFED0046C27B /* UserGamesGroupedModel.m in Sources */,
+				8D920F001BFBE44A00BA29BC /* GameRoundModel.m in Sources */,
 				8DF18E0F1BEE72860046C27B /* UserService.m in Sources */,
+				8D920F061BFBE50900BA29BC /* QuestionType.m in Sources */,
 				8DFCAC651BEBDD2E0035DE1E /* main.m in Sources */,
 				8DF18E331BEFA1B20046C27B /* GameStatus.m in Sources */,
 				8DF18E1F1BEF97F30046C27B /* UserProfileTableViewController.m in Sources */,

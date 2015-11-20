@@ -38,6 +38,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -129,6 +131,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -215,6 +219,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",

@@ -25,7 +25,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
      	 if (Ext.getCmp('nameQuestion').getValue() == "")
      		Ext.Msg.alert('Внимание', 'Пожалуйста, введите текст вопроса!');
      	 
-     	 else if (Ext.getCmp('categoryComboForQuestions').getValue() == 0)
+     	 else if (Ext.getCmp('categoryComboForQuestions').getValue() == "Не указана")
      		Ext.Msg.alert('Внимание', 'Пожалуйста, выберите категорию!');
      	 
      	 else if (Ext.getCmp('answer1').getValue() == "")
@@ -40,7 +40,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
      	 else if (Ext.getCmp('answer4').getValue() == "")
       		Ext.Msg.alert('Внимание', 'Пожалуйста, введите 4-ый вариант ответа!');
      	 
-     	 else if (Ext.getCmp('answerTrue').getValue() == 0)
+     	 else if (Ext.getCmp('answerTrue').getValue() == "Не указан")
        		Ext.Msg.alert('Внимание', 'Пожалуйста, выберите правильный вариант ответа!');     		 
       
      	 else {
@@ -115,7 +115,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
         Ext.getCmp('answer2Text').setValue(record.data.answers[1].name);
         Ext.getCmp('answer3Text').setValue(record.data.answers[2].name);
         Ext.getCmp('answer4Text').setValue(record.data.answers[3].name);
-        Ext.getCmp('categoryComboForQuestionsText').setValue(record.data.categoryId);
+        Ext.getCmp('categoryComboForQuestionsText').setValue(record.data.categoryName);
         
         for (var i=0; i<4;i++) {
         	if(record.data.answers[i].correct == true) {
@@ -151,7 +151,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
     onSaveButtonQuestionClick: function() {
    	 var model = new BrainFightsConsole.model.QuestionModel();
 	 model.data.text = Ext.getCmp('nameQuestionText').getValue();
-	 model.data.categoryId = Ext.getCmp('categoryComboForQuestionsText').getValue();
+	 if (Ext.getCmp('categoryComboForQuestionsText').getValue() > 0 && Ext.getCmp('categoryComboForQuestionsText').getValue() < 100000000000000)
+		  model.data.categoryId = Ext.getCmp('categoryComboForQuestionsText').getValue();
 	 
 	 model.data.answers = new Array();
 	 model.data.answers[0] = {name: Ext.getCmp('answer1Text').getValue(), correct: false};
@@ -222,6 +223,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 		questionsGrid.store.proxy.api.read = 'rest/questions/store/read';
 		questionsGrid.getStore().reload();
 		Ext.getCmp('categoryComboId').setValue(null);
+    	var text = Ext.getCmp('searchQuestionField');
+    	text.reset();
     },
     
     deleteQuestion: function()  {
@@ -268,6 +271,33 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 			},
 		this);
 	}
-}
+},
+    
+    searchQuestion: function () {
+    	console.log("search");
+    	var text = Ext.getCmp('searchQuestionField');
+    	var grid = Ext.getCmp('questionsGridId');
+    	grid.store.proxy.api.read = 'rest/search/question/store/read?name=' + text.getValue();
+    	grid.getStore().reload();
+        Ext.getCmp('questionName').setVisible(false);
+        Ext.getCmp('questionCreatedDate').setVisible(false);
+        Ext.getCmp('questionModifiedDate').setVisible(false);
+        Ext.getCmp('questionAnswer1').setVisible(false);
+        Ext.getCmp('questionAnswer2').setVisible(false);
+        Ext.getCmp('questionAnswer3').setVisible(false);
+        Ext.getCmp('questionAnswer4').setVisible(false);
+        Ext.getCmp('answerCorrect').setVisible(false);
+        Ext.getCmp('editButtonQuestion').setVisible(false);
+        Ext.getCmp('saveButtonQuestion').setVisible(false);
+        Ext.getCmp('cancelButtonQuestion').setVisible(false);
+        
+        Ext.getCmp('nameQuestionText').setVisible(false);
+        Ext.getCmp('answerTrueText').setVisible(false);
+        Ext.getCmp('categoryComboForQuestionsText').setVisible(false);
+        Ext.getCmp('answer4Text').setVisible(false);
+        Ext.getCmp('answer3Text').setVisible(false);
+        Ext.getCmp('answer2Text').setVisible(false);
+        Ext.getCmp('answer1Text').setVisible(false);
+    }
     
 });

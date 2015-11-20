@@ -38,6 +38,7 @@
 
 
 - (void) viewWillAppear:(BOOL)animated {
+    // SHOW LOADING
     // Загружаем игры при появлении сцены
     [GameService retrieveGamesGrouped:^(ResponseWrapperModel *response) {
         // Check data and refresh table
@@ -199,8 +200,45 @@
     
     if (indexPath.section > 0) {
         // Get Game
-        // Check Status
-        [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+        UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+        UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+        if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
+            // Если нам нужно принять решение
+            [GameService acceptGameInvitation:userGame.id onSuccess:^(ResponseWrapperModel *response) {
+                if ([response.status isEqualToString:SUCCESS]) {
+                    // Заменяем модель игры на новую и вперед
+                    gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
+                    // Check Status
+                    [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+                }
+                
+                if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+                    // Show Authorization View
+                    [[AppDelegate globalDelegate] showAuthorizationView:self];
+                }
+                
+                if ([response.status isEqualToString:SERVER_ERROR]) {
+                    // Show Error Alert
+                    // TODO
+                }
+            } onFailure:^(NSError *error) {
+                // SHOW ERROR
+            }];
+        } else
+        if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
+            // Если мы ждем принятия решения
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Внимание"
+                                                                           message:@"Ожидаем решение опонента."
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        } else {
+            // Check Status
+            [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+        }
     }
 }
 

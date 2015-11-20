@@ -14,6 +14,7 @@ Ext.define('BrainFightsConsole.controller.Root', {
     	'admins': 'onAdmins',
     	'category': 'onCategory',
     	'question': 'onQuestion',
+    	'logout' : 'onLogoutRoute',
     },
     
     //Управление администраторами/менеджерами
@@ -38,6 +39,25 @@ Ext.define('BrainFightsConsole.controller.Root', {
 		var questionsGrid = Ext.getCmp('questionsGridId');
 		questionsGrid.store.proxy.api.read = 'rest/questions/store/read?categoryId=' + Ext.getCmp('categoryComboId').getValue();
 		questionsGrid.getStore().reload();
+    },
+    
+    onLogoutRoute : function() {
+        console.log("onLogoutRoute route");
+        
+        Ext.Ajax.request({
+    	    url: '/rest/login/out',
+    	    method: 'POST',          
+    	    params: { },
+    	    success: function(response, conn, options, eOpts) {
+    	    	var json = Ext.util.JSON.decode(response.responseText);
+    	    	if (json.success) {}
+    	    },
+    	    failure: function(conn, response, options, eOpts){
+    	    	console.log("не удалось выйти");
+    	    }
+    	});
+    	
+		window.document.location = "/login";
     },
 
 });

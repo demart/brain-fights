@@ -39,6 +39,7 @@
 
 + (AppDelegate *)globalDelegate;
 
+- (UIStoryboard *)drawersStoryboard;
 - (void) initDrawerMenu;
 -(void) showAuthorizationView:(UIViewController*) parentController;
 

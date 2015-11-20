@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import controllers.Secure.Security;
 import play.mvc.Controller;
 import kz.aphion.brainfights.admin.models.AdminResponseWrapperModel;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
@@ -245,7 +246,7 @@ public class AdmController extends Controller {
 	public static Long destroyCategory(Long id) throws PlatformException {
 		Logger.info("Delete Category. User is " +  Security.connected());
 		
-		Boolean status = AdmService.checkUser(Security.connected());
+		Boolean status = AdmService.checkUsers(Security.connected());
 		System.out.println ("Is user's role administrator/manager? Answer: " + status);
 		if (status == true) {
 			if (id == null || id <= 0)
@@ -367,7 +368,7 @@ public class AdmController extends Controller {
 	public static Long destroyQuestion(Long id) throws PlatformException {
 		Logger.info("Delete Question. User is " +  Security.connected());
 		
-		Boolean status = AdmService.checkUser(Security.connected());
+		Boolean status = AdmService.checkUsers(Security.connected());
 		System.out.println ("Is user's role administrator/manager? Answer: " + status);
 		if (status == true) {
 			if (id == null || id <= 0)
@@ -386,7 +387,73 @@ public class AdmController extends Controller {
 			return 0l;
 	}
 	
+	/**
+	 * Поиск вопроса по заданному тексту
+	 * @param name
+	 * @throws PlatformException
+	 */
+	public static void searchQuestion (String name) throws PlatformException {
+		Logger.info("Search Question. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		if (status == true) {
+			
+			List<Question> list = AdmService.searchQuestions(name);
+			ArrayList<QuestionModel> models = AdmService.createQuestionsList(list);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountQuestionsNotDeleted(null).intValue());
+			renderJSON(wrapper);
 
+		}
+	}
+	
+	/**
+	 * Выбор категории при просмотре вопросов
+	 * @param start
+	 * @param limit
+	 * @throws PlatformException
+	 */
+	public static void createCategoryComboList (int start, int limit) throws PlatformException {
+		Logger.info("Create Category Combo List. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		if (status == true) {
+			
+			List<Category> listBase = AdmService.getCategoryList(start, limit);
+			
+			ArrayList<CategoryModel> models = AdmService.createCategoryComboList(listBase);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountCategoryNotDeleted().intValue());
+			renderJSON(wrapper);
+
+		}
+	}
+	
+	public static void loginOut() {
+		Logger.info("Log Out. User is " + Security.connected());
+    /*
+		session.clear();
+        response.removeCookie("rememberme");
+        */
+		Security.onDisconnect();
+        session.clear();
+        response.removeCookie("rememberme");
+        Security.onDisconnected();
+        flash.success("secure.logout");
+ 
+		AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+		wrapper.setStatus(ResponseStatus.SUCCESS);
+		renderJSON(wrapper);
+		
+	}
 	
 }
 

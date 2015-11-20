@@ -31,6 +31,22 @@ Ext.define('BrainFightsConsole.view.main.Main', {
      	        margin: '0 0 0 0',
      	        tbar : [
 					{
+						id: 'authUserNameLabel',
+						xtype:'label',
+					    text:'',
+					    scale: 'medium',
+					    hidden: false,
+					}, '-' , {
+						id: 'logoutBtn',
+						xtype:'button',
+			        	margin: '0 80 0 0',
+					    text:'Выход',
+					    scale: 'medium',
+					    hidden: false,
+					    listeners : {click : 'onLogoutClick', },
+					},
+					
+					{
 						id: 'adminUsersBtn',
 					    text:'Управление пользователями',
 					    iconCls: null,
@@ -57,6 +73,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 					    listeners : {click : 'onQuestionBtnClick', },
 					    
 					},
+					
      	         ],
             },
             {
@@ -77,16 +94,21 @@ Ext.define('BrainFightsConsole.view.main.Main', {
     listeners : {
     	beforerender: function(viewport, eOpts) {
     		var role = document.getElementById('console_user_role').innerHTML;
+    		var name = document.getElementById('console_user_name').innerHTML;
         	console.log(role);
         	if (role == 'ADMINISTRATOR') {
         		Ext.getCmp('adminUsersBtn').setVisible(true);
         		Ext.getCmp('categoryBtn').setVisible(true);
         		Ext.getCmp('questionBtn').setVisible(true);
+        		window.document.location = "#admins";
+        		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь администратором.');
         	}
         	else {
         		Ext.getCmp('adminUsersBtn').setVisible(false);
         		Ext.getCmp('categoryBtn').setVisible(true);
         		Ext.getCmp('questionBtn').setVisible(true);
+        		window.document.location = "#category";
+        		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь менеджером.');
         	}
 
     	}

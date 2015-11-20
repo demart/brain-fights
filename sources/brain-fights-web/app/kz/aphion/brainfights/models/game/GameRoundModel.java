@@ -33,6 +33,11 @@ public class GameRoundModel {
 	 * статус раунда
 	 */
 	public GameRoundStatus status;
+	
+	/**
+	 * Категория вопросов
+	 */
+	public GameRoundCategoryModel category;
 	/**
 	 * Создает модель раунда
 	 * 
@@ -52,6 +57,7 @@ public class GameRoundModel {
 		}
 		model.categoryName=gameRound.getCategory().getName();
 		model.status = gameRound.getStatus();
+		model.category = GameRoundCategoryModel.buildModel(gameRound.getCategory());
 		return model;
 	}
 	

@@ -26,6 +26,9 @@ GET		/rest/questions/store/read								AdmController.readQuestions
 POST	/rest/questions/store/update							AdmController.updateQuestion
 POST 	/rest/questions/store/destroy							AdmController.destroyQuestion
 POST	/rest/check/name										AdmController.checkNameAdminInBase
+GET		/rest/search/question/store/read						AdmController.searchQuestion
+GET		/rest/category/combo/store/read							AdmController.createCategoryComboList
+POST	/rest/login/out											AdmController.loginOut
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate
@@ -60,9 +63,10 @@ GET		/game/list/grouped																GameController.getUserGamesGrouped
 GET		/game/{gameId}																	GameController.getGameInformation
 GET		/game/{gameId}/																	GameController.getGameInformation
 GET		/game/{gameId}/round/generate/{categoryId}										GameController.generateGameRound
-GET		/game/{gameId}/round/questions													GameController.getRoundQuestions
+GET		/game/{gameId}/round/question													GameController.getRoundQuestions
+GET		/game/{gameId}/round/{roundId}/questions										GameController.getRoundQuestions
 GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			GameController.answerQuestion
-
+GET		/game/{gameId}/surrender														GameController.surrenderGame
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

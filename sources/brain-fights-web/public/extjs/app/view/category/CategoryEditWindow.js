@@ -78,7 +78,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryEditWindow', {
                 queryParam: 'q',
                 queryMode: 'remote',
 	            name: 'color',
-	            value: '0',
+	            value: 'Не указан',
                 getDisplayValue: function() {
                     return Ext.String.htmlDecode(this.value);
                 },

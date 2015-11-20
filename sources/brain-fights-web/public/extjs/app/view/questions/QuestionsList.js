@@ -30,13 +30,15 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 collapsible: false,
                 region: 'north',
                 margin: '0 0 0 0',
-                height: '10%',
-                
+               // height: '10%',
+
+             
                 items: [
                         {
                         	xtype: 'panel',
                         	layout: 'fit',
                         	bodyPadding: 5,
+                            width: 500,
                         	items: [{
                 	            reference: 'categoryCombo',
                 	            flex: 1,
@@ -47,7 +49,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                                 anchor: '-15',
                                 labelWidth: 130,
                                 autoRender: true,
-                                store: 'CategoryStore',
+                                store: 'CategoryComboStore',
                                 minChars: 5,
                                 queryParam: 'q',
                                 queryMode: 'remote',
@@ -65,8 +67,16 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                         	    
                         	    select: function () {
                             		var questionsGrid = Ext.getCmp('questionsGridId');
+                            		
+                            		if (Ext.getCmp('categoryComboId').getValue() == 0) {
+                            			questionsGrid.store.proxy.api.read = 'rest/questions/store/read';
+                                		questionsGrid.getStore().reload();
+                            		}
+                            			
+                            		else {
                            			questionsGrid.store.proxy.api.read = 'rest/questions/store/read?categoryId=' + Ext.getCmp('categoryComboId').getValue();
                             		questionsGrid.getStore().reload();
+                            		}
                         	    	//console.log (record.data.id);
                             		
                     		        Ext.getCmp('questionName').setVisible(false);
@@ -97,12 +107,74 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 }]
                 
    
-            }],
+            },
+            {
+            	xtype: 'panel',
+            	layout: 'fit',
+            	bodyPadding: 5,
+            	items: [{
+            		xtype: 'fieldcontainer',
+            		fieldLabel: 'Поиск по вопросу',
+            		labelWidth: 130,
+            		combineErrors: true,
+            		msgTarget : 'side',
+            		layout: 'hbox',
+            		defaults: {
+            			flex: 1,
+            			hideLabel: false,
+            			labelWidth: 60,
+            		},
+            		items: [{
+            			xtype: 'textfield',
+            			id:'searchQuestionField',
+            			name: 'searchingQuestion',
+            			margin: '0 15 0 0',
+            			width: 150,
+            			listeners:{
+            				specialkey: function(f,o){
+            					if(o.getKey()==13){
+            						Ext.getCmp('searchButton').fireEvent('click');
+            					}
+            				}
+            			},  
+            		}, 
+
+            		{
+            			region: 'center',
+            			items: [
+            			        {
+            				id: 'searchButton',
+            				region: 'east',
+            				xtype: 'button',
+                			margin: '0 15 0 0',
+            				text: 'Найти',
+            				listeners: {
+                				click : 'searchQuestion' 
+                			},
+            			},
+            			{
+            				id: 'refreshButton',
+            				region: 'east',
+            				xtype: 'button',
+                			margin: '0 15 0 0',
+            				text: 'Сбросить фильтр',
+            				listeners: {
+                				click : 'showAllQuestion' 
+                			},
+            			},
+    
+            			        ]
+            		},],
+            	}],
+    },
+                        
+                        
+                        ],
              },
             {
             	//title: 'Вопросы',
                 region: 'west',
-                width: 600,
+                flex: 2,
                 //minHeight: 100,
                 //maxHeight: 250,
                 items: [{
@@ -116,7 +188,6 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 	
                 	tbar: [
                 	       { text: 'Добавить новый вопрос', handler: 'showAddWindow' },
-                	       { text: 'Показать все вопросы', handler: 'showAllQuestion'},
                 	       { text: 'Удалить вопрос', handler: 'deleteQuestion'},
         	        ],
                 	
@@ -198,16 +269,20 @@ bbar:            	 {
 {
 region: 'center',
 title: 'Просмотр информации о вопросе',
+flex: 1,
 id: 'viewQuestionInformationId',
 items: [
 {
     defaultType: 'textfield',
     style: 'margin: 10px',
     style: 'margin: 10px',
-    width: 500,
+    //width: 500,
     defaults: {
     	labelWidth: 140,
-    },
+    	width: 370,
+       	grow      : true,
+       	growMin: 230,
+     },
 
 	items: [
 				{
@@ -273,6 +348,7 @@ items: [
 		            xtype: 'textfield',
 		           // labelWidth: 200,
 		            id: 'nameQuestionText',
+
 		            hidden: true,
 		            afterLabelTextTpl: [
 		                '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>'
@@ -407,6 +483,7 @@ items: [
 					xtype: 'button',
 					text: 'Редактировать',
 					hidden: true,
+					width: 130,
         			margin: '10 15 0 80',
 					id: 'editButtonQuestion',
 					handler: 'onEditButtonQuestionClick',
@@ -415,6 +492,7 @@ items: [
 					xtype: 'button',
 					text: 'Сохранить',
         			margin: '10 15 0 80',
+					width: 130,
 					hidden: true,
 					id: 'saveButtonQuestion',
 					handler: 'onSaveButtonQuestionClick',
@@ -423,6 +501,7 @@ items: [
 					xtype: 'button',
 					text: 'Отменить',
         			margin: '10 15 0 0',
+					width: 130,
 					hidden: true,
 					id: 'cancelButtonQuestion',
 					handler: 'onCancelButtonQuestionClick',

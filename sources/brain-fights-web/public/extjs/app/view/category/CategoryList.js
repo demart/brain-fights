@@ -29,8 +29,8 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                // collapsible: false,
                 region: 'west',
                 margin: '0 0 0 0',
-                width: 450,
-                
+               // width: 450,
+                flex: 2,
                 items: [
                         {
                 	viewConfig: {
@@ -122,6 +122,9 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                             width: 500,
                             defaults: {
                             	labelWidth: 140,
+            					width: 380,
+            			       	grow      : true,
+            			       	growMin: 240,
                             },
                         	items: [
                         	        {
@@ -206,6 +209,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
 									{
 										xtype: 'button',
 										text: 'Редактировать',
+										width: 130,
 										hidden: true,
 										margin: '10 15 0 80',
 										id: 'editButton',
@@ -214,6 +218,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
 									{
 										xtype: 'button',
 										text: 'Сохранить',
+										width: 130,
 										hidden: true,
 										id: 'saveButton',
 										margin: '10 15 0 80',
@@ -222,6 +227,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
 									{
 										xtype: 'button',
 										text: 'Отменить',
+										width: 130,
 										hidden: true,
 										id: 'cancelButton',
 										margin: '10 15 0 0',

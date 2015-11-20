@@ -49,6 +49,12 @@ public class GameRoundQuestionAnswer extends PersistentObject {
 	private Answer answer;
 	
 	/**
+	 * Был ли ответ от пользователя или произошел тайм аут
+	 */
+	@Column(name="is_missing_answer", nullable=false, columnDefinition = "boolean default false")
+	private Boolean isMissingAnswer;
+	
+	/**
 	 * Является ли ответ правильным
 	 */
 	@Column(name="is_correct_answer", nullable=false, columnDefinition = "boolean default false")
@@ -84,6 +90,12 @@ public class GameRoundQuestionAnswer extends PersistentObject {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Boolean getIsMissingAnswer() {
+		return isMissingAnswer;
+	}
+	public void setIsMissingAnswer(Boolean isMissingAnswer) {
+		this.isMissingAnswer = isMissingAnswer;
 	}
 	
 }
