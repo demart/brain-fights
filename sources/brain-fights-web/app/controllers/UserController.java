@@ -10,6 +10,7 @@ import kz.aphion.brainfights.models.ResponseWrapperModel;
 import kz.aphion.brainfights.models.UserFriendsResponseModel;
 import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.ADService;
 import kz.aphion.brainfights.services.UserService;
 import play.Logger;
 import play.mvc.Controller;
@@ -30,8 +31,10 @@ public class UserController extends Controller {
 	 */
 	public static void authenticate(){
 		try {
+
     		AuthorizationRequestModel model = null;
 	    	try {
+
 				String requestBody = params.current().get("body");
 				Logger.debug("authenticate request body: %s", requestBody);
 				Gson gson = new Gson();
@@ -41,7 +44,6 @@ public class UserController extends Controller {
 			}   	
 	    	if (model == null)
 	    		throw new PlatformException(ErrorCode.VALIDATION_ERROR, "authenticate request model is empty.");
-	    	
 	    	AuthorizationResponseModel result = UserService.authenticate(model);
 	    	renderJSON(ResponseWrapperModel.getSuccess(result));
 	    	

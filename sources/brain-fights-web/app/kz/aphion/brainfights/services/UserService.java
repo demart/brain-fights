@@ -37,6 +37,7 @@ public class UserService {
 	 * @throws SushimiException Ошибки при попытке авторизоваться
 	 */
 	public static AuthorizationResponseModel authenticate(AuthorizationRequestModel model) throws PlatformException {
+//		ADService.authenticate(model.login, model.password);
 		List<User> users = JPA.em().createQuery("From User where login = :userLogin")
 				.setParameter("userLogin", model.login).getResultList();
 		if (users.size() == 0)
