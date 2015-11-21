@@ -773,6 +773,7 @@ public class GameService {
 					game.setStatus(GameStatus.FINISHED);
 					game.setGameFinishedDate(Calendar.getInstance());
 					game.save();
+
 					
 					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
 						// Ничья
@@ -952,6 +953,33 @@ public class GameService {
 		GameModel model = GameModel.buildModel(game, gamer, oponent, null);  
 		return model;
 	}
-
+	private Game calculateScore(Game game){
+		Gamer hiGamer = game.getGamers().get(0);
+		Gamer lowGamer = game.getGamers().get(1);
+		if(hiGamer.getUser().getScore()<lowGamer.getUser().getScore()){
+			hiGamer = game.getGamers().get(1);
+			lowGamer = game.getGamers().get(0);
+		}
+		int hiGamerScores = hiGamer.getUser().getScore();
+		int lowGamerScores = lowGamer.getUser().getScore();
+		int diff = hiGamer.getCorrectAnswerCount()-lowGamer.getCorrectAnswerCount();
+		float prop;
+		if(hiGamerScores+lowGamerScores==0){
+			prop = (float) ((1+hiGamerScores)*1.00/((hiGamerScores+1)+(lowGamerScores+1)));
+		}else{
+			prop = (float) (hiGamerScores*1.00/(hiGamerScores+lowGamerScores));
+		}
+		double hiScore =  (diff*(((1+Math.signum(diff))/2)-Math.signum(diff)*prop) + (0.5-prop)*(1-Math.abs(Math.signum(diff))));
+		if(hiScore<0){
+			hiScore=-Math.ceil(-hiScore);
+		}else {
+			hiScore =  Math.ceil(hiScore);
+		}
+		hiGamer.setScore((int) hiScore);
+		lowGamer.setScore((int) (-hiScore));
+		hiGamer.getUser().setScore(hiGamer.getUser().getScore()+hiGamer.getScore());
+		lowGamer.getUser().setScore(lowGamer.getUser().getScore()+lowGamer.getScore());
+		return game;
+	}
 	
 }
