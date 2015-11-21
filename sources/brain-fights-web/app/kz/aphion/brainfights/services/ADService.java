@@ -25,7 +25,8 @@ import java.util.List;
 public class ADService {
     public static final String CONTEXT_FACTORY="com.sun.jndi.ldap.LdapCtxFactory";
 //    public static final String LDAP_URL = "ldap://169.254.148.46:389";
-    public static final String LDAP_URL = "ldap://alimjanns.ddns.net:390";
+//    public static final String LDAP_URL = "ldap://alimjanns.ddns.net:390";
+    public static final String LDAP_URL = "ldap://alimjanns.ddns.net:80";   
     public static final String LDAP_AUTH_TYPE = "simple";
     public static final String LDAP_DOMAIN = "transtelecom.kz";
     public static final String LDAP_SECURITY_PRINCIPAL = "cn=Alimjan Nurpeissov,cn=users,dc=transtelecom,dc=kz";
@@ -69,7 +70,7 @@ public class ADService {
     }
 
     public static User authenticate(String login, String password){
-        User user = User.find("from User where login=?", login).first();
+        User user = User.find("from User where login=? and deleted = false", login).first();
         try {
             DirContext context = initLDAPContext(login,password);
             if(user!=null){

@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import kz.aphion.brainfights.persistents.DeviceType;
 import kz.aphion.brainfights.persistents.PersistentObject;
 import kz.aphion.brainfights.persistents.game.Gamer;
@@ -75,6 +77,7 @@ public class User extends PersistentObject {
 	/**
 	 * Игрок в играх в которых участвовал пользователь
 	 */
+	//@Where(clause="deleted = false")
 	@OneToMany(mappedBy="user")
 	private List<Gamer> gamers;
 

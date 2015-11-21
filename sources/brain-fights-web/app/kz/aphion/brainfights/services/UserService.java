@@ -37,12 +37,15 @@ public class UserService {
 	 * @throws SushimiException Ошибки при попытке авторизоваться
 	 */
 	public static AuthorizationResponseModel authenticate(AuthorizationRequestModel model) throws PlatformException {
-//		ADService.authenticate(model.login, model.password);
+		User user =	ADService.authenticate(model.login, model.password);
+		/*
 		List<User> users = JPA.em().createQuery("From User where login = :userLogin")
 				.setParameter("userLogin", model.login).getResultList();
 		if (users.size() == 0)
 			throw new AuthorizationException(ErrorCode.AUTH_ERROR, "User account not found");
+			
 		User user  = users.get(0);
+		*/
 		if (user == null)
 			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "User account not found");
 		

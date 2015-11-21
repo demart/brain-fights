@@ -127,5 +127,70 @@ public class DepartmentService {
 		DepartmentModel model = DepartmentModel.buildModel(authorizedUser, department);
 		return model;
 	}
+
+
+	/**
+	 * Метод обновляет рейнтинги всех департаментов и колличество игроков в каждом
+	 */
+	public static void updateDepartmentStatistics() {
+		List<Department> departments = Department.find("from Department where parent=null and deleted = false").fetch();
+		
+		for (Department department : departments) {
+			updateDepartmentStatisticsRecursive(department);
+		}
+
+		// Получить последний уровень подразделения
+		// посчитать кол-во пользователей
+		// Посчитать входящие подразделения
+		// Посчитать средний рейтинг (пользователи + подразделения
+		// Сохранить изменения
+	}
+	
+	
+	/***
+	 * Пробегается рекурсивно по департаментам, выставляет колличество пользователей и т.д. 
+	 * @param department
+	 */
+	private static void updateDepartmentStatisticsRecursive(Department department) {
+		// Рекурсивно посчитать у детей
+		if (department.getChildren() != null)
+			for (Department child : department.getChildren()) {
+				updateDepartmentStatisticsRecursive(child);
+			}
+		
+		// Делаем подсчеты
+		int totalScore = 0;
+		int totalCount = 0;
+		int totalUserCount = 0;
+		
+		// Подсчитаем рейтинг внутренних департаментов
+		if (department.getChildren() != null)
+			for (Department child : department.getChildren()) {
+				totalScore += child.getScrore();
+				totalCount += 1;
+				if (child.getUsers() != null)
+					totalUserCount += child.getUsers().size();
+			}
+		
+		// Посчитаем рейтинг пользователей
+		if (department.getUsers() != null) {
+			for (User user : department.getUsers()) {
+				totalScore += user.getScore();
+				totalCount +=1;
+			}
+			totalUserCount += department.getUsers().size();
+		}
+		
+		if (totalCount != 0) {
+			int avarageScore = totalScore / totalCount;
+			department.setScrore(avarageScore);
+		} else {
+			department.setScrore(0);
+		}
+		
+		department.setUserCount(totalUserCount);
+		
+		department.save();
+	}
 	
 }
