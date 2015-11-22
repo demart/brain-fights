@@ -21,6 +21,8 @@
 
 @interface UserHelper : NSObject
 
+// Строит маппинг для профиля пользователя
++ (RKResponseDescriptor*) buildResponseDescriptorForUserProfile;
 
 // Строит маппинг для получения списка друзей
 + (RKResponseDescriptor*) buildResponseDescriptorForFriends;

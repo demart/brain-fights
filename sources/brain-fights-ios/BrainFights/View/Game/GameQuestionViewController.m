@@ -99,14 +99,16 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 // Инициализируем основные элементы экрана
 -(void) initViewLayouts {
     // init
-    self.aAnswerView.layer.cornerRadius = 5.0;
-    self.bAnswerView.layer.cornerRadius = 5.0;
-    self.cAnswerView.layer.cornerRadius = 5.0;
-    self.dAnswerView.layer.cornerRadius = 5.0;
-    self.questionView.layer.cornerRadius = 5.0;
-    self.firstQuestionAnswerIndicator.layer.cornerRadius = 5.0;
-    self.secondQuestionAnswerIndicator.layer.cornerRadius = 5.0;
-    self.thirdQuestionAnswerIndicator.layer.cornerRadius = 5.0;
+    [self initButtonView:self.aAnswerView];
+    [self initButtonView:self.bAnswerView];
+    [self initButtonView:self.cAnswerView];
+    [self initButtonView:self.dAnswerView];
+    [self initButtonView:self.questionView];
+    
+    [self initButtonView:self.firstQuestionAnswerIndicator];
+    [self initButtonView:self.secondQuestionAnswerIndicator];
+    [self initButtonView:self.thirdQuestionAnswerIndicator];
+    
     self.progressView.layer.cornerRadius = 5.0;
     
     self.answerViews = [[NSMutableArray alloc] init];
@@ -122,6 +124,15 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     [self.answerViewTexts insertObject:self.dAnswerViewText atIndex:3];
     
 }
+
+-(void) initButtonView:(UIView*) view {
+    view.layer.cornerRadius = 5.0;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(2, 2);
+    view.layer.shadowRadius = 2;
+    view.layer.shadowOpacity = 0.5;
+}
+
 
 - (void) initHeader {
     [self.roundNumberTitle setText: [[NSString alloc] initWithFormat:@"Раунд %li",[self.gameModel.gameRounds count]]];

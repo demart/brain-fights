@@ -18,8 +18,19 @@
 @implementation MenuProfileCellTableViewCell
 
 - (void)awakeFromNib {
-    UIColor *greenColor =  [UIColor colorWithRed:0.0/255.0f green:176.0/255.0f blue:80.0/255.0f alpha:1.0f];
-    self.backgroundColor = greenColor;
+    self.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self initSectionView:self.sectionView1];
+    [self initSectionView:self.sectionView2];
+    [self initSectionView:self.sectionView3];
+}
+
+-(void) initSectionView:(UIView*) view {
+    view.layer.cornerRadius = 5.0;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(1, 1);
+    view.layer.shadowRadius = 5;
+    view.layer.shadowOpacity = 0.5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,7 +48,6 @@
     [self.totalGameCount setText:[@(userProfile.totalGames) stringValue]];
     [self.wonGameCount setText:[@(userProfile.wonGames) stringValue]];
     [self.looseGameCount setText:[@(userProfile.loosingGames) stringValue]];
-    
     
     
 }

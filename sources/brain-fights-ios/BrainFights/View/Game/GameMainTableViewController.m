@@ -23,6 +23,8 @@
 #import "UserGameModel.h"
 #import "ResponseWrapperModel.h"
 
+#import "DejalActivityView.h"
+
 @interface GameMainTableViewController ()
 
 // Загруженные игры пользователя
@@ -32,15 +34,47 @@
 
 @implementation GameMainTableViewController
 
+static UIRefreshControl *refreshControl;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initRefreshControl];
+    self.tableView.separatorColor = [UIColor clearColor];
 }
 
 
+-(void) initRefreshControl {
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    refreshControl.tintColor = [Constants SYSTEM_COLOR_WHITE];
+    
+    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:@"Идет загрузка..."];
+    NSRange range = NSMakeRange(0,mutableString.length);
+    [mutableString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Gill Sans" size:(12.0)] range:range];
+    [mutableString addAttribute:NSForegroundColorAttributeName value:[Constants SYSTEM_COLOR_WHITE] range:range];
+    refreshControl.attributedTitle = mutableString;
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+}
+
+-(void) handleRefresh:(UIRefreshControl*) refreshControll {
+    [self loadGames];
+    [refreshControl endRefreshing];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
+    NSLog(@"Main View will appear");
     // SHOW LOADING
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    // Загружаем игры при появлении сцены
+    [self loadGames];
+}
+
+
+-(void) loadGames {
     // Загружаем игры при появлении сцены
     [GameService retrieveGamesGrouped:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         // Check data and refresh table
         if ([response.status isEqualToString:SUCCESS]) {
             UserGamesGroupedModel *userGamesGrouppedModel = (UserGamesGroupedModel*)response.data;
@@ -62,7 +96,9 @@
             // TODO
         }
         
+        
     } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         // Show Erro Alert
         // TODO
     }];

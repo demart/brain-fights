@@ -15,25 +15,54 @@
 #import "GameCategoriesTableViewController.h"
 #import "GameQuestionViewController.h"
 
+#import "DejalActivityView.h"
+
 @interface GameStatusTableViewController ()
 
 @property UserGameModel *gameModel;
 @property GameModel *model;
 @property GamerQuestionAnswerResultModel *lastQuestionAnswerResult;
 
+
+
 @end
 
 @implementation GameStatusTableViewController
 
+static UIRefreshControl* refreshControl;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initRefreshControl];
     self.tableView.separatorColor = [UIColor clearColor];
+}
+
+-(void) initRefreshControl {
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    refreshControl.tintColor = [Constants SYSTEM_COLOR_WHITE];
+    
+    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:@"Идет загрузка..."];
+    NSRange range = NSMakeRange(0,mutableString.length);
+    [mutableString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Gill Sans" size:(12.0)] range:range];
+    [mutableString addAttribute:NSForegroundColorAttributeName value:[Constants SYSTEM_COLOR_WHITE] range:range];
+    refreshControl.attributedTitle = mutableString;
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+}
+
+-(void) handleRefresh:(UIRefreshControl*) refreshControll {
+    [self refreshGameStatus];
+    [refreshControl endRefreshing];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    NSLog(@"Status view will appear");
+    
     // Show loading
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
     [self refreshGameStatus];
    
     if (self.lastQuestionAnswerResult != nil) {
@@ -92,8 +121,10 @@
             // Show Error Alert
             // TODO
         }
+        [DejalBezelActivityView removeViewAnimated:NO];
     } onFailure:^(NSError *error) {
-        
+        // SHOW ERROR
+        [DejalBezelActivityView removeViewAnimated:NO];
     }];
 }
 
@@ -111,10 +142,14 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.model == nil)
+        return 0;
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.model == nil)
+        return 0;
     return 8;
 }
 
@@ -139,7 +174,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusRoundCell"];
         }
         
-        if (self.model.gameRounds != nil && indexPath.row < [self.model.gameRounds count]) {
+        if (self.model.gameRounds != nil && indexPath.row <= [self.model.gameRounds count]) {
             [cell initGameRound:self.model.gameRounds[indexPath.row-1] andGame:self.model withIndex:indexPath.row];
         } else {
             [cell initGameRound:nil andGame:self.model withIndex:indexPath.row];
@@ -275,13 +310,20 @@
 }
 
 
+static CGFloat HEIGHT = 504;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Table View Height: %f", tableView.bounds.size.height);
+    
+    CGFloat proportion = tableView.bounds.size.height / HEIGHT;
+    NSLog(@"Proporting View Height: %f", proportion);
+    
+    
     if (indexPath.row == 0)
         return 70;
     if (indexPath.row == 7)
-        return 70;
-    return 50;
+        return tableView.bounds.size.height - ((70 + 55*6) * proportion);
+    return 55*proportion;
 }
 
 

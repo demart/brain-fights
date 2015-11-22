@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 #import "UserProfileModel.h"
 
 @interface MenuProfileCellTableViewCell : UITableViewCell
@@ -17,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *userScore;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *userJobPosition;
+@property (weak, nonatomic) IBOutlet UIView *sectionView1;
+@property (weak, nonatomic) IBOutlet UIView *sectionView2;
+@property (weak, nonatomic) IBOutlet UIView *sectionView3;
 
 - (void) initCell:(UserProfileModel*) userProfile;
 

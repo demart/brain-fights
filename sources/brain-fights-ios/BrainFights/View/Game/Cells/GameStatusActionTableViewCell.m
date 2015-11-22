@@ -26,10 +26,19 @@
 
 
 - (void)awakeFromNib {
-    self.surrenderActionButton.layer.cornerRadius = 5.0;
-    self.playButton.layer.cornerRadius = 5.0;
-    self.addToFriendsButton.layer.cornerRadius = 5.0;
+    [self initButtonView:self.surrenderActionButton];
+    [self initButtonView:self.playButton];
+    [self initButtonView:self.addToFriendsButton];
 }
+
+-(void) initButtonView:(UIView*) view {
+    view.layer.cornerRadius = 5.0;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(2, 2);
+    view.layer.shadowRadius = 2;
+    view.layer.shadowOpacity = 0.5;
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

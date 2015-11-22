@@ -13,9 +13,16 @@
 
 - (void)awakeFromNib {
     // Загругляем углы
-    self.gameView.layer.cornerRadius = 10.0f;
+    [self initButtonView:self.gameView];
     self.gameView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
-    
+}
+
+-(void) initButtonView:(UIView*) view {
+    view.layer.cornerRadius = 10.0;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(2, 2);
+    view.layer.shadowRadius = 2;
+    view.layer.shadowOpacity = 0.5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -60,6 +60,9 @@ static NSString * const RatingViewControllerStoryboardID = @"RatingViewControlle
 
 -(void) initDesignScheme {
     
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
+    
     [[UINavigationBar appearance] setBarTintColor: [Constants SYSTEM_COLOR_GREEN]];
     [UINavigationBar appearance].tintColor = [Constants SYSTEM_COLOR_WHITE];
     [[UINavigationBar appearance] setTranslucent:NO];
