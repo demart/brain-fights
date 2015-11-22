@@ -772,80 +772,43 @@ public class GameService {
 				if (gameRound.getNumber() == 6) {
 					// Последний раунд
 					// Завершаем игру, считаем баллы и так далле
-					// Отправляем PUSH уведомление другому участнику с результатом и т.д.
-					
-					// TODO Завершить игру
 					game.setStatus(GameStatus.FINISHED);
 					game.setGameFinishedDate(Calendar.getInstance());
 					game.save();
 
+					// Считаем очки
+					calculateScore(gamer, oponent);
 					
 					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
 						// Ничья
-						
 						gamer.setStatus(GamerStatus.DRAW);
-						// TODO считаем очки
-						gamer.save();
-						
 						oponent.setStatus(GamerStatus.DRAW);
-						// TODO считаем очки
-						oponent.save();
+						
 						Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
 						NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы закончили игру в ничью!");
-						// TODO отправить уведомление второму игроку о ничье
 						
 					} else {
 						if (gamer.getCorrectAnswerCount() > oponent.getCorrectAnswerCount()) {
 							// Выиграл текущий игрок
 							gamer.setStatus(GamerStatus.WINNER);
-							// TODO считаем очки
-							gamer.setScore(gamer.getCorrectAnswerCount());
-							
-							gamer.save();
-							
-							// Вата а не очки
-							gamer.getUser().setScore(gamer.getUser().getScore()+gamer.getScore());
 							gamer.getUser().save();
 							
 							// Проиграл опонент
 							oponent.setStatus(GamerStatus.LOOSER);
-							// TODO считаем очки
-							oponent.setScore(oponent.getCorrectAnswerCount()*-1);
-							
-							oponent.save();
-							
-							// Вата а не очки
-							oponent.getUser().setScore(oponent.getUser().getScore()+gamer.getScore());
 							oponent.getUser().save();
-							
-							// TODO отправить уведомление второму что он проиграл
+
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
 							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы проиграли игру!");
 							
 						} else {
-							// Выиграл текущий игрок
+							// Проиграл текущий игрок
 							gamer.setStatus(GamerStatus.LOOSER);
-							// TODO считаем очки
-							gamer.setScore(gamer.getCorrectAnswerCount()*-1);
-							
-							gamer.save();
-							
-							// Вата а не очки
-							gamer.getUser().setScore(gamer.getUser().getScore()+gamer.getScore());
 							gamer.getUser().save();
 							
-							// Проиграл опонент
+							// Выиграл опонент
 							oponent.setStatus(GamerStatus.WINNER);
-							// TODO считаем очки
-							oponent.setScore(oponent.getCorrectAnswerCount());
-							
-							oponent.save();
-							
-							// Вата а не очки
-							oponent.getUser().setScore(oponent.getUser().getScore()+gamer.getScore());
 							oponent.getUser().save();
-							
-							// TODO отправить уведомление второму что он выиграл
+
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
 							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы выиграли игру!");
 							
@@ -854,28 +817,26 @@ public class GameService {
 					
 				} else {
 					// Еще есть раунды
-					
 					// Если игрок был инициатором раунда, тогда теперь выбирает противник
 					if (gamer.id == gameRound.getOwner().id) {
 						gamer.setStatus(GamerStatus.WAITING_OPONENT);
-						gamer.save();
-						
 						oponent.setStatus(GamerStatus.WAITING_ROUND);
-						oponent.save();
-						// TODO SEND PUSH уведомление о ходе
+						
 						Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
 						NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш ход!");
 						
 					} else {
 						// Инициатором был опонент теперь наша очередь выбирать
 						gamer.setStatus(GamerStatus.WAITING_ROUND);
-						gamer.save();
-						
 						oponent.setStatus(GamerStatus.WAITING_OPONENT);
-						oponent.save();
 					}
-
 				}
+				
+				// В любом случае изменются состояния двух игроков
+				// Поэтому созранения из каждого условия вынес сюда
+				gamer.save();
+				oponent.save();
+				
 			} else {
 				// Если противник еще не ответил на вопросы тогда нужно изменить статус и ждать его ответов
 				// Пора менять статус на опонента
@@ -883,7 +844,6 @@ public class GameService {
 				gamer.save();
 				
 				oponent.setStatus(GamerStatus.WAITING_ANSWERS);
-				// TODO SEND PUSH NOTIFICATION что пора отвечать второму участнику
 				Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
 				NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш ход!");
 				oponent.save();
@@ -895,12 +855,40 @@ public class GameService {
 		GamerQuestionAnswerResultModel model = new GamerQuestionAnswerResultModel();
 		model.gameStatus = game.getStatus();
 		model.gamerStatus = gamer.getStatus();
-		model.gamerScore = 0;
+		model.gamerScore = gamer.getScore();
 		model.gameRoundStatus = gameRound.getStatus();
 		
 		return model;
 	}
 
+	private static void calculateScore(Gamer gamer, Gamer oponent){
+		Gamer hiGamer = gamer;
+		Gamer lowGamer = oponent;
+		if(hiGamer.getUser().getScore()<lowGamer.getUser().getScore()){
+			hiGamer = oponent;
+			lowGamer = gamer;
+		}
+		int hiGamerScores = hiGamer.getUser().getScore();
+		int lowGamerScores = lowGamer.getUser().getScore();
+		int diff = hiGamer.getCorrectAnswerCount()-lowGamer.getCorrectAnswerCount();
+		float prop;
+		if(hiGamerScores+lowGamerScores==0){
+			prop = (float) ((1+hiGamerScores)*1.00/((hiGamerScores+1)+(lowGamerScores+1)));
+		}else{
+			prop = (float) (hiGamerScores*1.00/(hiGamerScores+lowGamerScores));
+		}
+		double hiScore =  (diff*(((1+Math.signum(diff))/2)-Math.signum(diff)*prop) + (0.5-prop)*(1-Math.abs(Math.signum(diff))));
+		if(hiScore<0){
+			hiScore=-Math.ceil(-hiScore);
+		}else {
+			hiScore =  Math.ceil(hiScore);
+		}
+		hiGamer.setScore((int) hiScore);
+		lowGamer.setScore((int) (-hiScore));
+		hiGamer.getUser().setScore(hiGamer.getUser().getScore()+hiGamer.getScore());
+		lowGamer.getUser().setScore(lowGamer.getUser().getScore()+lowGamer.getScore());
+	}
+	
 	/**
 	 * Медот позволяет пользователям сдаться в игре
 	 * @param user 
@@ -1049,33 +1037,5 @@ public class GameService {
 		NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", gamer.getUser().getName() + " так и не принял ваше приглашение!");
 	}
 
-	private Game calculateScore(Game game){
-		Gamer hiGamer = game.getGamers().get(0);
-		Gamer lowGamer = game.getGamers().get(1);
-		if(hiGamer.getUser().getScore()<lowGamer.getUser().getScore()){
-			hiGamer = game.getGamers().get(1);
-			lowGamer = game.getGamers().get(0);
-		}
-		int hiGamerScores = hiGamer.getUser().getScore();
-		int lowGamerScores = lowGamer.getUser().getScore();
-		int diff = hiGamer.getCorrectAnswerCount()-lowGamer.getCorrectAnswerCount();
-		float prop;
-		if(hiGamerScores+lowGamerScores==0){
-			prop = (float) ((1+hiGamerScores)*1.00/((hiGamerScores+1)+(lowGamerScores+1)));
-		}else{
-			prop = (float) (hiGamerScores*1.00/(hiGamerScores+lowGamerScores));
-		}
-		double hiScore =  (diff*(((1+Math.signum(diff))/2)-Math.signum(diff)*prop) + (0.5-prop)*(1-Math.abs(Math.signum(diff))));
-		if(hiScore<0){
-			hiScore=-Math.ceil(-hiScore);
-		}else {
-			hiScore =  Math.ceil(hiScore);
-		}
-		hiGamer.setScore((int) hiScore);
-		lowGamer.setScore((int) (-hiScore));
-		hiGamer.getUser().setScore(hiGamer.getUser().getScore()+hiGamer.getScore());
-		lowGamer.getUser().setScore(lowGamer.getUser().getScore()+lowGamer.getScore());
-		return game;
-	}
-	
+
 }
