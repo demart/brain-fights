@@ -82,6 +82,7 @@ public class ADService {
                     String dn = getLdapAttrValue(ATTRIBUTE_DN,result.getAttributes());
                     List<String> path = parseDistinguishedName(dn);
                     List<Department> departments = Department.find("from Department where parent=null").fetch();
+                    if(departments==null) departments=new ArrayList<Department>();
                     Department department = getDepartamentByPath(departments,path,null);
                     user.setDepartment(department);
                     saveDepartments(departments);
@@ -103,6 +104,7 @@ public class ADService {
                     String dn = getLdapAttrValue(ATTRIBUTE_DN,result.getAttributes());
                     List<String> path = parseDistinguishedName(dn);
                     List<Department> departments = Department.find("from Department where parent=null").fetch();
+                    if(departments==null) departments=new ArrayList<Department>();
                     Department department = getDepartamentByPath(departments,path,null);
                     user.setDepartment(department);
                     saveDepartments(departments);
@@ -166,6 +168,7 @@ public class ADService {
         ldapEnv.put(Context.PROVIDER_URL,  LDAP_URL);
         ldapEnv.put(Context.SECURITY_AUTHENTICATION, LDAP_AUTH_TYPE);
         ldapEnv.put(Context.SECURITY_PRINCIPAL, login+"@"+ LDAP_DOMAIN);
+//        ldapEnv.put(Context.SECURITY_PRINCIPAL, ROOT_DEPARTMENT +"\\" + login);
         ldapEnv.put(Context.SECURITY_CREDENTIALS, password);
         System.out.println(LDAP_SECURITY_PRINCIPAL);
         return new InitialDirContext(ldapEnv);
