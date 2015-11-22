@@ -16,7 +16,8 @@
 +(NSString*) baseUrl {
 #if DEBUG
     return @"http://localhost:9000";
-    //return @"http://172.20.10.2";
+    //return @"http://172.20.10.2:9000";
+    //return @"http://192.168.0.246:9000";
     //return @"http://api.sushimi.kz/rest-api";
 #else
         return @"http://172.20.10.2";
@@ -55,6 +56,14 @@
 +(NSString*) userRemoveFriendByIdUrl:(NSInteger)userId {
     return [[NSString alloc] initWithFormat:@"%@/user/friends/remove/%li?authToken=%@", UrlHelper.baseUrl, userId, [self authToken]];
 }
+
+
+// URL для получения рейтинга пользователей
++ (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit {
+    return [[NSString alloc] initWithFormat:@"%@/stat/users/page/%li/limit/%li?authToken=%@", UrlHelper.baseUrl, page, limit, [self authToken]];
+}
+
+
 
 
 // URL для получения рутовый департаментов

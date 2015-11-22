@@ -33,6 +33,10 @@
 +(NSString*) userRemoveFriendByIdUrl:(NSInteger)userId;
 
 
+// URL для получения рейтинга пользователей
++ (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit;
+
+
 
 // URL для получения рутовый департаментов
 +(NSString*) childrenDepartmentByRootUrl;

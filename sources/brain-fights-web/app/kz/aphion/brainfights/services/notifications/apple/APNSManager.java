@@ -44,12 +44,12 @@ public class APNSManager {
 				pushManager =
 						new PushManager<SimpleApnsPushNotification>(
 						        ApnsEnvironment.getSandboxEnvironment(),
-						        SSLContextUtil.createDefaultSSLContext("Certificates.p12", "lepon&7&"),
+						        SSLContextUtil.createDefaultSSLContext("BrainFightsPushDev.p12", "lepon&7&"),
 						        null, // Optional: custom event loop group
 						        null, // Optional: custom ExecutorService for calling listeners
 						        null, // Optional: custom BlockingQueue implementation
 						        new PushManagerConfiguration(),
-						        "SushimiPushManager");
+						        "BrainFightsPushManager");
 				
 				pushManager.registerRejectedNotificationListener(new MyRejectedNotificationListener());
 				pushManager.registerFailedConnectionListener(new MyFailedConnectionListener());

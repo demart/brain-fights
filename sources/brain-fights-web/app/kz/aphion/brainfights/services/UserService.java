@@ -99,12 +99,20 @@ public class UserService {
 	 * @return
 	 * @throws PlatformException 
 	 */
-	public static void updateDevicePushToken(User user,
-			DevicePushTokenRegisterModel model) throws PlatformException {
-		
+	public static void updateDevicePushToken(User user, DevicePushTokenRegisterModel model) throws PlatformException {
 		if (model == null || model.devicePushToken == null || "".equals(model.devicePushToken.trim()))
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "model is null or devicePushToken is null");
+
+		// затираем всем этот ключ, для того чтобы если на одной девайсе два разных чувака авторизовались
+		// то мог получать только последний
+		JPA.em().createQuery("update User set devicePushToken = null where devicePushToken = :token")
+		.setParameter("token", model.devicePushToken).executeUpdate();
 		
+		if (model.invalidPushToken != null && "".equals(model.devicePushToken)) {
+			JPA.em().createQuery("update User set devicePushToken = null where devicePushToken = :token")
+			.setParameter("token", model.invalidPushToken).executeUpdate();
+		}
+
 		user.setDevicePushToken(model.devicePushToken);
 		user.save();
 	}
@@ -268,6 +276,44 @@ public class UserService {
 		if (user.getFriends() != null)
 			if (user.getFriends().remove(friendToDelete))
 				user.save();
+	}
+	
+	
+	/**
+	 * Возвращает постраничный статистику пользователей
+	 * @param user
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @throws PlatformException
+	 */
+	public static List<UserProfileModel> getUserStatistics(User user, Integer page, Integer limit) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user is null");
+		if (user.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user is deleted");
+		
+		List<User> users = JPA.em().createQuery("from User where deleted = false order by score DESC, lastActivityTime DESC")
+		.setFirstResult(page*limit)
+		.setMaxResults(limit)
+		.getResultList();
+		
+		List<UserProfileModel> userProfiles = new ArrayList<UserProfileModel>();
+		for (User userObject : users) {
+			UserProfileModel model = UserProfileModel.buildModel(user, userObject);
+			userProfiles.add(model);
+		}
+		
+		return userProfiles;
+	}
+	
+	/**
+	 * Возвращает позицию игрока оносительно других
+	 * @param user
+	 * @return
+	 */
+	public static Integer getUserGamePosition(User user) {
+		return (int)User.count("deleted = false and score >= ? and lastActivityTime > ?", user.getScore(), user.getLastActivityTime()) + 1;
 	}
 	
 }

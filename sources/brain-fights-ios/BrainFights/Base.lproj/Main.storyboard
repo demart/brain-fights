@@ -558,7 +558,7 @@
             </objects>
             <point key="canvasLocation" x="2167" y="1434"/>
         </scene>
-        <!--Рейтинг-->
+        <!--Rating Table View Controller-->
         <scene sceneID="pjH-Yd-gwM">
             <objects>
                 <tableViewController id="a9W-RH-nlb" customClass="RatingTableViewController" sceneMemberID="viewController">
@@ -584,12 +584,22 @@
                             <outlet property="delegate" destination="a9W-RH-nlb" id="Q2J-ta-UPm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Рейтинг" id="apG-Eo-4Yb">
+                    <navigationItem key="navigationItem" id="apG-Eo-4Yb">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="leftMenuIcon" id="fz7-yM-V5K">
                             <connections>
                                 <action selector="showMenuAction:" destination="a9W-RH-nlb" id="G4c-OC-3yB"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="JWJ-dl-9bj">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <segments>
+                                <segment title="Игроки"/>
+                                <segment title="Подразделения"/>
+                            </segments>
+                        </segmentedControl>
                     </navigationItem>
                     <connections>
                         <outlet property="showMenuButton" destination="fz7-yM-V5K" id="7fd-23-6UH"/>

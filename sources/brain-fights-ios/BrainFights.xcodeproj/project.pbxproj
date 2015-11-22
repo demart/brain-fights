@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */; };
 		8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */; };
+		8D7722121C00D022001E8CC8 /* UserRatingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7722101C00D022001E8CC8 /* UserRatingTableViewCell.m */; };
+		8D7722131C00D022001E8CC8 /* UserRatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D7722111C00D022001E8CC8 /* UserRatingTableViewCell.xib */; };
+		8D7722181C00D9A8001E8CC8 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7722171C00D9A8001E8CC8 /* DejalActivityView.m */; };
+		8D77221C1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D77221A1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m */; };
+		8D77221D1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D77221B1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib */; };
+		8D7722211C012696001E8CC8 /* DevicePushTokenRegisterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7722201C012696001E8CC8 /* DevicePushTokenRegisterModel.m */; };
+		8D7722241C012BAF001E8CC8 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7722231C012BAF001E8CC8 /* NotificationService.m */; };
 		8D920EFD1BFBE3B900BA29BC /* GameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920EFC1BFBE3B900BA29BC /* GameModel.m */; };
 		8D920F001BFBE44A00BA29BC /* GameRoundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920EFF1BFBE44A00BA29BC /* GameRoundModel.m */; };
 		8D920F031BFBE48000BA29BC /* GameRoundQuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920F021BFBE48000BA29BC /* GameRoundQuestionModel.m */; };
@@ -91,6 +98,18 @@
 /* Begin PBXFileReference section */
 		8D355F011BFE93E700FF12FD /* GamerQuestionAnswerResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamerQuestionAnswerResultModel.h; path = Data/ServerModels/GamerQuestionAnswerResultModel.h; sourceTree = "<group>"; };
 		8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamerQuestionAnswerResultModel.m; path = Data/ServerModels/GamerQuestionAnswerResultModel.m; sourceTree = "<group>"; };
+		8D77220F1C00D022001E8CC8 /* UserRatingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserRatingTableViewCell.h; path = View/Rating/Cells/UserRatingTableViewCell.h; sourceTree = "<group>"; };
+		8D7722101C00D022001E8CC8 /* UserRatingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserRatingTableViewCell.m; path = View/Rating/Cells/UserRatingTableViewCell.m; sourceTree = "<group>"; };
+		8D7722111C00D022001E8CC8 /* UserRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserRatingTableViewCell.xib; path = View/Rating/Cells/UserRatingTableViewCell.xib; sourceTree = "<group>"; };
+		8D7722161C00D9A8001E8CC8 /* DejalActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DejalActivityView.h; path = ThirdParty/DejalActivityView/DejalActivityView.h; sourceTree = "<group>"; };
+		8D7722171C00D9A8001E8CC8 /* DejalActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DejalActivityView.m; path = ThirdParty/DejalActivityView/DejalActivityView.m; sourceTree = "<group>"; };
+		8D7722191C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserRatingHeaderTableViewCell.h; path = View/Rating/Cells/UserRatingHeaderTableViewCell.h; sourceTree = "<group>"; };
+		8D77221A1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserRatingHeaderTableViewCell.m; path = View/Rating/Cells/UserRatingHeaderTableViewCell.m; sourceTree = "<group>"; };
+		8D77221B1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserRatingHeaderTableViewCell.xib; path = View/Rating/Cells/UserRatingHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		8D77221F1C012696001E8CC8 /* DevicePushTokenRegisterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DevicePushTokenRegisterModel.h; path = Data/ServerModels/DevicePushTokenRegisterModel.h; sourceTree = "<group>"; };
+		8D7722201C012696001E8CC8 /* DevicePushTokenRegisterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DevicePushTokenRegisterModel.m; path = Data/ServerModels/DevicePushTokenRegisterModel.m; sourceTree = "<group>"; };
+		8D7722221C012BAF001E8CC8 /* NotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationService.h; path = Services/NotificationService.h; sourceTree = "<group>"; };
+		8D7722231C012BAF001E8CC8 /* NotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationService.m; path = Services/NotificationService.m; sourceTree = "<group>"; };
 		8D920EFB1BFBE3B900BA29BC /* GameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameModel.h; path = Data/ServerModels/GameModel.h; sourceTree = "<group>"; };
 		8D920EFC1BFBE3B900BA29BC /* GameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameModel.m; path = Data/ServerModels/GameModel.m; sourceTree = "<group>"; };
 		8D920EFE1BFBE44A00BA29BC /* GameRoundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRoundModel.h; path = Data/ServerModels/GameRoundModel.h; sourceTree = "<group>"; };
@@ -257,6 +276,36 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8D77220E1C00CF3C001E8CC8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8D77220F1C00D022001E8CC8 /* UserRatingTableViewCell.h */,
+				8D7722101C00D022001E8CC8 /* UserRatingTableViewCell.m */,
+				8D7722111C00D022001E8CC8 /* UserRatingTableViewCell.xib */,
+				8D7722191C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.h */,
+				8D77221A1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m */,
+				8D77221B1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		8D7722141C00D8F5001E8CC8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8D7722151C00D997001E8CC8 /* DejalActivityView */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		8D7722151C00D997001E8CC8 /* DejalActivityView */ = {
+			isa = PBXGroup;
+			children = (
+				8D7722161C00D9A8001E8CC8 /* DejalActivityView.h */,
+				8D7722171C00D9A8001E8CC8 /* DejalActivityView.m */,
+			);
+			name = DejalActivityView;
+			sourceTree = "<group>";
+		};
 		8D920EFA1BFBE2C000BA29BC /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +364,8 @@
 				8DF18E551BF0B3E60046C27B /* UserType.m */,
 				8DF18E5D1BF10B6C0046C27B /* UserFriendsModel.h */,
 				8DF18E5E1BF10B6C0046C27B /* UserFriendsModel.m */,
+				8D77221F1C012696001E8CC8 /* DevicePushTokenRegisterModel.h */,
+				8D7722201C012696001E8CC8 /* DevicePushTokenRegisterModel.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -370,6 +421,7 @@
 		8DF18E1C1BEF97430046C27B /* Rating */ = {
 			isa = PBXGroup;
 			children = (
+				8D77220E1C00CF3C001E8CC8 /* Cells */,
 				8DF18E201BEF98370046C27B /* RatingTableViewController.h */,
 				8DF18E211BEF98370046C27B /* RatingTableViewController.m */,
 			);
@@ -540,6 +592,7 @@
 		8DFCAC7A1BEBEA030035DE1E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8D7722141C00D8F5001E8CC8 /* Components */,
 				8DF18E451BF09C4B0046C27B /* Search */,
 				8DF18E1C1BEF97430046C27B /* Rating */,
 				8DF18E1B1BEF973C0046C27B /* Profile */,
@@ -569,6 +622,8 @@
 				8DF18E0E1BEE72860046C27B /* UserService.m */,
 				8DF18E241BEF9E960046C27B /* GameService.h */,
 				8DF18E251BEF9E960046C27B /* GameService.m */,
+				8D7722221C012BAF001E8CC8 /* NotificationService.h */,
+				8D7722231C012BAF001E8CC8 /* NotificationService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -633,6 +688,14 @@
 					8DFCAC5F1BEBDD2E0035DE1E = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 4W3DP52J38;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -663,6 +726,7 @@
 				8DF18E5B1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib in Resources */,
 				8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */,
 				8DF18E3E1BEFB3830046C27B /* NewGameTableViewCell.xib in Resources */,
+				8D77221D1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib in Resources */,
 				8DF18E671BF111C90046C27B /* UserTableViewCell.xib in Resources */,
 				8DF18E531BF0AD940046C27B /* GameTableViewCell.xib in Resources */,
 				8DF18E6F1BF1E4EF0046C27B /* DepartmentTableViewCell.xib in Resources */,
@@ -673,6 +737,7 @@
 				8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */,
 				8DF18E871BF4E50C0046C27B /* GameStatusPlayersTableViewCell.xib in Resources */,
 				8DF18E911BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib in Resources */,
+				8D7722131C00D022001E8CC8 /* UserRatingTableViewCell.xib in Resources */,
 				8DF18E151BEE7F250046C27B /* MenuProfileCellTableViewCell.xib in Resources */,
 				8DFCAC6E1BEBDD2E0035DE1E /* Main.storyboard in Resources */,
 			);
@@ -727,11 +792,13 @@
 				8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */,
 				8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */,
 				8DB8AA2A1BECFE45005B7508 /* GameMainTableViewController.m in Sources */,
+				8D77221C1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m in Sources */,
 				8DF18E621BF10EC30046C27B /* UserHelper.m in Sources */,
 				8DF18E861BF4E50C0046C27B /* GameStatusPlayersTableViewCell.m in Sources */,
 				8DF18E441BEFC0350046C27B /* UserGameGroupModel.m in Sources */,
 				8DB8AA261BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m in Sources */,
 				8DF18E7A1BF33C520046C27B /* GameGroupHeaderTableViewCell.m in Sources */,
+				8D7722241C012BAF001E8CC8 /* NotificationService.m in Sources */,
 				8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */,
 				8DB8AA1F1BECDAF4005B7508 /* DepartmentModel.m in Sources */,
 				8DB8AA221BECDC02005B7508 /* ResponseWrapperModel.m in Sources */,
@@ -753,6 +820,7 @@
 				8DF18E4E1BF09D040046C27B /* SearchByNameTableViewController.m in Sources */,
 				8DF18E481BF09CB40046C27B /* NewGameTableViewController.m in Sources */,
 				8DF18E761BF269170046C27B /* SearchByNameResultsTableViewController.m in Sources */,
+				8D7722121C00D022001E8CC8 /* UserRatingTableViewCell.m in Sources */,
 				8DB8AA1C1BECD9F0005B7508 /* UserProfileModel.m in Sources */,
 				8D920F091BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m in Sources */,
 				8DF18E901BF4EFCF0046C27B /* GameStatusActionTableViewCell.m in Sources */,
@@ -766,11 +834,13 @@
 				8D920F0C1BFBE5FC00BA29BC /* GameRoundCategoryModel.m in Sources */,
 				8D920F141BFBF88800BA29BC /* GameQuestionViewController.m in Sources */,
 				8DF18E361BEFA23E0046C27B /* GamerStatus.m in Sources */,
+				8D7722211C012696001E8CC8 /* DevicePushTokenRegisterModel.m in Sources */,
 				8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */,
 				8DF18E261BEF9E960046C27B /* GameService.m in Sources */,
 				8DF18E4B1BF09CD90046C27B /* OrganizationStructureTableViewController.m in Sources */,
 				8DF18E661BF111C90046C27B /* UserTableViewCell.m in Sources */,
 				8DF18E301BEFA0EE0046C27B /* UserGameModel.m in Sources */,
+				8D7722181C00D9A8001E8CC8 /* DejalActivityView.m in Sources */,
 				8DF18E391BEFA3CA0046C27B /* GamerModel.m in Sources */,
 				8DF18E411BEFBFED0046C27B /* UserGamesGroupedModel.m in Sources */,
 				8D920F001BFBE44A00BA29BC /* GameRoundModel.m in Sources */,
@@ -899,6 +969,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BrainFights/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -908,6 +979,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -917,6 +989,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = BrainFights/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -926,6 +999,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -12,6 +12,7 @@ import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.ADService;
 import kz.aphion.brainfights.services.UserService;
+import kz.aphion.brainfights.services.notifications.NotificationService;
 import play.Logger;
 import play.mvc.Controller;
 
@@ -26,6 +27,12 @@ import com.google.gson.JsonSyntaxException;
  */
 public class UserController extends Controller {
 
+    
+    public static void testPush(String authToken) throws PlatformException {
+    	User user = UserService.getUserByAuthToken(authToken);
+    	NotificationService.sendPushNotificaiton(user, "Привет", "Я пушка");
+    }
+	
 	/**
 	 * Авторизация пользователя
 	 */

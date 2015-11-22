@@ -16,7 +16,8 @@ public class GcmManager {
 	private Thread dispatchThread;
 	private boolean dispatchThreadShouldContinue;
 	
-	private final static String GCM_API_KEY = "KEY_HERE";
+	private final static String GCM_API_KEY = "AIzaSyC3smEC8Kw2iURZnk5y2Zk01EDC2XORwJM";
+	private final static String GCM_SENDER_ID = "15700834773";
 	private final static int RETRY_COUNT = 3; 
 	
 	public static GcmManager getInstance() {

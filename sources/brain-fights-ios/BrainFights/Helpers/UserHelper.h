@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "UrlHelper.h"
+
 #import "RKObjectManager.h"
 #import "RKObjectMapping.h"
 #import "RKResponseDescriptor.h"
@@ -34,5 +36,11 @@
 
 //  Строит маппинг для поиска пользователей по имени
 + (RKResponseDescriptor*) buildResponseDescriptorForSearchUsers;
+
+//  Строит маппинг для получения рейтинга пользователей
++ (RKResponseDescriptor*) buildResponseDescriptorForUsersRating;
+
+//  Строит маппинг для получения ответа о регистрации PUSH токена
++ (RKObjectManager*) buildObjectManagerForRegisterOrUpdateDeviceToken;
 
 @end

@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorColor = [UIColor clearColor];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -126,6 +127,8 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusPlayersCell"];
         }
         
+        [cell initCell:self.model];
+        
         return cell;
     }
 
@@ -137,9 +140,9 @@
         }
         
         if (self.model.gameRounds != nil && indexPath.row < [self.model.gameRounds count]) {
-            [cell initGameRound:self.model.gameRounds[indexPath.row-1] withIndex:indexPath.row];
+            [cell initGameRound:self.model.gameRounds[indexPath.row-1] andGame:self.model withIndex:indexPath.row];
         } else {
-            [cell initGameRound:nil withIndex:indexPath.row];
+            [cell initGameRound:nil andGame:self.model withIndex:indexPath.row];
         }
         
         return cell;
