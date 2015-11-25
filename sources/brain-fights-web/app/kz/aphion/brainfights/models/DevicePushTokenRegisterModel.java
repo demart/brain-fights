@@ -13,4 +13,9 @@ public class DevicePushTokenRegisterModel {
 	 */
 	public String devicePushToken;
 	
+	/**
+	 * Старый токен который был ассоциирован с указанным телефоном и учетной записью
+	 */
+	public String invalidPushToken;
+	
 }

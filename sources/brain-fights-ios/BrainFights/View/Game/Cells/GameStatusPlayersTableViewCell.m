@@ -17,4 +17,14 @@
     [super setSelected:selected animated:animated];
 }
 
+- (void) initCell:(GameModel*) gameModel {
+    [self.gamerNameLabel setText:gameModel.me.user.name];
+    [self.oponentNameLabel setText:gameModel.oponent.user.name];
+    
+    [self.gamerCorrectAnswerCountLabel setText:[@(gameModel.me.correctAnswerCount) stringValue]];
+    [self.oponentCorrectAnswerLabel setText:[@(gameModel.oponent.correctAnswerCount) stringValue]];
+}
+
+
+
 @end

@@ -16,7 +16,8 @@
 +(NSString*) baseUrl {
 #if DEBUG
     return @"http://localhost:9000";
-    //return @"http://172.20.10.2";
+    //return @"http://172.20.10.2:9000";
+    //return @"http://192.168.0.246:9000";
     //return @"http://api.sushimi.kz/rest-api";
 #else
         return @"http://172.20.10.2";
@@ -55,6 +56,14 @@
 +(NSString*) userRemoveFriendByIdUrl:(NSInteger)userId {
     return [[NSString alloc] initWithFormat:@"%@/user/friends/remove/%li?authToken=%@", UrlHelper.baseUrl, userId, [self authToken]];
 }
+
+
+// URL для получения рейтинга пользователей
++ (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit {
+    return [[NSString alloc] initWithFormat:@"%@/stat/users/page/%li/limit/%li?authToken=%@", UrlHelper.baseUrl, page, limit, [self authToken]];
+}
+
+
 
 
 // URL для получения рутовый департаментов
@@ -108,14 +117,40 @@
 }
 
 // URL для отправки приглашения с выбранным игроком
-+ (NSString*) gameCreateInvitationByUserId:(NSInteger)userId {
++ (NSString*) gameCreateInvitationByUserIdUrl:(NSInteger)userId {
     return [[NSString alloc] initWithFormat:@"%@/game/invitation/create/%li?authToken=%@", UrlHelper.baseUrl, (long)userId, [self authToken]];
 }
 
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitation:(NSInteger)gameId {
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId {
     return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+}
+
+// URL для получения детальной информации об игре
++ (NSString*) gameInformationUrl:(NSInteger)gameId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+}
+
+// URL для создания нового раунда
++ (NSString*) gameCreateRoundUrl:(NSUInteger)gameId withSelectedCategoryId:(NSInteger)categoryId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li/round/generate/%li?authToken=%@", UrlHelper.baseUrl, (long)gameId, (long)categoryId, [self authToken]];
+}
+
+
+// URL для получения списка вопросов для указанного раунда
++ (NSString*) gameRoundQuestionsUrl:(NSUInteger)gameId withRoundId:(NSUInteger) roundId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li/round/%li/questions?authToken=%@", UrlHelper.baseUrl, (long)gameId, (long)roundId, [self authToken]];
+}
+
+// URL для получения списка вопросов для указанного раунда
++ (NSString*) gameAnswerOnQuestion:(NSUInteger)gameId withRoundId:(NSUInteger) roundId withQuestionId:(NSUInteger)questionId withAnswerId:(NSUInteger)answerId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li/round/%li/questions/%li/answer/%li?authToken=%@", UrlHelper.baseUrl, gameId, roundId, questionId, answerId,  [self authToken]];
+}
+
+// URL для того чтобы сдаться в игре
++ (NSString*) gameSurrenderUrl:(NSUInteger)gameId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li/surrender?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
 }
 
 

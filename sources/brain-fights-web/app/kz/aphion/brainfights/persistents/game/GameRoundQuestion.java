@@ -11,6 +11,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import kz.aphion.brainfights.persistents.PersistentObject;
 import kz.aphion.brainfights.persistents.game.question.Question;
 
@@ -47,6 +49,7 @@ public class GameRoundQuestion extends PersistentObject {
 	/**
 	 * Ответы пользователей на вопросы в раунде
 	 */
+	//@Where(clause="deleted = false")
 	@OneToMany(mappedBy="gameRoundQuestion")
 	@OrderBy("id ASC")
 	private List<GameRoundQuestionAnswer> questionAnswers;

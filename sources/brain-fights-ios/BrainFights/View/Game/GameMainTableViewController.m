@@ -23,6 +23,8 @@
 #import "UserGameModel.h"
 #import "ResponseWrapperModel.h"
 
+#import "DejalActivityView.h"
+
 @interface GameMainTableViewController ()
 
 // Загруженные игры пользователя
@@ -32,14 +34,47 @@
 
 @implementation GameMainTableViewController
 
+static UIRefreshControl *refreshControl;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initRefreshControl];
+    self.tableView.separatorColor = [UIColor clearColor];
 }
 
 
+-(void) initRefreshControl {
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    refreshControl.tintColor = [Constants SYSTEM_COLOR_WHITE];
+    
+    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:@"Идет загрузка..."];
+    NSRange range = NSMakeRange(0,mutableString.length);
+    [mutableString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Gill Sans" size:(12.0)] range:range];
+    [mutableString addAttribute:NSForegroundColorAttributeName value:[Constants SYSTEM_COLOR_WHITE] range:range];
+    refreshControl.attributedTitle = mutableString;
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+}
+
+-(void) handleRefresh:(UIRefreshControl*) refreshControll {
+    [self loadGames];
+    [refreshControl endRefreshing];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
+    NSLog(@"Main View will appear");
+    // SHOW LOADING
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    // Загружаем игры при появлении сцены
+    [self loadGames];
+}
+
+
+-(void) loadGames {
     // Загружаем игры при появлении сцены
     [GameService retrieveGamesGrouped:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         // Check data and refresh table
         if ([response.status isEqualToString:SUCCESS]) {
             UserGamesGroupedModel *userGamesGrouppedModel = (UserGamesGroupedModel*)response.data;
@@ -61,7 +96,9 @@
             // TODO
         }
         
+        
     } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         // Show Erro Alert
         // TODO
     }];
@@ -199,8 +236,45 @@
     
     if (indexPath.section > 0) {
         // Get Game
-        // Check Status
-        [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+        UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+        UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+        if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
+            // Если нам нужно принять решение
+            [GameService acceptGameInvitation:userGame.id onSuccess:^(ResponseWrapperModel *response) {
+                if ([response.status isEqualToString:SUCCESS]) {
+                    // Заменяем модель игры на новую и вперед
+                    gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
+                    // Check Status
+                    [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+                }
+                
+                if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+                    // Show Authorization View
+                    [[AppDelegate globalDelegate] showAuthorizationView:self];
+                }
+                
+                if ([response.status isEqualToString:SERVER_ERROR]) {
+                    // Show Error Alert
+                    // TODO
+                }
+            } onFailure:^(NSError *error) {
+                // SHOW ERROR
+            }];
+        } else
+        if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
+            // Если мы ждем принятия решения
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Внимание"
+                                                                           message:@"Ожидаем решение опонента."
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        } else {
+            // Check Status
+            [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+        }
     }
 }
 

@@ -86,6 +86,7 @@
                     <connections>
                         <outlet property="loginTextField" destination="t9u-Td-6uM" id="5SE-OJ-mHs"/>
                         <outlet property="passwordTextField" destination="zaN-0l-Bgn" id="syz-uD-4ic"/>
+                        <outlet property="scrollView" destination="Sih-EV-NCP" id="jtK-XZ-kt8"/>
                         <outlet property="signInButton" destination="TIc-JW-kM2" id="jd9-fX-889"/>
                     </connections>
                 </viewController>

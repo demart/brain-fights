@@ -10,7 +10,9 @@ import kz.aphion.brainfights.models.ResponseWrapperModel;
 import kz.aphion.brainfights.models.UserFriendsResponseModel;
 import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.ADService;
 import kz.aphion.brainfights.services.UserService;
+import kz.aphion.brainfights.services.notifications.NotificationService;
 import play.Logger;
 import play.mvc.Controller;
 
@@ -25,13 +27,21 @@ import com.google.gson.JsonSyntaxException;
  */
 public class UserController extends Controller {
 
+    
+    public static void testPush(String authToken) throws PlatformException {
+    	User user = UserService.getUserByAuthToken(authToken);
+    	NotificationService.sendPushNotificaiton(user, "Привет", "Я пушка");
+    }
+	
 	/**
 	 * Авторизация пользователя
 	 */
 	public static void authenticate(){
 		try {
+
     		AuthorizationRequestModel model = null;
 	    	try {
+
 				String requestBody = params.current().get("body");
 				Logger.debug("authenticate request body: %s", requestBody);
 				Gson gson = new Gson();
@@ -41,7 +51,6 @@ public class UserController extends Controller {
 			}   	
 	    	if (model == null)
 	    		throw new PlatformException(ErrorCode.VALIDATION_ERROR, "authenticate request model is empty.");
-	    	
 	    	AuthorizationResponseModel result = UserService.authenticate(model);
 	    	renderJSON(ResponseWrapperModel.getSuccess(result));
 	    	

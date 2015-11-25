@@ -1,9 +1,10 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
-import java.util.*;
+import play.mvc.Controller;
+import kz.aphion.brainfights.exceptions.PlatformException;
+import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.UserService;
+import kz.aphion.brainfights.services.notifications.NotificationService;
 
 //import models.*;
 

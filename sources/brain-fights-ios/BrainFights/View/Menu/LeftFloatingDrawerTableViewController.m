@@ -36,6 +36,10 @@ static const CGFloat kJVTableViewTopInset = 0.0;
 }
 
 
+-(void) viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1] animated:NO scrollPosition:UITableViewScrollPositionNone];

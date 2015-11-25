@@ -5,6 +5,7 @@ import java.util.List;
 
 import kz.aphion.brainfights.persistents.game.GameRound;
 import kz.aphion.brainfights.persistents.game.GameRoundQuestion;
+import kz.aphion.brainfights.persistents.game.GameRoundStatus;
 import kz.aphion.brainfights.persistents.game.Gamer;
 
 /**
@@ -24,7 +25,19 @@ public class GameRoundModel {
 	 * Вопросы в раунде
 	 */
 	public List<GameRoundQuestionModel> questions;
+	/**
+	 * Название категории вопросов
+	 */
+	public String categoryName;
+	/**
+	 * статус раунда
+	 */
+	public GameRoundStatus status;
 	
+	/**
+	 * Категория вопросов
+	 */
+	public GameRoundCategoryModel category;
 	/**
 	 * Создает модель раунда
 	 * 
@@ -37,12 +50,14 @@ public class GameRoundModel {
 		GameRoundModel model = new  GameRoundModel();
 		model.id = gameRound.id;
 		
-		model.questions = new ArrayList<>();
+		model.questions = new ArrayList();
 		for (GameRoundQuestion gameRoundQuestion : gameRound.getQuestions()) {
 			GameRoundQuestionModel gameRoundQuestionModel = GameRoundQuestionModel.buildModel(gameRoundQuestion, gamer, oponent);
 			model.questions.add(gameRoundQuestionModel);
 		}
-		
+		model.categoryName=gameRound.getCategory().getName();
+		model.status = gameRound.getStatus();
+		model.category = GameRoundCategoryModel.buildModel(gameRound.getCategory());
 		return model;
 	}
 	

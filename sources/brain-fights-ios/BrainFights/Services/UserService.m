@@ -36,6 +36,35 @@ static UserProfileModel *_userProfileModel;
 
 // Загружает профиль любого пользователя асинхронно
 - (void) retrieveUserProfileByIdAsync:(NSInteger)userId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    if (userId < 1)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userProfileByIdUrl:userId]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForUserProfile];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
 }
 
 // Загружает список друзей
@@ -197,6 +226,66 @@ static UserProfileModel *_userProfileModel;
     }];
     
     [objectRequestOperation start];
+}
+
+// Возращает постранично рейтинг пользователей
+- (void) retrieveUsersRating:(NSInteger)page withLimit:(NSInteger)limit onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper usersRating:page withLimit:limit]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForUsersRating];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+    
+}
+
+// Отправляет на сервер новый PUSH токен
+-(void) registerOrUpdateDeviceToken:(NSString*)deviceToken invalidateDeviceToken:(NSString*)invalidDeviceToken   onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    // Модель авторизации
+    DevicePushTokenRegisterModel *model = [[DevicePushTokenRegisterModel alloc] init];
+    model.devicePushToken = deviceToken;
+    model.invalidPushToken = invalidDeviceToken;
+    
+    RKObjectManager *objectManager = [UserHelper buildObjectManagerForRegisterOrUpdateDeviceToken];
+    [objectManager
+     postObject:model
+     path:@"" //???
+     parameters:nil
+     success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         ResponseWrapperModel *response = (ResponseWrapperModel*)[result.array objectAtIndex:0];
+
+         NSLog(@"Status: %@", response.status);
+         NSLog(@"Data: %@", response.data);
+         NSLog(@"ErrorCode: %@", response.errorCode);
+         NSLog(@"ErrorMessage: %@", response.errorMessage);
+         
+         success(response);
+     }
+     failure:^(RKObjectRequestOperation *operation, NSError *error){
+         NSLog(@"Error %@", error);
+         failure(error);
+     }];
+    
 }
 
 

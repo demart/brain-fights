@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GameModel.h"
 
 @interface GameStatusPlayersTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *gamerNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *oponentNameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *gamerCorrectAnswerCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *oponentCorrectAnswerLabel;
+
+- (void) initCell:(GameModel*) gameModel;
 
 @end

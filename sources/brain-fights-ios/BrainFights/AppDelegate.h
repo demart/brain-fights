@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"
+#import "NotificationService.h"
 
 @class JVFloatingDrawerViewController;
 @class JVFloatingDrawerSpringAnimator;
@@ -39,6 +40,7 @@
 
 + (AppDelegate *)globalDelegate;
 
+- (UIStoryboard *)drawersStoryboard;
 - (void) initDrawerMenu;
 -(void) showAuthorizationView:(UIViewController*) parentController;
 

@@ -4,6 +4,7 @@ import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.DepartmentService;
+import kz.aphion.brainfights.services.UserService;
 
 /**
  * Профиль пользователя
@@ -121,7 +122,7 @@ public class UserProfileModel {
 		model.wonGames = user.getWonGames() != null ? user.getWonGames() : 0;
 		model.totalGames = user.getTotalGames() != null ? user.getTotalGames() : 0;
 		model.score = user.getScore() != null ? user.getScore() : 0;
-		model.gamePosition = -1; // TODO считать рейтинг чувака
+		model.gamePosition = UserService.getUserGamePosition(user); // TODO считать рейтинг чувака
 		
 		return model;
 	}

@@ -14,6 +14,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import kz.aphion.brainfights.persistents.PersistentObject;
 
 /**
@@ -37,6 +39,7 @@ public class Game extends PersistentObject {
 	/**
 	 * Игроки
 	 */
+    //@Where(clause="deleted = false")
     @OneToMany(mappedBy="game")
 	private List<Gamer> gamers;
 	
@@ -51,6 +54,7 @@ public class Game extends PersistentObject {
 	 * Раунды игры
 	 */
 	//TODO НАКИКУТЬ СОРТИРОВКУ ПО ID
+    //@Where(clause="deleted = false")
     @OneToMany(mappedBy="game")
     @OrderBy("id ASC")
 	private List<GameRound> rounds;

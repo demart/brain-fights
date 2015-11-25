@@ -13,6 +13,12 @@
 
 #import "MenuProfileCellTableViewCell.h"
 #import "UserService.h"
+#import "UserDepartmentTableViewCell.h"
+#import "UserProfileActionTableViewCell.h"
+
+#import "GameService.h"
+
+#import "DejalActivityView.h"
 
 @interface UserProfileTableViewController ()
 
@@ -23,8 +29,17 @@
 
 @implementation UserProfileTableViewController
 
+static UIRefreshControl *refreshControl;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initRefreshControl];
+    
+    self.tableView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    self.tableView.separatorColor = [UIColor clearColor];
+    
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -34,7 +49,68 @@
     } else {
         [self.showMenuButton setImage:[UIImage imageNamed:@"leftMenuIcon"]];
     }
+    
+    [self reloadProfile];
 }
+
+
+-(void) initRefreshControl {
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    refreshControl.tintColor = [Constants SYSTEM_COLOR_WHITE];
+    
+    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:@"Идет загрузка..."];
+    NSRange range = NSMakeRange(0,mutableString.length);
+    [mutableString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Gill Sans" size:(12.0)] range:range];
+    [mutableString addAttribute:NSForegroundColorAttributeName value:[Constants SYSTEM_COLOR_WHITE] range:range];
+    refreshControl.attributedTitle = mutableString;
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+}
+
+-(void) handleRefresh:(UIRefreshControl*) refreshControll {
+    [self reloadProfile];
+    [refreshControl endRefreshing];
+}
+
+
+
+-(void) reloadProfile {
+    NSInteger userId = 0;
+    if (self.userProfileModel == nil) {
+        userId = [[UserService sharedInstance] getUserProfile].id;
+    } else {
+        // oponents profile
+        userId = self.userProfileModel.id;
+    }
+
+    [[UserService sharedInstance] retrieveUserProfileByIdAsync:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            if (self.userProfileModel != nil) {
+                self.userProfileModel = (UserProfileModel*)response.data;
+            } else {
+                [[UserService sharedInstance] setUserProfile:(UserProfileModel*)response.data];
+            }
+            
+            [self.tableView reloadData];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            // Show Authorization View
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            // TODO
+        }
+        [DejalBezelActivityView removeViewAnimated:YES];
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // SHOW ERROR
+    }];
+}
+
 
 // Указываем профиль пользователя
 - (void) setUserProfile:(UserProfileModel*)user {
@@ -60,32 +136,127 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 3;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MenuProfileCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuProfile"];
-    if (!cell) {
-        [tableView registerNib:[UINib nibWithNibName:@"MenuProfileCellTableViewCell" bundle:nil]forCellReuseIdentifier:@"MenuProfile"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"MenuProfile"];
+    if (indexPath.row == 0) {
+        MenuProfileCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuProfile"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"MenuProfileCellTableViewCell" bundle:nil]    forCellReuseIdentifier:@"MenuProfile"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"MenuProfile"];
+        }
+
+        [cell initCell: [self getUserProfileModel]];
+        return cell;
     }
-    
-    UserProfileModel *model = nil;
-    if (self.userProfileModel != nil) {
-        model = self.userProfileModel;
-    } else {
-        model = [[UserService sharedInstance] getUserProfile];
+    if (indexPath.row == 1) {
+        UserDepartmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserDepartmentCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"UserDepartmentTableViewCell" bundle:nil]    forCellReuseIdentifier:@"UserDepartmentCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"UserDepartmentCell"];
+        }
+        
+        [cell initCell:[self getUserProfileModel]];
+        return cell;
     }
-    [cell initCell: model];
-    
-    return cell;
+    if (indexPath.row == 2) {
+        UserProfileActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileActionCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"UserProfileActionTableViewCell" bundle:nil]    forCellReuseIdentifier:@"UserProfileActionCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileActionCell"];
+        }
+        
+        [cell initCell:[self getUserProfileModel] onPlayAction:^{
+            [self playAction];
+        } onAddToFriedsAction:^{
+            [self addToFriendsAction];
+        }];
+        return cell;
+    }
+
+    return nil;
 }
 
 
+- (void) playAction {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+
+    [GameService createGameInvitation:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
+        sleep(1);
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self reloadProfile];
+            // Show alert
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // Show Error
+    }];
+
+}
+
+
+- (void) addToFriendsAction {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [[UserService sharedInstance] addUserFriendAsync:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
+        sleep(1);
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self reloadProfile];
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // Show Error
+    }];
+}
+
+
+
+-(UserProfileModel*) getUserProfileModel {
+    if (self.userProfileModel != nil) {
+        return self.userProfileModel;
+    } else {
+        return [[UserService sharedInstance] getUserProfile];
+    }
+}
+
+static CGFloat HEIGHT = 504;
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0)
+    //NSLog(@"Table View Height: %f", tableView.bounds.size.height);
+    CGFloat proportion = tableView.bounds.size.height / HEIGHT;
+    //NSLog(@"Proporting View Height: %f", proportion);
+    
+    
+    if (indexPath.row == 0)
         return 250;
+    if (indexPath.row == 1)
+        return 80;
+    if (indexPath.row == 2)
+        return tableView.bounds.size.height - (250 + 80);
     return 44;
 }
 

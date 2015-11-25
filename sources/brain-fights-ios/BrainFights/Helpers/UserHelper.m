@@ -8,6 +8,8 @@
 
 #import "UserHelper.h"
 
+#import "DevicePushTokenRegisterModel.h"
+
 #import "DepartmentSearchResultModel.h"
 #import "DepartmentModel.h"
 #import "UserSearchResultModel.h"
@@ -16,6 +18,62 @@
 #import "ResponseWrapperModel.h"
 
 @implementation UserHelper
+
+// Строит маппинг для профиля пользователя
++ (RKResponseDescriptor*) buildResponseDescriptorForUserProfile {
+    RKObjectMapping* departmentModel = [RKObjectMapping mappingForClass:[DepartmentModel class]];
+    [departmentModel addAttributeMappingsFromDictionary:@{
+                                                          @"id": @"id",
+                                                          @"name": @"name",
+                                                          @"userCount": @"userCount",
+                                                          @"score": @"score",
+                                                          @"haveChildren": @"haveChildren",
+                                                          @"isUserBelongs": @"isUserBelongs",
+                                                          }];
+    
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
+                                                                                    toKeyPath:@"parent"
+                                                                                  withMapping:departmentModel]];
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"children"
+                                                                                    toKeyPath:@"children"
+                                                                                  withMapping:departmentModel]];
+    
+    RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
+    [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
+                                                           @"name": @"name",
+                                                           @"position": @"position",
+                                                           @"login": @"login",
+                                                           @"email": @"email",
+                                                           @"totalGames": @"totalGames",
+                                                           @"wonGames": @"wonGames",
+                                                           @"loosingGames": @"loosingGames",
+                                                           @"drawnGames": @"drawnGames",
+                                                           @"score": @"score",
+                                                           @"gamePosition": @"gamePosition",
+                                                           }];
+    
+    [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
+                                                                                     toKeyPath:@"department"
+                                                                                   withMapping:departmentModel]];
+    
+    RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
+    [wrapperMapping addAttributeMappingsFromDictionary:@{
+                                                         @"status": @"status",
+                                                         @"errorCode": @"errorCode",
+                                                         @"errorMessage": @"errorMessage"
+                                                         }];
+    
+    [wrapperMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"data"
+                                                                                   toKeyPath:@"data"
+                                                                                 withMapping:userProfileModel]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
+    
+    return responseWrapperDescriptor;
+}
+
 
 // Строит маппинг для результата отправки приглашения пользователю
 + (RKResponseDescriptor*) buildResponseDescriptorForFriends {
@@ -38,6 +96,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -129,6 +189,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -215,6 +277,8 @@
     
     RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
     [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
                                                            @"name": @"name",
                                                            @"position": @"position",
                                                            @"login": @"login",
@@ -255,6 +319,95 @@
     RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
     
     return responseWrapperDescriptor;
+}
+
+
+//  Строит маппинг для получения рейтинга пользователей
++ (RKResponseDescriptor*) buildResponseDescriptorForUsersRating {
+    
+    RKObjectMapping* departmentModel = [RKObjectMapping mappingForClass:[DepartmentModel class]];
+    [departmentModel addAttributeMappingsFromDictionary:@{
+                                                          @"id": @"id",
+                                                          @"name": @"name",
+                                                          @"userCount": @"userCount",
+                                                          @"score": @"score",
+                                                          @"haveChildren": @"haveChildren",
+                                                          @"isUserBelongs": @"isUserBelongs",
+                                                          }];
+    
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
+                                                                                    toKeyPath:@"parent"
+                                                                                  withMapping:departmentModel]];
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"children"
+                                                                                    toKeyPath:@"children"
+                                                                                  withMapping:departmentModel]];
+    
+    RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
+    [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
+                                                           @"name": @"name",
+                                                           @"position": @"position",
+                                                           @"login": @"login",
+                                                           @"email": @"email",
+                                                           @"totalGames": @"totalGames",
+                                                           @"wonGames": @"wonGames",
+                                                           @"loosingGames": @"loosingGames",
+                                                           @"drawnGames": @"drawnGames",
+                                                           @"score": @"score",
+                                                           @"gamePosition": @"gamePosition",
+                                                           }];
+    
+    [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
+                                                                                     toKeyPath:@"department"
+                                                                                   withMapping:departmentModel]];
+    
+    RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
+    [wrapperMapping addAttributeMappingsFromDictionary:@{
+                                                         @"status": @"status",
+                                                         @"errorCode": @"errorCode",
+                                                         @"errorMessage": @"errorMessage"
+                                                         }];
+    
+    [wrapperMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"data"
+                                                                                   toKeyPath:@"data"
+                                                                                 withMapping:userProfileModel]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
+    
+    return responseWrapperDescriptor;
+}
+
+//  Строит маппинг для получения ответа о регистрации PUSH токена
++ (RKObjectManager*) buildObjectManagerForRegisterOrUpdateDeviceToken {
+    NSURL *targetUrl = [NSURL URLWithString:[UrlHelper registerDeviceTokenUrl]];
+
+    RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
+    [wrapperMapping addAttributeMappingsFromDictionary:@{
+                                                         @"status": @"status",
+                                                         @"errorCode": @"errorCode",
+                                                         @"errorMessage": @"errorMessage"
+                                                         }];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
+    
+    // ==== REQUEST DESC =====
+    
+    RKObjectMapping* signinRequestModel = [RKObjectMapping requestMapping];
+    [signinRequestModel addAttributeMappingsFromDictionary:@{
+                                                             @"devicePushToken": @"devicePushToken",
+                                                             @"invalidPushToken": @"invalidPushToken",
+                                                             }];
+    
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:targetUrl];
+    objectManager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:signinRequestModel objectClass:[DevicePushTokenRegisterModel class] rootKeyPath:nil method:RKRequestMethodPOST];
+    
+    [objectManager addRequestDescriptor:requestDescriptor];
+    [objectManager addResponseDescriptor:responseWrapperDescriptor];
+    
+    return objectManager;
 }
 
 @end

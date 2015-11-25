@@ -27,6 +27,7 @@ import kz.aphion.brainfights.persistents.game.question.Answer;
 import kz.aphion.brainfights.persistents.game.question.Category;
 import kz.aphion.brainfights.persistents.game.question.Question;
 import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.notifications.NotificationService;
 import play.Logger;
 import play.db.jpa.JPA;
 
@@ -55,7 +56,7 @@ public class GameService {
 		User friend = User.findById(oponentId);
 		if (friend == null)
 			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "oponent with given Id not found");
-		if (friend.getDeleted() == true)
+		if (friend.getDeleted())
 			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "oponent with given Id was deleted");
 		
 		// Проверка есть ли уже игра с этим игроком
@@ -82,11 +83,12 @@ public class GameService {
 		// TODO Send PUSH notification to oponent
 		Gamer gamer = null;
 		for (Gamer gamerObject : game.getGamers())
-			if (gamer.getUser().id == authorizedUser.id)
+			if (gamerObject.getUser().id == authorizedUser.id)
 				gamer = gamerObject;
 		
 		// PUSH уведомление
 		Logger.info("PUSH " + friend.getName() + " вам пришло приглашение сыграть игру!");
+		NotificationService.sendPushNotificaiton(friend, "Кайдзен", friend.getName() + " вам пришло приглашение сыграть игру!");
 		
 		UserGameModel model = UserGameModel.buildModel(authorizedUser, gamer);
 		return model;
@@ -160,6 +162,7 @@ public class GameService {
 		
 		// PUSH уведомление
 		Logger.info("PUSH " + oponentUser.getName() + " вам пришло приглашение сыграть игру!");
+		NotificationService.sendPushNotificaiton(oponentUser, "Кайдзен", oponentUser.getName() + " вам пришло приглашение сыграть игру!");
 		
 		UserGameModel model = UserGameModel.buildModel(authorizedUser, gamer);
 		return model;
@@ -227,6 +230,8 @@ public class GameService {
 		Game game = Game.findById(gameId);
 		if (game == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game not found");
 		
 		if (game.getStatus() != GameStatus.WAITING)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game are not in waiting acceptance");
@@ -271,7 +276,7 @@ public class GameService {
 		
 		// TODO Отправить PUSH уведомление о том что игрок принял приглашение
 		Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
-		
+		NotificationService.sendPushNotificaiton(invitationSender.getUser(), "Кайдзен", invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
 		
 		UserGameModel model = UserGameModel.buildModel(authorizedUser, invitationReceiver);
 		return model;
@@ -473,10 +478,14 @@ public class GameService {
 					usedCategoryIds.add(gameRound.getCategory().id);
 				}
 			
+			// Fox for first calls
+			if (usedCategoryIds.size() == 0)
+				usedCategoryIds.add(-1l);
+			
 			// Получаем список категорий, крое использованных
 			List<Category> result = JPA.em().createQuery("from Category where deleted = false and id not in (:ids) order by RANDOM()")
-					.setMaxResults(3)
 					.setParameter("ids", usedCategoryIds)
+					.setMaxResults(3)
 					.getResultList();
 			
 			for (Category category : result) {
@@ -697,20 +706,30 @@ public class GameService {
 			}
 		
 		// Фиксируем ответ игрока
-		Answer answer = Answer.findById(answerId);
-		if (answer == null)
-			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer not found");
-
-		if (answer.getQuestion().id != gameRoundQuestion.getQuestion().id)
-			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer doesn't belong to the question");
-		
 		// Добавляем ответ
 		GameRoundQuestionAnswer gamerAnswer = new GameRoundQuestionAnswer();
 		gamerAnswer.setGamer(gamer);
 		gamerAnswer.setGameRoundQuestion(gameRoundQuestion);
-		gamerAnswer.setAnswer(answer);
-		gamerAnswer.setIsCorrectAnswer(answer.getCorrect());
+		
+		// Проверка на то, что прислали ответ от пользователя который не успел ответить
+		if (answerId == -1) {
+			gamerAnswer.setAnswer(null);
+			gamerAnswer.setIsCorrectAnswer(false);
+			gamerAnswer.setIsMissingAnswer(true);
+		} else {
+			Answer answer = Answer.findById(answerId);
+			if (answer == null)
+				throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer not found");
+			if (answer.getQuestion().id != gameRoundQuestion.getQuestion().id)
+				throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "asnwer doesn't belong to the question");
+			
+			gamerAnswer.setAnswer(answer);
+			gamerAnswer.setIsCorrectAnswer(answer.getCorrect());
+			gamerAnswer.setIsMissingAnswer(false);
+		}
+		
 		gamerAnswer.save();
+		
 		
 		if (gameRoundQuestion.getQuestionAnswers() == null)
 			gameRoundQuestion.setQuestionAnswers(new ArrayList<GameRoundQuestionAnswer>());
@@ -753,105 +772,71 @@ public class GameService {
 				if (gameRound.getNumber() == 6) {
 					// Последний раунд
 					// Завершаем игру, считаем баллы и так далле
-					// Отправляем PUSH уведомление другому участнику с результатом и т.д.
-					
-					// TODO Завершить игру
 					game.setStatus(GameStatus.FINISHED);
 					game.setGameFinishedDate(Calendar.getInstance());
 					game.save();
+
+					// Считаем очки
+					calculateScore(gamer, oponent);
 					
 					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
 						// Ничья
-						
 						gamer.setStatus(GamerStatus.DRAW);
-						// TODO считаем очки
-						gamer.save();
-						
 						oponent.setStatus(GamerStatus.DRAW);
-						// TODO считаем очки
-						oponent.save();
+						
 						Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
-						// TODO отправить уведомление второму игроку о ничье
+						NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы закончили игру в ничью!");
 						
 					} else {
 						if (gamer.getCorrectAnswerCount() > oponent.getCorrectAnswerCount()) {
 							// Выиграл текущий игрок
 							gamer.setStatus(GamerStatus.WINNER);
-							// TODO считаем очки
-							gamer.setScore(gamer.getCorrectAnswerCount());
-							
-							gamer.save();
-							
-							// Вата а не очки
-							gamer.getUser().setScore(gamer.getUser().getScore()+gamer.getScore());
 							gamer.getUser().save();
 							
 							// Проиграл опонент
 							oponent.setStatus(GamerStatus.LOOSER);
-							// TODO считаем очки
-							oponent.setScore(oponent.getCorrectAnswerCount()*-1);
-							
-							oponent.save();
-							
-							// Вата а не очки
-							oponent.getUser().setScore(oponent.getUser().getScore()+gamer.getScore());
 							oponent.getUser().save();
-							
-							// TODO отправить уведомление второму что он проиграл
+
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
+							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы проиграли игру!");
 							
 						} else {
-							// Выиграл текущий игрок
+							// Проиграл текущий игрок
 							gamer.setStatus(GamerStatus.LOOSER);
-							// TODO считаем очки
-							gamer.setScore(gamer.getCorrectAnswerCount()*-1);
-							
-							gamer.save();
-							
-							// Вата а не очки
-							gamer.getUser().setScore(gamer.getUser().getScore()+gamer.getScore());
 							gamer.getUser().save();
 							
-							// Проиграл опонент
+							// Выиграл опонент
 							oponent.setStatus(GamerStatus.WINNER);
-							// TODO считаем очки
-							oponent.setScore(oponent.getCorrectAnswerCount());
-							
-							oponent.save();
-							
-							// Вата а не очки
-							oponent.getUser().setScore(oponent.getUser().getScore()+gamer.getScore());
 							oponent.getUser().save();
-							
-							// TODO отправить уведомление второму что он выиграл
-							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
 
+							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
+							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы выиграли игру!");
+							
 						}
 					}
 					
 				} else {
 					// Еще есть раунды
-					
 					// Если игрок был инициатором раунда, тогда теперь выбирает противник
 					if (gamer.id == gameRound.getOwner().id) {
 						gamer.setStatus(GamerStatus.WAITING_OPONENT);
-						gamer.save();
-						
 						oponent.setStatus(GamerStatus.WAITING_ROUND);
-						oponent.save();
-						// TODO SEND PUSH уведомление о ходе
+						
 						Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
+						NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш ход!");
 						
 					} else {
 						// Инициатором был опонент теперь наша очередь выбирать
 						gamer.setStatus(GamerStatus.WAITING_ROUND);
-						gamer.save();
-						
 						oponent.setStatus(GamerStatus.WAITING_OPONENT);
-						oponent.save();
 					}
-
 				}
+				
+				// В любом случае изменются состояния двух игроков
+				// Поэтому созранения из каждого условия вынес сюда
+				gamer.save();
+				oponent.save();
+				
 			} else {
 				// Если противник еще не ответил на вопросы тогда нужно изменить статус и ждать его ответов
 				// Пора менять статус на опонента
@@ -859,8 +844,8 @@ public class GameService {
 				gamer.save();
 				
 				oponent.setStatus(GamerStatus.WAITING_ANSWERS);
-				// TODO SEND PUSH NOTIFICATION что пора отвечать второму участнику
 				Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
+				NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш ход!");
 				oponent.save();
 			}
 		} else {
@@ -870,11 +855,187 @@ public class GameService {
 		GamerQuestionAnswerResultModel model = new GamerQuestionAnswerResultModel();
 		model.gameStatus = game.getStatus();
 		model.gamerStatus = gamer.getStatus();
-		model.gamerScore = 0;
+		model.gamerScore = gamer.getScore();
 		model.gameRoundStatus = gameRound.getStatus();
 		
 		return model;
 	}
 
+	private static void calculateScore(Gamer gamer, Gamer oponent){
+		Gamer hiGamer = gamer;
+		Gamer lowGamer = oponent;
+		if(hiGamer.getUser().getScore()<lowGamer.getUser().getScore()){
+			hiGamer = oponent;
+			lowGamer = gamer;
+		}
+		int hiGamerScores = hiGamer.getUser().getScore();
+		int lowGamerScores = lowGamer.getUser().getScore();
+		int diff = hiGamer.getCorrectAnswerCount()-lowGamer.getCorrectAnswerCount();
+		float prop;
+		if(hiGamerScores+lowGamerScores==0){
+			prop = (float) ((1+hiGamerScores)*1.00/((hiGamerScores+1)+(lowGamerScores+1)));
+		}else{
+			prop = (float) (hiGamerScores*1.00/(hiGamerScores+lowGamerScores));
+		}
+		double hiScore =  (diff*(((1+Math.signum(diff))/2)-Math.signum(diff)*prop) + (0.5-prop)*(1-Math.abs(Math.signum(diff))));
+		if(hiScore<0){
+			hiScore=-Math.ceil(-hiScore);
+		}else {
+			hiScore =  Math.ceil(hiScore);
+		}
+		hiGamer.setScore((int) hiScore);
+		lowGamer.setScore((int) (-hiScore));
+		hiGamer.getUser().setScore(hiGamer.getUser().getScore()+hiGamer.getScore());
+		lowGamer.getUser().setScore(lowGamer.getUser().getScore()+lowGamer.getScore());
+	}
 	
+	/**
+	 * Медот позволяет пользователям сдаться в игре
+	 * @param user 
+	 * @param gameId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GameModel surrenderGame(User user, Long gameId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user is null");
+		if (user.getDeleted())
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user was deleted");
+		
+		// Проверяем игру
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
+		
+		// Получаем список игроков
+		Gamer gamer = null;
+		Gamer oponent = null;
+		for (Gamer gamerObject : game.getGamers()) {
+			if (gamerObject.getUser().id == user.id) {
+				gamer = gamerObject;
+				oponent = gamer.getOponent();
+			}
+		}
+		// TODO Завершить игру
+		game.setStatus(GameStatus.FINISHED);
+		game.setGameFinishedDate(Calendar.getInstance());
+		
+		for (GameRound gameRound : game.getRounds()) {
+			if (gameRound.getStatus() == GameRoundStatus.WAITING_ANSWER) {
+				gameRound.setStatus(GameRoundStatus.COMPLETED);
+				gameRound.save();
+			}
+			
+		}
+		
+		gamer.setStatus(GamerStatus.SURRENDED);
+		// TODO Calculate score
+		gamer.setScore(0);
+		gamer.getUser().setScore(gamer.getScore());
+		gamer.getUser().save();
+		
+		oponent.setStatus(GamerStatus.OPONENT_SURRENDED);
+		// TODO Calculate score
+		oponent.setScore(18);
+		oponent.getUser().setScore(gamer.getScore());
+		oponent.getUser().save();
+		
+		gamer.save();
+		oponent.save();
+		
+		game.save();
+		
+		Logger.info("PUSH " + oponent.getUser().getName() + " ваш противник сдался!");
+		NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш противник сдался!");
+		
+		// Строим модель игры
+		GameModel model = GameModel.buildModel(game, gamer, oponent, null);  
+		return model;
+	}
+
+	/**
+	 * Метод выполняет поиск просроченных игр и завершает их с отправкой соотвествующего уведомления
+	 * @return
+	 */
+	public static int findAndFinishExpiredGames() {
+		// Интересующие статусы
+		List<GamerStatus> statuses = new ArrayList<GamerStatus>();
+		statuses.add(GamerStatus.WAITING_ANSWERS);
+		statuses.add(GamerStatus.WAITING_ROUND);
+		
+		// Интересующее время
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.add(Calendar.HOUR, -48);
+
+		// Получения списка просроченных игр
+		List<Gamer> expiredGamers = JPA.em().createQuery("from Gamer where status in (:statuses) and lastUpdateStatusDate < :expiredDate and deleted = false")
+				.setParameter("statuses", statuses)
+				.setParameter("expiredDate", expirationDate)
+				.getResultList();
+		if (expiredGamers.size() > 0) {
+			 for (Gamer gamer : expiredGamers) {
+				 try {
+					surrenderGame(gamer.getUser(),gamer.getGame().id);
+				} catch (PlatformException e) {
+					Logger.error(e, "Can't complete expired game");
+				}
+			}
+		}
+		
+		return expiredGamers.size();
+	}
+
+	/**
+	 * Метод проверяет и удаляет просроченные приглашения
+	 * 
+	 * @return
+	 */
+	public static int findAndRemoveExpiredInvitations() {
+		List<GamerStatus> statuses = new ArrayList<GamerStatus>();
+		statuses.add(GamerStatus.WAITING_OWN_DECISION);
+		
+		// Интересующее время
+		Calendar expirationDate = Calendar.getInstance();
+		expirationDate.add(Calendar.HOUR, -24);
+
+		// Получения списка просроченных игр
+		List<Gamer> expiredInvitations = JPA.em().createQuery("from Gamer where status in (:statuses) and lastUpdateStatusDate < :expiredDate and deleted = false")
+				.setParameter("statuses", statuses)
+				.setParameter("expiredDate", expirationDate)
+				.getResultList();
+		if (expiredInvitations.size() > 0) {
+			 for (Gamer gamer : expiredInvitations) {
+				 try {
+					removeExpiredInvitation(gamer);
+				} catch (Throwable e) {
+					Logger.error(e, "Can't delete expired invitation");
+				}
+			}
+		}
+		
+		return expiredInvitations.size();
+	}
+	
+	/**
+	 * Удалает приглашение играть
+	 * @param gamer
+	 */
+	public static void removeExpiredInvitation(Gamer gamer) {
+		Game game = gamer.getGame();
+		Gamer oponent = gamer.getOponent();
+		
+		gamer.setDeleted(true);
+		gamer.save();
+		oponent.setDeleted(true);
+		oponent.save();
+		game.setDeleted(true);
+		game.save();
+		
+		Logger.info("PUSH " + gamer.getUser().getName() + " так и не принял ваше приглашение!");
+		NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", gamer.getUser().getName() + " так и не принял ваше приглашение!");
+	}
+
+
 }
