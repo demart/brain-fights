@@ -34,10 +34,13 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 margin: '0 0 0 0',
                // width: 450,
                 flex: 2,
+                layout: 'fit',
+                scroll: true,
                 items: [
                         {
                 	viewConfig: {
-                        stripeRows: true
+                        stripeRows: true,
+                        scroll: true,
                     },
                     store: 'CategoryStore',
                 	stateful: false,
