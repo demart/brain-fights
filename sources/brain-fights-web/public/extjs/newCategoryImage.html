@@ -7,7 +7,7 @@
   <meta name="description" content="A basic demo of Cropper.">
   <meta name="keywords" content="HTML, CSS, JS, JavaScript, jQuery plugin, image cropping, image crop, image move, image zoom, image rotate, image scale, front-end, frontend, web development">
   <meta name="author" content="Fengyuan Chen">
-  <title>Cropper</title>
+  <title>Редактор изображения</title>
   <link rel="stylesheet" href="/public/assets/css/font-awesome.min.css">
   <link rel="stylesheet" href="/public/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="/public/dist/cropper.css">
@@ -28,7 +28,7 @@
       <div class="col-md-9">
         <!-- <h3 class="page-header">Demo:</h3> -->
         <div class="img-container">
-          <img id="image" src="" alt="Picture">
+          <img id="image" src="" alt="Отсутствует изображение">
           <script>
           console.log(parent.parent.document.getElementById('testLabelUpload').innerHTML);
           document.getElementById('image').setAttribute('src', parent.parent.document.getElementById('testLabelUpload').innerHTML);
@@ -102,7 +102,7 @@
   
           <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
             <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
-            <span class="docs-tooltip" data-toggle="tooltip" title="Import image with Blob URLs">
+            <span class="docs-tooltip" data-toggle="tooltip" title="Выбрать изображение">
               <span class="fa fa-upload"></span>
             </span>
           </label>

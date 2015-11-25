@@ -180,15 +180,20 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
             	//title: 'Вопросы',
                 region: 'west',
                 flex: 2,
+                scroll: true,
+layout: 'fit',
                 //minHeight: 100,
                 //maxHeight: 250,
                 items: [{
                 	id: 'questionsGridId',
-                	viewConfig: { stripeRows: true },
+                	viewConfig: { 
+                		stripeRows: true,
+                        scroll: true,},
                     xtype: 'grid',
                     minHeight: 400,
                     store: 'QuestionStore',
                 	stateful: false,
+                	scroll: true,
                 	//controller: 'clients.infoClientsAddres',
                 	
                 	tbar: [
@@ -277,7 +282,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
 ],
 bbar:            	 {
  	xtype: 'pagingtoolbar',
-     store: 'AdminUsersStore',
+     store: 'QuestionStore',
      displayInfo: true,
      dock: 'bottom',
      displayMsg: 'Показано записей {0} - {1} из {2}',

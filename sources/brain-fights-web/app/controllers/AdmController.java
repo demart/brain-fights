@@ -233,7 +233,7 @@ public class AdmController extends Controller {
 		
 		if (status == true) {
 			String requestBody = params.current().get("body");
-			Logger.info (" Update Category: \n" + requestBody);
+			//Logger.info (" Update Category: \n" + requestBody);
 			
 			if (!requestBody.startsWith("["))
 				requestBody = "[" + requestBody + "]";
@@ -300,7 +300,7 @@ public class AdmController extends Controller {
 		
 		if (status == true) {
 			String requestBody = params.current().get("body");
-			Logger.info (" Create Question: \n" + requestBody);
+			//Logger.info (" Create Question: \n" + requestBody);
 			
 			if (!requestBody.startsWith("["))
 				requestBody = "[" + requestBody + "]";
@@ -330,7 +330,7 @@ public class AdmController extends Controller {
 		
 		if (status == true) {
 			String requestBody = params.current().get("body");
-			Logger.info (" Update Question: \n" + requestBody);
+			//Logger.info (" Update Question: \n" + requestBody);
 			
 			if (!requestBody.startsWith("["))
 				requestBody = "[" + requestBody + "]";

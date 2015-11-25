@@ -237,7 +237,10 @@ public class AdmService {
 			CategoryModel category = new CategoryModel();
 			category.setId(model.getId());
 			category.setName(model.getName());
-			category.setImage(model.getImageUrl());
+			if (model.getImageUrl() == null)
+				category.setImage("0");
+			else
+				category.setImage(model.getImageUrl());
 			category.setQuestionsCount(AdmService.getCountQuestionsInCategory(model.getId()));
 			category.setCreatedDate(model.getCreatedDate().getTime());
 			category.setModifiedDate(model.getModifiedDate().getTime());
@@ -275,17 +278,17 @@ public class AdmService {
 				String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
 				
 				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
-				System.out.println (imageTmpFormat);
+				//System.out.println (imageTmpFormat);
 				
 				
 				
-				System.out.println (imageTmpFormat);
+				//System.out.println (imageTmpFormat);
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 				
 				byte[] decoded = Base64.decodeBase64(stringInBase64);
 				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
-				System.out.println(f.getName());
-				System.out.println(f.getAbsolutePath());
+				//System.out.println(f.getName());
+				//System.out.println(f.getAbsolutePath());
 				System.out.println(f.getPath());
 				
 				
@@ -337,25 +340,27 @@ public class AdmService {
 			if (StringUtils.isNotEmpty(model.getImage())) {	
 				Category catImage = Category.findById(model.getId());
 				
-				File del = new File(catImage.getImageUrl());
-				del.delete();
-				
-				System.out.println("ok");
+				if (catImage.getImageUrl() != null) {
+					File del = new File(catImage.getImageUrl());
+					del.delete();
+				}
+					
+				//System.out.println("ok");
 				String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
 				String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
 				
 				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
-				System.out.println (imageTmpFormat);
+				//System.out.println (imageTmpFormat);
 				
 				
 				
-				System.out.println (imageTmpFormat);
+				//System.out.println (imageTmpFormat);
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 				
 				byte[] decoded = Base64.decodeBase64(stringInBase64);
 				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
-				System.out.println(f.getName());
-				System.out.println(f.getAbsolutePath());
+				//System.out.println(f.getName());
+				//System.out.println(f.getAbsolutePath());
 				System.out.println(f.getPath());
 				
 				
@@ -439,17 +444,17 @@ public class AdmService {
 				String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
 				
 				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
-				System.out.println (imageTmpFormat);
+				//System.out.println (imageTmpFormat);
 				
 				
 				
-				System.out.println (imageTmpFormat);
+				//System.out.println (imageTmpFormat);
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 				
 				byte[] decoded = Base64.decodeBase64(stringInBase64);
 				File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
-				System.out.println(f.getName());
-				System.out.println(f.getAbsolutePath());
+				//System.out.println(f.getName());
+				//System.out.println(f.getAbsolutePath());
 				System.out.println(f.getPath());
 				
 				
@@ -522,25 +527,26 @@ public class AdmService {
 				if (StringUtils.isNotEmpty(model.getImage())) {
 					Question questImage = Question.findById(model.getId());
 					
-					File del = new File(questImage.getImageUrl());
-					del.delete();
-					
+					if (questImage.getImageUrl() != null) {
+						File del = new File(questImage.getImageUrl());
+						del.delete();
+					}
 					
 					String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
 					String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
 					
 					String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
-					System.out.println (imageTmpFormat);
+					//System.out.println (imageTmpFormat);
 					
 					
 					
-					System.out.println (imageTmpFormat);
+					//System.out.println (imageTmpFormat);
 					String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 					
 					byte[] decoded = Base64.decodeBase64(stringInBase64);
 					File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
-					System.out.println(f.getName());
-					System.out.println(f.getAbsolutePath());
+					//System.out.println(f.getName());
+					//System.out.println(f.getAbsolutePath());
 					System.out.println(f.getPath());
 					
 					
@@ -640,7 +646,7 @@ public class AdmService {
 				for (Answer answers: model.getAnswers()) {
 					Answer ans = new Answer();
 					ans.setName(answers.getName());
-					System.out.println(answers.getName());
+					//System.out.println(answers.getName());
 					ans.setCorrect(answers.getCorrect());
 					question.getAnswers().add(ans);
 				}
@@ -649,7 +655,11 @@ public class AdmService {
 			question.setCategoryId(model.getCategory().getId());
 			question.setCreatedDate(model.getCreatedDate().getTime());
 			question.setModifiedDate(model.getModifiedDate().getTime());
-			question.setImage(model.getImageUrl());
+			
+			if (model.getImageUrl() == null)
+				question.setImage("0");
+			else
+				question.setImage(model.getImageUrl());
 			
 			
 			models.add(question);

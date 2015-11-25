@@ -153,6 +153,11 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
         }
     },
     
+    onFormCancel: function () {
+        this.lookupReference('questionsEditWindowForm').getForm().reset();
+        this.lookupReference('questionsEditWindow').hide();
+    },
+    
     onCancelButtonQuestionClick: function() {
         Ext.getCmp('questionName').setVisible(true);
         Ext.getCmp('questionCreatedDate').setVisible(true);
