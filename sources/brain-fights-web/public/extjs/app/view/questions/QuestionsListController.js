@@ -144,6 +144,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
         Ext.getCmp('answer4Text').setValue(record.data.answers[3].name);
         Ext.getCmp('categoryComboForQuestionsText').setValue(record.data.categoryName);
         
+		Ext.getCmp('editImageControl').setText('no');
+        
         for (var i=0; i<4;i++) {
         	if(record.data.answers[i].correct == true) {
                 Ext.getCmp('answerTrueText').setValue(i+1);
@@ -192,6 +194,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 			 if (Ext.getCmp('answerTrueText').getValue() == i)
 				 model.data.answers[i-1].correct = true;
 		 }
+
 		 
 		 if (document.getElementById('editImageControl').innerHTML == 'yes') {
 			 model.data.image = document.getElementById('nowImageQuestion').innerHTML;
@@ -214,10 +217,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 		    
 		    success: function(response){
 		    	Ext.MessageBox.alert('Успешно','Вопрос обновлен. Нажмите на вопрос, чтобы обновить информацию.');
-		     	// grid.getStore().removeAll();
-		     	 //addressClient.getStore().reload();
-		     	 //addresses.getStore().removeAll();
-		     	 //clients.getStore().reload();
+
 		    	Ext.getCmp('questionsGridId').getStore().reload();
 		    	Ext.getCmp('questionName').setVisible(true);
 		        Ext.getCmp('questionCreatedDate').setVisible(true);

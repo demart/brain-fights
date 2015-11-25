@@ -202,10 +202,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
 		    
 		    success: function(response){
 		    	Ext.MessageBox.alert('Успешно','Категория обновлена. Нажмите на категорию, чтобы обновить информацию.');
-		     	// grid.getStore().removeAll();
-		     	 //addressClient.getStore().reload();
-		     	 //addresses.getStore().removeAll();
-		     	 //clients.getStore().reload();
+				Ext.getCmp('editImageControlCategory').setText('no');
 		    	grid.getStore().reload();
 		    	Ext.getCmp('saveButton').setVisible(false);
 		    	Ext.getCmp('editButton').setVisible(true);
