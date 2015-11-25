@@ -30,6 +30,7 @@ POST	/rest/check/name										AdmController.checkNameAdminInBase
 GET		/rest/search/question/store/read						AdmController.searchQuestion
 GET		/rest/category/combo/store/read							AdmController.createCategoryComboList
 POST	/rest/login/out											AdmController.loginOut
+POST	/rest/upload/category/image								AdmController.uploadImage
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

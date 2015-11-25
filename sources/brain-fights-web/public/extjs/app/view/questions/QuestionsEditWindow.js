@@ -8,7 +8,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
     title: 'Добавить/Изменить вопрос',
     width: 200,
     minWidth: 300,
-    minHeight: 150,
+   // minHeight: 150,
+   height: 650,
     id: 'questionsEditWindowId',
     layout: 'fit',
     resizable: true,
@@ -30,7 +31,22 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
             labelStyle: 'font-weight:bold'
         },
         
-        items: [{
+        items: [
+	                {
+	                	xtype: 'label',
+	                	hidden: true,
+	                	text: '/public/images/no_image.jpg',
+	                	id: 'testLabelUploadQuestion'
+	                	
+	                },
+	                {
+	                	xtype: 'label',
+	                	hidden: true,
+	                	text: '/public/images/no_image.jpg',
+	                	id: 'testTmpLabelUploadQuestion'
+	                	
+	                },
+                {
             xtype: 'fieldcontainer',
             labelStyle: 'font-weight:bold;padding:0;',
             layout: 'fit',
@@ -49,6 +65,48 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
 	            ],
 	            fieldLabel: 'Название вопроса',
 	            allowBlank: false
+	        },
+	        {
+	        	xtype: 'label',
+	        	hidden: true,
+	        	id: 'valueRadioGroup',
+	        	text: ''
+	        },
+	        
+	        {
+	        	xtype: 'radiogroup',
+	        	fieldLabel: 'Тип вопроса',
+	        	id: 'typeQuestion',
+	        	items: [
+	        	        {
+	        	        	boxLabel: 'Текст',
+	        	        	name: 'type',
+	        	        	inputValue: '1'
+	        	        },
+	        	        {
+	        	        	boxLabel: 'Картинка',
+	        	        	name: 'type',
+	        	        	inputValue: '2'
+	        	        }
+	        	        ],
+	        	listeners: {
+	                change: function (field, newValue, oldValue) {
+	                	 switch (parseInt(newValue['type'])) {
+	                	 case 1:
+	                		 console.log("text");
+	                		 Ext.getCmp('valueRadioGroup').setText('text');
+	                		 Ext.getCmp('imageQuestionEditorButtonId').setVisible(false);
+	                		 Ext.getCmp('imageSetQuestionLabel').setVisible(false);
+	                		 break;
+	                	 case 2:
+	                		 console.log("image");
+	                		 Ext.getCmp('valueRadioGroup').setText('image');
+	                		 Ext.getCmp('imageQuestionEditorButtonId').setVisible(true);
+	                		 Ext.getCmp('imageSetQuestionLabel').setVisible(true);
+	                		 break;
+	                	 }
+	                }
+	                }
 	        },
 	        
 		    {
@@ -168,6 +226,28 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
 
 	            allowBlank: false,
 	        },
+	        
+
+	         {
+	        	 xtype: 'button',
+	        	 text: 'Редактировать изображение',
+	        	 id: 'imageQuestionEditorButtonId',
+	        	 handler: 'imageQuestionEditor', 
+	        	 hidden: true,
+	        	 margin: '10 10 10 10',
+	        	 align: 'center',
+	         } ,
+		        {
+	        	 xtype: 'image',
+	        	 //text: 'Информация: Изображение не выбрано',
+	        	 src: '/public/images/no_image.jpg',
+	        	 id: 'imageSetQuestionLabel',
+                style: 'margin: 10px',
+	        	 align: 'center',
+	        	 
+	        	 height: 100,
+	        	 hidden: true,
+	         },
 	        
         ],
 	        

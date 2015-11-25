@@ -10,6 +10,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
    	    'BrainFightsConsole.view.questions.QuestionsListController',
    	    'BrainFightsConsole.view.questions.QuestionsEditWindow',
    	    'BrainFightsConsole.model.QuestionModel',
+   	    'BrainFightsConsole.view.questions.UploadImageQuestionWindow',
+   	    'BrainFightsConsole.view.questions.UploadEditImageQuestionWindow',
 	],
 
 	layout: 'border',
@@ -98,6 +100,9 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                     		        Ext.getCmp('answer3Text').setVisible(false);
                     		        Ext.getCmp('answer2Text').setVisible(false);
                     		        Ext.getCmp('answer1Text').setVisible(false);
+                		        	Ext.getCmp('questionImage').setVisible(false);
+                    		        Ext.getCmp('editImageButtonQuestion').setVisible(false);
+                		        	
                         	    },
                         	    
                             	 },
@@ -233,6 +238,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
             		        Ext.getCmp('answer3Text').setVisible(false);
             		        Ext.getCmp('answer2Text').setVisible(false);
             		        Ext.getCmp('answer1Text').setVisible(false);
+            		        Ext.getCmp('editImageButtonQuestion').setVisible(false);
             		        
             		        Ext.getCmp('viewQuestionInformationId').setTitle('Просмотр информации о вопросе');
             		        
@@ -247,6 +253,19 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
             		        Ext.getCmp('questionAnswer3').setText('<b>Ответ #3: </b> ' + record.data.answers[2].name + '<br><br>', false);
             		        Ext.getCmp('questionAnswer4').setText('<b>Ответ #4: </b> ' + record.data.answers[3].name + '<br><br>', false);
                 		
+            		        if (record.data.type == "IMAGE") {
+            		        	Ext.getCmp('questionImage').setVisible(true);
+            		        	Ext.getCmp('questionImage').setSrc(record.data.image);
+            		        	 Ext.getCmp('questionCreatedDate').setText(' <br><br><b>Дата создания: </b> ' + Ext.util.Format.date(record.data.createdDate, 'm/d/Y H:i') + '<br><br>', false);
+                   		       	Ext.getCmp('nowImageQuestion').setText(record.data.image);
+            		        	
+            		        }
+            		        
+            		        else  {
+            		        	Ext.getCmp('questionImage').setVisible(false);
+            		        	Ext.getCmp('nowImageQuestion').setText('no');
+            		        }
+            		        
             		        for (var i=0; i<4; i++) {
             		        	if (record.data.answers[i].correct == true)
             		        		Ext.getCmp('answerCorrect').setText('<b> Правильный ответ #' + '<font color="red">' + (i+1) + '</font>' + '</b><br>', false);
@@ -276,6 +295,7 @@ items: [
     defaultType: 'textfield',
     style: 'margin: 10px',
     style: 'margin: 10px',
+    height: 800,
     //width: 500,
     defaults: {
     	labelWidth: 140,
@@ -292,6 +312,40 @@ items: [
 				    id: 'questionName',
 				    allowBlank:false,
 				    
+				},
+				{
+				    //text: '',
+					xtype: 'image',
+				    hidden: true,
+				    //height: 100,
+				    id: 'questionImage',
+				    allowBlank:false,
+				    
+				},
+				{
+					xtype: 'label',
+					hidden: true,
+					text: 'no',
+					id: 'nowImageQuestion',
+				},
+				{
+					xtype: 'label',
+					hidden: true,
+					id: 'tmpImageLabelQuestion',
+				},
+				{
+					xtype: 'label',
+					hidden: true,
+					id: 'editImageControl'
+				},
+				{
+					xtype: 'button',
+					text: 'Редактировать изоображение',
+        			margin: '10 15 0 80',
+					width: 200,
+					hidden: true,
+					id: 'editImageButtonQuestion',
+					handler: 'onEditButtonImageQuestionClick',
 				},
 				{
 				    text: '',

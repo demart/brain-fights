@@ -9,7 +9,7 @@ Ext.define('BrainFightsConsole.store.CategoryStore', {
             read: 'rest/category/store/read',
             create: 'rest/category/store/create',
             update: 'rest/category/store/update',
-            destroy: 'rest/category/store/destroy'
+            //destroy: 'rest/category/store/destroy'
         },
         reader: {
             type: 'json',
