@@ -13,6 +13,11 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
         this.lookupReference('categoryEditWindowForm').getForm().reset();
         record = Ext.create('BrainFightsConsole.model.CategoryModel');
 		record.set(win.down("form").getValues());
+		Ext.getCmp('imageSetLabel').setSrc('/public/images/no_image.jpg');
+		Ext.getCmp('testLabelUpload').setText('/public/images/no_image.jpg');
+		
+		//Ext.getCmp('imageSetLabel').setText('Информация: изображение не выбрано');
+		
 		win.down("form").loadRecord(record);
 		this.windowMode = 'add';
         win.show();
@@ -57,6 +62,8 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
     					        Ext.getCmp('categoryNameText').setVisible(false);
     					        Ext.getCmp('categoryColorId').setVisible(false);
     					        Ext.getCmp('categoryEditorId').setTitle('Просмотр информации о категории');
+    					        Ext.getCmp('editImageButtonCategory').setVisible(false);
+    					        Ext.getCmp('categoryImage').setVisible(false);
     					    },
     					    failure: function(batch) {
     							Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
@@ -91,23 +98,46 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
 	        	record.set(values);
 	    		
 	        	
-	           	if (this.windowMode == 'add') {
-	        		record.id = '0';
+	           	//if (this.windowMode == 'add') {
+	        		//record.id = '0';
 	        		record.data.id = '0';
+	        		record.data.imageUrl = document.getElementById('testLabelUpload').innerHTML;
+	        		console.log(document.getElementById('testLabelUpload').innerHTML);
 	                var grid = Ext.getCmp('categoryStoreId');
-	           		grid.getStore().add(record);
-	        	}
-	        	grid.getStore().sync({
+	           		//grid.getStore().add(record);
+	        	//}
+	                
+	                var data = record.getData();
+	                console.log(data);
+	                Ext.Ajax.request({
+	    			    url: '/rest/category/store/create',
+	    			    jsonData : data,
+	    			    
+	    			    success: function(response){
+	    			    	Ext.MessageBox.alert('Успешно','Категория создана');
+							view.lookupReference('categoryEditWindow').hide();
+	    			    	Ext.getCmp('categoryStoreId').getStore().reload();
+	    	
+	    			     	 
+	    			    	
+	    			    },
+	    			    failure: function(batch) {
+	    					Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
+	    				}
+	    			});
+	        /*	grid.getStore().sync({
 					success: function() {
 						form.reset();
 						view.lookupReference('categoryEditWindow').hide();
+						Ext.getCmp('ImageEditorWindowId').hide();
+						//Ext.getCmp('testLabelUpload').destroy();
 						grid.getStore().load();
 						
 					},
 					failure: function(batch) {
 						Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
 					}
-				});
+				});*/
 	        }
     	}
     },
@@ -123,6 +153,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
         Ext.getCmp('categoryNameText').setVisible(true);
         Ext.getCmp('categoryColorId').setVisible(true);
         Ext.getCmp('categoryEditorId').setTitle('Редактирование информации о категории');
+        Ext.getCmp('editImageButtonCategory').setVisible(true);
         
         var grid = Ext.getCmp('categoryStoreId');
         var record = grid.getSelectionModel().getSelection()[0];
@@ -141,6 +172,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
         Ext.getCmp('categoryNameText').setVisible(false);
         Ext.getCmp('categoryColorId').setVisible(false);
         Ext.getCmp('categoryEditorId').setTitle('Просмотр информации о категории');
+        Ext.getCmp('editImageButtonCategory').setVisible(false);
     },
     
     onSaveButtonClick: function () {
@@ -153,6 +185,12 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
          
          model.data.id = record.data.id;
          
+		 if (document.getElementById('editImageControlCategory').innerHTML == 'yes') {
+			 model.data.imageUrl = document.getElementById('nowImageCategory').innerHTML;
+			 console.log('editedImage');
+		 }
+         
+         
      	var data = model.getData();
     	console.log(data);
     	
@@ -163,22 +201,24 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
 		    jsonData : data,
 		    
 		    success: function(response){
-		    	Ext.MessageBox.alert('Успешно','Категория обновлена');
+		    	Ext.MessageBox.alert('Успешно','Категория обновлена. Нажмите на категорию, чтобы обновить информацию.');
 		     	// grid.getStore().removeAll();
 		     	 //addressClient.getStore().reload();
 		     	 //addresses.getStore().removeAll();
 		     	 //clients.getStore().reload();
 		    	grid.getStore().reload();
 		    	Ext.getCmp('saveButton').setVisible(false);
-		    	Ext.getCmp('editButton').setVisible(false);
+		    	Ext.getCmp('editButton').setVisible(true);
 		    	Ext.getCmp('cancelButton').setVisible(false);
-		        Ext.getCmp('categoryName').setVisible(false);
-		        Ext.getCmp('categoryColor').setVisible(false);
-		        Ext.getCmp('categoryCreatedDate').setVisible(false);
-		        Ext.getCmp('categoryModifiedDate').setVisible(false);
+		        Ext.getCmp('categoryName').setVisible(true);
+		        Ext.getCmp('categoryColor').setVisible(true);
+		        Ext.getCmp('categoryCreatedDate').setVisible(true);
+		        Ext.getCmp('categoryModifiedDate').setVisible(true);
 		        Ext.getCmp('categoryNameText').setVisible(false);
 		        Ext.getCmp('categoryColorId').setVisible(false);
 		        Ext.getCmp('categoryEditorId').setTitle('Просмотр информации о категории');
+		        Ext.getCmp('editImageButtonCategory').setVisible(false);
+		        Ext.getCmp('categoryImage').setVisible(true);
 		     	 
 		    	
 		    },
@@ -187,6 +227,21 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
 			}
 		});
     	 
+    },
+    
+    imageEditor: function() {
+    	Ext.getCmp('testTmpLabelUpload').setText(document.getElementById('testLabelUpload').innerHTML);
+        var window = new BrainFightsConsole.view.category.UploadImageWindow();
+
+        window.show();
+    },
+    
+    onEditButtonImageCategoryClick: function() {
+    	Ext.getCmp('tmpImageLabelCategory').setText(document.getElementById('nowImageCategory').innerHTML);
+    	Ext.getCmp('editImageControlCategory').setText('no');
+        var window = new BrainFightsConsole.view.category.UploadEditImageWindow();
+
+        window.show();
     }
     
 });

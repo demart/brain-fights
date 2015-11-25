@@ -3,9 +3,15 @@ package kz.aphion.brainfights.services;
 import play.Logger;
 import play.db.jpa.JPA;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import javax.persistence.Query;
 
@@ -255,13 +261,45 @@ public class AdmService {
 	 * @param models
 	 * @throws PlatformException
 	 */
-	public static void createNewCategory(CategoryModel[] models) throws PlatformException {
+	public static void createNewCategory(CategoryModel[] models) throws PlatformException, IOException {
+		Integer count = 0;
 		for (CategoryModel model: models) {
 			if (model == null)
 				throw new PlatformException("0", "Category model is null");
-			
+
 			Category category = new Category();
+
 			
+			if (StringUtils.isNotEmpty(model.getImage())) {
+				String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
+				String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+				
+				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
+				System.out.println (imageTmpFormat);
+				
+				
+				
+				System.out.println (imageTmpFormat);
+				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+				
+				byte[] decoded = Base64.decodeBase64(stringInBase64);
+				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
+				System.out.println(f.getName());
+				System.out.println(f.getAbsolutePath());
+				System.out.println(f.getPath());
+				
+				
+				f.createNewFile();
+
+				
+				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+				fileOut.write(decoded);
+				fileOut.close();
+				
+				category.setImageUrl(f.getPath());
+			}
+			
+		
 			
 			if (StringUtils.isNotEmpty(model.getName()))
 				category.setName(model.getName());
@@ -269,10 +307,12 @@ public class AdmService {
 			if (StringUtils.isNotEmpty(model.getColor()))
 				category.setColor(model.getColor());
 			
-			if (StringUtils.isNotEmpty(model.getImage()))
-				category.setImageUrl(model.getImage());
-		
+					
 			category.save();
+			
+
+
+
 			
 			Logger.info("Category created successfully");
 		}
@@ -284,7 +324,7 @@ public class AdmService {
 	 * @param models
 	 * @throws PlatformException
 	 */
-	public static void updateCategory(CategoryModel[] models) throws PlatformException {
+	public static void updateCategory(CategoryModel[] models) throws PlatformException, IOException {
 		
 		for (CategoryModel model: models) {
 			if (model == null)
@@ -294,14 +334,49 @@ public class AdmService {
 			if (category == null)
 				throw new PlatformException ("0", "Category not found");
 			
+			if (StringUtils.isNotEmpty(model.getImage())) {	
+				Category catImage = Category.findById(model.getId());
+				
+				File del = new File(catImage.getImageUrl());
+				del.delete();
+				
+				System.out.println("ok");
+				String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
+				String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+				
+				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
+				System.out.println (imageTmpFormat);
+				
+				
+				
+				System.out.println (imageTmpFormat);
+				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+				
+				byte[] decoded = Base64.decodeBase64(stringInBase64);
+				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
+				System.out.println(f.getName());
+				System.out.println(f.getAbsolutePath());
+				System.out.println(f.getPath());
+				
+				
+				f.createNewFile();
+
+				
+				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+				fileOut.write(decoded);
+				fileOut.close();
+				
+				category.setImageUrl(f.getPath());
+			}
+			
+			
 			if (StringUtils.isNotEmpty(model.getName()))
 				category.setName(model.getName());
 			
 			if (StringUtils.isNotEmpty(model.getColor()))
 				category.setColor(model.getColor());
 			
-			if (StringUtils.isNotEmpty(model.getImage()))
-				category.setImageUrl(model.getImage());
+
 			
 
 		
@@ -311,13 +386,36 @@ public class AdmService {
 		}
 		
 	}
+	
+	public static String saveImage (String strImage) throws IOException {
+		String strTmpOne = strImage.substring(strImage.indexOf("base64,"), strImage.length());
+		String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+		
+		String imageTmpFormat = strImage.substring(11, strImage.indexOf(";base64,"));
+		System.out.println (imageTmpFormat);
+		
+		byte[] decoded = Base64.decodeBase64(stringInBase64);
+		File f = new File("public" + File.separator + "Test." + imageTmpFormat);
+		f.createNewFile();
+		System.out.println(f.getName());
+		System.out.println(f.getAbsolutePath());
+		System.out.println(f.getPath());
+		
+		FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+		fileOut.write(decoded);
+		fileOut.flush();
+		fileOut.close();
+		
+		
+		return f.getPath();
+	}
 
 	/**
 	 * Создание вопроса
 	 * @param models
 	 * @throws PlatformException
 	 */
-	public static void createQuestion(QuestionModel[] models) throws PlatformException{
+	public static void createQuestion(QuestionModel[] models) throws PlatformException, IOException{
 		
 		for (QuestionModel model: models) {
 			if (model == null)
@@ -333,7 +431,41 @@ public class AdmService {
 				throw new PlatformException("0", "Category not found");
 				
 			question.setImageUrl("0");
-			question.setType(QuestionType.TEXT);
+			
+			question.setType(model.getType());
+			
+			if (model.getType() == QuestionType.IMAGE) {
+				String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
+				String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+				
+				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
+				System.out.println (imageTmpFormat);
+				
+				
+				
+				System.out.println (imageTmpFormat);
+				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+				
+				byte[] decoded = Base64.decodeBase64(stringInBase64);
+				File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
+				System.out.println(f.getName());
+				System.out.println(f.getAbsolutePath());
+				System.out.println(f.getPath());
+				
+				
+				f.createNewFile();
+
+				
+				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+				fileOut.write(decoded);
+				fileOut.close();
+				
+				question.setImageUrl(f.getPath());
+				
+				
+			}
+			
+			
 			question.setDeleted(false);
 			
 					
@@ -367,7 +499,7 @@ public class AdmService {
 	 * @param models
 	 * @throws PlatformException
 	 */
-	public static void updateQuestion(QuestionModel[] models) throws PlatformException{
+	public static void updateQuestion(QuestionModel[] models) throws PlatformException, IOException{
 		
 		for (QuestionModel model: models) {
 			if (model == null)
@@ -386,9 +518,42 @@ public class AdmService {
 					throw new PlatformException("0", "Category not found");
 			}
 
-				
-			question.setImageUrl("0");
-			question.setType(QuestionType.TEXT);
+			
+				if (StringUtils.isNotEmpty(model.getImage())) {
+					Question questImage = Question.findById(model.getId());
+					
+					File del = new File(questImage.getImageUrl());
+					del.delete();
+					
+					
+					String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
+					String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+					
+					String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
+					System.out.println (imageTmpFormat);
+					
+					
+					
+					System.out.println (imageTmpFormat);
+					String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+					
+					byte[] decoded = Base64.decodeBase64(stringInBase64);
+					File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
+					System.out.println(f.getName());
+					System.out.println(f.getAbsolutePath());
+					System.out.println(f.getPath());
+					
+					
+					f.createNewFile();
+
+					
+					FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+					fileOut.write(decoded);
+					fileOut.close();
+					
+					question.setImageUrl(f.getPath());
+				}
+			
 			question.setModifiedDate(Calendar.getInstance());
 			
 			if (StringUtils.isNotEmpty(model.getText()))
@@ -484,6 +649,7 @@ public class AdmService {
 			question.setCategoryId(model.getCategory().getId());
 			question.setCreatedDate(model.getCreatedDate().getTime());
 			question.setModifiedDate(model.getModifiedDate().getTime());
+			question.setImage(model.getImageUrl());
 			
 			
 			models.add(question);
@@ -502,6 +668,12 @@ public class AdmService {
 
 	}
 
+	/**
+	 * Создание списка категорий для вопросов
+	 * @param listBase
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static ArrayList<CategoryModel> createCategoryComboList(List<Category> listBase) throws PlatformException{
 		ArrayList<CategoryModel> models = new ArrayList<CategoryModel>();
 		CategoryModel firstCategory = new CategoryModel();

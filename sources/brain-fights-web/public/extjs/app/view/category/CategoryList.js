@@ -8,6 +8,9 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
    		'BrainFightsConsole.view.category.CategoryListController',
    		'BrainFightsConsole.view.category.CategoryEditWindow',
    		'BrainFightsConsole.model.CategoryModel',
+   		'BrainFightsConsole.view.category.UploadImageWindow',
+   		'BrainFightsConsole.model.ImageModel',
+   		'BrainFightsConsole.view.category.UploadEditImageWindow',
 	],
 
 
@@ -52,7 +55,9 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                     {
                     	text: 'Удалить категорию',
                     	handler: 'onDeleteRecord',
-                    }],
+                    },
+
+                    ],
                 	
                 	columns: [
                 				{text: "Название", dataIndex: 'name' , flex: 1},
@@ -71,6 +76,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 		        var record = iView.getRecord(iRowEl);
                 		        console.log(record);
                 		        Ext.getCmp('categoryName').setVisible(true);
+                		        Ext.getCmp('categoryImage').setVisible(true);
                 		        Ext.getCmp('categoryColor').setVisible(true);
                 		        Ext.getCmp('categoryCreatedDate').setVisible(true);
                 		        Ext.getCmp('categoryModifiedDate').setVisible(true);
@@ -81,10 +87,13 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 		        Ext.getCmp('categoryColorId').setVisible(false);
                 		        Ext.getCmp('categoryEditorId').setTitle('Просмотр информации о категории');
                 		        Ext.getCmp('categoryName').setText('<b>Название категории:</b> ' + record.data.name + '<br><br>', false);
+                		        Ext.getCmp('categoryImage').setSrc(record.data.imageUrl);
                 		        Ext.getCmp('categoryColor').setText('<b>Цвет:</b> ' + '<font color="' + record.data.color + '">' + record.data.color + '<font><br><br>', false);
-                		        Ext.getCmp('categoryCreatedDate').setText('<b>Дата создания:</b> ' + Ext.util.Format.date(record.data.createdDate, 'm/d/Y H:i') + '<br><br>', false);
+                		        Ext.getCmp('categoryCreatedDate').setText('<br><b>Дата создания:</b> ' + Ext.util.Format.date(record.data.createdDate, 'm/d/Y H:i') + '<br><br>', false);
                 		        Ext.getCmp('categoryModifiedDate').setText('<b>Дата изменения:</b> ' + Ext.util.Format.date(record.data.modifiedDate, 'm/d/Y H:i') + '<br><br>', false);
-                		    }
+                		    	Ext.getCmp('nowImageCategory').setText(record.data.imageUrl);
+                		        Ext.getCmp('editImageButtonCategory').setVisible(false);
+                	    	}
                 	    }
 
             
@@ -119,6 +128,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                             defaultType: 'textfield',
                             style: 'margin: 10px',
                             style: 'margin: 10px',
+                            height: 800,
                             width: 500,
                             defaults: {
                             	labelWidth: 140,
@@ -134,6 +144,40 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
 									    id: 'categoryName',
 									    allowBlank:false,
 									    
+									},
+									{
+									    text: '',
+										xtype: 'image',
+									    hidden: true,
+									    align: 'center',
+									    id: 'categoryImage',
+									    allowBlank:false,
+									    
+									},
+									{
+										xtype: 'label',
+										hidden: true,
+										text: 'no',
+										id: 'nowImageCategory',
+									},
+									{
+										xtype: 'label',
+										hidden: true,
+										id: 'tmpImageLabelCategory',
+									},
+									{
+										xtype: 'label',
+										hidden: true,
+										id: 'editImageControlCategory'
+									},
+									{
+										xtype: 'button',
+										text: 'Редактировать изоображение',
+					        			margin: '10 15 0 80',
+										width: 200,
+										hidden: true,
+										id: 'editImageButtonCategory',
+										handler: 'onEditButtonImageCategoryClick',
 									},
 									{
 									    text: '',
@@ -156,7 +200,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
 									    id: 'categoryColor',
 									    allowBlank:false
 									},
-									
+
 									
 									{
 									    //text: '',

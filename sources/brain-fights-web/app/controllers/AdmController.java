@@ -1,7 +1,19 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,6 +34,7 @@ import kz.aphion.brainfights.services.AdmService;
 import kz.aphion.brainfights.models.ResponseStatus;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
 import play.Logger;
+import play.Play;
 import play.db.jpa.JPA;
 
 /**
@@ -183,7 +196,7 @@ public class AdmController extends Controller {
 	 * Создание новой категории
 	 * @throws PlatformException
 	 */
-	public static void createNewCategory () throws PlatformException {
+	public static void createNewCategory () throws PlatformException, IOException {
 		Logger.info("Create New Category. User is " +  Security.connected());
 		
 		Boolean status = AdmService.checkUsers(Security.connected());
@@ -191,7 +204,7 @@ public class AdmController extends Controller {
 		
 		if (status == true) {
 			String requestBody = params.current().get("body");
-			Logger.info (" Create Category: \n" + requestBody);
+			//Logger.info (" Create Category: \n" + requestBody);
 			
 			if (!requestBody.startsWith("["))
 				requestBody = "[" + requestBody + "]";
@@ -212,7 +225,7 @@ public class AdmController extends Controller {
 	 * Редактирование категории
 	 * @throws PlatformException
 	 */
-	public static void updateCategory () throws PlatformException {
+	public static void updateCategory () throws PlatformException, IOException {
 		Logger.info("Update Category. User is " +  Security.connected());
 		
 		Boolean status = AdmService.checkUsers(Security.connected());
@@ -279,7 +292,7 @@ public class AdmController extends Controller {
 	 * Создание нового вопроса и ответов к нему
 	 * @throws PlatformException
 	 */
-	public static void createNewQuestion () throws PlatformException {
+	public static void createNewQuestion () throws PlatformException, IOException {
 		Logger.info("Create New Question. User is " +  Security.connected());
 		
 		Boolean status = AdmService.checkUsers(Security.connected());
@@ -309,7 +322,7 @@ public class AdmController extends Controller {
 	 * Редактирование вопроса и его ответов
 	 * @throws PlatformException
 	 */
-	public static void updateQuestion () throws PlatformException {
+	public static void updateQuestion () throws PlatformException, IOException {
 		Logger.info("Update Question. User is " +  Security.connected());
 		
 		Boolean status = AdmService.checkUsers(Security.connected());
@@ -436,7 +449,10 @@ public class AdmController extends Controller {
 
 		}
 	}
-	
+
+	/**
+	 * функция выхода пользователя
+	 */
 	public static void loginOut() {
 		Logger.info("Log Out. User is " + Security.connected());
     /*
@@ -455,6 +471,12 @@ public class AdmController extends Controller {
 		
 	}
 	
+	
+
+		
+		
+	
+
 }
 
 

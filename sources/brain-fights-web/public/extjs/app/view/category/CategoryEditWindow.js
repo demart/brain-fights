@@ -8,6 +8,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryEditWindow', {
     width: 200,
     minWidth: 300,
     minHeight: 150,
+    height: 550,
     layout: 'fit',
     resizable: true,
     modal: true,
@@ -37,7 +38,22 @@ Ext.define('BrainFightsConsole.view.category.CategoryEditWindow', {
                 labelAlign: 'top'
             },
         
-	        items: [{
+	        items: [
+	                {
+	                	xtype: 'label',
+	                	hidden: true,
+	                	text: '/public/images/no_image.jpg',
+	                	id: 'testLabelUpload'
+	                	
+	                },
+	                {
+	                	xtype: 'label',
+	                	hidden: true,
+	                	text: '/public/images/no_image.jpg',
+	                	id: 'testTmpLabelUpload'
+	                	
+	                },
+	                {
 	            flex: 1,
 	            name: 'name',
 	            itemId: 'name',
@@ -88,13 +104,31 @@ Ext.define('BrainFightsConsole.view.category.CategoryEditWindow', {
 	            ],
 	            allowBlank: false,
 	        },
-	        
+	        {
+	        	 xtype: 'image',
+	        	 //text: 'Информация: Изображение не выбрано',
+	        	 src: '/public/images/no_image.jpg',
+	        	 id: 'imageSetLabel',
+                 style: 'margin: 10px',
+	        	 align: 'center',
+	        	 hidden: false,
+	         },
+
+	         {
+	        	 xtype: 'button',
+	        	 text: 'Редактировать изображение',
+	        	 id: 'imageEditorButtonId',
+	        	 handler: 'imageEditor', 
+	        	 hidden: false,
+	        	 margin: '10 10 10 10',
+	        	 align: 'center',
+	         }
 	        
 	        ],
         }],
 
         buttons: [{
-            text: 'Отмена',
+            text: 'Закрыть',
             handler: 'onFormCancel'
         }, {
             text: 'Сохранить',

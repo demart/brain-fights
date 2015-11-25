@@ -5,7 +5,7 @@ Ext.define('BrainFightsConsole.model.CategoryModel', {
 		{ name: 'id', type: 'int'}, 
 		{ name: 'name'},
 		{ name: 'color'},
-		{ name: 'image'},
+		{ name: 'imageUrl'},
 		{ name: 'createdDate'},
 		{ name: 'modifiedDate'},
 		{ name: 'isDeleted'},
