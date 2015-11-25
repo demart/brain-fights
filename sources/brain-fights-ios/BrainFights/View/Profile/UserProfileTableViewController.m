@@ -43,6 +43,8 @@ static UIRefreshControl *refreshControl;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     if (self.userProfileModel != nil) {
         [self.showMenuButton setImage:[UIImage imageNamed:@"backArrowIcon"]];
         [self.showMenuButton setTitle:@"Назад"];
@@ -53,6 +55,10 @@ static UIRefreshControl *refreshControl;
     [self reloadProfile];
 }
 
+-(void) viewWillDisappear:(BOOL)animated {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+}
 
 -(void) initRefreshControl {
     refreshControl = [[UIRefreshControl alloc] init];
@@ -73,6 +79,10 @@ static UIRefreshControl *refreshControl;
     [refreshControl endRefreshing];
 }
 
+-(void) appDidBecomeActive:(NSNotification *)notification {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    [self reloadProfile];
+}
 
 
 -(void) reloadProfile {
@@ -80,7 +90,6 @@ static UIRefreshControl *refreshControl;
     if (self.userProfileModel == nil) {
         userId = [[UserService sharedInstance] getUserProfile].id;
     } else {
-        // oponents profile
         userId = self.userProfileModel.id;
     }
 
@@ -96,18 +105,16 @@ static UIRefreshControl *refreshControl;
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // Show Error Alert
-            // TODO
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
         }
         [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        // SHOW ERROR
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
     }];
 }
 
@@ -187,7 +194,7 @@ static UIRefreshControl *refreshControl;
         sleep(1);
         if ([response.status isEqualToString:SUCCESS]) {
             [self reloadProfile];
-            // Show alert
+            [self presentSimpleAlertViewWithTitle:@"Внимание" andMessage:@"Приглашение успешно отправлено!"];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -196,13 +203,14 @@ static UIRefreshControl *refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // Show Error Alert
             [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+//            [self presentErrorViewControllerWithTryAgainSelector:@selector(playAction)];
         }
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        // Show Error
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(playAction)];
     }];
 
 }
@@ -210,12 +218,10 @@ static UIRefreshControl *refreshControl;
 
 - (void) addToFriendsAction {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
-    
     [[UserService sharedInstance] addUserFriendAsync:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
         sleep(1);
         if ([response.status isEqualToString:SUCCESS]) {
             [self reloadProfile];
-            [DejalBezelActivityView removeViewAnimated:NO];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -224,12 +230,12 @@ static UIRefreshControl *refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // Show Error Alert
             [DejalBezelActivityView removeViewAnimated:NO];
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(addToFriendsAction)];
         }
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        // Show Error
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(addToFriendsAction)];
     }];
 }
 
@@ -247,7 +253,7 @@ static CGFloat HEIGHT = 504;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"Table View Height: %f", tableView.bounds.size.height);
-    CGFloat proportion = tableView.bounds.size.height / HEIGHT;
+    //CGFloat proportion = tableView.bounds.size.height / HEIGHT;
     //NSLog(@"Proporting View Height: %f", proportion);
     
     
@@ -262,51 +268,6 @@ static CGFloat HEIGHT = 504;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

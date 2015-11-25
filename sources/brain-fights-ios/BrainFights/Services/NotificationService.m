@@ -24,6 +24,8 @@
 
     // Сохраняем новый токен
     [LocalStorageService setSettingsKey:SYSTEM_DEVICE_TOKEN withObject:newTokenValue];
+    [self registerOrUpdateModel:newTokenValue withOldToken:oldTokenValue];
+    /*
     if (![newTokenValue isEqualToString:oldTokenValue]) {
         // Отправляем данные на сервер
         [self registerOrUpdateModel:newTokenValue withOldToken:oldTokenValue];
@@ -34,7 +36,7 @@
         if (![isSync isEqualToString:@"YES"]) {
             [self registerOrUpdateModel:newTokenValue withOldToken:oldTokenValue];
         }
-    }
+    }*/
 }
 
 

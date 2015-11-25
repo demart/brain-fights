@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AppDelegate.h"
 #import "UserProfileModel.h"
 
 @interface UserTableViewCell : UITableViewCell
@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *userPosition;
+@property (weak, nonatomic) IBOutlet UIView *roundView;
 
 // Модель пользователя
 @property UserProfileModel *userProfile;

@@ -53,15 +53,6 @@ static UIRefreshControl* refreshControl;
     
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    /*
-    self.page= 0;
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self loadUsersRating];
-    */
-}
-
-
 -(void) initRefreshControl {
     refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
@@ -87,11 +78,7 @@ static UIRefreshControl* refreshControl;
 // Загружает данные с сервера
 -(void) loadUsersRating {
     [[UserService sharedInstance] retrieveUsersRating:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
-        [DejalBezelActivityView removeViewAnimated:NO];
-        
         if ([response.status isEqualToString:SUCCESS]) {
-            NSLog(@"Success");
-            
             NSMutableArray *userProfiles = (NSMutableArray*)response.data;
             if (userProfiles == nil || [userProfiles count] < 1) {
                 self.isExistsMoreRecords = NO;
@@ -108,19 +95,17 @@ static UIRefreshControl* refreshControl;
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // TODO Show Error Alert
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
         }
+        [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
-        // Stop loading
-        // Show error
         [DejalBezelActivityView removeViewAnimated:NO];
-
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
     }];
 }
 
@@ -193,49 +178,5 @@ static UIRefreshControl* refreshControl;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

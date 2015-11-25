@@ -47,7 +47,7 @@ public class UserService {
 		User user  = users.get(0);
 		*/
 		if (user == null)
-			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "User account not found");
+			throw new AuthorizationException(ErrorCode.DATA_NOT_FOUND, "User account not found");
 		
 		if (user.getDeleted() == true || user.getDeleted() == null)
 			throw new AuthorizationException(ErrorCode.AUTH_ERROR, "User account was deleted");
@@ -136,7 +136,7 @@ public class UserService {
 		
 		//  and (name like '%?%' or email like '%?%')
 		
-		Long totalCount = User.count("deleted = false and id <> ? and (name like ? or email like ?)", user.id, searchText, searchText);
+		Long totalCount = User.count("deleted = false and id <> ? and (name like ? or email like ?)", user.id, "%" + searchText + "%", "%" + searchText + "%");
 		Logger.info("Found records:" + totalCount);
 		
 		List<User> users = JPA.em().createQuery("from User where deleted = false and id <> :userId and (name like :searchValue or email like :searchValue)")

@@ -10,11 +10,12 @@
 #import "CategoryTableViewCell.h"
 #import "GameQuestionViewController.h"
 
+#import "DejalActivityView.h"
+
 @interface GameCategoriesTableViewController ()
 
 @property GameModel* model;
 @property UITableViewController* gameStatusController;
-
 
 @end
 
@@ -61,11 +62,16 @@
 
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self processSelectedCategory];
+}
+
+
+- (void) processSelectedCategory {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
     
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
     GameRoundCategoryModel *categoryModel = (GameRoundCategoryModel*)self.model.categories[indexPath.row];
-    
-    // SHOW LOADING
-    // Call API to retrieve Questions
+
     [GameService genereateGameRound:self.model.id withSelectedCategory:categoryModel.id onSuccess:^(ResponseWrapperModel *response) {
         // Check data and refresh table
         if ([response.status isEqualToString:SUCCESS]) {
@@ -75,72 +81,26 @@
             GameQuestionViewController *gameQuestionViewController = [[[AppDelegate globalDelegate] drawersStoryboard] instantiateViewControllerWithIdentifier:@"GameQuestionViewController"];
             [gameQuestionViewController initView:self.gameStatusController withGameModel:self.model withGameRoundModel:gameRoundModel];
             [self presentViewController:gameQuestionViewController animated:YES completion:nil];
+            [DejalBezelActivityView removeViewAnimated:NO];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // Show Error Alert
-            // TODO
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
         }
     } onFailure:^(NSError *error) {
-        // SHOW ERROR
-        
+        [DejalBezelActivityView removeViewAnimated:NO];
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
     }];
-    
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

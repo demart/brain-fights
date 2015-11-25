@@ -14,11 +14,15 @@
 
 #import "OrganizationStructureTableViewController.h"
 
+#import "FriendsHeaderTableViewCell.h"
+
 #import "AppDelegate.h"
 #import "GameService.h"
 #import "UserService.h"
 #import "UserFriendsModel.h"
 #import "UserProfileModel.h"
+
+#import "DejalActivityView.h"
 
 
 @interface NewGameTableViewController ()
@@ -33,14 +37,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.tableView.separatorColor = [UIColor clearColor];
+}
+
+- (void) viewWillAppear:(BOOL)animated  {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     // Загружаем список друзей
     [self loadFriendsAsync];
 }
 
+-(void) viewWillDisappear:(BOOL)animated {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+-(void) appDidBecomeActive:(NSNotification *)notification {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    [self loadFriendsAsync];
+}
+
 - (void) loadFriendsAsync {
-    // Show Loader
-    
     // Retrieve data
     [[UserService sharedInstance] retrieveUserFriendsAsync:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
@@ -48,6 +64,7 @@
             if (model != nil)
                 self.friends = model.friends;
             [self.tableView reloadData];
+            [DejalBezelActivityView removeViewAnimated:YES];
         }
         
         if ([response.status isEqualToString:NO_CONTENT]) {
@@ -55,19 +72,55 @@
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // SHOW AUTH SCREEN
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:BAD_REQUEST]) {
-            // SHOW ERROR
+            [DejalBezelActivityView removeViewAnimated:NO];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // SHOW ERROR
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:@"Не удалось загрузить список друзей."];
         }
     } onFailure:^(NSError *error) {
-        // SHOW ERROR
+        [DejalBezelActivityView removeViewAnimated:NO];
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+    }];
+}
+
+
+- (void) createRandomInvitation {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    [GameService createGameInvitation:0 onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:NO_CONTENT]) {
+            // SHOW ALERT NOBODY TO PLAY WITH YOU RIGHT NOW
+            NSLog(@"response.status: %@", response.status);
+            [self presentSimpleAlertViewWithTitle:@"Внимание" andMessage:@"Не удалось найти игрока."];
+        }
+        
+        if ([response.status isEqualToString:BAD_REQUEST]) {
+            // SHOW ERROR TO CONTACT TO DEVELOPER
+            NSLog(@"response.status: %@", response.status);
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            NSLog(@"response.status: %@", response.status);
+            // SHOW ERROR ALERT
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:@"Не удалось найти игрока."];
+        }
+        
+    } onFailure:^(NSError *error) {
+        NSLog(@"error: %@", error);
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
     }];
 }
 
@@ -139,54 +192,32 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section < 3)
         return 0;
-    return 40;
+    return 35;
 }
 
+- (UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 3) {
+        FriendsHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendsHeaderCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"FriendsHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"FriendsHeaderCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"FriendsHeaderCell"];
+        }
+        return cell;
+    }
+    return nil;
+}
 
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 3) {
         return @"Мои друзья";
     }
-    return @"";
+    return nil;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Случайный игрок
     if (indexPath.section == 0) {
-        
-        // Loading bar
-        [GameService createGameInvitation:0 onSuccess:^(ResponseWrapperModel *response) {
-            if ([response.status isEqualToString:SUCCESS]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            
-            if ([response.status isEqualToString:NO_CONTENT]) {
-                // SHOW ALERT NOBODY TO PLAY WITH YOU RIGHT NOW
-                NSLog(@"response.status: %@", response.status);
-            }
-            
-            if ([response.status isEqualToString:BAD_REQUEST]) {
-                // SHOW ERROR TO CONTACT TO DEVELOPER
-                NSLog(@"response.status: %@", response.status);
-            }
-            
-            if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-                // Show Login Screen
-                NSLog(@"response.status: %@", response.status);
-                [[AppDelegate globalDelegate] showAuthorizationView:self];
-            }
-            
-            if ([response.status isEqualToString:SERVER_ERROR]) {
-                NSLog(@"response.status: %@", response.status);
-                // SHOW ERROR ALERT
-                
-            }
-            
-        } onFailure:^(NSError *error) {
-            NSLog(@"error: %@", error);
-            // SHOW ERROR ALERT
-            
-        }];
+        [self createRandomInvitation];
     }
     
     // Поиск по орг структуре
@@ -209,8 +240,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
-        return 60;
-    return 70;
+        return 75;
+    return 75;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -219,11 +250,7 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
     // Если переход на профиль друга
     if ([segue.destinationViewController isKindOfClass:[UserProfileTableViewController class]]) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -236,40 +263,5 @@
         NSLog(@"NewGame -> OrganizationStructure");
     }
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end

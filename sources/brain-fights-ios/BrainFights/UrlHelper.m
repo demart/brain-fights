@@ -15,9 +15,9 @@
 
 +(NSString*) baseUrl {
 #if DEBUG
-    return @"http://localhost:9000";
+    return @"http://localhost:8080";
     //return @"http://172.20.10.2:9000";
-    //return @"http://192.168.0.246:9000";
+    //return @"http://192.168.0.94:8080";
     //return @"http://api.sushimi.kz/rest-api";
 #else
         return @"http://172.20.10.2";

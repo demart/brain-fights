@@ -13,7 +13,9 @@
 #import "GamerQuestionAnswerResultModel.h"
 #import "GameStatusTableViewController.h"
 
-@interface GameQuestionViewController : UIViewController
+#import "BaseViewController.h"
+
+@interface GameQuestionViewController : BaseViewController
 @property (weak, nonatomic) IBOutlet UIView *firstQuestionAnswerIndicator;
 @property (weak, nonatomic) IBOutlet UIView *secondQuestionAnswerIndicator;
 @property (weak, nonatomic) IBOutlet UIView *thirdQuestionAnswerIndicator;

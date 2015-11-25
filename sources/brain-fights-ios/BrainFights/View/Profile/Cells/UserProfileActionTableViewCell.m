@@ -33,7 +33,7 @@
     view.layer.cornerRadius = 5.0;
     view.layer.masksToBounds = NO;
     view.layer.shadowOffset = CGSizeMake(1, 1);
-    view.layer.shadowRadius = 5;
+    view.layer.shadowRadius = 8;
     view.layer.shadowOpacity = 0.5;
 }
 

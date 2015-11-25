@@ -11,6 +11,17 @@
 @implementation UserTableViewCell
 
 - (void)awakeFromNib {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.roundView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    self.roundView.layer.cornerRadius = 5.0;
+    self.roundView.layer.masksToBounds = NO;
+    self.roundView.layer.shadowOffset = CGSizeMake(1, 1);
+    self.roundView.layer.shadowRadius = 3;
+    self.roundView.layer.shadowOpacity = 0.5;
+    self.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
+    
+    self.userName.textColor = [Constants SYSTEM_COLOR_WHITE];
+    self.userPosition.textColor = [Constants SYSTEM_COLOR_WHITE];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

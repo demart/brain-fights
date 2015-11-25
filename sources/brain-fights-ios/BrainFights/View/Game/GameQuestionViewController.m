@@ -290,13 +290,14 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     // Подстветить кто как ответил на вопрос
     [self hightLightAnswers:answerIndex withCorrrectAnswer:correctAnswerIndex andOponentAnswer:oponentAnswerIndex];
-    
     // Call server API
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:userAnswer.id onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
             self.lastAnswerResult = result;
 
+            // ISSUE: Из-за того что загрузка на сервер идет долго, то подствечивается на вехрну не сразу
+            
             // Показываем что пользователь ответил на вопрос
             question.answer = userAnswer;
             // Если игра закончилась то сообщить игроку об этом
@@ -304,7 +305,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
@@ -478,10 +478,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             question.answer.isCorrect = NO;
             question.answer.isMissingAnswer = YES;
             // Если игра закончилась то сообщить игроку об этом
+            [self initHeader];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
@@ -508,11 +508,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     }
 }
 
-
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
-
 
 - (IBAction)dismissView:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:^{
@@ -523,15 +521,5 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
