@@ -49,6 +49,8 @@ GET		/user/friends/remove/{id}								UserController.removeUserFriend
 
 # USER SEARCH
 GET		/search/user											SearchController.searchUsers
+POST	/search/user											SearchController.searchUsers
+POST	/search/user/											SearchController.searchUsers
 GET		/search/department										SearchController.searchDepartments
 GET		/search/department/										SearchController.searchDepartments
 GET		/search/department/{id}									SearchController.searchDepartments
@@ -79,7 +81,7 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-GET     /*										staticDir:public/extjs
+#GET     /*										staticDir:public/extjs
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
+#*       /{controller}/{action}                  {controller}.{action}

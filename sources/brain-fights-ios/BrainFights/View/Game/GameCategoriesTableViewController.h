@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "GameService.h"
 #import "BaseTableViewController.h"
+#import "UrlHelper.h"
 
 @interface GameCategoriesTableViewController : BaseTableViewController
 

@@ -166,9 +166,9 @@ static UIRefreshControl* refreshControl;
         }
         
         if (self.model.gameRounds != nil && indexPath.row <= [self.model.gameRounds count]) {
-            [cell initGameRound:self.model.gameRounds[indexPath.row-1] andGame:self.model withIndex:indexPath.row];
+            [cell initGameRound:self.model.gameRounds[indexPath.row-1] andGame:self.model withIndex:indexPath.row fromController:self];
         } else {
-            [cell initGameRound:nil andGame:self.model withIndex:indexPath.row];
+            [cell initGameRound:nil andGame:self.model withIndex:indexPath.row fromController:self];
         }
         
         return cell;
@@ -201,14 +201,14 @@ static UIRefreshControl* refreshControl;
 -(void) onPlayAction {
     NSLog(@"onPlayAction invoked");
 
-    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
+    if ([self.model.me.status isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
         // Начинаем новый раунд
         GameCategoriesTableViewController *destinationController = [[GameCategoriesTableViewController alloc] init];
         [destinationController initViewController:self.model fromGameStatus:self];
         [self.navigationController pushViewController:destinationController animated:YES];
     }
     
-    if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ANSWERS]) {
+    if ([self.model.me.status isEqualToString:GAMER_STATUS_WAITING_ANSWERS]) {
         // Подгужаем список вопросов для ответов
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
         [GameService getRoundQuestions:self.model.id withRound:self.model.lastRound.id onSuccess:^(ResponseWrapperModel *response) {
@@ -241,7 +241,7 @@ static UIRefreshControl* refreshControl;
     NSLog(@"onSurrenderAction invoked");
 
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [GameService surrenderGame:self.gameModel.id onSuccess:^(ResponseWrapperModel *response) {
+    [GameService surrenderGame:self.model.id onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Вы сдались!"
                                                                            message:@"В данной игре вы сдались. Ваш опонент заработал 18 очков."
@@ -272,7 +272,7 @@ static UIRefreshControl* refreshControl;
     NSLog(@"onAddToFriendsAction invoked");
     
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    NSUInteger userId = self.gameModel.oponent.user.id;
+    NSUInteger userId = self.model.oponent.user.id;
     [[UserService sharedInstance] addUserFriendAsync:userId onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             [self refreshGameStatus];
@@ -298,7 +298,7 @@ static UIRefreshControl* refreshControl;
     NSLog(@"onRevancheAction invoked");
 
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    NSUInteger oponentId = self.gameModel.oponent.user.id;
+    NSUInteger oponentId = self.model.oponent.user.id;
     [GameService createGameInvitation:oponentId onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             [DejalBezelActivityView removeViewAnimated:YES];
@@ -326,8 +326,6 @@ static UIRefreshControl* refreshControl;
 static CGFloat HEIGHT = 504;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //NSLog(@"Table View Height: %f", tableView.bounds.size.height);
-    //NSLog(@"Proporting View Height: %f", proportion);
     CGFloat proportion = tableView.bounds.size.height / HEIGHT;
     
     if (indexPath.row == 0)

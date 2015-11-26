@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 // Ключ для хранения токена авторизации
 static NSString* AUTH_TOKEN = @"settings.auth.token";
@@ -25,5 +26,12 @@ static NSString* PUSH_TOKEN = @"settings.push.token";
 
 // Возвращает сохраненное значение в локальных настройках приложения
 +(NSObject*) getSettingsValueByKey:(NSString*)key;
+
+
+// Сохраняет картинки в локальном хранилище
++(void)saveImageToLocalCache:(NSString *)imageName withData:(UIImage*)uiImage;
+
+// Достает картинки из локального хранилища
++(NSData *)loadImageFromLocalCache:(NSString *)imageName;
 
 @end

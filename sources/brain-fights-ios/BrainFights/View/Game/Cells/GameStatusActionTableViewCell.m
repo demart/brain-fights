@@ -45,6 +45,7 @@
 
 
 - (void) initCell:(GameModel*) gameModel onPlayAction:(void (^)(void))playAction onSurrenderAction:(void (^)(void))surrenderAction onAddToFriendsAction:(void (^)(void))addToFriendsAction onRevancheAction:(void (^)(void))onRevancheAction {
+    NSLog(@"GameStatusActionTableViewCell initCell invoked");
     self.model = gameModel;
     self.playActionBlock = playAction;
     self.revancheActionBlock = onRevancheAction;
