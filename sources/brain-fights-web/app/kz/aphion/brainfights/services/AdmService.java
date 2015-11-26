@@ -565,18 +565,28 @@ public class AdmService {
 			if (StringUtils.isNotEmpty(model.getText()))
 				question.setText(model.getText());
 			
+			
+			
 			if (model.getAnswers() != null) {
-				question.setAnswers(new ArrayList<Answer>());
-				for (Answer answer: model.getAnswers() ) {
-					Answer tmp = new Answer();
-					tmp.setCorrect(answer.getCorrect());
-					tmp.setName(answer.getName());
-					System.out.println(answer.getName());
-					tmp.setDeleted(false);
-					tmp.setQuestion(question);
-					question.getAnswers().add(tmp);
+				
+				try {
+					JPA.em().createQuery("delete Answer where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
+					question.setAnswers(new ArrayList<Answer>());
+					for (Answer answer: model.getAnswers() ) {
+						Answer tmp = new Answer();
+						tmp.setCorrect(answer.getCorrect());
+						tmp.setName(answer.getName());
+						System.out.println(answer.getName());
+						tmp.setDeleted(false);
+						tmp.setQuestion(question);
+						question.getAnswers().add(tmp);
+					}
 				}
-				System.out.println(question.getAnswers().get(0).getName());
+				
+				catch (Exception e) {
+					throw new PlatformException ("1", e.getMessage());
+				}
+				//System.out.println(question.getAnswers().get(0).getName());
 				//question.setAnswers(listModels);
 			}
 			
@@ -585,16 +595,6 @@ public class AdmService {
 					
 			Logger.info("Question updated successfully");
 			
-			List<Answer> listAnswer = JPA.em().createQuery("from Answer where question.id = :idQuest order by id asc").setParameter("idQuest", model.getId()).getResultList();
-			ArrayList<Long> ids = new ArrayList<Long>(0);
-			Integer t = 0;
-			for(Answer anrs: listAnswer) {
-				if (t < 4) {
-					ids.add(anrs.getId());
-					t++;
-				}
-			}
-			JPA.em().createQuery("delete Answer where id in (:ids)").setParameter("ids", ids).executeUpdate();
 			
 		}
 	}
@@ -645,10 +645,11 @@ public class AdmService {
 			question.setAnswers(new ArrayList<Answer>());
 				for (Answer answers: model.getAnswers()) {
 					Answer ans = new Answer();
-					ans.setName(answers.getName());
-					//System.out.println(answers.getName());
-					ans.setCorrect(answers.getCorrect());
-					question.getAnswers().add(ans);
+					if (answers.getDeleted() == false) {
+						ans.setName(answers.getName());
+						ans.setCorrect(answers.getCorrect());
+						question.getAnswers().add(ans);
+					}
 				}
 			question.setId(model.getId());
 			question.setCategoryName(model.getCategory().getName());
