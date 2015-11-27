@@ -435,6 +435,9 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
 
             if (request.prependBaseUrl) {
                 url = Boot.baseUrl + url;
+            } else {
+            	if (url.slice(0, "app/".length) == "app/")
+            		url = Boot.baseUrl + url;
             }
 
             if (request.sequential) {
@@ -649,6 +652,8 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
 
                 ++Boot.loading;
 
+                if (url.slice(0, "app/".length) == "app/")
+            		url = Boot.baseUrl + url;
 
                 content = Boot.fetchSync(url);
                 entry.done = true;

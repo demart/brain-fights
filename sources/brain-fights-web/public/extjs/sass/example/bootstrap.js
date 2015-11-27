@@ -212,6 +212,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 Boot.hasAsync = ("async" in script) || !('readyState' in script);
             }
             Boot.baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1);
+            Boot.baseUrl = "/public/extjs/";
         },
 
         create: function (url, key) {
@@ -440,9 +441,9 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 head = Boot.getHead(),
                 el, key;
 
-            if (request.prependBaseUrl) {
-                url = Boot.baseUrl + url;
-            }
+           // if (request.prependBaseUrl) {
+                url = "/public/extjs/" + url;
+            //}
 
             if (request.sequential) {
                 Boot.currentFile = url;
