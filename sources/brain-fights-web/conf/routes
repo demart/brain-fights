@@ -61,6 +61,7 @@ GET		/game/invitation/create									GameController.createInvitation
 GET		/game/invitation/create/								GameController.createInvitation
 GET		/game/invitation/create/{userId}						GameController.createInvitation
 GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
+GET		/game/{gameId}/accept/invitation/{accept}				GameController.acceptInvitation
 
 GET		/games																			GameController.getUserGames
 GET		/game/list																		GameController.getUserGames

@@ -221,9 +221,10 @@ public class GameService {
 	 * Принимает соглашение
 	 * @param user
 	 * @param gameId
+	 * @param accept Принять соглашение или нет
 	 * @throws PlatformException 
 	 */
-	public static UserGameModel acceptInvitation(User authorizedUser, Long gameId) throws PlatformException {
+	public static UserGameModel acceptInvitation(User authorizedUser, Long gameId, Boolean accept) throws PlatformException {
 		if (authorizedUser == null)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "autorizedUser is null");
 		
@@ -255,28 +256,53 @@ public class GameService {
 		if (invitationReceiver.getStatus() != GamerStatus.WAITING_OWN_DECISION)
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "invitaion state is incorrect");
 		
-		
-		// Изменяем параметры игры
-		game.setStatus(GameStatus.STARTED);
-		game.setInvitationAcceptedDate(Calendar.getInstance());
-		
-		game.save();
-		
-		// Настраиваем игрока
-		invitationSender.setLastUpdateStatusDate(Calendar.getInstance());
-		invitationSender.setStatus(GamerStatus.WAITING_OPONENT);
-		
-		invitationSender.save();
-		
-		// Настраиваем игрока
-		invitationReceiver.setLastUpdateStatusDate(Calendar.getInstance());
-		invitationReceiver.setStatus(GamerStatus.WAITING_ROUND);
-		
-		invitationReceiver.save();
-		
-		// TODO Отправить PUSH уведомление о том что игрок принял приглашение
-		Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
-		NotificationService.sendPushNotificaiton(invitationSender.getUser(), "Кайдзен", invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
+		if (accept) {
+			// Изменяем параметры игры
+			game.setStatus(GameStatus.STARTED);
+			game.setInvitationAcceptedDate(Calendar.getInstance());
+			
+			game.save();
+			
+			// Настраиваем игрока
+			invitationSender.setLastUpdateStatusDate(Calendar.getInstance());
+			invitationSender.setStatus(GamerStatus.WAITING_OPONENT);
+			
+			invitationSender.save();
+			
+			// Настраиваем игрока
+			invitationReceiver.setLastUpdateStatusDate(Calendar.getInstance());
+			invitationReceiver.setStatus(GamerStatus.WAITING_ROUND);
+			
+			invitationReceiver.save();
+			
+			// TODO Отправить PUSH уведомление о том что игрок принял приглашение
+			Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
+			NotificationService.sendPushNotificaiton(invitationSender.getUser(), "Кайдзен", invitationSender.getUser().getName() + " игрок принял ваше приглашение!");
+		} else {
+			// Изменяем параметры игры
+			game.setStatus(GameStatus.WAITING);
+			game.setInvitationAcceptedDate(Calendar.getInstance());
+			game.setDeleted(true);
+			
+			game.save();
+			
+			// Настраиваем игрока
+			invitationSender.setLastUpdateStatusDate(Calendar.getInstance());
+			invitationSender.setDeleted(true);
+			
+			invitationSender.save();
+			
+			// Настраиваем игрока
+			invitationReceiver.setLastUpdateStatusDate(Calendar.getInstance());
+			invitationReceiver.setDeleted(true);
+			
+			invitationReceiver.save();
+			
+			// TODO Отправить PUSH уведомление о том что игрок не принял приглашение
+			Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок отказался принять ваше приглашение!");
+			NotificationService.sendPushNotificaiton(invitationSender.getUser(), "Кайдзен", invitationSender.getUser().getName() + " игрок отказался принять ваше приглашение!");
+			
+		}
 		
 		UserGameModel model = UserGameModel.buildModel(authorizedUser, invitationReceiver);
 		return model;
