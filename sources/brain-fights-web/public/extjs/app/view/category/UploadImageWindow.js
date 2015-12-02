@@ -8,7 +8,7 @@ Ext.define('BrainFightsConsole.view.category.UploadImageWindow', {
     
     title: 'Редактирование изображения',
     width: 800,
-    height: 650,
+    height: 750,
     layout: 'fit',
     resizable: true,
     modal: true,
