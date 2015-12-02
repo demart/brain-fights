@@ -147,8 +147,12 @@
 
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId {
-    return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId withResult:(BOOL)result {
+    if (result) {
+        return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation/true?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+    } else {
+         return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation/false?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+    }
 }
 
 // URL для получения детальной информации об игре

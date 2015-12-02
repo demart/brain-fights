@@ -83,7 +83,7 @@
 + (NSString*) gameCreateInvitationByUserIdUrl:(NSInteger)userId;
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId;
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId withResult:(BOOL)result;
 
 // URL для получения детальной информации об игре
 + (NSString*) gameInformationUrl:(NSInteger)gameId;

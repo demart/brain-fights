@@ -63,6 +63,10 @@ public class GameService {
 		if (authorizedUser.getGamers() != null && authorizedUser.getGamers().size() > 0) {
 			for (Gamer gamer : authorizedUser.getGamers()) {
 				
+				// Если удалили игрока
+				if (gamer.getDeleted())
+					continue;
+				
 				// Если игра уже закончилась в ней проверять смысла нет
 				if (gamer.getGame().getStatus() == GameStatus.FINISHED)
 					continue;
@@ -385,7 +389,7 @@ public class GameService {
 		waitingStatuses.add(GamerStatus.WAITING_OPONENT_DECISION);
 		waitingStatuses.add(GamerStatus.WAITING_OWN_DECISION);
 		
-		List<Gamer> waitingGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+		List<Gamer> waitingGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and deleted = false")
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", waitingStatuses)
 				.getResultList();
@@ -395,7 +399,7 @@ public class GameService {
 		inProgressStatuses.add(GamerStatus.WAITING_ROUND);
 		inProgressStatuses.add(GamerStatus.WAITING_ANSWERS);
 		
-		List<Gamer> inProgressGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+		List<Gamer> inProgressGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and deleted = false")
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", inProgressStatuses)
 				.getResultList();
@@ -407,7 +411,7 @@ public class GameService {
 		completedStatuses.add(GamerStatus.WINNER);
 		
 		// Достаем законченные игры (последние 5 штук)
-		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) order by lastUpdateStatusDate DESC")
+		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and deleted = false order by lastUpdateStatusDate DESC")
 				.setMaxResults(5)
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", completedStatuses)
