@@ -29,52 +29,64 @@ Ext.define('BrainFightsConsole.view.main.Main', {
             	 region:'north',
      	        floatable: false,
      	        margin: '0 0 0 0',
-     	        tbar : [
-					{
-						id: 'authUserNameLabel',
-						xtype:'label',
-					    text:'',
-					    scale: 'medium',
-					    hidden: false,
-					}, '-' , {
-						id: 'logoutBtn',
-						xtype:'button',
-			        	margin: '0 80 0 0',
-					    text:'Выход',
-					    scale: 'medium',
-					    hidden: false,
-					    listeners : {click : 'onLogoutClick', },
-					},
-					
-					{
-						id: 'adminUsersBtn',
-					    text:'Управление пользователями',
-					    iconCls: null,
-					    scale: 'small',
-					    hidden: true,
-					    listeners : {click : 'onAdminUsersBtnClick', },
-					    
-					},
-					{
-						id: 'categoryBtn',
-					    text:'Управление категориями',
-					    iconCls: null,
-					    scale: 'small',
-					    hidden: true,
-					    listeners : {click : 'onCategoryBtnClick', },
-					    
-					},
-					{
-						id: 'questionBtn',
-					    text:'Управление вопросами',
-					    iconCls: null,
-					    scale: 'small',
-					    hidden: true,
-					    listeners : {click : 'onQuestionBtnClick', },
-					    
-					},
-					
-     	         ],
+     	        
+     	        items: [
+     	                
+     	                {
+     	                	region: 'west',
+     	                	buttonAlign: 'right',
+     	                
+		     	        tbar : [
+												
+							{
+								id: 'adminUsersBtn',
+							    text:'Управление пользователями',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onAdminUsersBtnClick', },
+							    
+							},
+							{
+								id: 'categoryBtn',
+							    text:'Управление категориями',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onCategoryBtnClick', },
+							    
+							},
+							{
+								id: 'questionBtn',
+							    text:'Управление вопросами',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onQuestionBtnClick', },
+							    
+							}, '->',
+							{
+								id: 'authUserNameLabel',
+								xtype:'label',
+							    text:'',
+							    scale: 'medium',
+							    align: 'right',
+							    //margin: '0 200 0 0',
+							    hidden: false,
+							}, '-' , {
+								id: 'logoutBtn',
+								xtype:'button',
+					        	//margin: '0 80 0 0',
+							    text:'Выход',
+							    scale: 'medium',
+							    hidden: false,
+							    buttonAlign: 'right',
+							    listeners : {click : 'onLogoutClick', },
+							},
+							
+		     	         ],
+     	                }
+	     	         ],
             },
             {
             	region:'center',

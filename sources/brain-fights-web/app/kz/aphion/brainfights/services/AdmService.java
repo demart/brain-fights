@@ -3,8 +3,10 @@ package kz.aphion.brainfights.services;
 import play.Logger;
 import play.db.jpa.JPA;
 import java.util.List;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.util.Calendar;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+
+import javax.imageio.ImageIO;
 import javax.persistence.Query;
 
 import kz.aphion.brainfights.persistents.game.question.Answer;
@@ -286,7 +290,7 @@ public class AdmService {
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 				
 				byte[] decoded = Base64.decodeBase64(stringInBase64);
-				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
+File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
 				//System.out.println(f.getName());
 				//System.out.println(f.getAbsolutePath());
 				System.out.println(f.getPath());
@@ -294,10 +298,10 @@ public class AdmService {
 				
 				f.createNewFile();
 
-				
 				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 				fileOut.write(decoded);
 				fileOut.close();
+				
 				
 				category.setImageUrl(f.getPath());
 			}
@@ -322,6 +326,7 @@ public class AdmService {
 				
 	}
 	
+
 	/**
 	 * Редактирование категории
 	 * @param models

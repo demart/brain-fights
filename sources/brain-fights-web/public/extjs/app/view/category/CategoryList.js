@@ -32,8 +32,10 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                // collapsible: false,
                 region: 'west',
                 margin: '0 0 0 0',
+                id: 'panelGridCategory',
                // width: 450,
                 flex: 2,
+                autoHeight: true,
                 layout: 'fit',
                 scroll: true,
                 items: [
@@ -47,6 +49,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 	id: 'categoryStoreId',
                 	region: 'center',
                     xtype: 'grid',
+                   
                 	scroll: true,
                 	
                 	tbar: [{
@@ -72,6 +75,24 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 	    
                 	    listeners: {
                 	    	viewready: function() {
+                	            var height = Ext.getBody().getSize().height - 215;
+                	    		console.log(height);
+                	    	    var rows = Math.floor(height / 25.0);
+                	    	    console.log(rows);
+                	    	    this.store.pageSize = rows;
+                	    		this.store.load();
+                	    	},
+                	    	
+                	    	resize: function() {
+                	            var height = Ext.getBody().getSize().height - 215;
+                	    		console.log(height);
+                	    		//console.log(grid.container.getHeight());
+                	    		//console.log(Ext.getCmp('categoryStoreId').getColumns());
+                	    		//var firstRow = this.getEl().select('tr.x-grid-row').elements[0].height;
+                	    		//console.log(firstRow);
+                	    	    var rows = Math.floor(height / 25.0);
+                	    	    console.log(rows);
+                	    	    this.store.pageSize = rows;
                 	    		this.store.load();
                 	    	},
                 	    	
@@ -111,8 +132,8 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
         	        store: 'CategoryStore',
         	        region: 'south',
         	        dock: 'bottom',
-        	        //displayInfo: true,
-        	       // displayMsg: 'Показано записей {0} - {1} из {2}',
+        	        displayInfo: true,
+        	        displayMsg: 'Показано записей {0} - {1} из {2}',
         	        items:[]
         	    }],
                 
@@ -123,6 +144,8 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
             	id: 'categoryEditorId',
                 region: 'center',
                 flex: 1,
+                layout: 'fit',
+                scroll: true,
            //     height: 300,
              // minHeight: 100,
               //  maxHeight: 250,
@@ -131,9 +154,12 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                             defaultType: 'textfield',
                             style: 'margin: 10px',
                             style: 'margin: 10px',
-                            height: 800,
+                            autoHeight: true,
+                            scroll: true,
+                            autoScroll: true,
                             width: 500,
                             defaults: {
+                            	scroll: true,
                             	labelWidth: 140,
             					width: 380,
             			       	grow      : true,
