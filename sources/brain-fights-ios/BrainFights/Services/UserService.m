@@ -141,7 +141,7 @@ static UserProfileModel *_userProfileModel;
     if (userId < 1)
         failure(nil);
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userAddFriendByIdUrl:userId]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userRemoveFriendByIdUrl:userId]]];
     
     RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForRemoveFriend];
     

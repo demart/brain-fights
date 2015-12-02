@@ -8,6 +8,12 @@
 
 #import "UserTableViewCell.h"
 
+@interface UserTableViewCell()
+
+@property (nonatomic, copy) void (^clickedBlockAction)(void);
+
+@end
+
 @implementation UserTableViewCell
 
 - (void)awakeFromNib {
@@ -29,12 +35,33 @@
 }
 
 // Инициализируем ячейкам
-- (void) initCell:(UserProfileModel*) userProfile {
+- (void) initCell:(UserProfileModel*) userProfile withDeleteButton:(BOOL)showDeleteButton onClicked:(void (^)())clicked {
     self.userProfile = userProfile;
-    
     [self.userName setText: userProfile.name];
     [self.userPosition setText:userProfile.position];
     
+    if (showDeleteButton) {
+        self.rightUtilityButtons = [self friendsRightButtons];
+        self.delegate = self;
+        self.clickedBlockAction = clicked;
+    }
+    
 }
+
+- (NSArray *)friendsRightButtons {
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+     //[UIColor whiteColor]
+                                                title:@"Удалить"];
+    
+    return rightUtilityButtons;
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    NSLog(@"Right button clicked");
+    self.clickedBlockAction();
+}
+
 
 @end

@@ -179,6 +179,8 @@ static UIRefreshControl *refreshControl;
             [self playAction];
         } onAddToFriedsAction:^{
             [self addToFriendsAction];
+        } onRemoveFromFriedsAction:^{
+            [self removeFromFriendsAction];
         }];
         return cell;
     }
@@ -239,6 +241,29 @@ static UIRefreshControl *refreshControl;
     }];
 }
 
+
+- (void) removeFromFriendsAction {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    [[UserService sharedInstance] removeUserFriendAsync:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
+        sleep(1);
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self reloadProfile];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(removeFromFriendsAction)];
+        }
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(removeFromFriendsAction)];
+    }];
+}
 
 
 -(UserProfileModel*) getUserProfileModel {

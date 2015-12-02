@@ -134,7 +134,7 @@
              // Инициализируем ячейку друга
              NSLog(@"users count: %li", [self.users count]);
              UserProfileModel *userProfile = (UserProfileModel*)self.users[indexPath.row];
-             [cell initCell:userProfile];
+             [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
              return cell;
          } else {
              // Подразделения
@@ -160,7 +160,7 @@
              // Инициализируем ячейку друга
              NSLog(@"users count: %li", [self.users count]);
              UserProfileModel *userProfile = (UserProfileModel*)self.users[indexPath.row];
-             [cell initCell:userProfile];
+             [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
              return cell;
          } else {
 
