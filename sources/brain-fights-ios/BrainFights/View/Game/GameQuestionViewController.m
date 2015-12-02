@@ -8,6 +8,7 @@
 
 #import "GameQuestionViewController.h"
 
+#import "UrlHelper.h"
 
 static NSInteger STATE_WAITING_START = 0;
 static NSInteger STATE_WAITING_ANSWER_1 = 1;
@@ -49,6 +50,13 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 //      Round is Finished
 //      Game is Finished
 
+
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
+@property UIImage *loadingImage;
+
+
 @end
 
 @implementation GameQuestionViewController
@@ -56,9 +64,16 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
+    
     [self initViewLayouts];
     [self initHeader];
     [self initTapGestureRecognizer];
+    
+    //[self initCategoryTitleView];
     
     // Показываем что мы ожидаем начала игры
     self.state = STATE_WAITING_START;
@@ -95,6 +110,39 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     self.gameRoundModel = gameRoundModel;
 }
 
+- (void) initCategoryTitleView {
+    CGRect backgroundView = CGRectMake(self.categoryTitle.layer.bounds.origin.x, self.categoryTitle.layer.bounds.origin.y, self.categoryTitle.layer.bounds.size.width + 20, self.categoryTitle.layer.bounds.size.height + 3);
+    
+    [self.categoryTitleBackgroundView setBounds:backgroundView];
+    CAShapeLayer *mask = [[CAShapeLayer alloc] init];
+    
+    mask.frame = self.categoryTitleBackgroundView.layer.bounds;
+    CGFloat width = self.categoryTitleBackgroundView.frame.size.width;
+    CGFloat height = self.categoryTitleBackgroundView.frame.size.height;
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    
+    CGPathMoveToPoint(path, nil, 0, 0);
+    CGPathAddLineToPoint(path, nil, width, 0);
+    CGPathAddLineToPoint(path, nil, self.categoryTitle.layer.bounds.size.width + 15, height);
+    CGPathAddLineToPoint(path, nil, 0, height);
+    CGPathAddLineToPoint(path, nil, 0, 0);
+    CGPathCloseSubpath(path);
+    
+    mask.path = path;
+    
+    self.categoryTitleBackgroundView.layer.mask = mask;
+    
+    CAShapeLayer *shape = [CAShapeLayer layer];
+    shape.frame = self.categoryTitleBackgroundView.bounds;
+    shape.path = path;
+    shape.lineWidth = 3.0f;
+    shape.strokeColor = self.categoryTitleBackgroundView.backgroundColor.CGColor;
+    shape.fillColor = self.categoryTitleBackgroundView.backgroundColor.CGColor;
+    
+    [self.categoryTitleBackgroundView.layer insertSublayer: shape atIndex:0];
+    CGPathRelease(path);
+}
 
 // Инициализируем основные элементы экрана
 -(void) initViewLayouts {
@@ -332,7 +380,27 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // Если уже есть ответы чувака, то показываем их выделяя как-то
     if (oponentAnswerIndex > -1) {
         // TODO анимация для вьюхи
-        [self.answerViewTexts[oponentAnswerIndex] setTextColor:[UIColor purpleColor]];
+        //[self.answerViewTexts[oponentAnswerIndex] setTextColor:[UIColor purpleColor]];
+        
+        UIView *oponentAnswer = self.answerViewTexts[oponentAnswerIndex];
+        UILabel *oponentName = [[UILabel alloc] init];
+        [oponentName setText:self.gameModel.oponent.user.name];
+        [oponentName setBounds:oponentAnswer.bounds];
+        [oponentAnswer addSubview:oponentName];
+        [oponentName setFont:[UIFont fontWithName:@"Gill Sans" size:10.0]];
+        
+        oponentName.center = CGPointMake(oponentAnswer.frame.size.width  / 2,
+                                         oponentAnswer.frame.size.height / 2);
+        
+        [UIView animateWithDuration:1.0
+                              delay:0.0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:(void (^)(void)) ^{
+                             oponentName.transform=CGAffineTransformMakeScale(oponentName.center.x, oponentName.center.y);
+                         }
+                         completion:^(BOOL finished){
+                             [oponentName removeFromSuperview];
+                         }];
     }
 }
 
@@ -359,12 +427,19 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // Показываем категорию вопросов
     if (self.state == STATE_WAITING_START) {
         // TODO Показываем картинку
-        // TODO Скрыть прогресс бар
-        [self.questionText setText:self.gameRoundModel.categoryName];
+        [self.categoryTitle setText:self.gameRoundModel.categoryName];
+        [self.categoryTitle sizeToFit];
+        [self initCategoryTitleView];
+        if (self.gameRoundModel.category != nil && self.gameRoundModel.category.imageUrl != nil) {
+            self.questionImageView.image = (UIImage *)[LocalStorageService  loadImageFromLocalCache:self.gameRoundModel.category.imageUrl];
+        }
+
         for (UIView *answerView in self.answerViews) {
             [answerView setHidden:YES];
         }
         [self.progressView setHidden:YES];
+        [self.questionImageTitle setHidden:YES];
+        [self.questionText setText:nil];
     }
     
     // Если нужно ответить на первый вопрос
@@ -392,7 +467,57 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (self.progressView.isHidden)
         [self.progressView setHidden:NO];
     
-    [self.questionText setText:question.text];
+    if ([question.type isEqualToString:QUESTION_TYPE_TEXT]) {
+        [self.questionText setText:question.text];
+        
+        [self.questionImageTitle setHidden:YES];
+        [self.questionImageView setHidden:YES];
+        
+        // TODO Сделать анимацию и как только она закончиться сразу запустить таймер
+        [self initTimers];
+    } else {
+        [self.questionText setHidden:YES];
+        
+        [self.questionImageTitle setHidden:NO];
+        [self.questionImageTitle setText:question.text];
+        
+        [self.questionImageView setHidden:NO];
+
+        UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:question.imageUrl];
+        
+        if (loadedImage != nil) {
+            self.questionImageView.image = loadedImage;
+            // TODO Сделать анимацию и как только она закончиться сразу запустить таймер
+            [self initTimers];
+        } else {
+            self.questionImageView.image = _loadingImage;
+            
+            NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+            __weak NSBlockOperation *weakOperation = loadImageOperation;
+            
+            [loadImageOperation addExecutionBlock:^(void){
+                UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                       [UrlHelper imageUrlForQuestionWithPath:question.imageUrl]
+                                                                                       ]]];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                    if (! weakOperation.isCancelled) {
+                        self.questionImageView.image = image;
+                        
+                        [LocalStorageService  saveImageToLocalCache:question.imageUrl withData:image];
+                        [self.loadImageOperations removeObjectForKey:@"0"];
+                        
+                        // TODO Сделать анимацию и как только она закончиться сразу запустить таймер
+                        [self initTimers];
+                    }
+                }];
+            }];
+            
+            [_loadImageOperations setObject: loadImageOperation forKey:@"0"];
+            if (loadImageOperation) {
+                [_loadImageOperationQueue addOperation:loadImageOperation];
+            }
+        }
+    }
     
     for (int i=0; i < [question.answers count]; i++) {
         GameRoundQuestionAnswerModel *answer = question.answers[i];
@@ -401,8 +526,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [label setTextColor:[UIColor blackColor]];
     }
     
-    // TODO Сделать анимацию и как только она закончиться сразу запустить таймер
-    [self initTimers];
 }
 
 
@@ -510,6 +633,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
 }
 
 - (IBAction)dismissView:(UIButton *)sender {
@@ -521,5 +646,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 
 @end

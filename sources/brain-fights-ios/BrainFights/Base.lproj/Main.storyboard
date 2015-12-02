@@ -88,6 +88,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWe-Xz-UEZ">
                                 <rect key="frame" x="20" y="80" width="560" height="226"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lpy-PV-Azv">
+                                        <rect key="frame" x="8" y="8" width="544" height="210"/>
+                                        <animations/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Текст для вопросов картинок" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ys3-wS-UYR">
+                                        <rect key="frame" x="29" y="175" width="501" height="41"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="41" id="oQg-N2-dlw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Что вам нравиться больше всего?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="M2L-rq-cfm">
                                         <rect key="frame" x="29" y="34" width="501" height="158"/>
                                         <animations/>
@@ -95,11 +109,16 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название категории" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egd-TD-tI7">
-                                        <rect key="frame" x="8" y="8" width="544" height="20.5"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6JW-4u-wef">
+                                        <rect key="frame" x="0.0" y="0.0" width="165" height="20"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.80000000000000004" green="0.20000000000000001" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Название категории" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egd-TD-tI7">
+                                        <rect key="frame" x="8" y="2" width="160" height="13"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -107,13 +126,27 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="M2L-rq-cfm" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="29" id="8y5-YU-dZn"/>
-                                    <constraint firstItem="egd-TD-tI7" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="8" id="Gwf-YV-Crg"/>
+                                    <constraint firstItem="Lpy-PV-Azv" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="8" id="EIb-VL-yod"/>
+                                    <constraint firstItem="egd-TD-tI7" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="2" id="Gwf-YV-Crg"/>
+                                    <constraint firstItem="6JW-4u-wef" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" id="Hfa-Ng-P66"/>
                                     <constraint firstAttribute="trailing" secondItem="egd-TD-tI7" secondAttribute="trailing" constant="8" id="Ho2-Ws-24h"/>
+                                    <constraint firstItem="6JW-4u-wef" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" id="N3y-Na-Hk2"/>
                                     <constraint firstAttribute="bottom" secondItem="M2L-rq-cfm" secondAttribute="bottom" constant="34" id="Oj2-wl-iJv"/>
+                                    <constraint firstItem="Lpy-PV-Azv" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="8" id="aGE-1h-fxX"/>
                                     <constraint firstItem="egd-TD-tI7" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="8" id="g4Y-QO-EZS"/>
                                     <constraint firstAttribute="trailing" secondItem="M2L-rq-cfm" secondAttribute="trailing" constant="30" id="gcr-ya-XcT"/>
                                     <constraint firstItem="M2L-rq-cfm" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="34" id="ntn-22-6Ls"/>
+                                    <constraint firstItem="Ys3-wS-UYR" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="29" id="ogq-ba-Jks"/>
+                                    <constraint firstAttribute="bottom" secondItem="Lpy-PV-Azv" secondAttribute="bottom" constant="8" id="r6l-Ik-3Uz"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ys3-wS-UYR" secondAttribute="bottom" constant="10" id="rR7-NO-RfN"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ys3-wS-UYR" secondAttribute="trailing" constant="30" id="tIh-BL-nl0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lpy-PV-Azv" secondAttribute="trailing" constant="8" id="w95-A4-zcH"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ho2-Ws-24h"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qb-QW-95w">
                                 <rect key="frame" x="28" y="556" width="544" height="24"/>
@@ -206,7 +239,7 @@
                                     </view>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.40000000000000002" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="LV5-9P-kAN" firstAttribute="top" secondItem="MqQ-UV-dEp" secondAttribute="bottom" constant="9" id="0Ov-uj-I9m"/>
                                     <constraint firstAttribute="height" constant="165" id="17D-Qg-eyf">
@@ -279,11 +312,14 @@
                         <outlet property="cAnswerView" destination="MqQ-UV-dEp" id="TUn-2d-xtw"/>
                         <outlet property="cAnswerViewText" destination="bLk-qw-fOn" id="YWB-v1-x7b"/>
                         <outlet property="categoryTitle" destination="egd-TD-tI7" id="Fwv-ka-lEs"/>
+                        <outlet property="categoryTitleBackgroundView" destination="6JW-4u-wef" id="4Js-6G-2is"/>
                         <outlet property="dAnswerView" destination="LV5-9P-kAN" id="t23-nk-eec"/>
                         <outlet property="dAnswerViewText" destination="tPy-qD-hwZ" id="5kb-bz-X1p"/>
                         <outlet property="firstQuestionAnswerIndicator" destination="1cW-Ir-h5C" id="8dS-9N-Jbc"/>
                         <outlet property="oponentNameTitle" destination="e51-DP-to6" id="0vZ-VU-C0x"/>
                         <outlet property="progressView" destination="3qb-QW-95w" id="O24-Re-NKG"/>
+                        <outlet property="questionImageTitle" destination="Ys3-wS-UYR" id="J0Q-cz-I3k"/>
+                        <outlet property="questionImageView" destination="Lpy-PV-Azv" id="eRY-oz-woS"/>
                         <outlet property="questionText" destination="M2L-rq-cfm" id="7XS-JG-dbD"/>
                         <outlet property="questionView" destination="eWe-Xz-UEZ" id="sdQ-7E-IUa"/>
                         <outlet property="roundNumberTitle" destination="p0D-ce-PNq" id="zmu-lL-xb7"/>
