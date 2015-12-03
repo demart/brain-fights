@@ -59,9 +59,20 @@
 }
 
 
+
 // URL для получения рейтинга пользователей
 + (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit {
     return [[NSString alloc] initWithFormat:@"%@/stat/users/page/%li/limit/%li?authToken=%@", UrlHelper.baseUrl, page, limit, [self authToken]];
+}
+
+// URL для получения типов подразделений
++ (NSString*) departmentTypeUrl {
+    return [[NSString alloc] initWithFormat:@"%@/stat/departments/types?authToken=%@", UrlHelper.baseUrl, [self authToken]];
+}
+
+// URL для получения рейтинга департаментов
++ (NSString*) departmentsRatingUrl:(NSUInteger)typeId withPage:(NSUInteger)page withLimit:(NSUInteger)limit {
+    return [[NSString alloc] initWithFormat:@"%@/stat/departments/type/%li/page/%li/limit/%li?authToken=%@", UrlHelper.baseUrl, typeId, page, limit, [self authToken]];
 }
 
 

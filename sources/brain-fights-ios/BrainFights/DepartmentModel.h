@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DepartmentTypeModel.h"
 
 @interface DepartmentModel : NSObject
 
@@ -19,6 +20,11 @@
  * Наименование подразделения
  */
 @property NSString *name;
+
+/**
+ * Тип подразделения
+ */
+@property DepartmentTypeModel* type;
 
 /**
  * Кол-во пользователь в подразделении

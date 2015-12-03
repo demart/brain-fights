@@ -17,4 +17,6 @@
 
 - (void) initCell:(UserProfileModel*)userProfile;
 
+- (void) initCellWithDepartment:(DepartmentModel*)departmentModel;
+
 @end

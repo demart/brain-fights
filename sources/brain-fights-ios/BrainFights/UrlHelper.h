@@ -36,6 +36,11 @@
 // URL для получения рейтинга пользователей
 + (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit;
 
+// URL для получения типов подразделений
++ (NSString*) departmentTypeUrl;
+
+// URL для получения рейтинга департаментов
++ (NSString*) departmentsRatingUrl:(NSUInteger)typeId withPage:(NSUInteger)page withLimit:(NSUInteger)limit;
 
 
 // URL для получения рутовый департаментов

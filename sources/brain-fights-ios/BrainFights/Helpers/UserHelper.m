@@ -379,6 +379,119 @@
     return responseWrapperDescriptor;
 }
 
+
+//  Строит маппинг для получения типа подразделений
++ (RKResponseDescriptor*) buildResponseDescriptorForDepartmentTypes {
+    RKObjectMapping* departmentTypeModel = [RKObjectMapping mappingForClass:[DepartmentTypeModel class]];
+    [departmentTypeModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"name": @"name"
+                                                           }];
+    
+    RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
+    [wrapperMapping addAttributeMappingsFromDictionary:@{
+                                                         @"status": @"status",
+                                                         @"errorCode": @"errorCode",
+                                                         @"errorMessage": @"errorMessage"
+                                                         }];
+    
+    [wrapperMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"data"
+                                                                                   toKeyPath:@"data"
+                                                                                 withMapping:departmentTypeModel]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
+    
+    return responseWrapperDescriptor;
+}
+
+//  Строит маппинг для получения рейтинга департаментов
++ (RKResponseDescriptor*) buildResponseDescriptorForDepartmentsRating {
+    
+    RKObjectMapping* userDepartmentModel = [RKObjectMapping mappingForClass:[DepartmentModel class]];
+    [userDepartmentModel addAttributeMappingsFromDictionary:@{
+                                                              @"id": @"id",
+                                                              @"name": @"name",
+                                                              @"userCount": @"userCount",
+                                                              @"score": @"score",
+                                                              @"haveChildren": @"haveChildren",
+                                                              @"isUserBelongs": @"isUserBelongs",
+                                                              }];
+    
+    [userDepartmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
+                                                                                        toKeyPath:@"parent"
+                                                                                      withMapping:userDepartmentModel]];
+    [userDepartmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"children"
+                                                                                        toKeyPath:@"children"
+                                                                                      withMapping:userDepartmentModel]];
+    
+    RKObjectMapping* userProfileModel = [RKObjectMapping mappingForClass:[UserProfileModel class]];
+    [userProfileModel addAttributeMappingsFromDictionary:@{
+                                                           @"id": @"id",
+                                                           @"type": @"type",
+                                                           @"name": @"name",
+                                                           @"position": @"position",
+                                                           @"login": @"login",
+                                                           @"email": @"email",
+                                                           @"totalGames": @"totalGames",
+                                                           @"wonGames": @"wonGames",
+                                                           @"loosingGames": @"loosingGames",
+                                                           @"drawnGames": @"drawnGames",
+                                                           @"score": @"score",
+                                                           @"gamePosition": @"gamePosition",
+                                                           }];
+    
+    [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
+                                                                                     toKeyPath:@"department"
+                                                                                   withMapping:userDepartmentModel]];
+    
+    RKObjectMapping* departmentTypeModel = [RKObjectMapping mappingForClass:[DepartmentTypeModel class]];
+    [departmentTypeModel addAttributeMappingsFromDictionary:@{
+                                                              @"id": @"id",
+                                                              @"name": @"name"
+                                                              }];
+    
+    RKObjectMapping* departmentModel = [RKObjectMapping mappingForClass:[DepartmentModel class]];
+    [departmentModel addAttributeMappingsFromDictionary:@{
+                                                          @"id": @"id",
+                                                          @"name": @"name",
+                                                          @"userCount": @"userCount",
+                                                          @"score": @"score",
+                                                          @"haveChildren": @"haveChildren",
+                                                          @"isUserBelongs": @"isUserBelongs",
+                                                          }];
+    
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
+                                                                                    toKeyPath:@"parent"
+                                                                                  withMapping:departmentModel]];
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"children"
+                                                                                    toKeyPath:@"children"
+                                                                                  withMapping:departmentModel]];
+    
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"users"
+                                                                                    toKeyPath:@"users"
+                                                                                  withMapping:userProfileModel]];
+    
+    [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"type" toKeyPath:@"type" withMapping:departmentTypeModel]];
+    
+    RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
+    [wrapperMapping addAttributeMappingsFromDictionary:@{
+                                                         @"status": @"status",
+                                                         @"errorCode": @"errorCode",
+                                                         @"errorMessage": @"errorMessage"
+                                                         }];
+    
+    [wrapperMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"data"
+                                                                                   toKeyPath:@"data"
+                                                                                 withMapping:departmentModel]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:wrapperMapping method:RKRequestMethodAny pathPattern:nil keyPath:@"" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful) ];
+    
+    return responseWrapperDescriptor;
+    
+}
+
+
+
 //  Строит маппинг для получения ответа о регистрации PUSH токена
 + (RKObjectManager*) buildObjectManagerForRegisterOrUpdateDeviceToken {
     NSURL *targetUrl = [NSURL URLWithString:[UrlHelper registerDeviceTokenUrl]];

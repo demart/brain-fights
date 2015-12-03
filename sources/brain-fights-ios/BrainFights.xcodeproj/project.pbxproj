@@ -20,6 +20,11 @@
 		8D3FA4671C0515B1005FDCBE /* ErrorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3FA4651C0515B1005FDCBE /* ErrorViewController.xib */; };
 		8D3FA46A1C05214B005FDCBE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3FA4691C05214B005FDCBE /* BaseViewController.m */; };
 		8D3FA46D1C052847005FDCBE /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D3FA46C1C052847005FDCBE /* BaseTableViewController.m */; };
+		8D52296F1C10AC110015EE19 /* DepartmentTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D52296E1C10AC110015EE19 /* DepartmentTypeModel.m */; };
+		8D5229761C10C82D0015EE19 /* DepartmentTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5229741C10C82D0015EE19 /* DepartmentTypeTableViewCell.m */; };
+		8D5229771C10C82D0015EE19 /* DepartmentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D5229751C10C82D0015EE19 /* DepartmentTypeTableViewCell.xib */; };
+		8D52297D1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D52297B1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.m */; };
+		8D52297E1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D52297C1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.xib */; };
 		8D7722121C00D022001E8CC8 /* UserRatingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7722101C00D022001E8CC8 /* UserRatingTableViewCell.m */; };
 		8D7722131C00D022001E8CC8 /* UserRatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D7722111C00D022001E8CC8 /* UserRatingTableViewCell.xib */; };
 		8D7722181C00D9A8001E8CC8 /* DejalActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7722171C00D9A8001E8CC8 /* DejalActivityView.m */; };
@@ -129,6 +134,14 @@
 		8D3FA4691C05214B005FDCBE /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = View/Common/BaseViewController.m; sourceTree = "<group>"; };
 		8D3FA46B1C052847005FDCBE /* BaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseTableViewController.h; path = View/Common/BaseTableViewController.h; sourceTree = "<group>"; };
 		8D3FA46C1C052847005FDCBE /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseTableViewController.m; path = View/Common/BaseTableViewController.m; sourceTree = "<group>"; };
+		8D52296D1C10AC110015EE19 /* DepartmentTypeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentTypeModel.h; path = Data/ServerModels/DepartmentTypeModel.h; sourceTree = "<group>"; };
+		8D52296E1C10AC110015EE19 /* DepartmentTypeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentTypeModel.m; path = Data/ServerModels/DepartmentTypeModel.m; sourceTree = "<group>"; };
+		8D5229731C10C82D0015EE19 /* DepartmentTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentTypeTableViewCell.h; path = View/Rating/Cells/DepartmentTypeTableViewCell.h; sourceTree = "<group>"; };
+		8D5229741C10C82D0015EE19 /* DepartmentTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentTypeTableViewCell.m; path = View/Rating/Cells/DepartmentTypeTableViewCell.m; sourceTree = "<group>"; };
+		8D5229751C10C82D0015EE19 /* DepartmentTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DepartmentTypeTableViewCell.xib; path = View/Rating/Cells/DepartmentTypeTableViewCell.xib; sourceTree = "<group>"; };
+		8D52297A1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentTypeFilterTableViewCell.h; path = View/Rating/Cells/DepartmentTypeFilterTableViewCell.h; sourceTree = "<group>"; };
+		8D52297B1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentTypeFilterTableViewCell.m; path = View/Rating/Cells/DepartmentTypeFilterTableViewCell.m; sourceTree = "<group>"; };
+		8D52297C1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DepartmentTypeFilterTableViewCell.xib; path = View/Rating/Cells/DepartmentTypeFilterTableViewCell.xib; sourceTree = "<group>"; };
 		8D77220F1C00D022001E8CC8 /* UserRatingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserRatingTableViewCell.h; path = View/Rating/Cells/UserRatingTableViewCell.h; sourceTree = "<group>"; };
 		8D7722101C00D022001E8CC8 /* UserRatingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserRatingTableViewCell.m; path = View/Rating/Cells/UserRatingTableViewCell.m; sourceTree = "<group>"; };
 		8D7722111C00D022001E8CC8 /* UserRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserRatingTableViewCell.xib; path = View/Rating/Cells/UserRatingTableViewCell.xib; sourceTree = "<group>"; };
@@ -353,7 +366,7 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
-		8D77220E1C00CF3C001E8CC8 /* Cells */ = {
+		8D5229781C10CE4F0015EE19 /* Users */ = {
 			isa = PBXGroup;
 			children = (
 				8D77220F1C00D022001E8CC8 /* UserRatingTableViewCell.h */,
@@ -362,6 +375,28 @@
 				8D7722191C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.h */,
 				8D77221A1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m */,
 				8D77221B1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		8D5229791C10CE5A0015EE19 /* Departments */ = {
+			isa = PBXGroup;
+			children = (
+				8D5229731C10C82D0015EE19 /* DepartmentTypeTableViewCell.h */,
+				8D5229741C10C82D0015EE19 /* DepartmentTypeTableViewCell.m */,
+				8D5229751C10C82D0015EE19 /* DepartmentTypeTableViewCell.xib */,
+				8D52297A1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.h */,
+				8D52297B1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.m */,
+				8D52297C1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.xib */,
+			);
+			name = Departments;
+			sourceTree = "<group>";
+		};
+		8D77220E1C00CF3C001E8CC8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8D5229791C10CE5A0015EE19 /* Departments */,
+				8D5229781C10CE4F0015EE19 /* Users */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -433,14 +468,16 @@
 		8DB8AA191BECD9DF005B7508 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				8DB8AA1A1BECD9F0005B7508 /* UserProfileModel.h */,
-				8DB8AA1B1BECD9F0005B7508 /* UserProfileModel.m */,
-				8DB8AA1D1BECDAF4005B7508 /* DepartmentModel.h */,
-				8DB8AA1E1BECDAF4005B7508 /* DepartmentModel.m */,
 				8DF18E541BF0B3E60046C27B /* UserType.h */,
 				8DF18E551BF0B3E60046C27B /* UserType.m */,
+				8DB8AA1A1BECD9F0005B7508 /* UserProfileModel.h */,
+				8DB8AA1B1BECD9F0005B7508 /* UserProfileModel.m */,
 				8DF18E5D1BF10B6C0046C27B /* UserFriendsModel.h */,
 				8DF18E5E1BF10B6C0046C27B /* UserFriendsModel.m */,
+				8DB8AA1D1BECDAF4005B7508 /* DepartmentModel.h */,
+				8DB8AA1E1BECDAF4005B7508 /* DepartmentModel.m */,
+				8D52296D1C10AC110015EE19 /* DepartmentTypeModel.h */,
+				8D52296E1C10AC110015EE19 /* DepartmentTypeModel.m */,
 				8D77221F1C012696001E8CC8 /* DevicePushTokenRegisterModel.h */,
 				8D7722201C012696001E8CC8 /* DevicePushTokenRegisterModel.m */,
 			);
@@ -810,6 +847,8 @@
 				8DF18E671BF111C90046C27B /* UserTableViewCell.xib in Resources */,
 				8DF18E531BF0AD940046C27B /* GameTableViewCell.xib in Resources */,
 				8DF18E6F1BF1E4EF0046C27B /* DepartmentTableViewCell.xib in Resources */,
+				8D5229771C10C82D0015EE19 /* DepartmentTypeTableViewCell.xib in Resources */,
+				8D52297E1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.xib in Resources */,
 				8DFCAC701BEBDD2E0035DE1E /* Assets.xcassets in Resources */,
 				8D25F5CB1C02688800222C14 /* UserDepartmentTableViewCell.xib in Resources */,
 				8DF18E8C1BF4ECB80046C27B /* GameStatusRoundTableViewCell.xib in Resources */,
@@ -878,11 +917,14 @@
 				8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */,
 				8DB8AA2A1BECFE45005B7508 /* GameMainTableViewController.m in Sources */,
 				8D77221C1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.m in Sources */,
+				8D52296F1C10AC110015EE19 /* DepartmentTypeModel.m in Sources */,
 				8DF18E621BF10EC30046C27B /* UserHelper.m in Sources */,
 				8DF18E861BF4E50C0046C27B /* GameStatusPlayersTableViewCell.m in Sources */,
 				8DF18E441BEFC0350046C27B /* UserGameGroupModel.m in Sources */,
+				8D52297D1C10CE970015EE19 /* DepartmentTypeFilterTableViewCell.m in Sources */,
 				8D094D011C0668EF00C1D66B /* UserSearchRequestModel.m in Sources */,
 				8DB8AA261BECFC94005B7508 /* LeftFloatingDrawerTableViewController.m in Sources */,
+				8D5229761C10C82D0015EE19 /* DepartmentTypeTableViewCell.m in Sources */,
 				8DF18E7A1BF33C520046C27B /* GameGroupHeaderTableViewCell.m in Sources */,
 				8D7722241C012BAF001E8CC8 /* NotificationService.m in Sources */,
 				8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */,

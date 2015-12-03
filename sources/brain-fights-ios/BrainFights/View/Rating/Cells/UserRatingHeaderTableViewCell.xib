@@ -57,6 +57,9 @@
                 </constraints>
             </tableViewCellContentView>
             <animations/>
+            <connections>
+                <outlet property="headerGroupTitle" destination="kzu-Wr-yP1" id="Sec-nf-AyX"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

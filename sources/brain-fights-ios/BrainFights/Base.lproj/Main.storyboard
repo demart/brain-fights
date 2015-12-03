@@ -635,13 +635,28 @@
                                 <segment title="Игроки"/>
                                 <segment title="Подразделения"/>
                             </segments>
+                            <connections>
+                                <action selector="ratingSegmentedControlValueChanged:" destination="a9W-RH-nlb" eventType="valueChanged" id="mX8-4U-QgF"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
+                        <outlet property="menuTableView" destination="eGN-cU-b1F" id="JMo-av-XkZ"/>
+                        <outlet property="ratingSegmentedControl" destination="JWJ-dl-9bj" id="WtI-zt-1L1"/>
                         <outlet property="showMenuButton" destination="fz7-yM-V5K" id="7fd-23-6UH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MG0-IN-NTm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eGN-cU-b1F">
+                    <rect key="frame" x="0.0" y="0.0" width="316" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="a9W-RH-nlb" id="1XY-SU-jCE"/>
+                        <outlet property="delegate" destination="a9W-RH-nlb" id="cPj-KT-z7I"/>
+                    </connections>
+                </tableView>
             </objects>
             <point key="canvasLocation" x="2167" y="2295"/>
         </scene>

@@ -39,8 +39,16 @@
 //  Строит маппинг для поиска пользователей по имени
 + (RKResponseDescriptor*) buildResponseDescriptorForSearchUsers;
 
+
 //  Строит маппинг для получения рейтинга пользователей
 + (RKResponseDescriptor*) buildResponseDescriptorForUsersRating;
+
+//  Строит маппинг для получения типа подразделений
++ (RKResponseDescriptor*) buildResponseDescriptorForDepartmentTypes;
+
+//  Строит маппинг для получения рейтинга департаментов
++ (RKResponseDescriptor*) buildResponseDescriptorForDepartmentsRating;
+
 
 //  Строит маппинг для получения ответа о регистрации PUSH токена
 + (RKObjectManager*) buildObjectManagerForRegisterOrUpdateDeviceToken;

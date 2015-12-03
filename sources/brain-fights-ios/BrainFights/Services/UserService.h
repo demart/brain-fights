@@ -49,6 +49,14 @@
 // Возращает постранично рейтинг пользователей
 - (void) retrieveUsersRating:(NSInteger)page withLimit:(NSInteger)limit onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
 
+// Возращает список типов подразделений
+- (void) retrieveDepartmentTyps:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
+
+// Возращает постранично департаменты
+- (void) retrieveDepartmentsRating:(NSInteger)type withPage:(NSInteger)page withLimit:(NSInteger)limit onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
+
+
+
 // Отправляет на сервер новый PUSH токен
 -(void) registerOrUpdateDeviceToken:(NSString*)deviceToken invalidateDeviceToken:(NSString*)invalidDeviceToken   onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
 
