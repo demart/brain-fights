@@ -39,6 +39,12 @@ public class Department extends PersistentObject {
 	private String name;
 	
 	/**
+	 * Ссылка на справочник типов подразделений
+	 */
+	@ManyToOne
+	private DepartmentType type;	
+	
+	/**
 	 * Ссылка на родителя
 	 */
 	@ManyToOne
@@ -54,7 +60,7 @@ public class Department extends PersistentObject {
 	 * Рейтинг усредненный по всем подразделениям
 	 */
 	@Column(nullable=false)
-	private Integer scrore;
+	private Integer score;
 	
 	/**
 	 * Кол-во игроков внутри всех подразделений
@@ -92,12 +98,12 @@ public class Department extends PersistentObject {
 		this.children = children;
 	}
 
-	public Integer getScrore() {
-		return scrore;
+	public Integer getScore() {
+		return score;
 	}
 
-	public void setScrore(Integer scrore) {
-		this.scrore = scrore;
+	public void setScore(Integer scrore) {
+		this.score = scrore;
 	}
 
 	public Integer getUserCount() {
@@ -115,6 +121,11 @@ public class Department extends PersistentObject {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
+	public DepartmentType getType() {
+		return type;
+	}
+	public void setType(DepartmentType type) {
+		this.type = type;
+	}
 	
 }

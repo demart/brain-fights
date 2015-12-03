@@ -79,7 +79,7 @@ public class DepartmentModel {
 		DepartmentModel model = new DepartmentModel();
 		model.id = department.id;
 		model.name = department.getName();
-		model.score = department.getScrore();
+		model.score = department.getScore();
 		model.userCount = department.getUserCount();
 		
 		// TODO хреновая проверка, нужно кэшировать походу так как структура статична

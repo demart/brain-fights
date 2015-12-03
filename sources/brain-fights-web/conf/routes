@@ -78,7 +78,9 @@ GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			G
 GET		/game/{gameId}/surrender														GameController.surrenderGame
 
 # STATISTICS API
-GET		/stat/users/page/{page}/limit/{limit}					StatisticController.getUserStatistics				
+GET		/stat/users/page/{page}/limit/{limit}												StatisticController.getUserStatistics
+GET		/stat/departments/types																StatisticController.getDepartmentTypes
+GET		/stat/departments/type/{departmentTypeId}/page/{page}/limit/{limit}					StatisticController.getDepartmentStatistics				
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
