@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseTableViewController.h"
 
-@interface RatingTableViewController : UITableViewController
+@interface RatingTableViewController : BaseTableViewController
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *showMenuButton;
 - (IBAction)showMenuAction:(UIBarButtonItem *)sender;

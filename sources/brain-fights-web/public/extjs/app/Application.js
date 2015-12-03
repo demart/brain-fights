@@ -5,7 +5,6 @@
  */
 Ext.define('BrainFightsConsole.Application', {
     extend: 'Ext.app.Application',
-    
     name: 'BrainFightsConsole',
 
     views: [

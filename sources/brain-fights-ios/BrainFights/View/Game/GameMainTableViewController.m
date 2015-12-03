@@ -57,16 +57,28 @@ static UIRefreshControl *refreshControl;
     self.refreshControl = refreshControl;
 }
 
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    [self loadGames];
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
 -(void) handleRefresh:(UIRefreshControl*) refreshControll {
     [self loadGames];
     [refreshControl endRefreshing];
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    NSLog(@"Main View will appear");
-    // SHOW LOADING
+-(void) appDidBecomeActive:(NSNotification *)notification {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    // Загружаем игры при появлении сцены
     [self loadGames];
 }
 
@@ -75,32 +87,27 @@ static UIRefreshControl *refreshControl;
     // Загружаем игры при появлении сцены
     [GameService retrieveGamesGrouped:^(ResponseWrapperModel *response) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        // Check data and refresh table
         if ([response.status isEqualToString:SUCCESS]) {
             UserGamesGroupedModel *userGamesGrouppedModel = (UserGamesGroupedModel*)response.data;
             // Выставляем новый профиль пользователя (например баллы поменялись или еще что)
             [[UserService sharedInstance] setUserProfile:userGamesGrouppedModel.user];
             // Обновляем список игр
             self.gameGroups = userGamesGrouppedModel.gameGroups;
-            // Обновляем таблицу
             [self.tableView reloadData];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // Show Error Alert
-            // TODO
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [self presentErrorViewController];
         }
-        
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        // Show Erro Alert
-        // TODO
+        [self presentErrorViewController];
     }];
 }
 
@@ -157,10 +164,9 @@ static UIRefreshControl *refreshControl;
         cell = [tableView dequeueReusableCellWithIdentifier:@"GameCell"];
     }
     
-    // Достаем игру
     UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
     UserGameModel *userGame = gameGroupModel.games[indexPath.row];
-    // Инициализируем ячейку
+
     [cell initCell:userGame];
     
     
@@ -235,32 +241,19 @@ static UIRefreshControl *refreshControl;
     }
     
     if (indexPath.section > 0) {
-        // Get Game
-        UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
-        UserGameModel *userGame = gameGroupModel.games[indexPath.row];
-        if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
-            // Если нам нужно принять решение
-            [GameService acceptGameInvitation:userGame.id onSuccess:^(ResponseWrapperModel *response) {
-                if ([response.status isEqualToString:SUCCESS]) {
-                    // Заменяем модель игры на новую и вперед
-                    gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
-                    // Check Status
-                    [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
-                }
-                
-                if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-                    // Show Authorization View
-                    [[AppDelegate globalDelegate] showAuthorizationView:self];
-                }
-                
-                if ([response.status isEqualToString:SERVER_ERROR]) {
-                    // Show Error Alert
-                    // TODO
-                }
-            } onFailure:^(NSError *error) {
-                // SHOW ERROR
-            }];
-        } else
+        [self processSelectedRow];
+    }
+}
+
+
+-(void) processSelectedRow {
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+    UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+    if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
+        // SHOW PROMPT
+        [self showAcceptAgreementAlertConfirmation];
+    } else
         if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
             // Если мы ждем принятия решения
             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Внимание"
@@ -275,13 +268,77 @@ static UIRefreshControl *refreshControl;
             // Check Status
             [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
         }
-    }
+}
+
+
+-(void) showAcceptAgreementAlertConfirmation {
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+    UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+
+    NSString *alertTitle = @"Новая игра";
+    NSString *alertMessage = [[NSString alloc] initWithFormat:@"%@ бросил вам вызов. Вы согласны играть?", userGame.oponent.user.name];
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:alertTitle
+                                          message:alertMessage
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *acceptAction = [UIAlertAction
+                                   actionWithTitle:@"Да"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action) {
+                                       [self acceptGameInvitationWithResult:YES];
+                                   }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                  actionWithTitle:@"Нет"
+                                  style:UIAlertActionStyleDestructive
+                                  handler:^(UIAlertAction *action) {
+                                      NSLog(@"Cancel action");
+                                       [self acceptGameInvitationWithResult:NO];
+                                  }];
+    
+    [alertController addAction:acceptAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void) acceptGameInvitationWithResult:(BOOL)result {
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+    UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+
+    // Если нам нужно принять решение
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    [GameService acceptGameInvitation:userGame.id onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            if (result) {
+                gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
+                [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+            } else {
+                [self loadGames];
+            }
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedRow)];
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+    } onFailure:^(NSError *error) {
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedRow)];
+        [DejalBezelActivityView removeViewAnimated:NO];
+    } withResult:result];
 }
 
 
  #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      if ([segue.destinationViewController isKindOfClass:[GameStatusTableViewController class]]) {
          GameStatusTableViewController *viewController = (GameStatusTableViewController*)segue.destinationViewController;
@@ -293,42 +350,5 @@ static UIRefreshControl *refreshControl;
          [viewController setUserGameModel:gameModel];
      }
  }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 
 @end

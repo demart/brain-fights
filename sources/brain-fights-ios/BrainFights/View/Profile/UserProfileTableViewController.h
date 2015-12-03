@@ -10,7 +10,9 @@
 
 #import "UserProfileModel.h"
 
-@interface UserProfileTableViewController : UITableViewController
+#import "BaseTableViewController.h"
+
+@interface UserProfileTableViewController : BaseTableViewController
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *showMenuButton;
 - (IBAction)showMenuAction:(UIBarButtonItem *)sender;

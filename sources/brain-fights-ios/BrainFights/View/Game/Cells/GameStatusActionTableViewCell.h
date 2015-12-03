@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserGameModel.h"
+#import "GameModel.h"
 
 @interface GameStatusActionTableViewCell : UITableViewCell
 
@@ -19,6 +19,6 @@
 - (IBAction)surrenderAction:(UIButton *)sender;
 - (IBAction)addToFrindsAction:(UIButton *)sender;
 
-- (void) initCell:(UserGameModel*) gameModel onPlayAction:(void (^)(void))playAction onSurrenderAction:(void (^)(void))surrenderAction onAddToFriendsAction:(void (^)(void))addToFriendsAction onRevancheAction:(void (^)(void))onRevancheAction;
+- (void) initCell:(GameModel*) gameModel onPlayAction:(void (^)(void))playAction onSurrenderAction:(void (^)(void))surrenderAction onAddToFriendsAction:(void (^)(void))addToFriendsAction onRevancheAction:(void (^)(void))onRevancheAction;
 
 @end

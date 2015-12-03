@@ -15,28 +15,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="169.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wm3-hO-7fz">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qJj-8w-M7Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="169.5"/>
                         <animations/>
-                        <color key="backgroundColor" red="0.79754738979999995" green="1" blue="0.74810020489999995" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
-                    <view alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3lw-dV-fgn">
-                        <rect key="frame" x="0.0" y="134" width="320" height="35.5"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3lw-dV-fgn">
+                        <rect key="frame" x="0.0" y="134.5" width="320" height="35.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Категория народные выборы" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMi-3D-15d">
-                                <rect key="frame" x="8" y="8" width="304" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Категория народные выборы" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMi-3D-15d">
+                                <rect key="frame" x="8" y="8" width="276" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forwardArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Nbz-fP-CxH">
+                                <rect key="frame" x="292" y="6" width="20" height="23"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="oaw-Pk-gO3"/>
+                                    <constraint firstAttribute="height" constant="23" id="wfK-TU-JjK"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.40000000000000002" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="QMi-3D-15d" firstAttribute="leading" secondItem="3lw-dV-fgn" secondAttribute="leading" constant="8" id="9Gq-B3-RTp"/>
                             <constraint firstItem="QMi-3D-15d" firstAttribute="top" secondItem="3lw-dV-fgn" secondAttribute="top" constant="8" id="9YR-qu-U81"/>
-                            <constraint firstAttribute="trailing" secondItem="QMi-3D-15d" secondAttribute="trailing" constant="8" id="oKd-D9-Xub"/>
+                            <constraint firstAttribute="bottom" secondItem="Nbz-fP-CxH" secondAttribute="bottom" constant="6.5" id="Rio-R3-5z7"/>
+                            <constraint firstAttribute="height" constant="35.5" id="bjJ-CY-l45"/>
+                            <constraint firstItem="Nbz-fP-CxH" firstAttribute="top" secondItem="3lw-dV-fgn" secondAttribute="top" constant="6" id="fOc-Hz-Cuh"/>
+                            <constraint firstItem="Nbz-fP-CxH" firstAttribute="leading" secondItem="QMi-3D-15d" secondAttribute="trailing" constant="8" id="iik-gc-Cfw"/>
+                            <constraint firstAttribute="trailing" secondItem="Nbz-fP-CxH" secondAttribute="trailing" constant="8" id="iuc-hF-XdW"/>
                             <constraint firstAttribute="bottom" secondItem="QMi-3D-15d" secondAttribute="bottom" constant="6.5" id="yqT-xc-SdK"/>
                         </constraints>
                     </view>
@@ -44,20 +55,24 @@
                 <animations/>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="3lw-dV-fgn" secondAttribute="trailing" constant="-8" id="6TY-ht-epS"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Wm3-hO-7fz" secondAttribute="bottom" constant="-8" id="D25-bO-o0x"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Wm3-hO-7fz" secondAttribute="trailing" constant="-8" id="HST-Nm-uxv"/>
+                    <constraint firstItem="qJj-8w-M7Z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="LOe-fI-xre"/>
+                    <constraint firstItem="qJj-8w-M7Z" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="8" id="RZq-3z-LtV"/>
+                    <constraint firstItem="qJj-8w-M7Z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="Rki-DR-bbZ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="3lw-dV-fgn" secondAttribute="bottom" constant="-8" id="YYN-up-aOP"/>
-                    <constraint firstItem="Wm3-hO-7fz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="vLF-ZM-r1C"/>
+                    <constraint firstItem="qJj-8w-M7Z" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="8" id="vD3-QI-4Oz"/>
                     <constraint firstItem="3lw-dV-fgn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="vvZ-cz-DMA"/>
-                    <constraint firstItem="Wm3-hO-7fz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="yRh-iy-P5v"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
-                <outlet property="categoryImage" destination="Wm3-hO-7fz" id="OsP-CK-D0a"/>
+                <outlet property="categoryImage" destination="qJj-8w-M7Z" id="cqN-nt-GDo"/>
                 <outlet property="categoryTitle" destination="QMi-3D-15d" id="cIH-oM-InS"/>
+                <outlet property="categoryTitleView" destination="3lw-dV-fgn" id="lih-dC-itq"/>
             </connections>
             <point key="canvasLocation" x="252" y="194"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="forwardArrowIcon" width="32" height="32"/>
+    </resources>
 </document>

@@ -60,13 +60,16 @@ public class GameController extends Controller {
 	 * 	2. Отправить пуш уведомление и принятии приглашения
 	 * 
 	 * @param gameId Идентифкатор игры
+	 * @param accept Принято соглашение или нет, по умолчанию если true или null принято
 	 */
-	public static void acceptInvitation(String authToken, Long gameId){
+	public static void acceptInvitation(String authToken, Long gameId, Boolean accept){
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 
-	    	UserGameModel model = GameService.acceptInvitation(user, gameId);
+	    	accept = accept == null ? true: accept;
+	    	
+	    	UserGameModel model = GameService.acceptInvitation(user, gameId, accept);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
 		} catch (AuthorizationException aEx) {

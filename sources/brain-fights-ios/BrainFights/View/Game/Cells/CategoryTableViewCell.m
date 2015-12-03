@@ -7,6 +7,7 @@
 //
 
 #import "CategoryTableViewCell.h"
+#import "AppDelegate.h"
 
 @interface CategoryTableViewCell()
 
@@ -17,6 +18,8 @@
 @implementation CategoryTableViewCell
 
 - (void)awakeFromNib {
+    [self.categoryTitleView setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -25,7 +28,6 @@
 
 -(void) initCell:(GameRoundCategoryModel*)categoryModel {
     self.categoryModel = categoryModel;
-    
     [self.categoryTitle setText:categoryModel.name];
 }
 

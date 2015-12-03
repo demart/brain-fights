@@ -620,7 +620,7 @@
     
     [gameRoundModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"category"
                                                                                    toKeyPath:@"category"
-                                                                                 withMapping:gameRoundModel]];
+                                                                                 withMapping:gameRoundCategoryModel]];
     
     RKObjectMapping* wrapperMapping = [RKObjectMapping mappingForClass:[ResponseWrapperModel class]];
     [wrapperMapping addAttributeMappingsFromDictionary:@{

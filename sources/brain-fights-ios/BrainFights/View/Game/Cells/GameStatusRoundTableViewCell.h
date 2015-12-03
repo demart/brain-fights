@@ -15,8 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *gamerStepLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oponentStepLabel;
 
-
-
 @property (weak, nonatomic) IBOutlet UILabel *gameRoundTitle;
 @property (weak, nonatomic) IBOutlet UILabel *gameRoundCategoryTitle;
 
@@ -28,6 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIView *oponentQuestion3View;
 
 // Инициализируем ячейку
--(void) initGameRound:(GameRoundModel*)gameRound andGame:(GameModel*)gameModel withIndex:(NSInteger)gameRoundIndex;
+-(void) initGameRound:(GameRoundModel*)gameRound andGame:(GameModel*)gameModel withIndex:(NSInteger)gameRoundIndex fromController:(UIViewController*)parentController;
 
 @end

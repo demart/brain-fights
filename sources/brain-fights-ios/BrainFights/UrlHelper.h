@@ -50,10 +50,23 @@
 // URL с текстом для поиска пользователей
 +(NSString*) searchUsersByTextUrl:(NSString*)searchText;
 
+
+// URL с текстом для поиска пользователей
++(NSString*) searchUsersByTextUrl;
+
+
 // URL для API регистрации PUSH tokena
 +(NSString*) registerDeviceTokenUrl;
 
 
+// Базовый URL для картинок по вопросам
++(NSString*) imageUrlForQuestionWithPath:(NSString*) questionImagePath;
+
+// Базовый URL для картинок по категориям
++(NSString*) imageUrlForCategoryWithPath:(NSString*) categoryImagePath;
+
+// Базовый URL для картинок авотаров
++(NSString*) imageUrlForAvatarWithPath:(NSString*) avatarImagePath;
 
 
 
@@ -70,7 +83,7 @@
 + (NSString*) gameCreateInvitationByUserIdUrl:(NSInteger)userId;
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId;
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId withResult:(BOOL)result;
 
 // URL для получения детальной информации об игре
 + (NSString*) gameInformationUrl:(NSInteger)gameId;

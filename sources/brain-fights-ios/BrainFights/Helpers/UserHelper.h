@@ -45,4 +45,7 @@
 //  Строит маппинг для получения ответа о регистрации PUSH токена
 + (RKObjectManager*) buildObjectManagerForRegisterOrUpdateDeviceToken;
 
+//  Строит маппинг для поиска пользователей
++ (RKObjectManager*) buildObjectManagerForSearchUsers;
+
 @end

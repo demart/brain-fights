@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SWTableViewCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>TransitionKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,7 +52,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>09A0945927EB19F0925A796A509C1A6B</key>
+		<key>01E2C0A1CBECC28BB5F5B2147335D91A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,17 +62,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>356EF5A9D5972127578175959A5F4F92</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>51BE7B8EC58DB91DAC4751FDEA308C3C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5AA25B786AF00F809E9608E997A76B28</key>
+		<key>413E0ECAE88F198A7506033368A90B25</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +72,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6A974657AAD0CD99B809DC4FD37CED69</key>
+		<key>870F69A4B3F61B19A0724E2704DE7C1A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>91CECDBF5B905A16A706A12841B3A249</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>A2770197345BCE1622568AECE6B8E824</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD1CBBBD021603108B715FB8D889DC8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CDE0B7668B6EC1B2BF166A65E070AF5E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

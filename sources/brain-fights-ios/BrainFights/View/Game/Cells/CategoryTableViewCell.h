@@ -11,6 +11,7 @@
 
 @interface CategoryTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *categoryImage;
+@property (weak, nonatomic) IBOutlet UIView *categoryTitleView;
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitle;
 
 -(void) initCell:(GameRoundCategoryModel*)categoryModel;

@@ -12,6 +12,7 @@
 #import "AuthorizationService.h"
 #import "UrlHelper.h"
 #import "UserHelper.h"
+#import "UserSearchRequestModel.h"
 
 @implementation UserService
 
@@ -140,7 +141,7 @@ static UserProfileModel *_userProfileModel;
     if (userId < 1)
         failure(nil);
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userAddFriendByIdUrl:userId]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userRemoveFriendByIdUrl:userId]]];
     
     RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForRemoveFriend];
     
@@ -205,27 +206,28 @@ static UserProfileModel *_userProfileModel;
     if (authToken == nil)
         failure(nil);
     
-    NSMutableURLRequest *request =  [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper searchUsersByTextUrl:searchText]]];
+    UserSearchRequestModel *model = [[UserSearchRequestModel alloc] init];
+    model.searchText = searchText;
     
-    RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForSearchUsers];
-    
-    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
-    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
-        
-        NSLog(@"Status: %@", response.status);
-        NSLog(@"Data: %@", response.data);
-        NSLog(@"ErrorCode: %@", response.errorCode);
-        NSLog(@"ErrorMessage: %@", response.errorMessage);
-        
-        success(response);
-        
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        NSLog(@"Operation failed with error: %@", error);
-        failure(error);
-    }];
-    
-    [objectRequestOperation start];
+    RKObjectManager *objectManager = [UserHelper buildObjectManagerForSearchUsers];
+    [objectManager
+     postObject:model
+     path:@"" //???
+     parameters:nil
+     success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+         ResponseWrapperModel *response = (ResponseWrapperModel*)[result.array objectAtIndex:0];
+         
+         NSLog(@"Status: %@", response.status);
+         NSLog(@"Data: %@", response.data);
+         NSLog(@"ErrorCode: %@", response.errorCode);
+         NSLog(@"ErrorMessage: %@", response.errorMessage);
+         
+         success(response);
+     }
+     failure:^(RKObjectRequestOperation *operation, NSError *error){
+         NSLog(@"Error %@", error);
+         failure(error);
+     }];
 }
 
 // Возращает постранично рейтинг пользователей

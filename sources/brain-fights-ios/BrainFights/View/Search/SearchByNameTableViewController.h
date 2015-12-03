@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "BaseTableViewController.h"
 
-@interface SearchByNameTableViewController : UITableViewController
+@interface SearchByNameTableViewController : BaseTableViewController
 
 @end

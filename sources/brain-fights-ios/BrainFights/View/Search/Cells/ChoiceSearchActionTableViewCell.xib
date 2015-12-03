@@ -15,6 +15,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDq-Yy-2vh">
+                        <rect key="frame" x="8" y="8" width="304" height="43.5"/>
+                        <animations/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uhc-oK-2z7">
+                        <rect key="frame" x="18" y="10" width="40" height="40"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ITR-l0-E8q">
                         <rect key="frame" x="18" y="10" width="40" height="40"/>
                         <animations/>
@@ -27,17 +36,21 @@
                         <rect key="frame" x="66" y="19" width="246" height="20.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <animations/>
                 <constraints>
                     <constraint firstItem="wc7-TI-0fA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2sX-FP-e57"/>
+                    <constraint firstItem="SDq-Yy-2vh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="BBf-qU-gCm"/>
                     <constraint firstItem="wc7-TI-0fA" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="CUd-pb-LnI"/>
+                    <constraint firstItem="SDq-Yy-2vh" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="PO1-Py-dnh"/>
                     <constraint firstItem="ITR-l0-E8q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Wu2-OJ-EWZ"/>
                     <constraint firstItem="ITR-l0-E8q" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e8A-od-PAX"/>
+                    <constraint firstItem="SDq-Yy-2vh" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="f4G-BP-hIF"/>
                     <constraint firstItem="ITR-l0-E8q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="r1R-OS-faE"/>
+                    <constraint firstItem="SDq-Yy-2vh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="tCq-aS-AAL"/>
                     <constraint firstItem="wc7-TI-0fA" firstAttribute="leading" secondItem="ITR-l0-E8q" secondAttribute="trailing" constant="8" id="tdd-Y0-QXs"/>
                 </constraints>
                 <variation key="default">
@@ -50,6 +63,8 @@
             <connections>
                 <outlet property="choiceActionTitle" destination="wc7-TI-0fA" id="Cbd-vH-4ju"/>
                 <outlet property="iconImage" destination="ITR-l0-E8q" id="tbD-sD-DLS"/>
+                <outlet property="imageViewContainer" destination="uhc-oK-2z7" id="57l-wG-7vy"/>
+                <outlet property="roundView" destination="SDq-Yy-2vh" id="s2H-mG-E1a"/>
             </connections>
             <point key="canvasLocation" x="252" y="254"/>
         </tableViewCell>

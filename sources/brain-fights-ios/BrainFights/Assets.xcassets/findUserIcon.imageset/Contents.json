@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Find User Filled-50.png",
+      "filename" : "Find User Filled-50-2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Find User Filled-64.png",
+      "filename" : "Find User Filled-64-2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Find User Filled-100.png",
+      "filename" : "Find User Filled-100-2.png",
       "scale" : "3x"
     }
   ],

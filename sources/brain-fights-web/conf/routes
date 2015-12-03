@@ -50,6 +50,8 @@ GET		/user/friends/remove/{id}								UserController.removeUserFriend
 
 # USER SEARCH
 GET		/search/user											SearchController.searchUsers
+POST	/search/user											SearchController.searchUsers
+POST	/search/user/											SearchController.searchUsers
 GET		/search/department										SearchController.searchDepartments
 GET		/search/department/										SearchController.searchDepartments
 GET		/search/department/{id}									SearchController.searchDepartments
@@ -60,6 +62,7 @@ GET		/game/invitation/create									GameController.createInvitation
 GET		/game/invitation/create/								GameController.createInvitation
 GET		/game/invitation/create/{userId}						GameController.createInvitation
 GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
+GET		/game/{gameId}/accept/invitation/{accept}				GameController.acceptInvitation
 
 GET		/games																			GameController.getUserGames
 GET		/game/list																		GameController.getUserGames
@@ -80,7 +83,7 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-GET     /*										staticDir:public/extjs
+#GET     /*										staticDir:public/extjs
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
+#*       /{controller}/{action}                  {controller}.{action}

@@ -10,6 +10,7 @@
 #import "GamerModel.h"
 #import "GameRoundModel.h"
 #import "GameRoundCategoryModel.h"
+#import "GameStatus.h"
 
 @interface GameModel : NSObject
 

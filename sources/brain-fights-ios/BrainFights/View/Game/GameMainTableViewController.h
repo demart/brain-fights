@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseTableViewController.h"
 
-@interface GameMainTableViewController : UITableViewController
+@interface GameMainTableViewController : BaseTableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *showMenuButton;
 - (IBAction)showMenuAction:(UIBarButtonItem *)sender;
 

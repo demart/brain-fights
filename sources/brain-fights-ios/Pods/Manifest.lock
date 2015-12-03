@@ -24,11 +24,13 @@ PODS:
     - TransitionKit (~> 2.1.0)
   - RKValueTransformers (1.1.2)
   - SOCKit (1.1)
+  - SWTableViewCell (0.3.7)
   - TransitionKit (2.1.1)
 
 DEPENDENCIES:
   - JVFloatingDrawer
   - RestKit (~> 0.24.0)
+  - SWTableViewCell (~> 0.3.7)
 
 SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
@@ -37,6 +39,7 @@ SPEC CHECKSUMS:
   RestKit: 1987b5efef289c6b27bd980714d6ca48d3871b78
   RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701
   SOCKit: c7376ac262bea9115b8f749358f762522a47d392
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TransitionKit: 3a14b6acc7cf2d1dd3e454e24dbad1cfab9a1ef1
 
 COCOAPODS: 0.38.2

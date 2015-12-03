@@ -15,9 +15,10 @@
 
 +(NSString*) baseUrl {
 #if DEBUG
+    //return @"http://localhost:8080";
     return @"http://localhost:9000";
     //return @"http://172.20.10.2:9000";
-    //return @"http://192.168.0.246:9000";
+    //return @"http://192.168.0.94:8080";
     //return @"http://api.sushimi.kz/rest-api";
 #else
         return @"http://172.20.10.2";
@@ -87,11 +88,34 @@
     return [[NSString alloc] initWithFormat:@"%@/search/user?searchText=%@&authToken=%@", UrlHelper.baseUrl, searchText, [self authToken]];
 }
 
+// URL с текстом для поиска пользователей
++(NSString*) searchUsersByTextUrl {
+    return [[NSString alloc] initWithFormat:@"%@/search/user?authToken=%@", UrlHelper.baseUrl, [self authToken]];
+}
+
 
 // URL для API регистрации PUSH tokena
 +(NSString*) registerDeviceTokenUrl {
     return [[NSString alloc] initWithFormat:@"%@/device/push/register?authToken=%@", UrlHelper.baseUrl, [self authToken]];
 }
+
+
+
+// Базовый URL для картинок по вопросам
++(NSString*) imageUrlForQuestionWithPath:(NSString*) questionImagePath {
+    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, questionImagePath];
+}
+
+// Базовый URL для картинок по категориям
++(NSString*) imageUrlForCategoryWithPath:(NSString*) categoryImagePath {
+    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, categoryImagePath];
+}
+
+// Базовый URL для картинок авотаров
++(NSString*) imageUrlForAvatarWithPath:(NSString*) avatarImagePath {
+    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, avatarImagePath];
+}
+
 
 
 
@@ -123,8 +147,12 @@
 
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId {
-    return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId withResult:(BOOL)result {
+    if (result) {
+        return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation/true?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+    } else {
+         return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation/false?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+    }
 }
 
 // URL для получения детальной информации об игре
