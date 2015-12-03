@@ -29,6 +29,9 @@
     
     [self.departmentName setText:model.name];
     [self.departmentScore setText: [@(model.score) stringValue]];
+    [self.departmentScore sizeToFit];
+    [self.departmentUserCount setText: [@(model.userCount) stringValue]];
+    [self.departmentUserCount sizeToFit];
     
     if (model.isUserBelongs) {
         [self.userBelongsToDepartment setHidden:NO];

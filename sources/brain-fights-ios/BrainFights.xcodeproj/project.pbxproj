@@ -98,6 +98,8 @@
 		8DF18E901BF4EFCF0046C27B /* GameStatusActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E8E1BF4EFCF0046C27B /* GameStatusActionTableViewCell.m */; };
 		8DF18E911BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E8F1BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib */; };
 		8DF18E941BF4F87A0046C27B /* GameCategoriesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E931BF4F87A0046C27B /* GameCategoriesTableViewController.m */; };
+		8DFB0C9D1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB0C9B1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m */; };
+		8DFB0C9E1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFB0C9C1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib */; };
 		8DFCAC651BEBDD2E0035DE1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC641BEBDD2E0035DE1E /* main.m */; };
 		8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */; };
 		8DFCAC6B1BEBDD2E0035DE1E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */; };
@@ -269,6 +271,9 @@
 		8DF18E8F1BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameStatusActionTableViewCell.xib; path = View/Game/Cells/GameStatusActionTableViewCell.xib; sourceTree = "<group>"; };
 		8DF18E921BF4F87A0046C27B /* GameCategoriesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCategoriesTableViewController.h; path = View/Game/GameCategoriesTableViewController.h; sourceTree = "<group>"; };
 		8DF18E931BF4F87A0046C27B /* GameCategoriesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameCategoriesTableViewController.m; path = View/Game/GameCategoriesTableViewController.m; sourceTree = "<group>"; };
+		8DFB0C9A1C0F817B00D15022 /* DepartmentHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentHeaderTableViewCell.h; path = View/Search/Cells/DepartmentHeaderTableViewCell.h; sourceTree = "<group>"; };
+		8DFB0C9B1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentHeaderTableViewCell.m; path = View/Search/Cells/DepartmentHeaderTableViewCell.m; sourceTree = "<group>"; };
+		8DFB0C9C1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DepartmentHeaderTableViewCell.xib; path = View/Search/Cells/DepartmentHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		8DFCAC601BEBDD2E0035DE1E /* BrainFights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainFights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DFCAC641BEBDD2E0035DE1E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8DFCAC661BEBDD2E0035DE1E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -579,6 +584,9 @@
 				8D25F5D11C0289A400222C14 /* FriendsHeaderTableViewCell.h */,
 				8D25F5D21C0289A400222C14 /* FriendsHeaderTableViewCell.m */,
 				8D25F5D31C0289A400222C14 /* FriendsHeaderTableViewCell.xib */,
+				8DFB0C9A1C0F817B00D15022 /* DepartmentHeaderTableViewCell.h */,
+				8DFB0C9B1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m */,
+				8DFB0C9C1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -808,6 +816,7 @@
 				8DF18E7B1BF33C520046C27B /* GameGroupHeaderTableViewCell.xib in Resources */,
 				8D25F5D01C02700E00222C14 /* UserProfileActionTableViewCell.xib in Resources */,
 				8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */,
+				8DFB0C9E1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib in Resources */,
 				8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */,
 				8DF18E871BF4E50C0046C27B /* GameStatusPlayersTableViewCell.xib in Resources */,
 				8D25F5D51C0289A400222C14 /* FriendsHeaderTableViewCell.xib in Resources */,
@@ -897,6 +906,7 @@
 				8D3FA4661C0515B1005FDCBE /* ErrorViewController.m in Sources */,
 				8D920F031BFBE48000BA29BC /* GameRoundQuestionModel.m in Sources */,
 				8DF18E561BF0B3E60046C27B /* UserType.m in Sources */,
+				8DFB0C9D1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m in Sources */,
 				8DF18E4E1BF09D040046C27B /* SearchByNameTableViewController.m in Sources */,
 				8DF18E481BF09CB40046C27B /* NewGameTableViewController.m in Sources */,
 				8DF18E761BF269170046C27B /* SearchByNameResultsTableViewController.m in Sources */,

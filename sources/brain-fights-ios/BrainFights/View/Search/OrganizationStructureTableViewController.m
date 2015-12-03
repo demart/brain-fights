@@ -12,6 +12,7 @@
 
 
 #import "DepartmentTableViewCell.h"
+#import "DepartmentHeaderTableViewCell.h"
 #import "UserTableViewCell.h"
 #import "UserProfileTableViewController.h"
 
@@ -26,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorColor = [UIColor clearColor];
 
     // Загружаем список друзей
     [self loadDepartmentsAsync];
@@ -177,6 +179,48 @@
      }
  }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    DepartmentHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
+    if (!cell) {
+        [tableView registerNib:[UINib nibWithNibName:@"DepartmentHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"DepartmentHeaderCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
+    }
+    
+    if (self.parentDepartmentModel == nil) {
+        [cell initCellWithTitle:@"Транстелеком"];
+        return cell;
+    }
+    
+    NSInteger sectionCount = [self.tableView numberOfSections];
+    if (sectionCount == 2) {
+        if (section == 0) {
+            [cell initCellWithTitle:@"Сотрудники"];
+            return cell;
+        } else {
+            [cell initCellWithTitle:self.parentDepartmentModel.name];
+            return cell;
+        }
+    }
+    //  Если одна секция
+    if (self.users != nil && [self.users count] > 0) {
+        [cell initCellWithTitle:@"Сотрудники"];
+        return cell;
+    }
+    
+    if (self.departments != nil && [self.departments count] > 0) {
+        [cell initCellWithTitle:self.parentDepartmentModel.name];
+        return cell;
+    }
+    
+    return cell;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
+
+
+/*
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSInteger sectionCount = [self.tableView numberOfSections];
     if (sectionCount == 2) {
@@ -196,6 +240,7 @@
     
     return nil;
 }
+ */
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger sectionCount = [self.tableView numberOfSections];
@@ -246,7 +291,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 75;
 }
 
 - (void)didReceiveMemoryWarning {

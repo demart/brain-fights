@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FriendsHeaderTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *friendsTitle;
 
 @end

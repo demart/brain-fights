@@ -93,6 +93,7 @@
 - (void) createRandomInvitation {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
     [GameService createGameInvitation:0 onSuccess:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         if ([response.status isEqualToString:SUCCESS]) {
             [self.navigationController popViewControllerAnimated:YES];
         }

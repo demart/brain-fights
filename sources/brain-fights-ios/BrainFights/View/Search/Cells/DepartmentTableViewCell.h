@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentName;
 @property (weak, nonatomic) IBOutlet UILabel *departmentScore;
 @property (weak, nonatomic) IBOutlet UILabel *userBelongsToDepartment;
+@property (weak, nonatomic) IBOutlet UILabel *departmentUserCount;
 
 // Инициализирует ячейку данными департамента
 - (void) initCell:(DepartmentModel*)model;
