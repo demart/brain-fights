@@ -32,6 +32,8 @@ GET		/rest/category/combo/store/read							AdmController.createCategoryComboList
 POST	/rest/login/out											AdmController.loginOut
 POST	/rest/upload/category/image								AdmController.uploadImage
 GET		/rest/department/combo/store/read						AdmController.createDepartmentComboList
+POST	/rest/users/image/store/create                          AdmController.updateImageUrl
+GET		/rest/search/users/store/read							AdmController.searchUsers
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

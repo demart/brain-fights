@@ -24,6 +24,9 @@ public class UserModel {
 	
 	public String position;
 	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,6 +93,14 @@ public class UserModel {
 	
 	public void setPosition(String position) {
 		this.position = position;
+	}
+	
+	public void setImageUrl (String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 	

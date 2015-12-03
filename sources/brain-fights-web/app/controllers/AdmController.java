@@ -512,28 +512,49 @@ public class AdmController extends Controller {
 		}
 	}
 		
-	public static void createNewUser () throws PlatformException, IOException {
-		Logger.info("Create New User. User is " +  Security.connected());
+	public static void updateImageUrl () throws PlatformException, IOException {
+		Logger.info("Upload Image. User is " +  Security.connected());
 		
-		Boolean status = AdmService.checkUsers(Security.connected());
-		System.out.println ("Is user's role administrator/manager? Answer: " + status);
-		
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
 		if (status == true) {
-			String requestBody = params.current().get("body");
-			//Logger.info (" Create Question: \n" + requestBody);
 			
+			String requestBody = params.current().get("body");
+						
 			if (!requestBody.startsWith("["))
 				requestBody = "[" + requestBody + "]";
 			
-				Gson gson = new Gson();
+			Gson gson = new Gson();
 			UserModel[] models = gson.fromJson(requestBody, UserModel[].class);
 			Logger.info("\n Model.lenght: " + models.length);
 			
-			AdmService.createUser(models);
+			AdmService.uploadImage(models);
 			
 			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
 			wrapper.setStatus(ResponseStatus.SUCCESS);
 			renderJSON(wrapper);
+
+		}
+	}
+	
+	public static void searchUsers (String name) throws PlatformException {
+		Logger.info("Search users. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			
+			List<User> list = AdmService.getSearchUsers(name);
+			
+			
+			ArrayList<UserModel> models = AdmService.createUsersList(list);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountUserNotDeleted().intValue());
+			renderJSON(wrapper);
+
 		}
 	}
 	

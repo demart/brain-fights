@@ -56,6 +56,9 @@ public class User extends PersistentObject {
 	@Column(length=50)
 	private String email;
 	
+	@Column(length=255)
+	private String imageUrl;
+	
 	/**
 	 * Токен авторизации, перезатирается каждый раз при повторной авторизации
 	 */
@@ -287,6 +290,14 @@ public class User extends PersistentObject {
 	}
 	public void setInvisibleFriends(List<User> invisibleFriends) {
 		this.invisibleFriends = invisibleFriends;
+	}
+	
+	public String getImageUrl () {
+		return imageUrl;
+	}
+	
+	public void setImageUrl (String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }

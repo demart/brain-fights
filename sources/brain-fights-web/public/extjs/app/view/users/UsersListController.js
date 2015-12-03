@@ -2,90 +2,72 @@ Ext.define('BrainFightsConsole.view.users.UsersListController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.users',
     
-    windowMode : 'add',
-    
-    showAddWindow: function() {
-        var win = this.lookupReference('usersEditWindow');
-        if (!win) {
-            win = new BrainFightsConsole.view.users.UsersEditWindow();
-            this.getView().add(win);
-        }
-        this.lookupReference('usersEditWindowForm').getForm().reset();
-        record = Ext.create('BrainFightsConsole.model.UsersModel');
-		record.set(win.down("form").getValues());
-		win.down("form").loadRecord(record);
-		this.windowMode = 'add';
-        win.show();
+ 
+    showImageWindow: function() {
+    	console.log("image editor");
+    	var grid = Ext.getCmp('usersListId');
+    	var record = grid.getSelectionModel().getSelection()[0];
+    	  var win = this.lookupReference('imageUsersEditWindow');
+          if (!win) {
+              win = new BrainFightsConsole.view.users.EditImageWindow();
+              this.getView().add(win);
+          }
+      	Ext.getCmp('imageSetLabelAvatar').setSrc(record.data.imageUrl);
+      	Ext.getCmp('uploadImageAvatar').setText(record.data.imageUrl);
+      	Ext.getCmp('tmpUploadImageAvatar').setText(record.data.imageUrl);
+      	win.show();
     },
     
-    showEditWindow: function() {
-        var win = this.lookupReference('usersEditWindow');
-        if (!win) {
-        	win = new BrainFightsConsole.view.users.UsersEditWindow();
-            this.getView().add(win);
-        }
-        this.lookupReference('usersEditWindowForm').getForm().reset();
-        var selectedRecord = this.view.getSelectionModel().getSelection()[0];
-    	win.down('form').loadRecord(selectedRecord);
-    	this.windowMode = 'edit';
-    	win.show();
-    },  
+    onFormCancel: function() {
+        Ext.getCmp('imageUserEditWindowId').hide();
+    },
     
-    // Удалить запись
-    onDeleteRecord : function() {
-    	var store = this.view.getStore();
-    	var selectedRecord = this.view.getSelectionModel().getSelection()[0];
-    	console.log(selectedRecord);
-    	if (selectedRecord) {
-    		Ext.MessageBox.confirm('Внимание', 'Вы уверены что хотите удалить запись?', 
-				function(btn,text) {
-    				if (btn == 'yes') {
-    					Ext.Ajax.request({
-    					    url: 'rest/users/store/destroy',
-    					    params: {
-    					        id: selectedRecord.data.id,
-    					    },
-    					    success: function(response){
-    					    	store.reload();
-    					    },
-    					    failure: function(batch) {
-    							Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
-    						}
-    					});
-    				} else {
-    				}
-    			},
-			this);
-    	}
+    imageEditorAvatar: function() {
+      	Ext.getCmp('tmpUploadImageAvatar').setText(document.getElementById('uploadImageAvatar').innerHTML);
+    	var window = new BrainFightsConsole.view.users.UploadImageUserWindow();
+    	window.show();
     },
     
     onFormSubmit: function() {
-        var formPanel = this.lookupReference('usersEditWindowForm'),
-            form = formPanel.getForm();
-        var view = this;
-        if (form.isValid()) {
-        	var record = form.getRecord();
-         	var values = form.getValues();
-        	record.set(values);
-    		
-
-        	if (this.windowMode == 'add') {
-        		record.id = '0';
-        		record.data.id = '0';
-
-           		this.view.getStore().add(record);
-        	}
-        	this.view.getStore().sync({
-				success: function() {
-					form.reset();
-					view.lookupReference('usersEditWindow').hide();
-					view.view.getStore().reload();
-				},
-				failure: function(batch) {
-					Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
-				}
-			});
-        }
-    }
+    	var model = new BrainFightsConsole.model.UsersModel();
+    	var grid = Ext.getCmp('usersListId');
+    	var record = grid.getSelectionModel().getSelection()[0];
+    	model.data.id = record.data.id;
+    	model.data.imageUrl = document.getElementById('uploadImageAvatar').innerHTML;
+    	var data = model.getData();
+    	
+    	Ext.Ajax.request({
+		    url: '/rest/users/image/store/create',
+		    jsonData : data,
+		    
+		    success: function(response){
+		    	Ext.MessageBox.alert('Успешно','Фотография обновлена.');
+		        Ext.getCmp('imageUserEditWindowId').hide();
+		        grid.getStore().reload();
+	
+		    	
+		    },
+		    failure: function(batch) {
+				Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
+			}
+		});
+    },
+    
+    searchUsers: function () {
+    	console.log("search");
+    	var text = Ext.getCmp('searchUsersField');
+    	var grid = Ext.getCmp('usersListId');
+    	grid.store.proxy.api.read = 'rest/search/users/store/read?name=' + text.getValue();
+    	grid.getStore().reload();
+    },
+    
+    showAllUsers: function() {
+    	var questionsGrid = Ext.getCmp('usersListId');
+		questionsGrid.store.proxy.api.read = 'rest/users/store/read';
+		questionsGrid.getStore().reload();
+		//Ext.getCmp('categoryComboId').setValue(null);
+    	var text = Ext.getCmp('searchUsersField');
+    	text.reset();
+    },
     
 });
