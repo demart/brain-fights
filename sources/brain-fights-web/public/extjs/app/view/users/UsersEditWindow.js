@@ -46,7 +46,53 @@ Ext.define('BrainFightsConsole.view.users.UsersEditWindow', {
 	            ],
 	            fieldLabel: 'Имя',
 	            allowBlank: false
-	        }, {
+	        }, 
+	        {
+	            reference: 'departmentCombo',
+	            flex: 1,
+	            xtype: 'combo',
+                fieldLabel: 'Отделение:',
+                displayField: 'name',
+                valueField: 'id',
+                anchor: '-15',
+                labelWidth: 130,
+                autoRender: true,
+                pageSize: 6,
+                store: {
+                    model: 'BrainFightsConsole.model.DepartmentModel',
+                    pageSize: 6,
+                    proxy: {
+                        type: 'ajax',
+                        url: '/rest/department/combo/store/read',
+                        reader: {
+                        	type: 'json',
+                            rootProperty: 'data',
+                            successProperty: 'success',
+                            totalProperty: 'totalCount',
+                            idProperty: 'id'
+                        }
+                    },
+                    autoDestroy: true
+                },
+                minChars: 5,
+                queryParam: 'q',
+                queryMode: 'remote',
+	            name: 'department',
+	            itemId: 'department',
+	            id: 'departmentComboId',
+	        },
+	        {
+	            flex: 1,
+	            name: 'position',
+	            itemId: 'position',
+	            afterLabelTextTpl: [
+	                '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>'
+	            ],
+	            fieldLabel: 'Должность',
+	            allowBlank: false
+	        }, 
+	        
+	        {
 	            flex: 1,
 	            name: 'login',
 	            itemId: 'login',

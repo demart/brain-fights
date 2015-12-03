@@ -72,6 +72,7 @@ Ext.define('BrainFightsConsole.view.users.UsersListController', {
         	if (this.windowMode == 'add') {
         		record.id = '0';
         		record.data.id = '0';
+
            		this.view.getStore().add(record);
         	}
         	this.view.getStore().sync({

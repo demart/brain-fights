@@ -51,7 +51,23 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                                 anchor: '-15',
                                 labelWidth: 130,
                                 autoRender: true,
-                                store: 'CategoryComboStore',
+                                pageSize: 10,
+                                store: {
+            	                    model: 'BrainFightsConsole.model.CategoryModel',
+            	                    pageSize: 10,
+            	                    proxy: {
+            	                        type: 'ajax',
+            	                        url: '/rest/category/combo/store/read',
+            	                        reader: {
+            	                        	type: 'json',
+            	                            rootProperty: 'data',
+            	                            successProperty: 'success',
+            	                            totalProperty: 'totalCount',
+            	                            idProperty: 'id'
+            	                        }
+            	                    },
+            	                    autoDestroy: true
+            	                },
                                 minChars: 5,
                                 queryParam: 'q',
                                 queryMode: 'remote',
@@ -313,6 +329,8 @@ bbar:            	 {
 region: 'center',
 title: 'Просмотр информации о вопросе',
 flex: 1,
+layout: 'fit',
+scroll: true,
 id: 'viewQuestionInformationId',
 items: [
 {

@@ -26,7 +26,9 @@ import kz.aphion.brainfights.persistents.game.question.QuestionType;
 import kz.aphion.brainfights.persistents.user.*;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
+import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
+import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.*;
 
@@ -227,6 +229,17 @@ public class AdmService {
 	 */
 	public static List<Category> getCategoryList(int start, int limit) throws PlatformException {
 		return JPA.em().createQuery("from Category where deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).getResultList();
+	}
+	
+	/**
+	 * Список пользователей из базы данных
+	 * @param start
+	 * @param limit
+	 * @return
+	 * @throws PlatformException
+	 */
+	public static List<User> getUsersList (int start, int limit) throws PlatformException {
+		return JPA.em().createQuery("from User where deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).getResultList();
 	}
 
 	/**
@@ -709,5 +722,99 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		}
 		return models;
 
+	}
+	
+	public static ArrayList<DepartmentForAdminModel> createDepartmentComboList (List<Department> list) {
+		ArrayList<DepartmentForAdminModel> models = new ArrayList<DepartmentForAdminModel> ();
+		for (Department model: list) {
+			DepartmentForAdminModel department = new DepartmentForAdminModel();
+			department.setId(model.getId());
+			department.setName(model.getName());
+			models.add(department);
+		}
+ 		return models;
+	}
+
+	public static ArrayList<UserModel> createUsersList(List<User> list) throws PlatformException {
+		ArrayList<UserModel> models = new ArrayList<UserModel>();
+		for (User model: list) {
+			UserModel user = new UserModel();
+			user.setId(model.getId());
+			user.setName(model.getName());
+			user.setEmail(model.getEmail());
+			user.setLogin(model.getLogin());
+			user.setScore(model.getScore().toString());
+			user.setTotalGames(model.getScore());
+			if (model.getDepartment() != null)
+				user.setDepartment(model.getDepartment().getName());
+			else 
+				user.setDepartment("Не указано");
+			models.add(user);
+		}
+		return models;
+	
+	}
+
+	public static Long getCountUserNotDeleted() {
+		Query query = JPA.em().createQuery("select count(*) from User where deleted = 'FALSE'");
+		return (Long)query.getSingleResult();
+	}
+
+	public static List<Department> getDepartmentList(int start, int limit) {
+		return JPA.em().createQuery("from Department where deleted = 'FALSE'").setFirstResult(start).setMaxResults(limit).getResultList();
+	}
+
+	public static Long getCountDepartmentNotDeleted() {
+		Query query = JPA.em().createQuery("select count(*) from Department where deleted = 'FALSE'");
+		return (Long)query.getSingleResult();
+	}
+
+	public static void createUser(UserModel[] models) throws PlatformException, IOException {
+		for (UserModel model: models) {
+			if (model == null)
+				throw new PlatformException("0", "User model is null");
+
+			User user = new User();
+
+			
+			
+			if (StringUtils.isNotEmpty(model.getName()))
+				user.setName(model.getName());
+			
+			if (StringUtils.isNotEmpty(model.getEmail()))
+				user.setEmail(model.getEmail());
+			
+			if (StringUtils.isNotEmpty(model.getLogin()))
+				user.setLogin(model.getLogin());
+			
+			if (StringUtils.isNotEmpty(model.getPassword()))
+				user.setPassword(model.getPassword());
+			
+			if (StringUtils.isNotEmpty(model.getDepartment())) {
+				Department department = Department.findById(Long.parseLong(model.getDepartment()));
+				user.setDepartment(department);
+			}
+			
+			if (StringUtils.isNotEmpty(model.getPosition()))
+				user.setPosition(model.getPosition());
+			
+			Calendar calendar = Calendar.getInstance();
+			user.setLastActivityTime(calendar);
+			
+			user.setScore(0);
+			user.setLoosingGames(0);
+			user.setWonGames(0);
+			user.setTotalGames(0);
+			user.setDeleted(false);
+					
+			user.save();
+			
+			Department department = Department.findById(Long.parseLong(model.getDepartment()));
+			department.setUserCount(department.getUserCount() + 1);
+			department.save();
+					
+			Logger.info("User created successfully");
+		}
+		
 	}
 }

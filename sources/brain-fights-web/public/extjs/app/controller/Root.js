@@ -15,6 +15,7 @@ Ext.define('BrainFightsConsole.controller.Root', {
     	'category': 'onCategory',
     	'question': 'onQuestion',
     	'logout' : 'onLogoutRoute',
+    	'users' : 'onUsers',
     },
     
     //Управление администраторами/менеджерами
@@ -22,6 +23,13 @@ Ext.define('BrainFightsConsole.controller.Root', {
         console.log("onAdminsList route");
         this.getMain().getComponent('mainBody').removeAll(true);
         this.getMain().getComponent('mainBody').add(Ext.create('BrainFightsConsole.view.admins.AdminUsersList'));
+    },
+    
+    //Управление пользователями
+    onUsers : function() {
+        console.log("onAdminsList route");
+        this.getMain().getComponent('mainBody').removeAll(true);
+        this.getMain().getComponent('mainBody').add(Ext.create('BrainFightsConsole.view.users.UsersList'));
     },
     
     //Управление категориями

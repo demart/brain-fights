@@ -28,14 +28,14 @@ Ext.define('BrainFightsConsole.view.users.UsersList' ,{
     }],
 	
 	columns: [
-			{text: "№", dataIndex: 'id', width: 50},
-			{text: "Логин", dataIndex: 'login' , width: 80},
+			//{text: "№", dataIndex: 'id', width: 50},
+			{text: "Логин", dataIndex: 'login' , width: 120},
 			{text: "Имя", dataIndex: 'name' , flex: 3},
-            {text: "E-mail", dataIndex: 'email', width:200},
-            {text: "Игр", dataIndex: 'totalGames', width: 50},
-			{text: "Был активен", dataIndex: 'activityTime', xtype: 'datecolumn', format: 'd.m.Y H:i:s', width: 150},
-			{text: "Зарегистрирован", dataIndex: 'registeredTime', xtype: 'datecolumn', format: 'd.m.Y H:i:s', width: 150},
-	],
+            {text: "E-mail", dataIndex: 'email', align: 'left', width:250},
+            {text: "Отделение", dataIndex: 'department', align: 'left', width: 260},
+            {text: "Игр", dataIndex: 'totalGames', align: 'center',  width: 50},
+            {text: "Рейтинг", dataIndex: 'score', align: 'center', width: 80}
+				],
 		
     bbar: {
     	xtype: 'pagingtoolbar',

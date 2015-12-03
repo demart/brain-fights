@@ -23,12 +23,15 @@ import play.mvc.Controller;
 import kz.aphion.brainfights.admin.models.AdminResponseWrapperModel;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
+import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
+import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.persistents.game.question.Category;
 import kz.aphion.brainfights.persistents.game.question.Question;
 import kz.aphion.brainfights.persistents.user.AdminUser;
+import kz.aphion.brainfights.persistents.user.Department;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.AdmService;
 import kz.aphion.brainfights.models.ResponseStatus;
@@ -472,9 +475,67 @@ public class AdmController extends Controller {
 	}
 	
 	
+	public static void readUserList (int page, int start, int limit) throws PlatformException, IOException {
+		Logger.info("Read Users List. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator or manager? Answer: " + status);
+		if (status == true) {
+			List<User> list = AdmService.getUsersList(start,limit);
+			ArrayList<UserModel> models = AdmService.createUsersList(list);
+		
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountUserNotDeleted().intValue());
+			renderJSON(wrapper);
+		}
+	}
+	
+	public static void createDepartmentComboList (int start, int limit) throws PlatformException {
+		Logger.info("Create Department Combo List. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		if (status == true) {
+			
+			List<Department> listBase = AdmService.getDepartmentList(start, limit);
+			
+			ArrayList<DepartmentForAdminModel> models = AdmService.createDepartmentComboList(listBase);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountDepartmentNotDeleted().intValue());
+			renderJSON(wrapper);
 
+		}
+	}
 		
+	public static void createNewUser () throws PlatformException, IOException {
+		Logger.info("Create New User. User is " +  Security.connected());
 		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		
+		if (status == true) {
+			String requestBody = params.current().get("body");
+			//Logger.info (" Create Question: \n" + requestBody);
+			
+			if (!requestBody.startsWith("["))
+				requestBody = "[" + requestBody + "]";
+			
+				Gson gson = new Gson();
+			UserModel[] models = gson.fromJson(requestBody, UserModel[].class);
+			Logger.info("\n Model.lenght: " + models.length);
+			
+			AdmService.createUser(models);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			renderJSON(wrapper);
+		}
+	}
 	
 
 }
