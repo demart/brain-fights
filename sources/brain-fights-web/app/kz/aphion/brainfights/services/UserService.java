@@ -62,8 +62,13 @@ public class UserService {
 		user.setDeviceType(model.deviceType);
 		user.setAppVersion(model.appVersion);
 		
-		if (model.devicePushToken != null && "".equals(model.devicePushToken.trim()))
+		if (model.devicePushToken != null && !"".equals(model.devicePushToken.trim())) {
+			// затираем всем этот ключ, для того чтобы если на одной девайсе два разных чувака авторизовались
+			// то мог получать только последний
+			JPA.em().createQuery("update User set devicePushToken = null where devicePushToken = :token")
+			.setParameter("token", model.devicePushToken).executeUpdate();
 			user.setDevicePushToken(model.devicePushToken);
+		}
 		
 		user.save();
 		
