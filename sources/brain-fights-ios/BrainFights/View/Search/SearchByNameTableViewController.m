@@ -17,6 +17,8 @@
 #import "UserProfileModel.h"
 #import "ResponseWrapperModel.h"
 
+#import "DejalActivityView.h"
+
 @interface SearchByNameTableViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) UISearchController *searchController;
@@ -50,7 +52,6 @@
     [self.searchController.searchBar sizeToFit];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
-    // we want to be the delegate for our filtered table so didSelectRowAtIndexPath is called for both tables
     self.resultsTableController.tableView.delegate = self;
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO; // default is YES
@@ -58,11 +59,11 @@
     
     self.searchController.searchBar.placeholder = @"Введите имя соперника";
     
-    // Search is now just presenting a view controller. As such, normal view controller
-    // presentation semantics apply. Namely that presentation will walk up the view controller
-    // hierarchy until it finds the root view controller or one that defines a presentation context.
-    //
-    self.definesPresentationContext = YES;  // know where you want UISearchController to be displayed
+    self.searchController.searchBar.layer.borderWidth = 1;
+    self.searchController.searchBar.layer.borderColor = [[Constants SYSTEM_COLOR_GREEN] CGColor];
+    self.searchController.searchBar.translucent = NO;
+
+    self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.resultsTableController.extendedLayoutIncludesOpaqueBars = YES;
 }
@@ -70,7 +71,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    // restore the searchController's active state
     if (self.searchControllerWasActive) {
         self.searchController.active = self.searchControllerWasActive;
         _searchControllerWasActive = NO;
@@ -90,13 +90,6 @@
 
 #pragma mark - UISearchControllerDelegate
 
-// Called after the search controller's search bar has agreed to begin editing or when
-// 'active' is set to YES.
-// If you choose not to present the controller yourself or do not implement this method,
-// a default presentation is performed on your behalf.
-//
-// Implement this method if the default presentation is not adequate for your purposes.
-//
 - (void)presentSearchController:(UISearchController *)searchController {
     
 }
@@ -141,31 +134,17 @@
     
     // Инициализируем ячейку друга
     UserProfileModel *userProfile = (UserProfileModel*)self.filteredUsers[indexPath.row];
-    [cell initCell:userProfile];
+    [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
     
     return cell;
 }
-
-/*
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"Clean filtered search data...");
-    [self.filteredUsers removeAllObjects];
-    self.filteredUsers = nil;
-    [self.tableView reloadData];
-}
- */
 
 
 // Выполняет поиск асинхронно
 - (void) searchUsersByTextRemotely {
     NSLog(@"remote search text: %@", self.searchController.searchBar.text);
-    
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
     [[UserService sharedInstance] searchUsersByTextAsync:self.searchController.searchBar.text onSuccess:^(ResponseWrapperModel *response) {
-        
-        // ====
-        // HIDE LOADING BAR
-        // ====
-        
         if ([response.status isEqualToString:SUCCESS]) {
             UserSearchResultModel *model = (UserSearchResultModel*)response.data;
             if (model != nil)
@@ -193,13 +172,10 @@
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // SHOW ERROR
         }
-        
+        [DejalBezelActivityView removeViewAnimated:NO];
     } onFailure:^(NSError *error) {
-        // ====
-        // HIDE LOADING BAR
-        // ====
-        
-        // SHOW ALERT
+        [DejalBezelActivityView removeViewAnimated:NO];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(searchUsersByTextRemotely)];
     }];
 }
 
@@ -217,9 +193,6 @@
     }
     
     NSLog(@"search text: %@", searchText);
-    // ====
-    // SHOW LOADING BAR
-    // ====
     self.searchDelayedTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                                target:self
                                                              selector:@selector(searchUsersByTextRemotely)
@@ -238,7 +211,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 75;
 }
 
 
@@ -258,49 +231,5 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

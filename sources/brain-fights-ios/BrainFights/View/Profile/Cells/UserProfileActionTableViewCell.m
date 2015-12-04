@@ -13,6 +13,7 @@
 @property UserProfileModel *userProfile;
 
 @property (nonatomic, copy) void (^addToFriendsActionBlock)(void);
+@property (nonatomic, copy) void (^removeFromFriendsActionBlock)(void);
 @property (nonatomic, copy) void (^playActionBlock)(void);
 
 @end
@@ -33,7 +34,7 @@
     view.layer.cornerRadius = 5.0;
     view.layer.masksToBounds = NO;
     view.layer.shadowOffset = CGSizeMake(1, 1);
-    view.layer.shadowRadius = 5;
+    view.layer.shadowRadius = 8;
     view.layer.shadowOpacity = 0.5;
 }
 
@@ -42,20 +43,27 @@
     [super setSelected:selected animated:animated];
 }
 
--(void) initCell:(UserProfileModel*)userProfileModel  onPlayAction:(void (^)(void))playAction  onAddToFriedsAction:(void (^)(void))addToFriendAction {
+-(void) initCell:(UserProfileModel*)userProfileModel  onPlayAction:(void (^)(void))playAction  onAddToFriedsAction:(void (^)(void))addToFriendAction onRemoveFromFriedsAction:(void (^)(void))removeFromFriendAction {
     
     self.playActionBlock = playAction;
     self.addToFriendsActionBlock = addToFriendAction;
+    self.removeFromFriendsActionBlock = removeFromFriendAction;
     
     self.userProfile = userProfileModel;
     if ([userProfileModel.type isEqualToString:USER_TYPE_OPONENT]) {
         [self.twoActionsView setHidden:NO];
-        [self.oneActionView setHidden:YES];
+//        [self.oneActionView setHidden:YES];
+        [self.twoActionsViewAddToFriendButton setTitle:@"В друзья" forState:UIControlStateNormal];
+        [self.twoActionsViewAddToFriendButton setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
     }
     if ([userProfileModel.type isEqualToString:USER_TYPE_FRIEND]) {
-        [self.twoActionsView setHidden:YES];
-        [self.oneActionView setHidden:NO];
+//        [self.twoActionsView setHidden:YES];
+//        [self.oneActionView setHidden:NO];
+        
+        [self.twoActionsViewAddToFriendButton setTitle:@"Убрать из друзей" forState:UIControlStateNormal];
+        [self.twoActionsViewAddToFriendButton setBackgroundColor:[Constants SYSTEM_COLOR_RED]];
     }
+    
     if ([userProfileModel.type isEqualToString:USER_TYPE_ME]) {
         [self.twoActionsView setHidden:YES];
         [self.oneActionView setHidden:YES];
@@ -72,7 +80,12 @@
 }
 
 - (IBAction)twoActionsViewAddToFriendAction:(UIButton *)sender {
-    self.addToFriendsActionBlock();
+    if ([self.userProfile.type isEqualToString:USER_TYPE_FRIEND]) {
+        self.removeFromFriendsActionBlock();
+    } else {
+        self.addToFriendsActionBlock();
+    }
+    
 }
 
 @end

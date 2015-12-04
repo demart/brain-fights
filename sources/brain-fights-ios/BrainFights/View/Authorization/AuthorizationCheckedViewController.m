@@ -31,7 +31,13 @@
 
 
 -(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
     sleep(2);
+    [self checkAuthorization];
+}
+
+
+- (void) checkAuthorization {
     if ([AuthorizationService isAuthTokenExisit]) {
         [AuthorizationService retrieveUserProfileAsync:^(ResponseWrapperModel *response) {
             if ([response.status isEqualToString:SUCCESS]) {
@@ -53,27 +59,19 @@
             
         } onFailure:^(NSError *error) {
             // Если ошибка, то скорее всего сети нужно показать скрин и передать функцию на перевызов
-            
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(checkAuthorization)];
         }];
-         } else {
+    } else {
         // Либо первый раз, либо просрочился токен
         [self performSegueWithIdentifier:@"LoadingToSignIn" sender:self];
     }
 }
 
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

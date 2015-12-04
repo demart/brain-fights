@@ -10,11 +10,17 @@
 #import "CategoryTableViewCell.h"
 #import "GameQuestionViewController.h"
 
+#import "DejalActivityView.h"
+
 @interface GameCategoriesTableViewController ()
 
 @property GameModel* model;
 @property UITableViewController* gameStatusController;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
+@property UIImage *loadingImage;
 
 @end
 
@@ -22,6 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.tableView.separatorColor = [Constants SYSTEM_COLOR_GREEN];
+    self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
 }
 
 -(void) initViewController:(GameModel*)gameModel fromGameStatus:(UITableViewController*) gameStatusController {
@@ -43,8 +54,11 @@
     return 0;
 }
 
+static CGFloat HEIGHT = 504;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 170;
+    CGFloat proportion = tableView.bounds.size.height / HEIGHT;
+    
+    return 168*proportion;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -54,18 +68,59 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
     }
     
-    [cell initCell:self.model.categories[indexPath.row]];
+    GameRoundCategoryModel *categoryModel = self.model.categories[indexPath.row];
+    [cell initCell:categoryModel];
+    
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:categoryModel.imageUrl];
+    
+    if (loadedImage != nil) {
+        cell.categoryImage.image = loadedImage;
+    } else {
+        cell.categoryImage.image = _loadingImage;
+        
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForCategoryWithPath:categoryModel.imageUrl]
+                                                                                    ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    CategoryTableViewCell *updateCell = (CategoryTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+                    if (updateCell != nil) {
+                        updateCell.categoryImage.image = image;
+                    }
+
+                    [LocalStorageService  saveImageToLocalCache:categoryModel.imageUrl withData:image];
+                    [self.loadImageOperations removeObjectForKey:indexPath];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:indexPath];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+    
+
     
     return cell;
 }
 
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self processSelectedCategory];
+}
+
+
+- (void) processSelectedCategory {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
     
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
     GameRoundCategoryModel *categoryModel = (GameRoundCategoryModel*)self.model.categories[indexPath.row];
-    
-    // SHOW LOADING
-    // Call API to retrieve Questions
+
     [GameService genereateGameRound:self.model.id withSelectedCategory:categoryModel.id onSuccess:^(ResponseWrapperModel *response) {
         // Check data and refresh table
         if ([response.status isEqualToString:SUCCESS]) {
@@ -75,72 +130,32 @@
             GameQuestionViewController *gameQuestionViewController = [[[AppDelegate globalDelegate] drawersStoryboard] instantiateViewControllerWithIdentifier:@"GameQuestionViewController"];
             [gameQuestionViewController initView:self.gameStatusController withGameModel:self.model withGameRoundModel:gameRoundModel];
             [self presentViewController:gameQuestionViewController animated:YES completion:nil];
+            [DejalBezelActivityView removeViewAnimated:NO];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // Show Authorization View
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // Show Error Alert
-            // TODO
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
         }
     } onFailure:^(NSError *error) {
-        // SHOW ERROR
-        
+        [DejalBezelActivityView removeViewAnimated:NO];
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
     }];
-    
 }
 
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

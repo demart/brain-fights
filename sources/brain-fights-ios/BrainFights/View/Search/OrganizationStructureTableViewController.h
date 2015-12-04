@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "DepartmentModel.h"
+#import "BaseTableViewController.h"
 
-@interface OrganizationStructureTableViewController : UITableViewController
+@interface OrganizationStructureTableViewController : BaseTableViewController
 
 /*
  Идентификатор родителя, для того чтобы выгрузить детей

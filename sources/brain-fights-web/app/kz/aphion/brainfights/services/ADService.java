@@ -220,7 +220,7 @@ public class ADService {
                 d.setName(departName);
                 d.setParent(parent);
                 d.setChildren(new ArrayList<Department>());
-                d.setScrore(0);
+                d.setScore(0);
                 d.setUserCount(0);
                 departments.add(d);
             }
@@ -237,7 +237,7 @@ public class ADService {
                 d.setName(departName);
                 d.setParent(parent);
                 d.setChildren(new ArrayList<Department>());
-                d.setScrore(0);
+                d.setScore(0);
                 d.setUserCount(0);
                 departments.add(d);
             }

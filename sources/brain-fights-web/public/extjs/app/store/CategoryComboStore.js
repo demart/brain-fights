@@ -2,7 +2,7 @@ Ext.define('BrainFightsConsole.store.CategoryComboStore', {
     extend: 'Ext.data.Store',
     model: 'BrainFightsConsole.model.CategoryModel',
     autoLoad: false,
-    pageSize: 300,
+    pageSize: 10,
     proxy: {
 	    type: 'ajax',
         api: {

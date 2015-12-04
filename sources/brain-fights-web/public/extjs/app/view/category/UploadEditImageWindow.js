@@ -25,7 +25,7 @@ Ext.define('BrainFightsConsole.view.category.UploadEditImageWindow', {
         xtype : "component",
         autoEl : {
             tag : "iframe",
-            src : "editCategoryImage.html"
+            src : "/public/extjs/editCategoryImage.html"
         },
         tbar: [
                   {

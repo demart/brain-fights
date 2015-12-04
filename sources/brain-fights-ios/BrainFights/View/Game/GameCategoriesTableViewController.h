@@ -10,8 +10,10 @@
 #import "GameModel.h"
 #import "AppDelegate.h"
 #import "GameService.h"
+#import "BaseTableViewController.h"
+#import "UrlHelper.h"
 
-@interface GameCategoriesTableViewController : UITableViewController
+@interface GameCategoriesTableViewController : BaseTableViewController
 
 
 // Передаем модель игры для того чтобы показать категории для выбора

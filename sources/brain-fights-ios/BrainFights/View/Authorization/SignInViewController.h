@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface SignInViewController : UIViewController
+@interface SignInViewController : BaseViewController
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

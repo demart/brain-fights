@@ -25,7 +25,7 @@ Ext.define('BrainFightsConsole.view.questions.UploadEditImageQuestionWindow', {
         xtype : "component",
         autoEl : {
             tag : "iframe",
-            src : "editQuestionImage.html"
+            src : "/public/extjs/editQuestionImage.html"
         },
         tbar: [
                   {

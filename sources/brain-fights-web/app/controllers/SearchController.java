@@ -6,11 +6,16 @@ import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.DepartmentModel;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
 import kz.aphion.brainfights.models.search.DepartmentSearchResultModel;
+import kz.aphion.brainfights.models.search.UserSearchRequestModel;
 import kz.aphion.brainfights.models.search.UserSearchResultModel;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.DepartmentService;
 import kz.aphion.brainfights.services.UserService;
+import play.Logger;
 import play.mvc.Controller;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 /**
  * 
@@ -34,6 +39,23 @@ public class SearchController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 			
+	    	// Если отправили не Get а Post
+	    	if (searchText == null || "".equals(searchText)) {
+	    		UserSearchRequestModel model = null;
+		    	try {
+
+					String requestBody = params.current().get("body");
+					Logger.debug("user search request body: %s", requestBody);
+					Gson gson = new Gson();
+					model = gson.fromJson(requestBody, UserSearchRequestModel.class);
+				} catch (JsonSyntaxException jSE) {
+					throw new PlatformException(ErrorCode.JSON_PARSE_ERROR, "user search requst model is incorrect");
+				}   	
+		    	if (model == null)
+		    		throw new PlatformException(ErrorCode.VALIDATION_ERROR, "user search requst model is empty.");
+		    	searchText = model.searchText;
+	    	}
+	    	
 	    	// Формируем список людей по указанному тексту, кроме указанного пользователя
 	    	UserSearchResultModel model = UserService.searchUsersByText(user, searchText);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));

@@ -12,6 +12,7 @@
 
 
 #import "DepartmentTableViewCell.h"
+#import "DepartmentHeaderTableViewCell.h"
 #import "UserTableViewCell.h"
 #import "UserProfileTableViewController.h"
 
@@ -26,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorColor = [UIColor clearColor];
 
     // Загружаем список друзей
     [self loadDepartmentsAsync];
@@ -51,7 +53,6 @@
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            // SHOW AUTH SCREEN
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
@@ -63,7 +64,7 @@
             // SHOW ERROR
         }
     } onFailure:^(NSError *error) {
-        // SHOW ERROR
+        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadDepartmentsAsync)];
     }];
     
 }
@@ -90,9 +91,7 @@
     // Если есть департаменты то для них секцию
     if (self.departments != nil && [self.departments count] > 0)
         sectionCount = sectionCount + 1;
-    
-    NSLog(@"Section count: %li", sectionCount);
-    
+ 
     return sectionCount;
 }
 
@@ -119,24 +118,12 @@
         
         return 0;
     }
-    
-    /*
-    if (self.departmets == nil)
-        return 0;
-    
-    DepartmentModel *model = self.departmets[section];
-    if (model.users != nil)
-        return [model.users count] + 1;
-    return 1;
-     */
 }
 
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      NSInteger sectionCount = [self.tableView numberOfSections];
-     
-     NSLog(@"cell indexPath: %li %li", indexPath.section, indexPath.row);
-     
+    
      if (sectionCount == 2) {
          if (indexPath.section == 0) {
              // Пользователи
@@ -149,7 +136,7 @@
              // Инициализируем ячейку друга
              NSLog(@"users count: %li", [self.users count]);
              UserProfileModel *userProfile = (UserProfileModel*)self.users[indexPath.row];
-             [cell initCell:userProfile];
+             [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
              return cell;
          } else {
              // Подразделения
@@ -175,12 +162,10 @@
              // Инициализируем ячейку друга
              NSLog(@"users count: %li", [self.users count]);
              UserProfileModel *userProfile = (UserProfileModel*)self.users[indexPath.row];
-             [cell initCell:userProfile];
+             [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
              return cell;
          } else {
-         
-         //if (self.departments != nil && [self.departments count] > 0) {
-             // Департаменты
+
              DepartmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentCell"];
              if (!cell) {
                  [tableView registerNib:[UINib nibWithNibName:@"DepartmentTableViewCell" bundle:nil]forCellReuseIdentifier:@"DepartmentCell"];
@@ -194,11 +179,48 @@
      }
  }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    DepartmentHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
+    if (!cell) {
+        [tableView registerNib:[UINib nibWithNibName:@"DepartmentHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"DepartmentHeaderCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
+    }
+    
+    if (self.parentDepartmentModel == nil) {
+        [cell initCellWithTitle:@"Транстелеком"];
+        return cell;
+    }
+    
+    NSInteger sectionCount = [self.tableView numberOfSections];
+    if (sectionCount == 2) {
+        if (section == 0) {
+            [cell initCellWithTitle:@"Сотрудники"];
+            return cell;
+        } else {
+            [cell initCellWithTitle:self.parentDepartmentModel.name];
+            return cell;
+        }
+    }
+    //  Если одна секция
+    if (self.users != nil && [self.users count] > 0) {
+        [cell initCellWithTitle:@"Сотрудники"];
+        return cell;
+    }
+    
+    if (self.departments != nil && [self.departments count] > 0) {
+        [cell initCellWithTitle:self.parentDepartmentModel.name];
+        return cell;
+    }
+    
+    return cell;
+}
 
-//-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//}
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
 
 
+/*
 -(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSInteger sectionCount = [self.tableView numberOfSections];
     if (sectionCount == 2) {
@@ -218,6 +240,7 @@
     
     return nil;
 }
+ */
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger sectionCount = [self.tableView numberOfSections];
@@ -268,68 +291,11 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.row == 0)
-//        return 44;
-    return 60;
+    return 75;
 }
-
-/*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if (segue isKindOfClass:<#(__unsafe_unretained Class)#>)
-}
-
-*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

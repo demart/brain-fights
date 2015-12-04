@@ -14,8 +14,9 @@
 #import "GameService.h"
 #import "UserService.h"
 #import "GamerQuestionAnswerResultModel.h"
+#import "BaseTableViewController.h"
 
-@interface GameStatusTableViewController : UITableViewController
+@interface GameStatusTableViewController : BaseTableViewController
 
 // Инициализруем статус игры
 - (void) setUserGameModel:(UserGameModel*)gameModel;

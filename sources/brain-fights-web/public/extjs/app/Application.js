@@ -5,7 +5,6 @@
  */
 Ext.define('BrainFightsConsole.Application', {
     extend: 'Ext.app.Application',
-    
     name: 'BrainFightsConsole',
 
     views: [
@@ -23,6 +22,7 @@ Ext.define('BrainFightsConsole.Application', {
              'CategoryStore',
              'QuestionStore',
              'CategoryComboStore',
+             'DepartmentComboStore',
         
     ],
     

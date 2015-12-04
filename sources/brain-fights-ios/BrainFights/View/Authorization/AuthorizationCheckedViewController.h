@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface AuthorizationCheckedViewController : UIViewController
+@interface AuthorizationCheckedViewController : BaseViewController
 
 @end
