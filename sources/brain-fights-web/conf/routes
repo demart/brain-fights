@@ -12,7 +12,7 @@ GET     /push/test	                              				User.testPush
 # Admin
 GET		/rest/users/store/read									AdmController.readUserList
 POST	/rest/users/store/update								AdmController.updateUser
-POST	/rest/users/store/create								AdmController.createUser
+POST	/rest/users/store/create								AdmController.createNewUser
 POST	/rest/users/store/destroy								AdmController.deleteUser
 GET		/rest/admin/users/store/read							AdmController.readAdminUsers
 POST	/rest/admin/users/store/create							AdmController.createAdminUser
@@ -31,6 +31,9 @@ GET		/rest/search/question/store/read						AdmController.searchQuestion
 GET		/rest/category/combo/store/read							AdmController.createCategoryComboList
 POST	/rest/login/out											AdmController.loginOut
 POST	/rest/upload/category/image								AdmController.uploadImage
+GET		/rest/department/combo/store/read						AdmController.createDepartmentComboList
+POST	/rest/users/image/store/create                          AdmController.updateImageUrl
+GET		/rest/search/users/store/read							AdmController.searchUsers
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

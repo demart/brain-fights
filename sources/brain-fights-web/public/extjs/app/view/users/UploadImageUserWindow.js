@@ -1,9 +1,9 @@
-Ext.define('BrainFightsConsole.view.questions.UploadEditImageQuestionWindow', {
+Ext.define('BrainFightsConsole.view.users.UploadImageUserWindow', {
     extend: 'Ext.window.Window',
-    xtype: 'editquestion-image-window',
+    xtype: 'question-image-window',
     
     requires: [
-	'BrainFightsConsole.view.questions.QuestionsEditWindow',
+	//'BrainFightsConsole.view.questions.QuestionsEditWindow',
                ],
     
     title: 'Редактирование изображения',
@@ -15,7 +15,7 @@ Ext.define('BrainFightsConsole.view.questions.UploadEditImageQuestionWindow', {
     defaultFocus: 'name',
     closable: false,
     //closeAble: false,
-    id: 'editQuestionFile',
+    id: 'userImageFile',
    // reference: 'catImageFileReference',
     closeAction: 'hide',
     imageLink: "/public/images/favicon.png",
@@ -25,15 +25,9 @@ Ext.define('BrainFightsConsole.view.questions.UploadEditImageQuestionWindow', {
         xtype : "component",
         autoEl : {
             tag : "iframe",
-            src : "/public/extjs/editQuestionImage.html"
+            src : "/public/extjs/newUserImage.html"
         },
-        tbar: [
-                  {
-                	  xtype: 'button',
-                	  text: 'Закрыть'
-                  }
-                  ]
-            },
+          },
 
     
 ]

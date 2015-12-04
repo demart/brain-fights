@@ -1,15 +1,15 @@
-Ext.define('BrainFightsConsole.store.CategoryComboStore', {
+Ext.define('BrainFightsConsole.store.DepartmentComboStore', {
     extend: 'Ext.data.Store',
-    model: 'BrainFightsConsole.model.CategoryModel',
+    model: 'BrainFightsConsole.model.DepartmentModel',
     autoLoad: false,
-    pageSize: 10,
+    pageSize: 8,
     proxy: {
 	    type: 'ajax',
         api: {
-            read: 'rest/category/combo/store/read',
-            create: 'rest/category/combo/store/create',
-            update: 'rest/category/combo/store/update',
-            destroy: 'rest/category/combo/store/destroy'
+            read: 'rest/department/combo/store/read',
+            create: 'rest/category/store/create',
+            update: 'rest/category/store/update',
+            //destroy: 'rest/category/store/destroy'
         },
         reader: {
             type: 'json',

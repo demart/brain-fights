@@ -26,7 +26,9 @@ import kz.aphion.brainfights.persistents.game.question.QuestionType;
 import kz.aphion.brainfights.persistents.user.*;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
+import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
+import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.*;
 
@@ -228,6 +230,17 @@ public class AdmService {
 	public static List<Category> getCategoryList(int start, int limit) throws PlatformException {
 		return JPA.em().createQuery("from Category where deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).getResultList();
 	}
+	
+	/**
+	 * Список пользователей из базы данных
+	 * @param start
+	 * @param limit
+	 * @return
+	 * @throws PlatformException
+	 */
+	public static List<User> getUsersList (int start, int limit) throws PlatformException {
+		return JPA.em().createQuery("from User where deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).getResultList();
+	}
 
 	/**
 	 * Создаем список категорий, которые отправляем клиенту
@@ -303,7 +316,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				fileOut.close();
 				
 				
-				category.setImageUrl(f.getPath());
+				category.setImageUrl(File.separator + f.getPath());
 			}
 			
 		
@@ -346,7 +359,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				Category catImage = Category.findById(model.getId());
 				
 				if (catImage.getImageUrl() != null) {
-					File del = new File(catImage.getImageUrl());
+					File del = new File(catImage.getImageUrl().substring(1, catImage.getImageUrl().length()));
 					del.delete();
 				}
 					
@@ -376,7 +389,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				fileOut.write(decoded);
 				fileOut.close();
 				
-				category.setImageUrl(f.getPath());
+				category.setImageUrl(File.separator + f.getPath());
 			}
 			
 			
@@ -470,7 +483,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				fileOut.write(decoded);
 				fileOut.close();
 				
-				question.setImageUrl(f.getPath());
+				question.setImageUrl(File.separator + f.getPath());
 				
 				
 			}
@@ -533,7 +546,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					Question questImage = Question.findById(model.getId());
 					
 					if (questImage.getImageUrl() != null) {
-						File del = new File(questImage.getImageUrl());
+						File del = new File(questImage.getImageUrl().substring(1, questImage.getImageUrl().length()));
 						del.delete();
 					}
 					
@@ -562,7 +575,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					fileOut.write(decoded);
 					fileOut.close();
 					
-					question.setImageUrl(f.getPath());
+					question.setImageUrl(File.separator + f.getPath());
 				}
 			
 			question.setModifiedDate(Calendar.getInstance());
@@ -710,4 +723,138 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		return models;
 
 	}
+	
+	public static ArrayList<DepartmentForAdminModel> createDepartmentComboList (List<Department> list) {
+		ArrayList<DepartmentForAdminModel> models = new ArrayList<DepartmentForAdminModel> ();
+		for (Department model: list) {
+			DepartmentForAdminModel department = new DepartmentForAdminModel();
+			department.setId(model.getId());
+			department.setName(model.getName());
+			models.add(department);
+		}
+ 		return models;
+	}
+
+	public static ArrayList<UserModel> createUsersList(List<User> list) throws PlatformException {
+		ArrayList<UserModel> models = new ArrayList<UserModel>();
+		for (User model: list) {
+			UserModel user = new UserModel();
+			user.setId(model.getId());
+			user.setName(model.getName());
+			user.setEmail(model.getEmail());
+			user.setLogin(model.getLogin());
+			user.setScore(model.getScore().toString());
+			user.setTotalGames(model.getScore());
+			if (model.getDepartment() != null)
+				user.setDepartment(model.getDepartment().getName());
+			else 
+				user.setDepartment("Не указано");
+			
+			if (model.getImageUrl() == null)
+				user.setImageUrl("/public/images/no_image.jpg");
+			else
+				user.setImageUrl(model.getImageUrl());
+			models.add(user);
+		}
+		return models;
+	
+	}
+
+	public static Long getCountUserNotDeleted() {
+		Query query = JPA.em().createQuery("select count(*) from User where deleted = 'FALSE'");
+		return (Long)query.getSingleResult();
+	}
+
+	public static List<Department> getDepartmentList(int start, int limit) {
+		return JPA.em().createQuery("from Department where deleted = 'FALSE'").setFirstResult(start).setMaxResults(limit).getResultList();
+	}
+
+	public static Long getCountDepartmentNotDeleted() {
+		Query query = JPA.em().createQuery("select count(*) from Department where deleted = 'FALSE'");
+		return (Long)query.getSingleResult();
+	}
+
+	public static void uploadImage(UserModel[] models) throws PlatformException,IOException{
+		for (UserModel model: models) {
+			if (model == null)
+				throw new PlatformException("0", "User model is null");
+			
+			User user = User.findById(model.getId());
+			if (user == null)
+				throw new PlatformException("0", "User not found");
+			
+			if (model.getImageUrl() != null) {
+				if (user.getImageUrl() != null) {
+					File del = new File(user.getImageUrl().substring(1, user.getImageUrl().length()));
+					del.delete();
+					System.out.println ("Ok DELETED");
+					
+					String strTmpOne = model.getImageUrl().substring(model.getImageUrl().indexOf("base64,"), model.getImageUrl().length());
+					String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+					
+					String imageTmpFormat = model.getImageUrl().substring(11, model.getImageUrl().indexOf(";base64,"));
+					//System.out.println (imageTmpFormat);
+					
+					
+					
+					//System.out.println (imageTmpFormat);
+					String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+					
+					byte[] decoded = Base64.decodeBase64(stringInBase64);
+					File f = new File("public" + File.separator +"images" + File.separator + "avatars" + File.separator + nameImage + "." + imageTmpFormat);
+					//System.out.println(f.getName());
+					//System.out.println(f.getAbsolutePath());
+					System.out.println(f.getPath());
+					
+					
+					f.createNewFile();
+
+					
+					FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+					fileOut.write(decoded);
+					fileOut.close();
+					
+					user.setImageUrl(File.separator + f.getPath());
+				}
+				else {
+					String strTmpOne = model.getImageUrl().substring(model.getImageUrl().indexOf("base64,"), model.getImageUrl().length());
+					String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+					
+					String imageTmpFormat = model.getImageUrl().substring(11, model.getImageUrl().indexOf(";base64,"));
+					//System.out.println (imageTmpFormat);
+					
+					
+					
+					//System.out.println (imageTmpFormat);
+					String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+					
+					byte[] decoded = Base64.decodeBase64(stringInBase64);
+					File f = new File("public" + File.separator +"images" + File.separator + "avatars" + File.separator + nameImage + "." + imageTmpFormat);
+					//System.out.println(f.getName());
+					//System.out.println(f.getAbsolutePath());
+					System.out.println(f.getPath());
+					
+					
+					f.createNewFile();
+
+					
+					FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+					fileOut.write(decoded);
+					fileOut.close();
+					
+					user.setImageUrl(File.separator + f.getPath());
+				}
+			}
+			
+			user.save();
+			System.out.println("User image upload!");
+		}
+	}
+
+	public static List<User> getSearchUsers(String name) {
+		return JPA.em().createQuery("from User where (lower(login) like lower(:name) or lower(name) like lower(:name) or lower(email) like lower(:name)) and deleted = 'FALSE' order by id")
+				.setParameter("name", "%" + name + "%").getResultList();
+	}
+
+
 }
