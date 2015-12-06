@@ -44,7 +44,7 @@ public class GcmManager {
 	}
 	
 	public void sendNotification(String deviceToken, String title, String message){
-		Notification notification = new Notification.Builder("").title(title).body(message).build();
+		Notification notification = new Notification.Builder("@drawable/ttk_logo").title(title).body(message).build();
 		Message pushMessage = new Message.Builder().notification(notification).build();
 		GcmMessage gcmMessage = new GcmMessage(deviceToken, pushMessage);
 		try {
