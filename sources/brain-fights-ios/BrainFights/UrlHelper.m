@@ -22,6 +22,7 @@
     //return @"http://192.168.0.94:8080";
     //return @"http://api.sushimi.kz/rest-api";
 #else
+    return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
         return @"http://172.20.10.2";
     //return @"http://api.sushimi.kz/rest-api";
 #endif
@@ -193,6 +194,10 @@
     return [[NSString alloc] initWithFormat:@"%@/game/%li/surrender?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
 }
 
+// URL для отметки о прочтении
++ (NSString*) gameMarkAsViewed:(NSUInteger)gameId onGamer:(NSUInteger)gamerId {
+    return [[NSString alloc] initWithFormat:@"%@/game/%li/gamer/%li/mark/as/viewed?authToken=%@", UrlHelper.baseUrl, gameId, gamerId, [self authToken]];
+}
 
 +(NSString*) authToken {
     return [AuthorizationService getAuthToken];

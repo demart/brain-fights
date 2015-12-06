@@ -46,5 +46,7 @@
 // Строит маппинг для получения ответа на запрос "Сдаться"
 + (RKResponseDescriptor*) buildResponseDescriptorForGameSurrender;
 
+// Строит маппинг для получения ответа на запрос отметки о прочтении
++ (RKResponseDescriptor*) buildResponseDescriptorForGameMarkAsViewed;
 
 @end

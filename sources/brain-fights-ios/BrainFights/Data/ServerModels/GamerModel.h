@@ -33,6 +33,18 @@
  */
 @property NSInteger correctAnswerCount;
 
+
+/**
+ * Результатов
+ */
+@property NSInteger resultScore;
+
+/**
+ * Было ли просмотрено уведомление об окончании игры
+ */
+@property Boolean resultWasViewed;
+
+
 /**
  * Время последнего обновления
  * Формат ISO 8601

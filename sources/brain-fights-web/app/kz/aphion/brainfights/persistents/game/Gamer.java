@@ -81,6 +81,12 @@ public class Gamer extends PersistentObject {
     private Integer score;
 
     /**
+     * Просмотрел ли пользователь результат игры
+     */
+    @Column(name="is_result_was_viewed", nullable=false, columnDefinition="boolean default false")
+    private Boolean isResultWasViewed;
+    
+    /**
      * Игрок который предложил играть
      */
     @Column(name="game_initiator", nullable=false, columnDefinition="boolean default false")
@@ -159,6 +165,12 @@ public class Gamer extends PersistentObject {
 	}
 	public void setOponent(Gamer oponent) {
 		this.oponent = oponent;
+	}
+	public Boolean getIsResultWasViewed() {
+		return isResultWasViewed;
+	}
+	public void setIsResultWasViewed(Boolean isResultWasViewed) {
+		this.isResultWasViewed = isResultWasViewed;
 	}
     
 }

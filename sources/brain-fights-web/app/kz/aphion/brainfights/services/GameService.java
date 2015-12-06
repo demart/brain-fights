@@ -1067,5 +1067,43 @@ public class GameService {
 		NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", gamer.getUser().getName() + " так и не принял ваше приглашение!");
 	}
 
+	
+	/**
+	 * Пометить просмотренным уведомление об окончании игры
+	 * @param user
+	 * @param gameId
+	 * @param gamerId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GameModel markGameResultAsViewed(User user, Long gameId, Long gamerId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user is null");
+		if (user.getDeleted())
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user was deleted");
+		
+		// Проверяем игру
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
+		
+		Gamer gamer = null;
+		Gamer oponent = null;
+		if (game.getGamers() != null && game.getGamers().size() > 0) {
+			if (game.getGamers().get(0).id == gamerId) {
+				gamer = game.getGamers().get(0);
+				oponent = game.getGamers().get(0);
+			}
+		}
+		
+		gamer.setIsResultWasViewed(true);
+		gamer.save();
+		
+		GameModel model = GameModel.buildModel(game, gamer, oponent, null);
+		return model;
+	}
+
 
 }

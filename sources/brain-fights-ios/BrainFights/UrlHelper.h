@@ -105,6 +105,11 @@
 // URL для того чтобы сдаться в игре
 + (NSString*) gameSurrenderUrl:(NSUInteger)gameId;
 
+
+// URL для отметки о прочтении
++ (NSString*) gameMarkAsViewed:(NSUInteger)gameId onGamer:(NSUInteger)gamerId;
+
+
 // Базовый URL для API по игре
 + (NSString*) gameBaseUrl;
 
