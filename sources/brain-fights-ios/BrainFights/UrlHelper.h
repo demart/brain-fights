@@ -36,6 +36,11 @@
 // URL для получения рейтинга пользователей
 + (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit;
 
+// URL для получения типов подразделений
++ (NSString*) departmentTypeUrl;
+
+// URL для получения рейтинга департаментов
++ (NSString*) departmentsRatingUrl:(NSUInteger)typeId withPage:(NSUInteger)page withLimit:(NSUInteger)limit;
 
 
 // URL для получения рутовый департаментов
@@ -83,7 +88,7 @@
 + (NSString*) gameCreateInvitationByUserIdUrl:(NSInteger)userId;
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId;
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId withResult:(BOOL)result;
 
 // URL для получения детальной информации об игре
 + (NSString*) gameInformationUrl:(NSInteger)gameId;

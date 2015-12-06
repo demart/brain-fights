@@ -7,8 +7,10 @@ import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.models.DepartmentModel;
+import kz.aphion.brainfights.models.DepartmentTypeModel;
 import kz.aphion.brainfights.models.search.DepartmentSearchResultModel;
 import kz.aphion.brainfights.persistents.user.Department;
+import kz.aphion.brainfights.persistents.user.DepartmentType;
 import kz.aphion.brainfights.persistents.user.User;
 import play.db.jpa.JPA;
 
@@ -166,7 +168,7 @@ public class DepartmentService {
 		// Подсчитаем рейтинг внутренних департаментов
 		if (department.getChildren() != null)
 			for (Department child : department.getChildren()) {
-				totalScore += child.getScrore();
+				totalScore += child.getScore();
 				totalCount += 1;
 				if (child.getUsers() != null)
 					totalUserCount += child.getUsers().size();
@@ -183,14 +185,64 @@ public class DepartmentService {
 		
 		if (totalCount != 0) {
 			int avarageScore = totalScore / totalCount;
-			department.setScrore(avarageScore);
+			department.setScore(avarageScore);
 		} else {
-			department.setScrore(0);
+			department.setScore(0);
 		}
 		
 		department.setUserCount(totalUserCount);
 		
 		department.save();
+	}
+	
+	/**
+	 * Возращает список доступных моделей типов подразделений
+	 * @param authorizedUser
+	 * @return
+	 * @throws AuthorizationException
+	 */
+	public static List<DepartmentTypeModel> getDepartmentTypes(User authorizedUser) throws AuthorizationException {
+		if (authorizedUser == null)
+			throw new AuthorizationException(ErrorCode.AUTH_ERROR, "authorized user is null");
+		
+		List<DepartmentType> objects = DepartmentType.find("deleted = false").fetch();
+		if (objects == null)
+			return null;
+		
+		List<DepartmentTypeModel> models = new ArrayList<DepartmentTypeModel>();
+		for (DepartmentType departmentType : objects) {
+			DepartmentTypeModel model = DepartmentTypeModel.buildModel(authorizedUser, departmentType);
+			models.add(model);
+		}
+		
+		return models;
+	}
+	
+	
+	/**
+	 * Возвращает список департаментов по указанному типу подразделения
+	 * @param authorizedUser
+	 * @param departmentTypeId
+	 * @param page
+	 * @param limit
+	 * @return
+	 * @throws PlatformException
+	 */
+	public static List<DepartmentModel> getDepartmentStatisticsByType(User authorizedUser, Long departmentTypeId, Integer page, Integer limit) throws PlatformException {
+		if (authorizedUser == null)
+			throw new AuthorizationException(ErrorCode.AUTH_ERROR, "authorized user is null");
+		
+		List<Department> objects = Department.find("deleted = false and type.id = ? order by score DESC", departmentTypeId).fetch(page, limit);
+		if (objects == null)
+			return null;
+		
+		List<DepartmentModel> models = new ArrayList<DepartmentModel>();
+		for (Department department : objects) {
+			DepartmentModel model = DepartmentModel.buildModel(authorizedUser, department);
+			models.add(model);
+		}
+		
+		return models;
 	}
 	
 }

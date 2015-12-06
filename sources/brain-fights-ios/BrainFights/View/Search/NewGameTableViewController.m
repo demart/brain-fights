@@ -93,6 +93,7 @@
 - (void) createRandomInvitation {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
     [GameService createGameInvitation:0 onSuccess:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         if ([response.status isEqualToString:SUCCESS]) {
             [self.navigationController popViewControllerAnimated:YES];
         }
@@ -181,13 +182,53 @@
         
         // Инициализируем ячейку друга
         UserProfileModel *userProfile = self.friends[indexPath.row];
-        [cell initCell:userProfile];
+        [cell initCell:userProfile withDeleteButton:YES onClicked:^{
+            // remove friend;
+            [self removeFriend];
+        }];
         
         return cell;
     }
     
     return nil;
 }
+
+
+-(void) removeFriend {
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    UserProfileModel *userProfile = self.friends[selectedIndexPath.row];
+    if (userProfile != nil) {
+            [[UserService sharedInstance] removeUserFriendAsync:userProfile.id onSuccess:^(ResponseWrapperModel *response) {
+                if ([response.status isEqualToString:SUCCESS]) {
+                    // REMOVE ROW
+                    [self.friends removeObject:userProfile];
+                    [self.tableView reloadData];
+                }
+                
+                if ([response.status isEqualToString:NO_CONTENT]) {
+                    NSLog(@"response.status: %@", response.status);
+                }
+                
+                if ([response.status isEqualToString:BAD_REQUEST]) {
+                    NSLog(@"response.status: %@", response.status);
+                }
+                
+                if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+                    [[AppDelegate globalDelegate] showAuthorizationView:self];
+                }
+                
+                if ([response.status isEqualToString:SERVER_ERROR]) {
+                    NSLog(@"response.status: %@", response.status);
+                    // SHOW ERROR ALERT
+                }
+                
+            } onFailure:^(NSError *error) {
+                NSLog(@"error: %@", error);
+                [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+            }];
+    }
+}
+
 
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section < 3)

@@ -7,10 +7,12 @@
 //
 
 #import "FriendsHeaderTableViewCell.h"
+#import "AppDelegate.h"
 
 @implementation FriendsHeaderTableViewCell
 
 - (void)awakeFromNib {
+    [self.friendsTitle setTextColor:[Constants SYSTEM_COLOR_ORANGE]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -141,7 +141,7 @@ static UserProfileModel *_userProfileModel;
     if (userId < 1)
         failure(nil);
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userAddFriendByIdUrl:userId]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper userRemoveFriendByIdUrl:userId]]];
     
     RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForRemoveFriend];
     
@@ -260,6 +260,68 @@ static UserProfileModel *_userProfileModel;
     [objectRequestOperation start];
     
 }
+
+// Возращает список типов подразделений
+- (void) retrieveDepartmentTyps:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper departmentTypeUrl]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForDepartmentTypes];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
+// Возращает постранично департаменты
+- (void) retrieveDepartmentsRating:(NSInteger)type withPage:(NSInteger)page withLimit:(NSInteger)limit onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper departmentsRatingUrl:type withPage:page withLimit:limit]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [UserHelper buildResponseDescriptorForDepartmentsRating];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
+
 
 // Отправляет на сервер новый PUSH токен
 -(void) registerOrUpdateDeviceToken:(NSString*)deviceToken invalidateDeviceToken:(NSString*)invalidDeviceToken   onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {

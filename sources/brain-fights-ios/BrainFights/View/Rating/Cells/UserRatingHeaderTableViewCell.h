@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UserRatingHeaderTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *headerGroupTitle;
+
+- (void) initCellWithHeaderTitle:(NSString*)title;
 
 @end

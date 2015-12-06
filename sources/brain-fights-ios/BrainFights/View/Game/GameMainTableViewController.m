@@ -251,27 +251,8 @@ static UIRefreshControl *refreshControl;
     UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
     UserGameModel *userGame = gameGroupModel.games[indexPath.row];
     if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
-        // Если нам нужно принять решение
-        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Принимаем приглашение..."];
-        [GameService acceptGameInvitation:userGame.id onSuccess:^(ResponseWrapperModel *response) {
-            if ([response.status isEqualToString:SUCCESS]) {
-                gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
-                [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
-            }
-            
-            if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-                [[AppDelegate globalDelegate] showAuthorizationView:self];
-            }
-            
-            if ([response.status isEqualToString:SERVER_ERROR]) {
-                // Show Error Alert
-                [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedRow)];
-                [DejalBezelActivityView removeViewAnimated:NO];
-            }
-        } onFailure:^(NSError *error) {
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedRow)];
-            [DejalBezelActivityView removeViewAnimated:NO];
-        }];
+        // SHOW PROMPT
+        [self showAcceptAgreementAlertConfirmation];
     } else
         if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
             // Если мы ждем принятия решения
@@ -287,6 +268,72 @@ static UIRefreshControl *refreshControl;
             // Check Status
             [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
         }
+}
+
+
+-(void) showAcceptAgreementAlertConfirmation {
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+    UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+
+    NSString *alertTitle = @"Новая игра";
+    NSString *alertMessage = [[NSString alloc] initWithFormat:@"%@ бросил вам вызов. Вы согласны играть?", userGame.oponent.user.name];
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:alertTitle
+                                          message:alertMessage
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *acceptAction = [UIAlertAction
+                                   actionWithTitle:@"Да"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action) {
+                                       [self acceptGameInvitationWithResult:YES];
+                                   }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                  actionWithTitle:@"Нет"
+                                  style:UIAlertActionStyleDestructive
+                                  handler:^(UIAlertAction *action) {
+                                      NSLog(@"Cancel action");
+                                       [self acceptGameInvitationWithResult:NO];
+                                  }];
+    
+    [alertController addAction:acceptAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void) acceptGameInvitationWithResult:(BOOL)result {
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
+    UserGameModel *userGame = gameGroupModel.games[indexPath.row];
+
+    // Если нам нужно принять решение
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    [GameService acceptGameInvitation:userGame.id onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            if (result) {
+                gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
+                [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
+            } else {
+                [self loadGames];
+            }
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            // Show Error Alert
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedRow)];
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+    } onFailure:^(NSError *error) {
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedRow)];
+        [DejalBezelActivityView removeViewAnimated:NO];
+    } withResult:result];
 }
 
 

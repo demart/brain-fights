@@ -29,52 +29,73 @@ Ext.define('BrainFightsConsole.view.main.Main', {
             	 region:'north',
      	        floatable: false,
      	        margin: '0 0 0 0',
-     	        tbar : [
-					{
-						id: 'authUserNameLabel',
-						xtype:'label',
-					    text:'',
-					    scale: 'medium',
-					    hidden: false,
-					}, '-' , {
-						id: 'logoutBtn',
-						xtype:'button',
-			        	margin: '0 80 0 0',
-					    text:'Выход',
-					    scale: 'medium',
-					    hidden: false,
-					    listeners : {click : 'onLogoutClick', },
-					},
-					
-					{
-						id: 'adminUsersBtn',
-					    text:'Управление пользователями',
-					    iconCls: null,
-					    scale: 'small',
-					    hidden: true,
-					    listeners : {click : 'onAdminUsersBtnClick', },
-					    
-					},
-					{
-						id: 'categoryBtn',
-					    text:'Управление категориями',
-					    iconCls: null,
-					    scale: 'small',
-					    hidden: true,
-					    listeners : {click : 'onCategoryBtnClick', },
-					    
-					},
-					{
-						id: 'questionBtn',
-					    text:'Управление вопросами',
-					    iconCls: null,
-					    scale: 'small',
-					    hidden: true,
-					    listeners : {click : 'onQuestionBtnClick', },
-					    
-					},
-					
-     	         ],
+     	        
+     	        items: [
+     	                
+     	                {
+     	                	region: 'west',
+     	                	buttonAlign: 'right',
+     	                
+		     	        tbar : [
+												
+							{
+								id: 'adminUsersBtn',
+							    text:'Управление администраторами',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onAdminUsersBtnClick', },
+							    
+							},
+							{
+								id: 'usersBtn',
+							    text:'Управление игроками',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onUsersBtnClick', },
+							    
+							},
+							{
+								id: 'categoryBtn',
+							    text:'Управление категориями',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onCategoryBtnClick', },
+							    
+							},
+							{
+								id: 'questionBtn',
+							    text:'Управление вопросами',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onQuestionBtnClick', },
+							    
+							}, '->',
+							{
+								id: 'authUserNameLabel',
+								xtype:'label',
+							    text:'',
+							    scale: 'medium',
+							    align: 'right',
+							    //margin: '0 200 0 0',
+							    hidden: false,
+							}, '-' , {
+								id: 'logoutBtn',
+								xtype:'button',
+					        	//margin: '0 80 0 0',
+							    text:'Выход',
+							    scale: 'medium',
+							    hidden: false,
+							    buttonAlign: 'right',
+							    listeners : {click : 'onLogoutClick', },
+							},
+							
+		     	         ],
+     	                }
+	     	         ],
             },
             {
             	region:'center',
@@ -100,6 +121,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('adminUsersBtn').setVisible(true);
         		Ext.getCmp('categoryBtn').setVisible(true);
         		Ext.getCmp('questionBtn').setVisible(true);
+        		Ext.getCmp('usersBtn').setVisible(true);
         		window.document.location = "#admins";
         		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь администратором.');
         	}
@@ -107,6 +129,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('adminUsersBtn').setVisible(false);
         		Ext.getCmp('categoryBtn').setVisible(true);
         		Ext.getCmp('questionBtn').setVisible(true);
+        		Ext.getCmp('usersBtn').setVisible(false);
         		window.document.location = "#category";
         		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь менеджером.');
         	}

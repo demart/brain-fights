@@ -51,7 +51,23 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                                 anchor: '-15',
                                 labelWidth: 130,
                                 autoRender: true,
-                                store: 'CategoryComboStore',
+                                pageSize: 10,
+                                store: {
+            	                    model: 'BrainFightsConsole.model.CategoryModel',
+            	                    pageSize: 10,
+            	                    proxy: {
+            	                        type: 'ajax',
+            	                        url: '/rest/category/combo/store/read',
+            	                        reader: {
+            	                        	type: 'json',
+            	                            rootProperty: 'data',
+            	                            successProperty: 'success',
+            	                            totalProperty: 'totalCount',
+            	                            idProperty: 'id'
+            	                        }
+            	                    },
+            	                    autoDestroy: true
+            	                },
                                 minChars: 5,
                                 queryParam: 'q',
                                 queryMode: 'remote',
@@ -218,8 +234,27 @@ layout: 'fit',
 
                 	listeners: {
                 		viewready: function() {
-                			this.store.load();
-                		},
+            	            var height = Ext.getBody().getSize().height - 265;
+            	    		console.log(height);
+            	    	    var rows = Math.floor(height / 25.0);
+            	    	    console.log(rows);
+            	    	    this.store.pageSize = rows;
+            	    		this.store.load();
+            	    	},
+            	    	
+            	    	resize: function() {
+            	            var height = Ext.getBody().getSize().height - 265;
+            	    		console.log(height);
+            	    		//console.log(grid.container.getHeight());
+            	    		//console.log(Ext.getCmp('categoryStoreId').getColumns());
+            	    		//var firstRow = this.getEl().select('tr.x-grid-row').elements[0].height;
+            	    		//console.log(firstRow);
+            	    	    var rows = Math.floor(height / 25.0);
+            	    	    console.log(rows);
+            	    	    this.store.pageSize = rows;
+            	    		this.store.load();
+            	    	},
+            	    	
                 		
                 		cellclick: function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
             		        var record = iView.getRecord(iRowEl);
@@ -294,6 +329,8 @@ bbar:            	 {
 region: 'center',
 title: 'Просмотр информации о вопросе',
 flex: 1,
+layout: 'fit',
+scroll: true,
 id: 'viewQuestionInformationId',
 items: [
 {

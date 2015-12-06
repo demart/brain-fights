@@ -116,8 +116,8 @@
     [objectRequestOperation start];
 }
 
-// принять приглашение сыграть в игру
-+ (void) acceptGameInvitation:(NSInteger)gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+// принять или отказать приглашение сыграть в игру
++ (void) acceptGameInvitation:(NSInteger)gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure withResult:(BOOL)result {
     
     NSString* authToken = [AuthorizationService getAuthToken];
     if (authToken == nil)
@@ -126,7 +126,7 @@
     if (gameId < 1)
         failure(nil);
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameAcceptInvitationUrl:gameId]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameAcceptInvitationUrl:gameId withResult:result]]];
     
     RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForAcceptInvitation];
     

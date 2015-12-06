@@ -134,7 +134,7 @@
     
     // Инициализируем ячейку друга
     UserProfileModel *userProfile = (UserProfileModel*)self.filteredUsers[indexPath.row];
-    [cell initCell:userProfile];
+    [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
     
     return cell;
 }
@@ -211,7 +211,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 75;
 }
 
 

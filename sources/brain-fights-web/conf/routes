@@ -12,7 +12,7 @@ GET     /push/test	                              				User.testPush
 # Admin
 GET		/rest/users/store/read									AdmController.readUserList
 POST	/rest/users/store/update								AdmController.updateUser
-POST	/rest/users/store/create								AdmController.createUser
+POST	/rest/users/store/create								AdmController.createNewUser
 POST	/rest/users/store/destroy								AdmController.deleteUser
 GET		/rest/admin/users/store/read							AdmController.readAdminUsers
 POST	/rest/admin/users/store/create							AdmController.createAdminUser
@@ -31,6 +31,9 @@ GET		/rest/search/question/store/read						AdmController.searchQuestion
 GET		/rest/category/combo/store/read							AdmController.createCategoryComboList
 POST	/rest/login/out											AdmController.loginOut
 POST	/rest/upload/category/image								AdmController.uploadImage
+GET		/rest/department/combo/store/read						AdmController.createDepartmentComboList
+POST	/rest/users/image/store/create                          AdmController.updateImageUrl
+GET		/rest/search/users/store/read							AdmController.searchUsers
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate
@@ -61,6 +64,7 @@ GET		/game/invitation/create									GameController.createInvitation
 GET		/game/invitation/create/								GameController.createInvitation
 GET		/game/invitation/create/{userId}						GameController.createInvitation
 GET		/game/{gameId}/accept/invitation						GameController.acceptInvitation
+GET		/game/{gameId}/accept/invitation/{accept}				GameController.acceptInvitation
 
 GET		/games																			GameController.getUserGames
 GET		/game/list																		GameController.getUserGames
@@ -74,7 +78,9 @@ GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			G
 GET		/game/{gameId}/surrender														GameController.surrenderGame
 
 # STATISTICS API
-GET		/stat/users/page/{page}/limit/{limit}					StatisticController.getUserStatistics				
+GET		/stat/users/page/{page}/limit/{limit}												StatisticController.getUserStatistics
+GET		/stat/departments/types																StatisticController.getDepartmentTypes
+GET		/stat/departments/type/{departmentTypeId}/page/{page}/limit/{limit}					StatisticController.getDepartmentStatistics				
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

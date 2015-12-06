@@ -16,7 +16,8 @@
 +(NSString*) baseUrl {
 #if DEBUG
     //return @"http://localhost:8080";
-    return @"http://localhost:9000";
+    return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
+    //return @"http://localhost:9000";
     //return @"http://172.20.10.2:9000";
     //return @"http://192.168.0.94:8080";
     //return @"http://api.sushimi.kz/rest-api";
@@ -59,9 +60,20 @@
 }
 
 
+
 // URL для получения рейтинга пользователей
 + (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit {
     return [[NSString alloc] initWithFormat:@"%@/stat/users/page/%li/limit/%li?authToken=%@", UrlHelper.baseUrl, page, limit, [self authToken]];
+}
+
+// URL для получения типов подразделений
++ (NSString*) departmentTypeUrl {
+    return [[NSString alloc] initWithFormat:@"%@/stat/departments/types?authToken=%@", UrlHelper.baseUrl, [self authToken]];
+}
+
+// URL для получения рейтинга департаментов
++ (NSString*) departmentsRatingUrl:(NSUInteger)typeId withPage:(NSUInteger)page withLimit:(NSUInteger)limit {
+    return [[NSString alloc] initWithFormat:@"%@/stat/departments/type/%li/page/%li/limit/%li?authToken=%@", UrlHelper.baseUrl, typeId, page, limit, [self authToken]];
 }
 
 
@@ -147,8 +159,12 @@
 
 
 // URL для принятия приглашения сыграть в игру
-+ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId {
-    return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
++ (NSString*) gameAcceptInvitationUrl:(NSInteger)gameId withResult:(BOOL)result {
+    if (result) {
+        return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation/true?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+    } else {
+         return [[NSString alloc] initWithFormat:@"%@/game/%li/accept/invitation/false?authToken=%@", UrlHelper.baseUrl, (long)gameId, [self authToken]];
+    }
 }
 
 // URL для получения детальной информации об игре

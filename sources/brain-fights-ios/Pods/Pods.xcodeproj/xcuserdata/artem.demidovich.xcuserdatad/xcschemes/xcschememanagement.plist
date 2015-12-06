@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>LMDropdownView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BrainFights.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SWTableViewCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>TransitionKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,6 +57,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>040B04992A2A51077E5551FA770967AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>09A0945927EB19F0925A796A509C1A6B</key>
 		<dict>
 			<key>primary</key>
@@ -58,6 +73,11 @@
 			<true/>
 		</dict>
 		<key>356EF5A9D5972127578175959A5F4F92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3B6D55A5AC45D071940415635BD497E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +102,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>73585AEF49A9E8DDA0BA645EF9DD3E90</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>99FBDFA71BC7C13C6E68DD6B512472A3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A2770197345BCE1622568AECE6B8E824</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AA14E335407F02C95A45599AB67CDC48</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C22D931AA9B5114C127CC6722A6E9238</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CDE0B7668B6EC1B2BF166A65E070AF5E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

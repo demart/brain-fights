@@ -19,8 +19,14 @@ Ext.define('BrainFightsConsole.view.main.MainController', {
  
     // Управление администраторами/менеджерами
     onAdminUsersBtnClick : function() {
-    	console.log('Users clicked');
+    	console.log('Admin Users clicked');
     	this.redirectTo('admins');
+    },
+    
+    //Управление пользователями
+    onUsersBtnClick: function() {
+    	console.log('Users clicked');
+    	this.redirectTo('users');
     },
     
     // Управление категориями

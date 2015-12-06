@@ -8,7 +8,7 @@ Ext.define('BrainFightsConsole.view.questions.UploadImageQuestionWindow', {
     
     title: 'Редактирование изображения',
     width: 800,
-    height: 650,
+    height: 750,
     layout: 'fit',
     resizable: true,
     modal: true,
@@ -25,7 +25,7 @@ Ext.define('BrainFightsConsole.view.questions.UploadImageQuestionWindow', {
         xtype : "component",
         autoEl : {
             tag : "iframe",
-            src : "newQuestionImage.html"
+            src : "/public/extjs/newQuestionImage.html"
         },
         tbar: [
                   {

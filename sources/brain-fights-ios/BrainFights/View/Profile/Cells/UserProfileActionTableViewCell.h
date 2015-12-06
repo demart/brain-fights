@@ -20,6 +20,6 @@
 - (IBAction)oneActionViewPlayAction:(UIButton *)sender;
 - (IBAction)twoActionsViewAddToFriendAction:(UIButton *)sender;
 
--(void) initCell:(UserProfileModel*)userProfileModel onPlayAction:(void (^)(void))playAction  onAddToFriedsAction:(void (^)(void))addToFriendAction;
+-(void) initCell:(UserProfileModel*)userProfileModel onPlayAction:(void (^)(void))playAction  onAddToFriedsAction:(void (^)(void))addToFriendAction onRemoveFromFriedsAction:(void (^)(void))removeFromFriendAction;
 
 @end

@@ -11,6 +11,8 @@
 @implementation ChoiceSearchActionTableViewCell
 
 - (void)awakeFromNib {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     self.roundView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
     self.roundView.layer.cornerRadius = 5.0;
     [self initView:self.imageView];
