@@ -331,25 +331,27 @@ public class GameService {
 		statuses.add(GamerStatus.WAITING_OWN_DECISION);
 		statuses.add(GamerStatus.WAITING_ROUND);
 		statuses.add(GamerStatus.WAITING_ANSWERS);
-		
-		List<Gamer> notCompletedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+
+		List<Gamer> notCompletedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and game.deleted=:deleted ")
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", statuses)
+				.setParameter("deleted",false)
 				.getResultList();
-		
+
 		List<GamerStatus> completedStatuses = new ArrayList<>();
 		completedStatuses.add(GamerStatus.DRAW);
 		completedStatuses.add(GamerStatus.LOOSER);
 		completedStatuses.add(GamerStatus.SURRENDED);
 		completedStatuses.add(GamerStatus.WINNER);
-		
+
 		// Достаем законченные игры (последние 5 штук)
-		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) order by lastUpdateStatusDate DESC")
+		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and game.deleted=:deleted  order by lastUpdateStatusDate DESC")
 				.setMaxResults(5)
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", completedStatuses)
+				.setParameter("deleted",false)
 				.getResultList();
-		
+
 		System.out.println("notCompleted Games count: " + notCompletedGames.size());
 		System.out.println("Completed Games count: " + completedGames.size());
 		
