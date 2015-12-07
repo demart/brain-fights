@@ -28,6 +28,11 @@ import kz.aphion.brainfights.persistents.user.User;
 @Table(name = "gamer")
 public class Gamer extends PersistentObject {
 	  
+	public Gamer() {
+		isResultWasViewed = false;
+	}
+	
+	
 	@Id
 	@GeneratedValue(generator="gamer_sequence")
 	@SequenceGenerator(name="gamer_sequence",sequenceName="gamer_sequence", allocationSize=1)

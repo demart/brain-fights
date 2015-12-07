@@ -771,7 +771,6 @@ public class GameService {
 		
 		gamerAnswer.save();
 		
-		
 		if (gameRoundQuestion.getQuestionAnswers() == null)
 			gameRoundQuestion.setQuestionAnswers(new ArrayList<GameRoundQuestionAnswer>());
 		gameRoundQuestion.getQuestionAnswers().add(gamerAnswer);
@@ -1100,17 +1099,8 @@ public class GameService {
 		if (game.getDeleted())
 			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
 		
-		Gamer gamer = null;
-		Gamer oponent = null;
-		if (game.getGamers() != null && game.getGamers().size() > 0) {
-			if (game.getGamers().get(0).id == gamerId) {
-				gamer = game.getGamers().get(0);
-				oponent = game.getGamers().get(1);
-			} else {
-				gamer = game.getGamers().get(1);
-				oponent = game.getGamers().get(0);
-			}
-		}
+		Gamer gamer = Gamer.findById(gamerId);
+		Gamer oponent = gamer.getOponent();
 		
 		gamer.setIsResultWasViewed(true);
 		gamer.save();

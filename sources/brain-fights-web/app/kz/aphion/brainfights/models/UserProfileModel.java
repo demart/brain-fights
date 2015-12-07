@@ -1,5 +1,6 @@
 package kz.aphion.brainfights.models;
 
+import play.db.jpa.JPA;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.persistents.user.User;
@@ -91,6 +92,10 @@ public class UserProfileModel {
 	 */
 	public Integer gamePosition;
 
+	/**
+	 * Уже играю с этим пользоватетелем
+	 */
+	public boolean isPlayingWithMe;
 	
 	/**
 	 * Строит профиль пользоваля, по умолчанию выставляет USER TYPE = ME
@@ -123,6 +128,8 @@ public class UserProfileModel {
 		model.totalGames = user.getTotalGames() != null ? user.getTotalGames() : 0;
 		model.score = user.getScore() != null ? user.getScore() : 0;
 		model.gamePosition = UserService.getUserGamePosition(user); // TODO считать рейтинг чувака
+		
+		model.isPlayingWithMe = false;
 		
 		return model;
 	}
@@ -162,6 +169,13 @@ public class UserProfileModel {
 		
 		// Не друг, просто опонент
 		model.type = UserType.OPONENT;
+		
+		// Если потенциальный противник
+		if (model.type == UserType.FRIEND || model.type == UserType.OPONENT) {
+			// TODO вставить проверку на активную игру с между игроками
+			// auth -> Gamers \
+			// user -> Gamers / game
+		}
 		
 		return model;
 	}
