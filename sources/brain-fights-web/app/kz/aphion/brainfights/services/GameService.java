@@ -1105,6 +1105,9 @@ public class GameService {
 		if (game.getGamers() != null && game.getGamers().size() > 0) {
 			if (game.getGamers().get(0).id == gamerId) {
 				gamer = game.getGamers().get(0);
+				oponent = game.getGamers().get(1);
+			} else {
+				gamer = game.getGamers().get(1);
 				oponent = game.getGamers().get(0);
 			}
 		}

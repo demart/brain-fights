@@ -52,7 +52,7 @@ static UIRefreshControl *refreshControl;
         [self.showMenuButton setImage:[UIImage imageNamed:@"leftMenuIcon"]];
     }
     
-    [self reloadProfile];
+    [self reloadProfile:nil];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -75,17 +75,17 @@ static UIRefreshControl *refreshControl;
 }
 
 -(void) handleRefresh:(UIRefreshControl*) refreshControll {
-    [self reloadProfile];
+    [self reloadProfile:refreshControl];
     [refreshControl endRefreshing];
 }
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self reloadProfile];
+    [self reloadProfile:nil];
 }
 
 
--(void) reloadProfile {
+-(void) reloadProfile:(UIRefreshControl*) refreshControll {
     NSInteger userId = 0;
     if (self.userProfileModel == nil) {
         userId = [[UserService sharedInstance] getUserProfile].id;
@@ -94,6 +94,8 @@ static UIRefreshControl *refreshControl;
     }
 
     [[UserService sharedInstance] retrieveUserProfileByIdAsync:userId onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControl != nil)
+            [refreshControl endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             if (self.userProfileModel != nil) {
                 self.userProfileModel = (UserProfileModel*)response.data;
@@ -113,6 +115,8 @@ static UIRefreshControl *refreshControl;
         }
         [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
+        if (refreshControl != nil)
+            [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
     }];
@@ -195,7 +199,7 @@ static UIRefreshControl *refreshControl;
     [GameService createGameInvitation:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
         sleep(1);
         if ([response.status isEqualToString:SUCCESS]) {
-            [self reloadProfile];
+            [self reloadProfile:nil];
             [self presentSimpleAlertViewWithTitle:@"Внимание" andMessage:@"Приглашение успешно отправлено!"];
         }
         
@@ -223,7 +227,7 @@ static UIRefreshControl *refreshControl;
     [[UserService sharedInstance] addUserFriendAsync:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
         sleep(1);
         if ([response.status isEqualToString:SUCCESS]) {
-            [self reloadProfile];
+            [self reloadProfile:nil];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -247,7 +251,7 @@ static UIRefreshControl *refreshControl;
     [[UserService sharedInstance] removeUserFriendAsync:[self getUserProfileModel].id onSuccess:^(ResponseWrapperModel *response) {
         sleep(1);
         if ([response.status isEqualToString:SUCCESS]) {
-            [self reloadProfile];
+            [self reloadProfile:nil];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
