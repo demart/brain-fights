@@ -141,12 +141,20 @@ public class GameService {
 			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "oponent with given Id was deleted");
 		
 		// Проверка есть ли уже игра с этим игроком
+		/*
 		if (authorizedUser.getGamers() != null && authorizedUser.getGamers().size() > 0) {
 			for (Gamer gamer : authorizedUser.getGamers()) {
 				
 				// Если игра уже закончилась в ней проверять смысла нет
 				if (gamer.getGame().getStatus() == GameStatus.FINISHED)
 					continue;
+				
+				if (gamer.getGame().getDeleted() == true)
+					continue;
+				
+				if (gamer.getGame().getDeleted() == true)
+					continue;
+				
 				
 				for (Gamer oponent : gamer.getGame().getGamers()) {
 					// Если уже есть игра с чуваком, то завершаем процесс создания приглашения
@@ -156,6 +164,7 @@ public class GameService {
 				}
 			}
 		}
+		*/
 		
 		Game game = createInvitationWithPushNotification(authorizedUser, oponentUser);
 
