@@ -84,7 +84,7 @@ public class Gamer extends PersistentObject {
      * Просмотрел ли пользователь результат игры
      */
     @Column(name="is_result_was_viewed", nullable=false, columnDefinition="boolean default false")
-    private Boolean isResultWasViewed;
+    private Boolean isResultWasViewed = false;
     
     /**
      * Игрок который предложил играть

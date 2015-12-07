@@ -21,7 +21,4 @@
 // Инициализруем статус игры
 - (void) setUserGameModel:(UserGameModel*)gameModel;
 
-// Принимает последний ответ пользователя, для того чтобы показать результат игры и поздравить пользователя
-- (void) lastQuestionAnswerResult:(GamerQuestionAnswerResultModel*)lastQuestionAnswerResult;
-
 @end

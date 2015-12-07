@@ -104,8 +104,6 @@ static CGFloat HEIGHT = 504;
         }
     }
     
-
-    
     return cell;
 }
 

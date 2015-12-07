@@ -1114,6 +1114,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "aede0985-6b8d-4508-86ca-9bf2b01596ff";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1134,6 +1135,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "aede0985-6b8d-4508-86ca-9bf2b01596ff";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

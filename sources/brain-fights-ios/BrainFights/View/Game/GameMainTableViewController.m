@@ -64,7 +64,7 @@ static UIRefreshControl *refreshControl;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self loadGames];
+    [self loadGames:nil];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -73,20 +73,23 @@ static UIRefreshControl *refreshControl;
 }
 
 -(void) handleRefresh:(UIRefreshControl*) refreshControll {
-    [self loadGames];
-    [refreshControl endRefreshing];
+    [self loadGames:refreshControl];
+//    [refreshControl endRefreshing];
 }
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self loadGames];
+    [self loadGames:nil];
 }
 
 
--(void) loadGames {
+-(void) loadGames:(UIRefreshControl*)refreshControl {
     // Загружаем игры при появлении сцены
     [GameService retrieveGamesGrouped:^(ResponseWrapperModel *response) {
-        [DejalBezelActivityView removeViewAnimated:NO];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        if (refreshControl != nil)
+            [refreshControl endRefreshing];
+        
         if ([response.status isEqualToString:SUCCESS]) {
             UserGamesGroupedModel *userGamesGrouppedModel = (UserGamesGroupedModel*)response.data;
             // Выставляем новый профиль пользователя (например баллы поменялись или еще что)
@@ -94,6 +97,7 @@ static UIRefreshControl *refreshControl;
             // Обновляем список игр
             self.gameGroups = userGamesGrouppedModel.gameGroups;
             [self.tableView reloadData];
+            [self findAndShowFinalResultPromtMessage];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -106,10 +110,92 @@ static UIRefreshControl *refreshControl;
         }
         
     } onFailure:^(NSError *error) {
+        if (refreshControl != nil)
+            [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewController];
     }];
 }
+
+
+// Проверяет есть ли завершенные игры и нужно ли показать результаты игры
+// Показывает каждый раз только первую игру
+- (void) findAndShowFinalResultPromtMessage {
+    if (self.gameGroups == nil || [self.gameGroups count] < 1)
+        return;
+    for (UserGameGroupModel *gameGroup in self.gameGroups) {
+        if ([gameGroup.status isEqualToString:GAME_STATUS_FINISHED]) {
+            if (gameGroup.games == nil || [gameGroup.games count] < 1)
+                return;
+            
+            for (UserGameModel *gameModel in gameGroup.games) {
+                if (gameModel.me.resultWasViewed == NO) {
+                    // Show Prompt message
+                    [self showPromtMessageWithViewedResultConfirmation:gameModel];
+                    return;
+                }
+            }
+            
+        }
+    }
+}
+
+// Показывает окошко с результатом игры
+-(void) showPromtMessageWithViewedResultConfirmation:(UserGameModel*) gameModel {
+    NSString* title = @"Игра закончилась";
+    NSString* message;
+    
+    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_DRAW]) {
+        message = [[NSString alloc] initWithFormat: @"Вы закончили игру в ничью с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_LOOSER]) {
+        message = [[NSString alloc] initWithFormat: @"Вы проиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_WINNER]) {
+        message = [[NSString alloc] initWithFormat: @"Вы выиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
+        message = [[NSString alloc] initWithFormat: @"Ваш опонент %@ сдался.\n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              [self markGameResultAsViewed:gameModel];
+                                                          }];
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void) markGameResultAsViewed:(UserGameModel*)gameModel {
+    if (gameModel == nil) {
+        NSLog(@"MarkAsViewed gameModel null");
+        return;
+    }
+    
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    
+    [GameService markAsViewed:gameModel.id andGamer:gameModel.me.id onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self loadGames:nil];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        NSLog(@"error mark as viewed");
+    }];
+    
+}
+
 
 - (IBAction)showMenuAction:(UIBarButtonItem *)sender {
     [[AppDelegate globalDelegate] toggleLeftDrawer:self animated:YES];
@@ -317,7 +403,7 @@ static UIRefreshControl *refreshControl;
                 gameGroupModel.games[indexPath.row] = (UserGameModel*)response.data;
                 [self performSegueWithIdentifier:@"FromGamesToGameStatus" sender:self];
             } else {
-                [self loadGames];
+                [self loadGames:nil];
             }
         }
         
