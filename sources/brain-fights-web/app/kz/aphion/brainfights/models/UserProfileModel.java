@@ -36,6 +36,11 @@ public class UserProfileModel {
 	public String position;
 	
 	/**
+	 * Аватар пользователя
+	 */
+	public String imageUrl;
+	
+	/**
 	 * Логин пользователя
 	 */
 	public String login;
@@ -130,7 +135,9 @@ public class UserProfileModel {
 		model.totalGames = user.getTotalGames() != null ? user.getTotalGames() : 0;
 		model.score = user.getScore() != null ? user.getScore() : 0;
 		model.gamePosition = UserService.getUserGamePosition(user); // TODO считать рейтинг чувака
+		
 		model.playStatus = UserGamePlayingStatus.READY;
+		model.imageUrl = user.getImageUrl();
 		
 		return model;
 	}

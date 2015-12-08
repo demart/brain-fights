@@ -128,7 +128,7 @@
         [self.gameStatus setText:@"Вы сдались"];
         // Show play icon
         [self.playGameView setImage:[UIImage imageNamed:@"looserIcon"]];
-        [self.playGameView setHidden:YES];
+//        [self.playGameView setHidden:YES];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WINNER]) {
