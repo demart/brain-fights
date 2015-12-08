@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "UserType.h"
+#import "UserGamePlayingStatus.h"
 #import "DepartmentModel.h"
 
 @interface UserProfileModel : NSObject
@@ -53,6 +54,36 @@
  * Почтовый ящик пользователя
  */
 @property NSString *email;
+
+/**
+ * Ccылка на аватар
+ */
+@property NSString *imageUrl;
+
+/**
+ * Состояние игрока по отношению к пользователю (Играет не играет с ним)
+ */
+@property NSString *playStatus;
+
+/**
+ * Готов играть
+ */
+//READY,
+
+/**
+ * Играет сейчас со мной
+ */
+//PLAYING,
+
+/**
+ * Отпарвили игроку предложение
+ */
+//INVITED,
+
+/**
+ * Игрок ожидает нашего решения
+ */
+//WAITING,
 
 /**
  * Подразделение где работает ползователь (скорее всего отдел)
