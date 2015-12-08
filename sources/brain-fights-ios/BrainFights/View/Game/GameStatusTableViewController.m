@@ -21,9 +21,6 @@
 
 @property UserGameModel *gameModel;
 @property GameModel *model;
-@property GamerQuestionAnswerResultModel *lastQuestionAnswerResult;
-
-
 
 @end
 
@@ -53,8 +50,8 @@ static UIRefreshControl* refreshControl;
 
 
 -(void) handleRefresh:(UIRefreshControl*) refreshControll {
-    [self refreshGameStatus];
-    [refreshControl endRefreshing];
+    [self refreshGameStatus:refreshControl];
+//    [refreshControl endRefreshing];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -65,27 +62,7 @@ static UIRefreshControl* refreshControl;
     
     // Show loading
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self refreshGameStatus];
-   
-    if (self.lastQuestionAnswerResult != nil) {
-        // Показываем последний результат пользователю (если это победа)
-        if ([self.lastQuestionAnswerResult.gamerStatus isEqualToString:GAMER_STATUS_WINNER]) {
-            // Победитель
-            NSLog(@"Пользователь выиграл");
-            [self presentSimpleAlertViewWithTitle:@"Поздравляем" andMessage:@"Вы выиграли эту игру!"];
-        }
-        if ([self.lastQuestionAnswerResult.gamerStatus isEqualToString:GAMER_STATUS_DRAW]) {
-            // Ничья
-            NSLog(@"Пользователь сыграл в ничью");
-            [self presentSimpleAlertViewWithTitle:@"Ничья" andMessage:@"Победа была у вас в руках!"];
-        }
-        if ([self.lastQuestionAnswerResult.gamerStatus isEqualToString:GAMER_STATUS_LOOSER]) {
-            // Проиграл
-            NSLog(@"Пользователь проиграл");
-            [self presentSimpleAlertViewWithTitle:@"Проигрыш" andMessage:@"Вы проигралы эту игру!"];
-        }
-        self.lastQuestionAnswerResult = nil;
-    }
+    [self refreshGameStatus:nil];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -95,14 +72,17 @@ static UIRefreshControl* refreshControl;
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self refreshGameStatus];
+    [self refreshGameStatus:nil];
 }
 
--(void) refreshGameStatus {
+-(void) refreshGameStatus:(UIRefreshControl*) refreshControll {
     [GameService retrieveGameInformation:self.gameModel.id onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControl != nil)
+            [refreshControl endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             self.model = (GameModel*)response.data;
             [self.tableView reloadData];
+            [self checkAndShowFinalResultPromtMessage];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -112,21 +92,90 @@ static UIRefreshControl* refreshControl;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [self presentErrorViewControllerWithTryAgainSelector:@selector(refreshGameStatus)];
         }
-        [DejalBezelActivityView removeViewAnimated:NO];
+        [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
+        if (refreshControl != nil)
+            [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewControllerWithTryAgainSelector:@selector(refreshGameStatus)];
     }];
 }
 
 
+// Проверяет есть ли завершенные игры и нужно ли показать результаты игры
+// Показывает каждый раз только первую игру
+- (void) checkAndShowFinalResultPromtMessage {
+    if (self.model == nil)
+        return;
+    if ([self.model.status isEqualToString:GAME_STATUS_FINISHED]) {
+        if (self.model.me.resultWasViewed == NO) {
+            // Show Prompt message
+            [self showPromtMessageWithViewedResultConfirmation:self.model];
+            return;
+        }
+    }
+}
+
+// Показывает окошко с результатом игры
+-(void) showPromtMessageWithViewedResultConfirmation:(GameModel*) gameModel {
+    NSString* title = @"Игра закончилась";
+    NSString* message;
+    
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_DRAW]) {
+        message = [[NSString alloc] initWithFormat: @"Вы закончили игру в ничью с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_LOOSER]) {
+        message = [[NSString alloc] initWithFormat: @"Вы проиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_WINNER]) {
+        message = [[NSString alloc] initWithFormat: @"Вы выиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
+        message = [[NSString alloc] initWithFormat: @"Ваш опонент %@ сдался.\n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    }
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              [self markGameResultAsViewed:self.model];
+                                                          }];
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+// Отправляет отметку о прочтении на сервер
+-(void) markGameResultAsViewed:(GameModel*)gameModel {
+    if (gameModel == nil) {
+        NSLog(@"MarkAsViewed gameModel null");
+        return;
+    }
+    
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    
+    [GameService markAsViewed:gameModel.id andGamer:gameModel.me.id onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self refreshGameStatus:nil];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+        }
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        NSLog(@"error mark as viewed");
+    }];
+    
+}
+
 // Инициализруем статус игры
 -(void) setUserGameModel:(UserGameModel*)gameModel {
     self.gameModel = gameModel;
-}
-
-- (void) lastQuestionAnswerResult:(GamerQuestionAnswerResultModel*)lastQuestionAnswerResult {
-    self.lastQuestionAnswerResult = lastQuestionAnswerResult;
 }
 
 
@@ -275,7 +324,7 @@ static UIRefreshControl* refreshControl;
     NSUInteger userId = self.model.oponent.user.id;
     [[UserService sharedInstance] addUserFriendAsync:userId onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
-            [self refreshGameStatus];
+            [self refreshGameStatus:nil];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {

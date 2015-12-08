@@ -42,6 +42,17 @@ public class GamerModel {
 	 */
 	public Integer correctAnswerCount;
 	
+	/**
+	 * Результатов
+	 */
+	public Integer resultScore;
+	
+	/**
+	 * Было ли просмотрено уведомление об окончании игры
+	 */
+	public Boolean resultWasViewed;
+	
+	
 	public static GamerModel buildGamerModel(User authorizedUser, Gamer gamer) throws PlatformException {
 		GamerModel model = new GamerModel();
 		
@@ -50,6 +61,8 @@ public class GamerModel {
 		model.user = UserProfileModel.buildModel(authorizedUser, gamer.getUser()); 
 		model.status = gamer.getStatus();
 		model.correctAnswerCount = gamer.getCorrectAnswerCount();
+		model.resultScore = gamer.getScore();
+		model.resultWasViewed = gamer.getIsResultWasViewed();
 		
 		return model;
 	}

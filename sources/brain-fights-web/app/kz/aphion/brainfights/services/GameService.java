@@ -6,6 +6,7 @@ import java.util.List;
 
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
+import kz.aphion.brainfights.models.UserGamePlayingStatus;
 import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.models.game.GameModel;
 import kz.aphion.brainfights.models.game.GameRoundCategoryModel;
@@ -141,12 +142,20 @@ public class GameService {
 			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "oponent with given Id was deleted");
 		
 		// Проверка есть ли уже игра с этим игроком
+		/*
 		if (authorizedUser.getGamers() != null && authorizedUser.getGamers().size() > 0) {
 			for (Gamer gamer : authorizedUser.getGamers()) {
 				
 				// Если игра уже закончилась в ней проверять смысла нет
 				if (gamer.getGame().getStatus() == GameStatus.FINISHED)
 					continue;
+				
+				if (gamer.getGame().getDeleted() == true)
+					continue;
+				
+				if (gamer.getGame().getDeleted() == true)
+					continue;
+				
 				
 				for (Gamer oponent : gamer.getGame().getGamers()) {
 					// Если уже есть игра с чуваком, то завершаем процесс создания приглашения
@@ -156,6 +165,7 @@ public class GameService {
 				}
 			}
 		}
+		*/
 		
 		Game game = createInvitationWithPushNotification(authorizedUser, oponentUser);
 
@@ -331,25 +341,27 @@ public class GameService {
 		statuses.add(GamerStatus.WAITING_OWN_DECISION);
 		statuses.add(GamerStatus.WAITING_ROUND);
 		statuses.add(GamerStatus.WAITING_ANSWERS);
-		
-		List<Gamer> notCompletedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses)")
+
+		List<Gamer> notCompletedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and game.deleted=:deleted ")
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", statuses)
+				.setParameter("deleted",false)
 				.getResultList();
-		
+
 		List<GamerStatus> completedStatuses = new ArrayList<>();
 		completedStatuses.add(GamerStatus.DRAW);
 		completedStatuses.add(GamerStatus.LOOSER);
 		completedStatuses.add(GamerStatus.SURRENDED);
 		completedStatuses.add(GamerStatus.WINNER);
-		
+
 		// Достаем законченные игры (последние 5 штук)
-		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) order by lastUpdateStatusDate DESC")
+		List<Gamer> completedGames = JPA.em().createQuery("from Gamer where user.id = :userId and status in (:statuses) and game.deleted=:deleted  order by lastUpdateStatusDate DESC")
 				.setMaxResults(5)
 				.setParameter("userId", authorizedUser.id)
 				.setParameter("statuses", completedStatuses)
+				.setParameter("deleted",false)
 				.getResultList();
-		
+
 		System.out.println("notCompleted Games count: " + notCompletedGames.size());
 		System.out.println("Completed Games count: " + completedGames.size());
 		
@@ -760,7 +772,6 @@ public class GameService {
 		
 		gamerAnswer.save();
 		
-		
 		if (gameRoundQuestion.getQuestionAnswers() == null)
 			gameRoundQuestion.setQuestionAnswers(new ArrayList<GameRoundQuestionAnswer>());
 		gameRoundQuestion.getQuestionAnswers().add(gamerAnswer);
@@ -1067,5 +1078,81 @@ public class GameService {
 		NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", gamer.getUser().getName() + " так и не принял ваше приглашение!");
 	}
 
+	
+	/**
+	 * Пометить просмотренным уведомление об окончании игры
+	 * @param user
+	 * @param gameId
+	 * @param gamerId
+	 * @return
+	 * @throws PlatformException 
+	 */
+	public static GameModel markGameResultAsViewed(User user, Long gameId, Long gamerId) throws PlatformException {
+		if (user == null)
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user is null");
+		if (user.getDeleted())
+			throw new PlatformException(ErrorCode.AUTH_ERROR, "user was deleted");
+		
+		// Проверяем игру
+		Game game = Game.findById(gameId);
+		if (game == null)
+			throw new PlatformException(ErrorCode.DATA_NOT_FOUND, "game not found");
+		if (game.getDeleted())
+			throw new PlatformException(ErrorCode.VALIDATION_ERROR, "game was deleted");
+		
+		Gamer gamer = Gamer.findById(gamerId);
+		Gamer oponent = gamer.getOponent();
+		
+		gamer.setIsResultWasViewed(true);
+		gamer.save();
+		
+		GameModel model = GameModel.buildModel(game, gamer, oponent, null);
+		return model;
+	}
 
+
+	/**
+	 * Возвращает статус пользователя по отношению к другому пользователю. Готов играть или не готов.
+	 * @param authorizedUser
+	 * @param user
+	 * @return
+	 */
+	public static UserGamePlayingStatus getUserGamePlayingStatus(User authorizedUser, User user) {
+		List<GamerStatus> incompletedStatuses = new ArrayList<GamerStatus>();
+		incompletedStatuses.add(GamerStatus.WINNER);
+		incompletedStatuses.add(GamerStatus.DRAW);
+		incompletedStatuses.add(GamerStatus.LOOSER);
+		incompletedStatuses.add(GamerStatus.OPONENT_SURRENDED);
+		incompletedStatuses.add(GamerStatus.SURRENDED);
+		
+		// Получаем список активных игр пользователя
+		List<Gamer> gamers = JPA.em().createQuery("from Gamer where user.id = :userId and deleted = false and status not in (:incompletedStatuses)")
+			.setParameter("userId", authorizedUser.id)
+			.setParameter("incompletedStatuses", incompletedStatuses)
+			.getResultList();
+		
+		for (Gamer gamer : gamers) {
+			User oponentUser = gamer.getOponent().getUser();
+			if (oponentUser == null)
+				continue;
+			
+			if (oponentUser.id == user.id) {
+				
+				if (gamer.getStatus() == GamerStatus.WAITING_OWN_DECISION)
+					return UserGamePlayingStatus.WAITING;
+				if (gamer.getStatus() == GamerStatus.WAITING_OPONENT_DECISION)
+					return UserGamePlayingStatus.INVITED;
+				
+				if (gamer.getStatus() == GamerStatus.WAITING_ANSWERS)
+					return UserGamePlayingStatus.PLAYING;
+				if (gamer.getStatus() == GamerStatus.WAITING_ROUND)
+					return UserGamePlayingStatus.PLAYING;
+				if (gamer.getStatus() == GamerStatus.WAITING_OPONENT)
+					return UserGamePlayingStatus.PLAYING;
+			}
+		}
+		
+		return UserGamePlayingStatus.READY;
+	}
+	
 }

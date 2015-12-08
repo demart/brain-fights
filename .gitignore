@@ -1,5 +1,6 @@
 certificates
 db
+builds
 .classpath
 .project
 sources/brain-fights-web/.classpath

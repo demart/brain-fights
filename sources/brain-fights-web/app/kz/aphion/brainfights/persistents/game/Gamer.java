@@ -28,6 +28,11 @@ import kz.aphion.brainfights.persistents.user.User;
 @Table(name = "gamer")
 public class Gamer extends PersistentObject {
 	  
+	public Gamer() {
+		isResultWasViewed = false;
+	}
+	
+	
 	@Id
 	@GeneratedValue(generator="gamer_sequence")
 	@SequenceGenerator(name="gamer_sequence",sequenceName="gamer_sequence", allocationSize=1)
@@ -80,6 +85,12 @@ public class Gamer extends PersistentObject {
     @Column(nullable=false)
     private Integer score;
 
+    /**
+     * Просмотрел ли пользователь результат игры
+     */
+    @Column(name="is_result_was_viewed", nullable=false, columnDefinition="boolean default false")
+    private Boolean isResultWasViewed = false;
+    
     /**
      * Игрок который предложил играть
      */
@@ -159,6 +170,12 @@ public class Gamer extends PersistentObject {
 	}
 	public void setOponent(Gamer oponent) {
 		this.oponent = oponent;
+	}
+	public Boolean getIsResultWasViewed() {
+		return isResultWasViewed;
+	}
+	public void setIsResultWasViewed(Boolean isResultWasViewed) {
+		this.isResultWasViewed = isResultWasViewed;
 	}
     
 }

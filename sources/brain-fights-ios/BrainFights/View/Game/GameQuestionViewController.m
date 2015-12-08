@@ -274,7 +274,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         // Конец раунда или игры, и переход на старницу статуса
         // Передаем информацию о последнем ответе в статус игры
         // Смотрим там как на это реагировать
-        [(GameStatusTableViewController*)self.gameStatusViewController lastQuestionAnswerResult:self.lastAnswerResult];
         [self dismissViewControllerAnimated:YES completion:^{
             [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
         }];

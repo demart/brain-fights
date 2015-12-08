@@ -302,4 +302,36 @@
     [objectRequestOperation start];
 }
 
+
+// Пометить запись как прочитанную
++ (void) markAsViewed:(NSUInteger) gameId andGamer:(NSUInteger)gamerId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure {
+    
+    NSString* authToken = [AuthorizationService getAuthToken];
+    if (authToken == nil)
+        failure(nil);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[UrlHelper gameMarkAsViewed:gameId onGamer:gamerId]]];
+    
+    RKResponseDescriptor *responseWrapperDescriptor = [GameHelper buildResponseDescriptorForGameSurrender];
+    
+    RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[ responseWrapperDescriptor ]];
+    [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        ResponseWrapperModel *response = (ResponseWrapperModel*)[mappingResult.array objectAtIndex:0];
+        
+        NSLog(@"Status: %@", response.status);
+        NSLog(@"Data: %@", response.data);
+        NSLog(@"ErrorCode: %@", response.errorCode);
+        NSLog(@"ErrorMessage: %@", response.errorMessage);
+        
+        success(response);
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Operation failed with error: %@", error);
+        failure(error);
+    }];
+    
+    [objectRequestOperation start];
+}
+
+
 @end

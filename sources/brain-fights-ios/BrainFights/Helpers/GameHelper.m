@@ -71,6 +71,8 @@
                                                         @"status": @"status",
                                                         @"lastUpdateStatusDate": @"lastUpdateStatusDate",
                                                         @"correctAnswerCount": @"correctAnswerCount",
+                                                        @"resultScore": @"resultScore",
+                                                        @"resultWasViewed": @"resultWasViewed",
                                                         }];
     
     // USER
@@ -168,6 +170,8 @@
                                                      @"status": @"status",
                                                      @"lastUpdateStatusDate": @"lastUpdateStatusDate",
                                                      @"correctAnswerCount": @"correctAnswerCount",
+                                                     @"resultScore": @"resultScore",
+                                                     @"resultWasViewed": @"resultWasViewed",
                                                      }];
     
     // USER
@@ -275,6 +279,8 @@
                                                      @"status": @"status",
                                                      @"lastUpdateStatusDate": @"lastUpdateStatusDate",
                                                      @"correctAnswerCount": @"correctAnswerCount",
+                                                     @"resultScore": @"resultScore",
+                                                     @"resultWasViewed": @"resultWasViewed",
                                                      }];
     
     // USER
@@ -363,6 +369,8 @@
                                                      @"status": @"status",
                                                      @"lastUpdateStatusDate": @"lastUpdateStatusDate",
                                                      @"correctAnswerCount": @"correctAnswerCount",
+                                                     @"resultScore": @"resultScore",
+                                                     @"resultWasViewed": @"resultWasViewed",
                                                      }];
     
     // USER
@@ -452,6 +460,8 @@
                                                      @"status": @"status",
                                                      @"lastUpdateStatusDate": @"lastUpdateStatusDate",
                                                      @"correctAnswerCount": @"correctAnswerCount",
+                                                     @"resultScore": @"resultScore",
+                                                     @"resultWasViewed": @"resultWasViewed",
                                                      }];
     
     // USER
@@ -674,6 +684,13 @@
 + (RKResponseDescriptor*) buildResponseDescriptorForGameSurrender {
     return [GameHelper buildResponseDescriptorForGameInformation];
 }
+
+
+// Строит маппинг для получения ответа на запрос отметки о прочтении
++ (RKResponseDescriptor*) buildResponseDescriptorForGameMarkAsViewed {
+    return [GameHelper buildResponseDescriptorForGameInformation];
+}
+
 
 
 @end

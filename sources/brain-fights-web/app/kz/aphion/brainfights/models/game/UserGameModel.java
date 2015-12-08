@@ -39,7 +39,17 @@ public class UserGameModel {
 	 * Опонент
 	 */
 	public GamerModel oponent;
+	
+	/**
+	 * Просмотрено ли это сообщение пользователем
+	 */
+	public Boolean seen;
 
+	/**
+	 * Очки в результате игры
+	 */
+	public Integer scrore;
+	
 	/**
 	 * Строит модель описывающую игру
 	 * 

@@ -36,6 +36,11 @@
 // URL для получения рейтинга пользователей
 + (NSString*) usersRating:(NSUInteger)page withLimit:(NSUInteger)limit;
 
+// URL для получения типов подразделений
++ (NSString*) departmentTypeUrl;
+
+// URL для получения рейтинга департаментов
++ (NSString*) departmentsRatingUrl:(NSUInteger)typeId withPage:(NSUInteger)page withLimit:(NSUInteger)limit;
 
 
 // URL для получения рутовый департаментов
@@ -99,6 +104,11 @@
 
 // URL для того чтобы сдаться в игре
 + (NSString*) gameSurrenderUrl:(NSUInteger)gameId;
+
+
+// URL для отметки о прочтении
++ (NSString*) gameMarkAsViewed:(NSUInteger)gameId onGamer:(NSUInteger)gamerId;
+
 
 // Базовый URL для API по игре
 + (NSString*) gameBaseUrl;

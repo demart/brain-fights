@@ -148,15 +148,6 @@ public class GameController extends Controller {
 	 * @param gameId Идентификатор игры
 	 */
 	public static void getGameInformation(String authToken, Long gameId){
-		// Статус игры
-		// Информацию об игроках
-		// Информация о счете 
-		// Ифнормация о раундах
-			// Номер раунда
-			// Список вопросов
-			// Ответы пользователя
-		// Доступные действия
-			// Предлагаемые категории вопросов для нового раунда
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
@@ -164,7 +155,6 @@ public class GameController extends Controller {
 	    	GameModel model = GameService.getGameInformation(user, gameId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
-
 		} catch (AuthorizationException aEx) {
 			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
     	} catch (PlatformException sEx) {
@@ -273,5 +263,28 @@ public class GameController extends Controller {
 		}
 	}
 
+	/**
+	 * Помечает просмотренный результат игры у пользователя
+	 * @param authToken
+	 * @param gameId
+	 * @param gamerId
+	 */
+	public static void markGameResultAsViewed(String authToken, Long gameId, Long gamerId) {
+		try {	
+			// Проверяем авторизован ли пользователь
+	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	GameModel model = GameService.markGameResultAsViewed(user, gameId, gamerId);
+	    	renderJSON(ResponseWrapperModel.getSuccess(model));
+	    	
+		} catch (AuthorizationException aEx) {
+			renderJSON(ResponseWrapperModel.getAuthorizationError(aEx.getCode(), aEx));
+    	} catch (PlatformException sEx) {
+    		renderJSON(ResponseWrapperModel.getServerError(sEx.getCode(), sEx));
+    	} catch (Throwable ex) {
+			ex.printStackTrace();
+			renderJSON(ResponseWrapperModel.getServerError(ErrorCode.UNDEFINED_ERROR, ex));
+		}
+	}
 	
 }

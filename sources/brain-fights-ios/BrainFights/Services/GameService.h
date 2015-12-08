@@ -44,5 +44,7 @@
 // Сдаться в указанной игре
 + (void) surrenderGame:(NSUInteger) gameId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
 
+// Пометить запись как прочитанную
++ (void) markAsViewed:(NSUInteger) gameId andGamer:(NSUInteger)gamerId onSuccess:(void (^)(ResponseWrapperModel *response))success onFailure:(void (^)(NSError *error))failure;
 
 @end

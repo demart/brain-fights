@@ -1,9 +1,11 @@
 package kz.aphion.brainfights.models;
 
+import play.db.jpa.JPA;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.DepartmentService;
+import kz.aphion.brainfights.services.GameService;
 import kz.aphion.brainfights.services.UserService;
 
 /**
@@ -32,6 +34,11 @@ public class UserProfileModel {
 	 * Должность пользователя
 	 */
 	public String position;
+	
+	/**
+	 * Аватар пользователя
+	 */
+	public String imageUrl;
 	
 	/**
 	 * Логин пользователя
@@ -90,7 +97,12 @@ public class UserProfileModel {
 	 * Позиция пользователя относиться всех остальных игроков
 	 */
 	public Integer gamePosition;
-
+	
+	/**
+	 * Состояние игрового процесса по отношению к пользователю.
+	 * (Играем или не играем с пользователем)
+	 */
+	public UserGamePlayingStatus playStatus;
 	
 	/**
 	 * Строит профиль пользоваля, по умолчанию выставляет USER TYPE = ME
@@ -124,6 +136,9 @@ public class UserProfileModel {
 		model.score = user.getScore() != null ? user.getScore() : 0;
 		model.gamePosition = UserService.getUserGamePosition(user); // TODO считать рейтинг чувака
 		
+		model.playStatus = UserGamePlayingStatus.READY;
+		model.imageUrl = user.getImageUrl();
+		
 		return model;
 	}
 	
@@ -147,21 +162,25 @@ public class UserProfileModel {
 		// Если тот же самый пользователь
 		if (authorizedUser.id == user.id) {
 			model.type = UserType.ME;
-			return model;
-		}
-		
-		// Если друг
-		if (authorizedUser.getFriends() != null) {
-			for (User friend : authorizedUser.getFriends()) {
-				if (friend.id == user.id) {
-					model.type = UserType.FRIEND;
-					return model;
+		} else { 
+			// Если друг
+			if (authorizedUser.getFriends() != null) {
+				for (User friend : authorizedUser.getFriends()) {
+					if (friend.id == user.id) {
+						model.type = UserType.FRIEND;
+						break;
+					}
 				}
+			} else {
+				// Не друг, просто опонент
+				model.type = UserType.OPONENT;
 			}
 		}
 		
-		// Не друг, просто опонент
-		model.type = UserType.OPONENT;
+		// Если потенциальный противник
+		if (model.type != UserType.ME) {
+			model.playStatus = GameService.getUserGamePlayingStatus(authorizedUser, user);
+		}
 		
 		return model;
 	}

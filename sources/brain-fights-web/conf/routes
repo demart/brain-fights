@@ -82,6 +82,7 @@ GET		/game/{gameId}/round/question													GameController.getRoundQuestions
 GET		/game/{gameId}/round/{roundId}/questions										GameController.getRoundQuestions
 GET		/game/{gameId}/round/{roundId}/questions/{questionId}/answer/{answerId}			GameController.answerQuestion
 GET		/game/{gameId}/surrender														GameController.surrenderGame
+GET		/game/{gameId}/gamer/{gamerId}/mark/as/viewed									GameController.markGameResultAsViewed
 
 # STATISTICS API
 GET		/stat/users/page/{page}/limit/{limit}												StatisticController.getUserStatistics

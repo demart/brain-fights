@@ -17,4 +17,8 @@
     [super setSelected:selected animated:animated];
 }
 
+- (void) initCellWithHeaderTitle:(NSString*)title {
+    [self.headerGroupTitle setText:title];
+}
+
 @end

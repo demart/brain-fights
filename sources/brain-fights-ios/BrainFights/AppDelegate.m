@@ -75,12 +75,10 @@ static NSString * const RatingViewControllerStoryboardID = @"RatingViewControlle
       //[UIFont fontWithName:@"Gill Sans" size:17.0], NSFontAttributeName,
       nil]];
     
-    
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[Constants SYSTEM_COLOR_WHITE],
        //NSFontAttributeName: [UIFont fontWithName:@"Gill Sans" size:17.0]
        } forState:UIControlStateNormal];
-    
     
     [[UISearchBar appearance] setBarTintColor: [Constants SYSTEM_COLOR_GREEN]];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];

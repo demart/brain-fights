@@ -8,6 +8,7 @@ target 'BrainFights' do
 pod 'RestKit', '~> 0.24.0'
 pod 'JVFloatingDrawer'
 pod 'SWTableViewCell', '~> 0.3.7'
+pod 'LMDropdownView'
 
 end
 
