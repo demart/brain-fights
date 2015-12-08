@@ -6,6 +6,7 @@ Ext.define('BrainFightsConsole.model.DepartmentsTypeModel', {
 		{ name: 'name'},
 		{ name: 'createdDate'},
 		{ name: 'modifiedDate'},
+		
 
 	],
 });
