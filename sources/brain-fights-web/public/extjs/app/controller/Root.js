@@ -16,6 +16,8 @@ Ext.define('BrainFightsConsole.controller.Root', {
     	'question': 'onQuestion',
     	'logout' : 'onLogoutRoute',
     	'users' : 'onUsers',
+    	'departments': 'onDepartments',
+    	'departmentsType' : 'onDepartmentsType',
     },
     
     //Управление администраторами/менеджерами
@@ -23,6 +25,21 @@ Ext.define('BrainFightsConsole.controller.Root', {
         console.log("onAdminsList route");
         this.getMain().getComponent('mainBody').removeAll(true);
         this.getMain().getComponent('mainBody').add(Ext.create('BrainFightsConsole.view.admins.AdminUsersList'));
+    },
+    
+    //Управление типами подразделений
+    onDepartmentsType : function() {
+        console.log("onDepartmentsTypeList route");
+        this.getMain().getComponent('mainBody').removeAll(true);
+        this.getMain().getComponent('mainBody').add(Ext.create('BrainFightsConsole.view.departments.type.DepartmentsTypeList'));
+    },
+    
+    //Управление отделениями
+    onDepartments: function() {
+    	console.log("onDepartments route");
+    	 this.getMain().getComponent('mainBody').removeAll(true);
+         this.getMain().getComponent('mainBody').add(Ext.create('BrainFightsConsole.view.departments.DepartmentsTreeList'));
+  
     },
     
     //Управление пользователями
