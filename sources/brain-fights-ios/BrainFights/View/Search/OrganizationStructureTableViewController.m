@@ -8,6 +8,7 @@
 
 #import "OrganizationStructureTableViewController.h"
 #import "UserService.h"
+#import "GameService.h"
 #import "AppDelegate.h"
 
 
@@ -15,6 +16,8 @@
 #import "DepartmentHeaderTableViewCell.h"
 #import "UserTableViewCell.h"
 #import "UserProfileTableViewController.h"
+
+#import "DejalActivityView.h"
 
 @interface OrganizationStructureTableViewController ()
 
@@ -123,7 +126,6 @@
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      NSInteger sectionCount = [self.tableView numberOfSections];
-    
      if (sectionCount == 2) {
          if (indexPath.section == 0) {
              // Пользователи
@@ -136,7 +138,9 @@
              // Инициализируем ячейку друга
              NSLog(@"users count: %li", [self.users count]);
              UserProfileModel *userProfile = (UserProfileModel*)self.users[indexPath.row];
-             [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
+             [cell initCell:userProfile withDeleteButton:NO onClicked:nil withSendGameInvitationAction:^(NSUInteger userId) {
+                 [self sendGameInvitationToSelectedUserAction:userId];
+             } onParentViewController:self];
              return cell;
          } else {
              // Подразделения
@@ -162,7 +166,10 @@
              // Инициализируем ячейку друга
              NSLog(@"users count: %li", [self.users count]);
              UserProfileModel *userProfile = (UserProfileModel*)self.users[indexPath.row];
-             [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
+             [cell initCell:userProfile withDeleteButton:NO onClicked:nil withSendGameInvitationAction:^(NSUInteger userId) {
+                 [self sendGameInvitationToSelectedUserAction:userId];
+             } onParentViewController:self];
+             
              return cell;
          } else {
 
@@ -178,6 +185,34 @@
          
      }
  }
+
+
+// Отправить приглашение выбранному пользователю сыграть
+- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            //[self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // TODO SHOW ERROR
+    }];
+    
+}
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     DepartmentHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
@@ -218,29 +253,6 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40;
 }
-
-
-/*
--(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSInteger sectionCount = [self.tableView numberOfSections];
-    if (sectionCount == 2) {
-        if (section == 0) {
-            return @"Сотрудники";
-        } else {
-            //return @"Подразделения";
-            return self.parentDepartmentModel.name;
-        }
-    }
-    //  Если одна секция
-    if (self.users != nil && [self.users count] > 0)
-        return @"Сотрудники";
-    
-    if (self.departments != nil && [self.departments count] > 0)
-        return self.parentDepartmentModel.name;
-    
-    return nil;
-}
- */
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger sectionCount = [self.tableView numberOfSections];

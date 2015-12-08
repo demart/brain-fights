@@ -17,6 +17,8 @@
 #import "UserProfileModel.h"
 #import "ResponseWrapperModel.h"
 
+#import "GameService.h"
+
 #import "DejalActivityView.h"
 
 @interface SearchByNameTableViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
@@ -45,6 +47,7 @@
     [super viewDidLoad];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorColor = [UIColor clearColor];
     
     _resultsTableController = [[SearchByNameResultsTableViewController alloc] init];
     _searchController = [[UISearchController alloc] initWithSearchResultsController:self.resultsTableController];
@@ -134,9 +137,38 @@
     
     // Инициализируем ячейку друга
     UserProfileModel *userProfile = (UserProfileModel*)self.filteredUsers[indexPath.row];
-    [cell initCell:userProfile withDeleteButton:NO onClicked:nil];
+    [cell initCell:userProfile withDeleteButton:NO onClicked:nil withSendGameInvitationAction:^(NSUInteger userId) {
+        [self sendGameInvitationToSelectedUserAction:userId];
+    } onParentViewController:self];
     
     return cell;
+}
+
+
+// Отправить приглашение выбранному пользователю сыграть
+- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // TODO SHOW ERROR
+    }];
+    
 }
 
 

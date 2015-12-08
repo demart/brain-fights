@@ -157,6 +157,8 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -266,6 +268,8 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -355,7 +359,9 @@
                                                            @"loosingGames": @"loosingGames",
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
-                                                           @"gamePosition": @"gamePosition"
+                                                           @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -446,7 +452,9 @@
                                                            @"loosingGames": @"loosingGames",
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
-                                                           @"gamePosition": @"gamePosition"
+                                                           @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"

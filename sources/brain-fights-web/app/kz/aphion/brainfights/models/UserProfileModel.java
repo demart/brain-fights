@@ -171,7 +171,8 @@ public class UserProfileModel {
 						break;
 					}
 				}
-			} else {
+			}
+			if (model.type == UserType.ME) { 
 				// Не друг, просто опонент
 				model.type = UserType.OPONENT;
 			}

@@ -53,16 +53,17 @@
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
     
+//    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_DARK_GREY]];
+//    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
+    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+    
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
         [self.gameStatus setText:@"Ждем игрока"];
-        // Show play icon
-//        [self.playGameView setHidden:YES];
         [self.playGameView setImage:[UIImage imageNamed:@"waitingIcon"]];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
         [self.gameStatus setText:@"Сыграем?"];
-        // Show play icon
         [self.playGameView setHidden:NO];
     }
     [self calculateWaitingTime];
@@ -74,24 +75,23 @@
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
     [self calculateWaitingTime];
-
+    
+    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
+//  [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+    
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
         [self.gameStatus setText:@"Ваш ход!"];
-        // Show play icon
         [self.playGameView setHidden:NO];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ANSWERS]) {
         [self.gameStatus setText:@"Ваш ход!"];
-        // Show play icon
         [self.playGameView setHidden:NO];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT]) {
         [self.gameStatus setText:@"Ждем игрока"];
-        // Hide play icon
         [self.playGameView setImage:[UIImage imageNamed:@"waitingIcon"]];
-//        [self.playGameView setHidden:YES];
     }
     
     
@@ -103,40 +103,31 @@
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
     
+    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_DARK_GREY]];
+    
     [self.waitingTimeLabel setHidden:YES];
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_DRAW]) {
         [self.gameStatus setText:@"Ничья"];
-        // Show play icon
         [self.playGameView setImage:[UIImage imageNamed:@"handshakeIcon"]];
-        //[self.playGameView setHidden:YES];
     }
 
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_LOOSER]) {
         [self.gameStatus setText:@"Вы проиграли"];
-        // Show play icon
         [self.playGameView setImage:[UIImage imageNamed:@"looserIcon"]];
-        //[self.playGameView setHidden:YES];
     }
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
         [self.gameStatus setText:@"Игрок сдался"];
-        // Show play icon
         [self.playGameView setImage:[UIImage imageNamed:@"winnerIcon"]];
-//        [self.playGameView setHidden:YES];
     }
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_SURRENDED]) {
         [self.gameStatus setText:@"Вы сдались"];
-        // Show play icon
         [self.playGameView setImage:[UIImage imageNamed:@"looserIcon"]];
-//        [self.playGameView setHidden:YES];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WINNER]) {
         [self.gameStatus setText:@"Победа!"];
-        // Show play icon
         [self.playGameView setImage:[UIImage imageNamed:@"winnerIcon"]];
-//        [self.playGameView setHidden:YES];
-        // Show triumph
     }
     
 }
@@ -159,11 +150,11 @@
         if (secondsBetween > 3600) {
             // Больше часа
             int numberOfHours = secondsBetween / 3600;
-            [self.waitingTimeLabel setText:[[NSString alloc] initWithFormat:@"%i час", numberOfHours]];
+            [self.waitingTimeLabel setText:[[NSString alloc] initWithFormat:@"%i час.", numberOfHours]];
         } else {
             // Меньше часа
             int numberOfMinutes = secondsBetween / 60;
-            [self.waitingTimeLabel setText:[[NSString alloc] initWithFormat:@"%i мин", numberOfMinutes]];
+            [self.waitingTimeLabel setText:[[NSString alloc] initWithFormat:@"%i мин.", numberOfMinutes]];
         }
     }
 }

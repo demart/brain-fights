@@ -185,7 +185,9 @@
         [cell initCell:userProfile withDeleteButton:YES onClicked:^{
             // remove friend;
             [self removeFriend];
-        }];
+        } withSendGameInvitationAction:^(NSUInteger userId) {
+            [self sendGameInvitationToSelectedUserAction:userId];
+        } onParentViewController:self];
         
         return cell;
     }
@@ -193,6 +195,31 @@
     return nil;
 }
 
+// Отправить приглашение выбранному пользователю сыграть
+- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // TODO SHOW ERROR
+    }];
+    
+}
 
 -(void) removeFriend {
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];

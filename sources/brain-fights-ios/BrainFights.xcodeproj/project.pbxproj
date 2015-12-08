@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */; };
 		8D094D011C0668EF00C1D66B /* UserSearchRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D094D001C0668EF00C1D66B /* UserSearchRequestModel.m */; };
+		8D0E16771C171CA500D5CE8E /* UserGamePlayingStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0E16761C171CA500D5CE8E /* UserGamePlayingStatus.m */; };
 		8D25F5CA1C02688800222C14 /* UserDepartmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */; };
 		8D25F5CB1C02688800222C14 /* UserDepartmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */; };
 		8D25F5CF1C02700E00222C14 /* UserProfileActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5CD1C02700E00222C14 /* UserProfileActionTableViewCell.m */; };
@@ -116,6 +117,8 @@
 /* Begin PBXFileReference section */
 		8D094CFF1C0668EF00C1D66B /* UserSearchRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSearchRequestModel.h; path = Data/ServerModels/UserSearchRequestModel.h; sourceTree = "<group>"; };
 		8D094D001C0668EF00C1D66B /* UserSearchRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSearchRequestModel.m; path = Data/ServerModels/UserSearchRequestModel.m; sourceTree = "<group>"; };
+		8D0E16751C171CA500D5CE8E /* UserGamePlayingStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGamePlayingStatus.h; path = Data/ServerModels/UserGamePlayingStatus.h; sourceTree = "<group>"; };
+		8D0E16761C171CA500D5CE8E /* UserGamePlayingStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGamePlayingStatus.m; path = Data/ServerModels/UserGamePlayingStatus.m; sourceTree = "<group>"; };
 		8D25F5C71C02688800222C14 /* UserDepartmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDepartmentTableViewCell.h; path = View/Profile/Cells/UserDepartmentTableViewCell.h; sourceTree = "<group>"; };
 		8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDepartmentTableViewCell.m; path = View/Profile/Cells/UserDepartmentTableViewCell.m; sourceTree = "<group>"; };
 		8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserDepartmentTableViewCell.xib; path = View/Profile/Cells/UserDepartmentTableViewCell.xib; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 			children = (
 				8DF18E541BF0B3E60046C27B /* UserType.h */,
 				8DF18E551BF0B3E60046C27B /* UserType.m */,
+				8D0E16751C171CA500D5CE8E /* UserGamePlayingStatus.h */,
+				8D0E16761C171CA500D5CE8E /* UserGamePlayingStatus.m */,
 				8DB8AA1A1BECD9F0005B7508 /* UserProfileModel.h */,
 				8DB8AA1B1BECD9F0005B7508 /* UserProfileModel.m */,
 				8DF18E5D1BF10B6C0046C27B /* UserFriendsModel.h */,
@@ -929,6 +934,7 @@
 				8D7722241C012BAF001E8CC8 /* NotificationService.m in Sources */,
 				8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */,
 				8DB8AA1F1BECDAF4005B7508 /* DepartmentModel.m in Sources */,
+				8D0E16771C171CA500D5CE8E /* UserGamePlayingStatus.m in Sources */,
 				8DB8AA221BECDC02005B7508 /* ResponseWrapperModel.m in Sources */,
 				8DF18E521BF0AD940046C27B /* GameTableViewCell.m in Sources */,
 				8DB8AA151BECD92C005B7508 /* AuthorizationRequestModel.m in Sources */,
