@@ -6,6 +6,7 @@ import java.util.List;
 
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
+import kz.aphion.brainfights.models.UserGamePlayingStatus;
 import kz.aphion.brainfights.models.UserProfileModel;
 import kz.aphion.brainfights.models.game.GameModel;
 import kz.aphion.brainfights.models.game.GameRoundCategoryModel;
@@ -1110,4 +1111,48 @@ public class GameService {
 	}
 
 
+	/**
+	 * Возвращает статус пользователя по отношению к другому пользователю. Готов играть или не готов.
+	 * @param authorizedUser
+	 * @param user
+	 * @return
+	 */
+	public static UserGamePlayingStatus getUserGamePlayingStatus(User authorizedUser, User user) {
+		List<GamerStatus> incompletedStatuses = new ArrayList<GamerStatus>();
+		incompletedStatuses.add(GamerStatus.WINNER);
+		incompletedStatuses.add(GamerStatus.DRAW);
+		incompletedStatuses.add(GamerStatus.LOOSER);
+		incompletedStatuses.add(GamerStatus.OPONENT_SURRENDED);
+		incompletedStatuses.add(GamerStatus.SURRENDED);
+		
+		// Получаем список активных игр пользователя
+		List<Gamer> gamers = JPA.em().createQuery("from Gamer where user.id = :userId and deleted = false and status not in (:incompletedStatuses)")
+			.setParameter("userId", authorizedUser.id)
+			.setParameter("incompletedStatuses", incompletedStatuses)
+			.getResultList();
+		
+		for (Gamer gamer : gamers) {
+			User oponentUser = gamer.getOponent().getUser();
+			if (oponentUser == null)
+				continue;
+			
+			if (oponentUser.id == user.id) {
+				
+				if (gamer.getStatus() == GamerStatus.WAITING_OWN_DECISION)
+					return UserGamePlayingStatus.WAITING;
+				if (gamer.getStatus() == GamerStatus.WAITING_OPONENT_DECISION)
+					return UserGamePlayingStatus.INVITED;
+				
+				if (gamer.getStatus() == GamerStatus.WAITING_ANSWERS)
+					return UserGamePlayingStatus.PLAYING;
+				if (gamer.getStatus() == GamerStatus.WAITING_ROUND)
+					return UserGamePlayingStatus.PLAYING;
+				if (gamer.getStatus() == GamerStatus.WAITING_OPONENT)
+					return UserGamePlayingStatus.PLAYING;
+			}
+		}
+		
+		return UserGamePlayingStatus.READY;
+	}
+	
 }

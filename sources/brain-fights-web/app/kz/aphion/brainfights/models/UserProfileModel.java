@@ -5,6 +5,7 @@ import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.DepartmentService;
+import kz.aphion.brainfights.services.GameService;
 import kz.aphion.brainfights.services.UserService;
 
 /**
@@ -91,11 +92,12 @@ public class UserProfileModel {
 	 * Позиция пользователя относиться всех остальных игроков
 	 */
 	public Integer gamePosition;
-
+	
 	/**
-	 * Уже играю с этим пользоватетелем
+	 * Состояние игрового процесса по отношению к пользователю.
+	 * (Играем или не играем с пользователем)
 	 */
-	public boolean isPlayingWithMe;
+	public UserGamePlayingStatus playStatus;
 	
 	/**
 	 * Строит профиль пользоваля, по умолчанию выставляет USER TYPE = ME
@@ -128,8 +130,7 @@ public class UserProfileModel {
 		model.totalGames = user.getTotalGames() != null ? user.getTotalGames() : 0;
 		model.score = user.getScore() != null ? user.getScore() : 0;
 		model.gamePosition = UserService.getUserGamePosition(user); // TODO считать рейтинг чувака
-		
-		model.isPlayingWithMe = false;
+		model.playStatus = UserGamePlayingStatus.READY;
 		
 		return model;
 	}
@@ -154,27 +155,24 @@ public class UserProfileModel {
 		// Если тот же самый пользователь
 		if (authorizedUser.id == user.id) {
 			model.type = UserType.ME;
-			return model;
-		}
-		
-		// Если друг
-		if (authorizedUser.getFriends() != null) {
-			for (User friend : authorizedUser.getFriends()) {
-				if (friend.id == user.id) {
-					model.type = UserType.FRIEND;
-					return model;
+		} else { 
+			// Если друг
+			if (authorizedUser.getFriends() != null) {
+				for (User friend : authorizedUser.getFriends()) {
+					if (friend.id == user.id) {
+						model.type = UserType.FRIEND;
+						break;
+					}
 				}
+			} else {
+				// Не друг, просто опонент
+				model.type = UserType.OPONENT;
 			}
 		}
 		
-		// Не друг, просто опонент
-		model.type = UserType.OPONENT;
-		
 		// Если потенциальный противник
-		if (model.type == UserType.FRIEND || model.type == UserType.OPONENT) {
-			// TODO вставить проверку на активную игру с между игроками
-			// auth -> Gamers \
-			// user -> Gamers / game
+		if (model.type != UserType.ME) {
+			model.playStatus = GameService.getUserGamePlayingStatus(authorizedUser, user);
 		}
 		
 		return model;
