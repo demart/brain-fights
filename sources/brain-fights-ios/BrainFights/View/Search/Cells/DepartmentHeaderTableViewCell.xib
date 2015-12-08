@@ -15,26 +15,45 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Заголовок подразделеия" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxB-Lg-D55">
-                        <rect key="frame" x="18" y="8" width="294" height="27.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Заголовок подразделеия" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lxB-Lg-D55">
+                        <rect key="frame" x="16" y="8" width="296" height="27.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="organizationStructureIconGreen" translatesAutoresizingMaskIntoConstraints="NO" id="JjN-Xb-rha">
+                        <rect key="frame" x="13" y="10" width="22" height="22"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="NDz-Vq-JAx"/>
+                            <constraint firstAttribute="height" constant="22" id="q1p-JX-F3S"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <constraints>
+                    <constraint firstItem="lxB-Lg-D55" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="51" id="04p-L2-bst"/>
                     <constraint firstItem="lxB-Lg-D55" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="BpB-Sy-gih"/>
                     <constraint firstItem="lxB-Lg-D55" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="W3f-nJ-Fsp"/>
                     <constraint firstItem="lxB-Lg-D55" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="YKE-ED-hE6"/>
-                    <constraint firstItem="lxB-Lg-D55" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="g0b-Ei-hbv"/>
+                    <constraint firstItem="lxB-Lg-D55" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="gdz-yo-0ek"/>
+                    <constraint firstItem="JjN-Xb-rha" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hmz-IZ-3Yd"/>
+                    <constraint firstItem="JjN-Xb-rha" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="pUX-4Q-T8O"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
+                <outlet property="departmentIcon" destination="JjN-Xb-rha" id="OBG-lo-3gp"/>
+                <outlet property="departmentIconLeftContraint" destination="pUX-4Q-T8O" id="Rbx-4p-Zjo"/>
                 <outlet property="departmentTitle" destination="lxB-Lg-D55" id="8N3-wM-svM"/>
+                <outlet property="departmentTitleLeftConstraint" destination="04p-L2-bst" id="Hnc-wd-p55"/>
+                <outlet property="departmentTitleWithoutIconConstraint" destination="gdz-yo-0ek" id="l2L-NL-7Tw"/>
             </connections>
+            <point key="canvasLocation" x="139" y="255"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="organizationStructureIconGreen" width="50" height="50"/>
+    </resources>
 </document>

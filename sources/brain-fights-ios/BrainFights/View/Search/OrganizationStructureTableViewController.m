@@ -85,7 +85,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger sectionCount = 0;
+    NSInteger sectionCount = 1;
     
     // Если есть пользователи то для них секцию
     if (self.users != nil && [self.users count] > 0)
@@ -101,33 +101,47 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger sectionCount = [self.tableView numberOfSections];
     
-    if (sectionCount == 2) {
-        if (section == 0) {
-            if (self.users != nil && [self.users count] > 0)
-                return [self.users count];
-            return [self.parentDepartmentModel.users count];
-        } else {
-            if (self.departments != nil && [self.departments count] > 0)
-                return [self.departments count];
-            return 0;
-        }
-    } else {
-        //  Если одна секция
-        if (self.users != nil && [self.users count] > 0)
-            return [self.users count];
-        
-        if (self.departments != nil && [self.departments count] > 0)
-            return [self.departments count];
-        
+    if (sectionCount == 1) {
+        // Поидее не должно быть
         return 0;
     }
+    
+    if (sectionCount == 2) {
+        if (section == 0)
+            return 0;
+        
+        //  Если одна секция
+        if (section == 1) {
+            if (self.users != nil && [self.users count] > 0)
+                return [self.users count];
+        
+            if (self.departments != nil && [self.departments count] > 0)
+                return [self.departments count];
+        }
+    }
+    
+    if (sectionCount == 3) {
+        if (section == 0) {
+            return 0;
+        }
+        if (section == 1) {
+            if (self.users != nil && [self.users count] > 0)
+                return [self.users count];
+        }
+        if (section == 2) {
+            if (self.departments != nil && [self.departments count] > 0)
+                return [self.departments count];
+        }
+    }
+    
+    return 0;
 }
 
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      NSInteger sectionCount = [self.tableView numberOfSections];
-     if (sectionCount == 2) {
-         if (indexPath.section == 0) {
+     if (sectionCount == 3) {
+         if (indexPath.section == 1) {
              // Пользователи
              UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserCell"];
              if (!cell) {
@@ -221,30 +235,66 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
     }
     
+    /*
     if (self.parentDepartmentModel == nil) {
         [cell initCellWithTitle:@"Транстелеком"];
         return cell;
     }
+     */
     
     NSInteger sectionCount = [self.tableView numberOfSections];
-    if (sectionCount == 2) {
-        if (section == 0) {
-            [cell initCellWithTitle:@"Сотрудники"];
+    
+    // Если ничего нету в подразделении
+    if (sectionCount == 1) {
+        if (self.parentDepartmentModel == nil) {
+            [cell initCellWithTitle:@"Транстелеком" withMainHeader:YES isDepartment:YES];
             return cell;
         } else {
-            [cell initCellWithTitle:self.parentDepartmentModel.name];
+            [cell initCellWithTitle:self.parentDepartmentModel.name withMainHeader:YES isDepartment:YES];
             return cell;
         }
     }
-    //  Если одна секция
-    if (self.users != nil && [self.users count] > 0) {
-        [cell initCellWithTitle:@"Сотрудники"];
-        return cell;
-    }
     
-    if (self.departments != nil && [self.departments count] > 0) {
-        [cell initCellWithTitle:self.parentDepartmentModel.name];
-        return cell;
+    if (sectionCount == 2) {
+        if (section == 0) {
+            if (self.parentDepartmentModel == nil) {
+                [cell initCellWithTitle:@"Транстелеком" withMainHeader:YES isDepartment:YES];
+                return cell;
+            } else {
+                [cell initCellWithTitle:self.parentDepartmentModel.name withMainHeader:YES isDepartment:YES];
+                return cell;
+            }
+        }
+        
+        //  Если одна секция
+        if (self.users != nil && [self.users count] > 0) {
+            [cell initCellWithTitle:@"Сотрудники" withMainHeader:NO isDepartment:NO];
+            return cell;
+        }
+        
+        if (self.departments != nil && [self.departments count] > 0) {
+            [cell initCellWithTitle:@"Подразделения" withMainHeader:NO isDepartment:YES];
+            return cell;
+        }
+    }
+
+    if (sectionCount == 3) {
+        if (section == 0) {
+            if (self.parentDepartmentModel == nil) {
+                [cell initCellWithTitle:@"Транстелеком" withMainHeader:YES isDepartment:YES];
+                return cell;
+            } else {
+                [cell initCellWithTitle:self.parentDepartmentModel.name withMainHeader:YES isDepartment:YES];
+                return cell;
+            }
+        }
+        if (section == 1) {
+            [cell initCellWithTitle:@"Сотрудники" withMainHeader:NO isDepartment:NO];
+            return cell;
+        } else {
+            [cell initCellWithTitle:@"Подразделения" withMainHeader:NO isDepartment:YES];
+            return cell;
+        }
     }
     
     return cell;
@@ -257,8 +307,8 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger sectionCount = [self.tableView numberOfSections];
     
-    if (sectionCount == 2) {
-        if (indexPath.section == 0) {
+    if (sectionCount == 3) {
+        if (indexPath.section == 1) {
             // Пользователи
             UserProfileTableViewController *viewController = [[UserProfileTableViewController alloc] init];
             [viewController setUserProfile:self.parentDepartmentModel.users[indexPath.row]];
@@ -267,7 +317,9 @@
                                                                                               target:nil
                                                                                               action:nil];
             [self.navigationController pushViewController:viewController animated:YES];
-        } else {
+        }
+        
+        if (indexPath.section == 2) {
             // Подразделения
             OrganizationStructureTableViewController *viewController = [[OrganizationStructureTableViewController alloc] init];
             [viewController setParentDepartment:self.departments[indexPath.row]];
@@ -278,7 +330,9 @@
             [self.navigationController pushViewController:viewController animated:YES];
         }
         
-    } else {
+    }
+    
+    if (sectionCount == 2) {
         if (self.departments != nil && [self.departments count] >0) {
             // Подразделения
             OrganizationStructureTableViewController *viewController = [[OrganizationStructureTableViewController alloc] init];
@@ -303,6 +357,8 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0)
+        return 0;
     return 75;
 }
 
