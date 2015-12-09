@@ -142,6 +142,10 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -260,6 +264,10 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -359,6 +367,10 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -459,6 +471,10 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"

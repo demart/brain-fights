@@ -38,6 +38,26 @@ public class DepartmentModel {
 	public Integer score;
 	
 	/**
+	 * Рейтинг подразделения
+	 */
+	public Integer lastScore;
+
+	/**
+	 * Позиция подразделения (прошлая статистика)
+	 */
+	public Integer lastPosition;	
+
+	/**
+	 * Глобальная позиции подразделения (прошлая статистика)
+	 */
+	public Integer lastGlobalPosition;	
+	
+	/**
+	 * Время последнего пересчета статистики
+	 */
+	public String lastStatisticsUpdate;
+	
+	/**
 	 * Есть ли подразделения на уровне ниже
 	 */
 	public Boolean haveChildren;
@@ -81,6 +101,11 @@ public class DepartmentModel {
 		model.name = department.getName();
 		model.score = department.getScore();
 		model.userCount = department.getUserCount();
+		
+		model.lastScore = department.getLastScore();
+		model.lastPosition = department.getLastPosition();
+		model.lastGlobalPosition = department.getLastGlobalPosition();
+		model.lastStatisticsUpdate = department.getLastStatisticsUpdateDateISO8601();
 		
 		// TODO хреновая проверка, нужно кэшировать походу так как структура статична
 		model.haveChildren = department.getChildren() != null && department.getChildren().size() > 0 ? true : false;

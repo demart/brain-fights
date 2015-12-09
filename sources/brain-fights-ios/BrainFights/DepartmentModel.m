@@ -10,4 +10,12 @@
 
 @implementation DepartmentModel
 
+// Время последнего обновления в формате
+-(NSDate*) getLastStatisticsUpdateDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSDate *date = [formatter dateFromString:self.lastStatisticsUpdate];
+    return date;
+}
+
 @end
