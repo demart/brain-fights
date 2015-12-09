@@ -39,6 +39,11 @@
 /**
  * Позиция подразделения (прошлая статистика)
  */
+@property NSInteger lastScore;
+
+/**
+ * Позиция подразделения (прошлая статистика)
+ */
 @property NSInteger lastPosition;
 
 /**

@@ -299,8 +299,15 @@
     }
     
     if (indexPath.section == 3) {
-        // TODO
-        [self performSegueWithIdentifier:@"FromNewGameToUserProfile" sender:self];
+        // Пользователи
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        UserProfileTableViewController *viewController = [[UserProfileTableViewController alloc] init];
+        [viewController setUserProfile:self.friends[selectedIndexPath.row]];
+        viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Назад"
+                                                                                           style:UIBarButtonItemStylePlain
+                                                                                          target:nil
+                                                                                          action:nil];
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     
 }
@@ -319,17 +326,12 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Если переход на профиль друга
-    if ([segue.destinationViewController isKindOfClass:[UserProfileTableViewController class]]) {
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        [(UserProfileTableViewController*)segue.destinationViewController setUserProfile:self.friends[selectedIndexPath.row]];
-        NSLog(@"NewGame -> UserProfile");
-    }
-    
+
     if ([segue.destinationViewController isKindOfClass:[OrganizationStructureTableViewController class]]) {
         segue.destinationViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStylePlain target:nil action:nil];
         NSLog(@"NewGame -> OrganizationStructure");
     }
+    
 }
 
 @end

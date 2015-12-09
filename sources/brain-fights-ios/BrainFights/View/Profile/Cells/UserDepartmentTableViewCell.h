@@ -10,9 +10,10 @@
 #import "AppDelegate.h"
 
 @interface UserDepartmentTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *departmentTitle;
 @property (weak, nonatomic) IBOutlet UILabel *departmentValueTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconLeftConstraint;
 
--(void) initCell:(UserProfileModel*)userProfileModel;
+-(void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index;
 
 @end

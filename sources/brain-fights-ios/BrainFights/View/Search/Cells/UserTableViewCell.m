@@ -24,8 +24,8 @@
     self.roundView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
     self.roundView.layer.cornerRadius = 5.0;
     self.roundView.layer.masksToBounds = NO;
-    self.roundView.layer.shadowOffset = CGSizeMake(1, 1);
-    self.roundView.layer.shadowRadius = 3;
+    self.roundView.layer.shadowOffset = CGSizeMake(2, 2);
+    self.roundView.layer.shadowRadius = 1;
     self.roundView.layer.shadowOpacity = 0.5;
     self.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
     

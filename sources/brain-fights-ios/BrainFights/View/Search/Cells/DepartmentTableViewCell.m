@@ -21,8 +21,8 @@
     self.departmentBackgroundView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
     self.departmentBackgroundView.layer.cornerRadius = 5.0;
     self.departmentBackgroundView.layer.masksToBounds = NO;
-    self.departmentBackgroundView.layer.shadowOffset = CGSizeMake(1, 1);
-    self.departmentBackgroundView.layer.shadowRadius = 3;
+    self.departmentBackgroundView.layer.shadowOffset = CGSizeMake(2, 2);
+    self.departmentBackgroundView.layer.shadowRadius = 1;
     self.departmentBackgroundView.layer.shadowOpacity = 0.5;
     self.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
 }
