@@ -133,4 +133,45 @@
  */
 @property NSInteger gamePosition;
 
+
+// LAST STATISTIC
+
+/**
+ * Всего игр
+ */
+@property NSInteger lastTotalGames;
+
+/**
+ * Выиграно игр
+ */
+@property NSInteger lastWonGames;
+
+/**
+ * Проиграно игр
+ */
+@property NSInteger lastLoosingGames;
+
+/**
+ * Игр в ничью
+ */
+@property NSInteger lastDrawnGames;
+
+/**
+ * Рейтинг пользоваля
+ */
+@property NSInteger lastScore;
+
+/**
+ * Позиция пользователя относиться всех остальных игроков
+ */
+@property NSInteger lastGamePosition;
+
+/**
+ * Время последнего обновления статистики
+ */
+@property NSString *lastStatisticsUpdate;
+
+// Время последнего обновления в формате
+-(NSDate*) getLastStatisticsUpdateDate;
+
 @end

@@ -58,6 +58,14 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"imageUrl":@"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -159,6 +167,13 @@
                                                            @"gamePosition": @"gamePosition",
                                                            @"playStatus": @"playStatus",
                                                            @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -270,6 +285,13 @@
                                                            @"gamePosition": @"gamePosition",
                                                            @"playStatus": @"playStatus",
                                                            @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -362,6 +384,13 @@
                                                            @"gamePosition": @"gamePosition",
                                                            @"playStatus": @"playStatus",
                                                            @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -455,6 +484,13 @@
                                                            @"gamePosition": @"gamePosition",
                                                            @"playStatus": @"playStatus",
                                                            @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
