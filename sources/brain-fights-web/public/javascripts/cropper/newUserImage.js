@@ -159,6 +159,7 @@ $(function () {
               //parent.window.Ext.getCmp('catImageFile').close();
               //parent.window.Ext.getCmp('catImageFile').destroy();
               //parent.window.Ext.getCmp('catImageFile').hide();
+              parent.document.getElementById('editControlAvatar').innerHTML = 'yes';
 
               //parent.document.getElementById('imageEditorButtonId').setText("Изображение успешно выбрано");
             //  parent.document.getElementById('imageEditorButtonId').setDisabled(true);
@@ -169,6 +170,7 @@ $(function () {
         case 'getSaveAction':
         	parent.window.Ext.getCmp('userImageFile').destroy();
             parent.window.Ext.getCmp('userImageFile').hide();
+            parent.document.getElementById('editControlAvatar').innerHTML = 'yes';
         	break;
           
         case 'getCloseAction':
@@ -176,7 +178,7 @@ $(function () {
             parent.parent.document.getElementById('uploadImageAvatar').innerHTML = parent.parent.document.getElementById('tmpUploadImageAvatar').innerHTML;
              //console.log (pred);
              parent.parent.window.Ext.getCmp('imageSetLabelAvatar').setSrc(parent.parent.document.getElementById('uploadImageAvatar').innerHTML);
-     
+             parent.document.getElementById('editControlAvatar').innerHTML = 'no';
                 parent.window.Ext.getCmp('userImageFile').destroy();
                 parent.window.Ext.getCmp('userImageFile').hide();
                 break;

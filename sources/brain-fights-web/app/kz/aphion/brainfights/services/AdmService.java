@@ -16,6 +16,8 @@ import java.util.Calendar;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
+import kz.aphion.brainfights.persistents.user.DepartmentType;
+
 import javax.imageio.ImageIO;
 import javax.persistence.Query;
 
@@ -27,6 +29,8 @@ import kz.aphion.brainfights.persistents.user.*;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
 import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
+import kz.aphion.brainfights.admin.models.DepartmentTreeModel;
+import kz.aphion.brainfights.admin.models.DepartmentTreeRootModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
 import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
@@ -856,5 +860,134 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				.setParameter("name", "%" + name + "%").getResultList();
 	}
 
+	public static List<Department> getDepartments() {
+		return JPA.em().createQuery("from Department where deleted = 'FALSE'").getResultList();
+
+	}
+	
+	public static List<Department> getDepartmentsById(Long id) {
+		return JPA.em().createQuery("from Department where deleted = 'FALSE' and parent.id = :thisId").setParameter("thisId", id).getResultList();
+
+	}
+
+	public static DepartmentTreeRootModel createDepartmentsTree(List<Department> listBase) throws PlatformException {
+		DepartmentTreeRootModel root = new DepartmentTreeRootModel();
+		root.setChildren(new ArrayList<DepartmentTreeModel>());
+		ArrayList<Long> ids = new ArrayList<Long>();
+		
+		for (Department model: listBase) {
+			if (model.getParent() != null)
+				ids.add(model.getParent().getId());
+		}
+		for (Department model: listBase) {
+			Boolean tmpLeaf = true;
+
+			if (AdmService.getChildrensDepartment(model.getId()) > 0l) {
+				tmpLeaf = false;
+			}
+			
+			if (model.getParent() == null) {
+				System.out.println(tmpLeaf);
+				if (model.getType() == null) {
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), "Не указан", 0l,  tmpLeaf);
+					root.getChildren().add(mod);
+				}
+				else {
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(),  tmpLeaf);
+					root.getChildren().add(mod);
+				}
+				
+			}
+		}
+		return root;
+	}
+
+	public static DepartmentTreeRootModel createChildrensTree(List<Department> listBase, Long id) throws PlatformException {
+		DepartmentTreeRootModel root = new DepartmentTreeRootModel();
+		root.setChildren(new ArrayList<DepartmentTreeModel>());
+
+		for (Department model: listBase) {
+				System.out.println(model.getId());
+				Boolean tmpLeaf = true;
+				
+				if (AdmService.getChildrensDepartment(model.getId()) > 0l) {
+					tmpLeaf = false;
+				}
+				
+				
+				if (model.getType() == null) {
+
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), "Не указан", 0l, tmpLeaf);
+					root.getChildren().add(mod);
+				}
+				
+				else {
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(), tmpLeaf);
+					root.getChildren().add(mod);
+				}
+
+		}
+		return root;
+	}
+
+	public static Long getChildrensDepartment(Long id) throws PlatformException {
+			return (Long)JPA.em().createQuery("select count(*) from Department where parent.id = :idParent").setParameter("idParent", id).getSingleResult();
+	}
+
+	public static List<DepartmentType> getDepartmentsType() {
+		return JPA.em().createQuery("from DepartmentType where deleted = 'FALSE'").getResultList();
+	}
+
+	public static ArrayList<DepartmentForAdminModel> createDepartmentsType(List<DepartmentType> listBase) {
+		ArrayList<DepartmentForAdminModel> models = new ArrayList<DepartmentForAdminModel>();
+		for (DepartmentType model: listBase) {
+			DepartmentForAdminModel type = new DepartmentForAdminModel();
+			type.setId(model.getId());
+			type.setCreatedDate(model.getCreatedDate().getTime());
+			type.setName(model.getName());
+			type.setModifiedDate(model.getModifiedDate().getTime());
+			models.add(type);
+		}
+		return models;
+	}
+
+	public static Long getCountTypeDepartments() {
+		return (Long) JPA.em().createQuery("select count(*) from DepartmentType where deleted = 'FALSE'").getSingleResult();
+	}
+
+	public static void createNewDepartmentType(DepartmentForAdminModel[] models) throws PlatformException {
+		for (DepartmentForAdminModel model: models) {
+			if (model == null)
+				throw new PlatformException("0", "Department type model is null");
+
+			DepartmentType type = new DepartmentType();
+			
+			type.setName(model.getName());
+			type.save();
+						
+			Logger.info("Department type created successfully");
+		}
+		
+	}
+
+	public static void updateNewDepartmentType(DepartmentForAdminModel[] models) throws PlatformException {
+		for (DepartmentForAdminModel model: models) {
+			if (model == null)
+				throw new PlatformException("0", "Department type model is null");
+
+			DepartmentType type = DepartmentType.findById(model.getId());
+			
+			if (StringUtils.isNotEmpty(model.getName()))
+				type.setName(model.getName());
+			
+			type.setModifiedDate(Calendar.getInstance());
+			
+			type.save();
+						
+			Logger.info("Department type updated successfully");
+		}
+		
+	}
+	
 
 }

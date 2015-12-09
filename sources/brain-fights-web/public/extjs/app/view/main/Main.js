@@ -73,7 +73,30 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 							    hidden: true,
 							    listeners : {click : 'onQuestionBtnClick', },
 							    
-							}, '->',
+							}, 
+							{
+					        	id: 'departmentsBtn',
+					            xtype:'button',
+					            text:'Управление отделениями',
+					            iconCls: null,
+					            glyph: 61,
+					            hidden: true,
+					            scale: 'small',
+					            menu:[
+					                  {
+					                	  text:'Справочник подразделений',
+					                	  listeners: { click : 'onDepartmentsTypeBtnClick', }
+					                  },
+					                  {
+					                	  text:'Структура компании',
+					                	  listeners: { click : 'onDepartmentsBtnClick', },
+					                  }
+				                  ]
+					        	},
+							
+							
+							
+							'->',
 							{
 								id: 'authUserNameLabel',
 								xtype:'label',
@@ -122,6 +145,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('categoryBtn').setVisible(true);
         		Ext.getCmp('questionBtn').setVisible(true);
         		Ext.getCmp('usersBtn').setVisible(true);
+        		Ext.getCmp('departmentsBtn').setVisible(true);
         		window.document.location = "#admins";
         		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь администратором.');
         	}
@@ -130,6 +154,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('categoryBtn').setVisible(true);
         		Ext.getCmp('questionBtn').setVisible(true);
         		Ext.getCmp('usersBtn').setVisible(false);
+        		Ext.getCmp('departmentsBtn').setVisible(false);
         		window.document.location = "#category";
         		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь менеджером.');
         	}

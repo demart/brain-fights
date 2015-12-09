@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,8 @@ import kz.aphion.brainfights.admin.models.AdminResponseWrapperModel;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
 import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
+import kz.aphion.brainfights.admin.models.DepartmentTreeModel;
+import kz.aphion.brainfights.admin.models.DepartmentTreeRootModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
 import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
@@ -32,6 +35,7 @@ import kz.aphion.brainfights.persistents.game.question.Category;
 import kz.aphion.brainfights.persistents.game.question.Question;
 import kz.aphion.brainfights.persistents.user.AdminUser;
 import kz.aphion.brainfights.persistents.user.Department;
+import kz.aphion.brainfights.persistents.user.DepartmentType;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.AdmService;
 import kz.aphion.brainfights.models.ResponseStatus;
@@ -537,6 +541,11 @@ public class AdmController extends Controller {
 		}
 	}
 	
+	/**
+	 * Поиск пользователя по email/логину/имени
+	 * @param name
+	 * @throws PlatformException
+	 */
 	public static void searchUsers (String name) throws PlatformException {
 		Logger.info("Search users. User is " +  Security.connected());
 		
@@ -557,6 +566,152 @@ public class AdmController extends Controller {
 
 		}
 	}
+	
+	public static void getDepartmentsTreeList (Long node) throws PlatformException {
+		Logger.info("Read Departments Tree. User is " + Security.connected());
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			
+			if (node == null) {
+				List<Department> listBase = AdmService.getDepartments();
+				DepartmentTreeRootModel models = AdmService.createDepartmentsTree(listBase);
+				renderJSON(models);
+			}
+			
+			else {
+				List<Department> listBase = AdmService.getDepartmentsById(node);
+				DepartmentTreeRootModel models = AdmService.createChildrensTree(listBase, node);
+
+				renderJSON(models);
+			}
+			
+		}
+	}
+	
+	public static void readDepartmentsType () throws PlatformException {
+		Logger.info("Read Departments Type. User is " + Security.connected());
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			List<DepartmentType> listBase = AdmService.getDepartmentsType();
+			ArrayList<DepartmentForAdminModel> models = AdmService.createDepartmentsType(listBase);
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountTypeDepartments().intValue());
+			renderJSON(wrapper);
+		}
+			
+		}
+	
+	public static void createDepartmentType () throws PlatformException {
+		Logger.info("Create Departments Type. User is " + Security.connected());
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			String requestBody = params.current().get("body");
+			//Logger.info (" Create Question: \n" + requestBody);
+			
+			if (!requestBody.startsWith("["))
+				requestBody = "[" + requestBody + "]";
+			
+				Gson gson = new Gson();
+			DepartmentForAdminModel[] models = gson.fromJson(requestBody, DepartmentForAdminModel[].class);
+			Logger.info("\n Model.lenght: " + models.length);
+			AdmService.createNewDepartmentType(models);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			renderJSON(wrapper);
+		}
+			
+		}
+	
+	public static void updateDepartmentType () throws PlatformException {
+		Logger.info("Update Departments Type. User is " + Security.connected());
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			String requestBody = params.current().get("body");
+			//Logger.info (" Create Question: \n" + requestBody);
+			
+			if (!requestBody.startsWith("["))
+				requestBody = "[" + requestBody + "]";
+			
+				Gson gson = new Gson();
+			DepartmentForAdminModel[] models = gson.fromJson(requestBody, DepartmentForAdminModel[].class);
+			Logger.info("\n Model.lenght: " + models.length);
+			AdmService.updateNewDepartmentType(models);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			renderJSON(wrapper);
+		}
+			
+		}
+	
+	
+	public static Long destroyDepartmentType(Long id) throws PlatformException {
+		Logger.info("Delete Department Type. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		if (status == true) {
+			if (id == null || id <= 0)
+				throw new PlatformException ("0","DepartmentType id is 0 or empty");
+			
+			try {
+			DepartmentType type = DepartmentType.findById(id);
+			type.setDeleted(true);
+			type.save();
+			Long tmp = null;
+			
+			JPA.em().createQuery("update Department set type.id = :tmp where type.id = :id").setParameter("tmp", tmp).setParameter("id", id).executeUpdate();
+			
+			}
+			catch(Exception e) {
+				throw new PlatformException("0", e.getMessage());
+			}
+			return id;
+			
+		}
+		
+		else
+			return 0l;
+	}
+	
+	public static Long updateDepartment(Long depId, Long typeId) throws PlatformException {
+		Logger.info("Update Department (type). User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		if (status == true) {
+			if (depId == null || depId <= 0)
+				throw new PlatformException ("0","Department id is 0 or empty");
+			
+			if (typeId == null || typeId <= 0)
+				throw new PlatformException ("0","Department Type id is 0 or empty");
+
+			DepartmentType type = DepartmentType.findById(typeId);
+			Department dep = Department.findById(depId);
+			
+			if (type == null || dep == null)
+				throw new PlatformException ("0","Not found department or type");
+			
+			
+			dep.setType(type);
+			dep.setModifiedDate(Calendar.getInstance());
+			dep.save();
+
+			return depId;
+			
+		}
+		
+		else
+			return 0l;
+	}
+	
 	
 
 }

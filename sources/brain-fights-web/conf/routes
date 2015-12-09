@@ -34,6 +34,12 @@ POST	/rest/upload/category/image								AdmController.uploadImage
 GET		/rest/department/combo/store/read						AdmController.createDepartmentComboList
 POST	/rest/users/image/store/create                          AdmController.updateImageUrl
 GET		/rest/search/users/store/read							AdmController.searchUsers
+GET		/rest/departments/tree/store/read						AdmController.getDepartmentsTreeList
+GET		/rest/departments/type/store/read						AdmController.readDepartmentsType
+POST	/rest/departments/type/store/create						AdmController.createDepartmentType
+POST	/rest/departments/type/store/update						AdmController.updateDepartmentType
+POST	/rest/departments/type/store/destroy					AdmController.destroyDepartmentType
+POST	/rest/departments/store/update							AdmController.updateDepartment
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

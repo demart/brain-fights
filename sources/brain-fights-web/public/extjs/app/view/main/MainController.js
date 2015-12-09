@@ -23,6 +23,17 @@ Ext.define('BrainFightsConsole.view.main.MainController', {
     	this.redirectTo('admins');
     },
     
+    //Управление типами подразделений
+    onDepartmentsTypeBtnClick : function () {
+    	console.log('Departments type');
+    	this.redirectTo('departmentsType');
+    },
+    
+    onDepartmentsBtnClick: function () {
+    	console.log('Departments clicked');
+    	this.redirectTo('departments');
+    },
+    
     //Управление пользователями
     onUsersBtnClick: function() {
     	console.log('Users clicked');

@@ -54,7 +54,7 @@ Ext.define('BrainFightsConsole.view.users.EditImageWindow', {
 	               },
 	               {
 	               	xtype: 'label',
-	               	text: '',
+	               	text: 'no',
 	               	id: 'editControlAvatar',
 	               	hidden: true,
 	               },

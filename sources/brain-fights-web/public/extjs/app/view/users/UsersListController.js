@@ -15,6 +15,7 @@ Ext.define('BrainFightsConsole.view.users.UsersListController', {
       	Ext.getCmp('imageSetLabelAvatar').setSrc(record.data.imageUrl);
       	Ext.getCmp('uploadImageAvatar').setText(record.data.imageUrl);
       	Ext.getCmp('tmpUploadImageAvatar').setText(record.data.imageUrl);
+      	Ext.getCmp('editControlAvatar').setText('no');
       	win.show();
     },
     
@@ -33,25 +34,32 @@ Ext.define('BrainFightsConsole.view.users.UsersListController', {
     	var grid = Ext.getCmp('usersListId');
     	var record = grid.getSelectionModel().getSelection()[0];
     	model.data.id = record.data.id;
-    	model.data.imageUrl = document.getElementById('uploadImageAvatar').innerHTML;
-    	var data = model.getData();
     	
-    	Ext.Ajax.request({
-		    url: '/rest/users/image/store/create',
-		    jsonData : data,
-		    
-		    success: function(response){
-		    	Ext.MessageBox.alert('Успешно','Фотография обновлена.');
-		        Ext.getCmp('imageUserEditWindowId').hide();
-		        grid.getStore().reload();
-	
-		    	
-		    },
-		    failure: function(batch) {
-				Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
-			}
-		});
-    },
+    	console.log(document.getElementById('editControlAvatar').innerHTML);
+    	
+    	if (document.getElementById('editControlAvatar').innerHTML == 'yes'){
+    		model.data.imageUrl = document.getElementById('uploadImageAvatar').innerHTML;
+    		var data = model.getData();
+        	
+        	Ext.Ajax.request({
+    		    url: '/rest/users/image/store/create',
+    		    jsonData : data,
+    		    
+    		    success: function(response){
+    		    	Ext.MessageBox.alert('Успешно','Фотография обновлена.');
+    		        Ext.getCmp('imageUserEditWindowId').hide();
+    		        grid.getStore().reload();
+    	
+    		    	
+    		    },
+    		    failure: function(batch) {
+    				Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
+    			}
+    		});
+    	}
+    	else
+    		Ext.Msg.alert('Внимание', 'Фотография не изменена!');
+    	    },
     
     searchUsers: function () {
     	console.log("search");
