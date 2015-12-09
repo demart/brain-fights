@@ -15,8 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *userPositionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userScoreLabel;
 
-- (void) initCell:(UserProfileModel*)userProfile;
-
-- (void) initCellWithDepartment:(DepartmentModel*)departmentModel;
+- (void) initCell:(UserProfileModel*)userProfile withIndex:(NSInteger)index;
 
 @end

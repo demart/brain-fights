@@ -12,6 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *departmentTypeTitle;
 
-- (void) initCell:(NSString*)title;
+- (void) initCell:(NSString*)title isSelected:(BOOL)selected;
 
 @end
