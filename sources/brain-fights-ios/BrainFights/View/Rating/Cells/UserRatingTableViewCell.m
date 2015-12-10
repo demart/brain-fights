@@ -29,8 +29,15 @@
 
 - (void) initCell:(UserProfileModel*)userProfile withIndex:(NSInteger)index {
     self.userProfileModel = userProfile;
+    
     if (index % 2 == 1) {
         self.backgroundColor = [UIColor colorWithRed:242.0/255.0f green:242.0/255.0f blue:242.0/255.0f alpha:1.0];
+    }
+    if ([userProfile.type isEqualToString:USER_TYPE_ME]) {
+        self.backgroundColor = [UIColor colorWithRed:255.0/255.0f green:255.0/255.0f blue:215.0/255.0f alpha:1.0];
+        [self.thisIsYouLabel setHidden:YES];
+    } else {
+        [self.thisIsYouLabel setHidden:YES];
     }
     
     [self.userNameLabel setText:userProfile.name];
@@ -41,6 +48,7 @@
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [self prepareAndShowRatingChanges];
+
 }
 
 - (void) prepareAndShowRatingChanges {

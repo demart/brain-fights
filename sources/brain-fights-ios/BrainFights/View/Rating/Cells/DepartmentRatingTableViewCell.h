@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentScore;
 @property (weak, nonatomic) IBOutlet UILabel *departmentPositionChangesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentScoreChangesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *departmentIsMineLabel;
 
 - (void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index;
 

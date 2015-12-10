@@ -29,6 +29,12 @@
     if (index % 2 == 1) {
         self.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0/255.0f blue:240.0/255.0f alpha:1.0];
     }
+    if (departmentModel.isUserBelongs == true) {
+        self.backgroundColor = [UIColor colorWithRed:255.0/255.0f green:255.0/255.0f blue:215.0/255.0f alpha:1.0];
+        [self.departmentIsMineLabel setHidden:YES];
+    } else {
+        [self.departmentIsMineLabel setHidden:YES];
+    }
 
     [self.departmentTitle setText:departmentModel.name];
     [self.departmentPosition setText:[@(departmentModel.position) stringValue]];

@@ -73,6 +73,17 @@
                         <color key="textColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Это Я" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C47-IX-uEi">
+                        <rect key="frame" x="8" y="2" width="40" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="HeU-04-UyN"/>
+                            <constraint firstAttribute="height" constant="12" id="Hfr-tN-egi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -80,6 +91,8 @@
                     <constraint firstItem="TFw-Gs-L3A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="48" id="4h2-8S-YqO"/>
                     <constraint firstItem="TFw-Gs-L3A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="17" id="5Je-w9-mAX"/>
                     <constraint firstItem="hIf-Tr-TtM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="BH4-4v-Qch"/>
+                    <constraint firstItem="C47-IX-uEi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Bry-h5-MFU"/>
+                    <constraint firstItem="C47-IX-uEi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-6" id="C2M-rh-SrU"/>
                     <constraint firstItem="8ic-Md-FZc" firstAttribute="leading" secondItem="hIf-Tr-TtM" secondAttribute="trailing" constant="8" id="CFf-SU-mow"/>
                     <constraint firstAttribute="trailingMargin" secondItem="TFw-Gs-L3A" secondAttribute="trailing" constant="58" id="How-GJ-ziE"/>
                     <constraint firstItem="Yzh-sV-UrV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="IvV-81-2y9"/>
@@ -100,6 +113,7 @@
             <connections>
                 <outlet property="gamePositionChanges" destination="Yzh-sV-UrV" id="be6-JX-dh5"/>
                 <outlet property="gamePositionLabel" destination="hIf-Tr-TtM" id="JgR-Di-dxq"/>
+                <outlet property="thisIsYouLabel" destination="C47-IX-uEi" id="veU-q1-1HB"/>
                 <outlet property="userNameLabel" destination="8ic-Md-FZc" id="CYh-Ft-ubj"/>
                 <outlet property="userPositionLabel" destination="TFw-Gs-L3A" id="2VM-tx-OTC"/>
                 <outlet property="userScoreChanges" destination="XcZ-ZE-tAs" id="mjH-6e-mCO"/>
