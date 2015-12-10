@@ -21,34 +21,44 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sih-EV-NCP">
                                 <rect key="frame" x="20" y="0.0" width="560" height="600"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oeM-EX-R1a">
-                                        <rect key="frame" x="160" y="28" width="240" height="80"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="oeM-EX-R1a">
+                                        <rect key="frame" x="130" y="15" width="300" height="300"/>
                                         <animations/>
-                                        <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="300" id="48l-TM-CCo"/>
+                                            <constraint firstAttribute="width" constant="300" id="y7Z-LK-8Z7"/>
+                                        </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hMq-3A-fp9">
-                                        <rect key="frame" x="160" y="128" width="240" height="70"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Логин" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9u-Td-6uM">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Логин" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9u-Td-6uM">
                                         <rect key="frame" x="160" y="247" width="240" height="30"/>
                                         <animations/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="KEc-aE-3Rz"/>
+                                            <constraint firstAttribute="width" constant="240" id="W1a-oq-HDX"/>
+                                        </constraints>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zaN-0l-Bgn">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zaN-0l-Bgn">
                                         <rect key="frame" x="160" y="285" width="240" height="30"/>
                                         <animations/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="dS2-O4-QAp"/>
+                                            <constraint firstAttribute="height" constant="30" id="xU5-b8-Hsn"/>
+                                        </constraints>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIc-JW-kM2">
-                                        <rect key="frame" x="160" y="328" width="240" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIc-JW-kM2">
+                                        <rect key="frame" x="160" y="348" width="240" height="40"/>
                                         <animations/>
-                                        <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="eR9-sE-bDH"/>
+                                            <constraint firstAttribute="width" constant="240" id="h5j-c0-Dpx"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <state key="normal" title="Войти">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -59,27 +69,41 @@
                                     </button>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.69019607843137254" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="t9u-Td-6uM" firstAttribute="top" secondItem="hMq-3A-fp9" secondAttribute="bottom" constant="49" id="8Zz-ne-Wxl"/>
-                                    <constraint firstItem="hMq-3A-fp9" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Kbc-km-mCB"/>
                                     <constraint firstItem="oeM-EX-R1a" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Nfa-3e-2lI"/>
+                                    <constraint firstItem="zaN-0l-Bgn" firstAttribute="top" secondItem="t9u-Td-6uM" secondAttribute="bottom" constant="8" id="OOQ-au-Oxt"/>
                                     <constraint firstItem="zaN-0l-Bgn" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Ppt-MS-3mI"/>
                                     <constraint firstItem="t9u-Td-6uM" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="WYB-Wb-EvX"/>
-                                    <constraint firstItem="hMq-3A-fp9" firstAttribute="top" secondItem="oeM-EX-R1a" secondAttribute="bottom" constant="20" id="cCB-og-liL"/>
-                                    <constraint firstItem="zaN-0l-Bgn" firstAttribute="top" secondItem="t9u-Td-6uM" secondAttribute="bottom" constant="8" id="n1d-yQ-nkF"/>
-                                    <constraint firstItem="oeM-EX-R1a" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="28" id="nWo-K7-Si5"/>
+                                    <constraint firstItem="oeM-EX-R1a" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="15" id="mBz-JP-iow"/>
                                     <constraint firstItem="TIc-JW-kM2" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="qWL-i1-bvr"/>
-                                    <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="zaN-0l-Bgn" secondAttribute="bottom" constant="13" id="z5y-JW-RVe"/>
+                                    <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="oeM-EX-R1a" secondAttribute="bottom" constant="33" id="tcJ-qO-QsN"/>
+                                    <constraint firstItem="zaN-0l-Bgn" firstAttribute="top" secondItem="oeM-EX-R1a" secondAttribute="bottom" constant="8" id="yNJ-lp-Gqf"/>
+                                    <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="zaN-0l-Bgn" secondAttribute="bottom" constant="33" id="z5y-JW-RVe"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="yNJ-lp-Gqf"/>
+                                    </mask>
+                                </variation>
                             </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="hMq-3A-fp9">
+                                <rect key="frame" x="199" y="513" width="201" height="71"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="201" id="8rA-hF-5Zg"/>
+                                    <constraint firstAttribute="height" constant="71" id="blc-eR-cmR"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="trailing" secondItem="GbC-PN-kpe" secondAttribute="trailingMargin" id="1vu-W5-mSI"/>
                             <constraint firstItem="m5S-6T-gmB" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="bottom" id="IDM-oo-Fch"/>
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="leading" secondItem="GbC-PN-kpe" secondAttribute="leadingMargin" id="YvB-A2-4c0"/>
+                            <constraint firstItem="hMq-3A-fp9" firstAttribute="centerX" secondItem="GbC-PN-kpe" secondAttribute="centerX" id="ZXl-F0-gqY"/>
+                            <constraint firstItem="m5S-6T-gmB" firstAttribute="top" secondItem="hMq-3A-fp9" secondAttribute="bottom" constant="16" id="b0L-GV-sm9"/>
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="top" secondItem="GbC-PN-kpe" secondAttribute="topMargin" id="gAx-12-zpc"/>
                         </constraints>
                     </view>
@@ -106,19 +130,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Brain Fights Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-WY-usB">
-                                <rect key="frame" x="191" y="285" width="219" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="UoD-Uh-bpx">
+                                <rect key="frame" x="125" y="125" width="350" height="350"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="O2H-vT-ss2"/>
+                                    <constraint firstAttribute="width" constant="350" id="exo-kV-IVg"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ake-1y-IZO">
+                                <rect key="frame" x="200" y="483" width="201" height="71"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="201" id="FhI-Kt-61E"/>
+                                    <constraint firstAttribute="height" constant="71" id="bBi-bo-tEu"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Dqo-WY-usB" firstAttribute="centerY" secondItem="1eD-jF-jwT" secondAttribute="centerY" id="DKN-7C-Z8Y"/>
-                            <constraint firstItem="Dqo-WY-usB" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="Yj0-4L-AcP"/>
+                            <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerY" secondItem="1eD-jF-jwT" secondAttribute="centerY" id="B0v-Ro-2rg"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="UoD-Uh-bpx" secondAttribute="bottom" constant="8" id="F19-R5-99a"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="IOn-c0-khf"/>
+                            <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="m7f-kl-FZd"/>
                         </constraints>
                     </view>
                     <connections>
@@ -130,4 +165,8 @@
             <point key="canvasLocation" x="1" y="121"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="splashScreen" width="781" height="781"/>
+        <image name="transtelecomLogo" width="300" height="110"/>
+    </resources>
 </document>

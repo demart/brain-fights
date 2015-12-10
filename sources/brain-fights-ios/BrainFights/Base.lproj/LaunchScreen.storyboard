@@ -16,8 +16,32 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="6iA-sB-35M">
+                                <rect key="frame" x="125" y="125" width="350" height="350"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="Enn-Kr-fYY"/>
+                                    <constraint firstAttribute="height" constant="350" id="i0I-ct-ikX"/>
+                                </constraints>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="maB-DL-qC2">
+                                <rect key="frame" x="200" y="483" width="201" height="71"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="201" id="XpQ-Dk-h3G"/>
+                                    <constraint firstAttribute="height" constant="71" id="x01-jr-V0l"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6iA-sB-35M" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Ihl-BI-MvB"/>
+                            <constraint firstItem="maB-DL-qC2" firstAttribute="top" secondItem="6iA-sB-35M" secondAttribute="bottom" constant="8" id="Jsd-fC-dTE"/>
+                            <constraint firstItem="maB-DL-qC2" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ou2-A0-meG"/>
+                            <constraint firstItem="6iA-sB-35M" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qB6-ci-gIl"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -25,4 +49,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="splashScreen" width="781" height="781"/>
+        <image name="transtelecomLogo" width="300" height="110"/>
+    </resources>
 </document>
