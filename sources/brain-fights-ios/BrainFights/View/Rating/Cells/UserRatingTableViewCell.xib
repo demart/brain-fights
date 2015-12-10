@@ -41,7 +41,7 @@
                             <constraint firstAttribute="width" constant="50" id="rRN-hZ-PBw"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.69803921570000005" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFw-Gs-L3A">
@@ -49,6 +49,28 @@
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+ 2)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yzh-sV-UrV">
+                        <rect key="frame" x="13" y="27" width="30" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="9n6-Jo-XRS"/>
+                            <constraint firstAttribute="width" constant="30" id="PRf-Uo-Ca3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <color key="textColor" red="1" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+ 100)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-ZE-tAs">
+                        <rect key="frame" x="272" y="27" width="30" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="HKz-ub-0wB"/>
+                            <constraint firstAttribute="height" constant="12" id="P9H-HU-O23"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <color key="textColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -60,21 +82,27 @@
                     <constraint firstItem="hIf-Tr-TtM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="BH4-4v-Qch"/>
                     <constraint firstItem="8ic-Md-FZc" firstAttribute="leading" secondItem="hIf-Tr-TtM" secondAttribute="trailing" constant="8" id="CFf-SU-mow"/>
                     <constraint firstAttribute="trailingMargin" secondItem="TFw-Gs-L3A" secondAttribute="trailing" constant="58" id="How-GJ-ziE"/>
+                    <constraint firstItem="Yzh-sV-UrV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="IvV-81-2y9"/>
                     <constraint firstItem="8ic-Md-FZc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="JKi-k5-w7I"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="XcZ-ZE-tAs" secondAttribute="trailing" constant="10" id="Lql-mO-Id8"/>
                     <constraint firstAttribute="bottomMargin" secondItem="8ic-Md-FZc" secondAttribute="bottom" constant="8.5" id="Y62-rT-hsq"/>
                     <constraint firstItem="6C6-eZ-3je" firstAttribute="leading" secondItem="8ic-Md-FZc" secondAttribute="trailing" constant="8" id="adK-4M-lM1"/>
                     <constraint firstAttribute="bottomMargin" secondItem="TFw-Gs-L3A" secondAttribute="bottom" constant="-2.5" id="ela-1b-qIn"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="XcZ-ZE-tAs" secondAttribute="bottom" constant="-3.5" id="h3m-I2-4jA"/>
                     <constraint firstItem="6C6-eZ-3je" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="jVz-qH-avy"/>
                     <constraint firstItem="hIf-Tr-TtM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="p0x-as-7gE"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6C6-eZ-3je" secondAttribute="bottom" constant="3.5" id="rl0-Ka-yND"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Yzh-sV-UrV" secondAttribute="bottom" constant="-3.5" id="tLb-2w-jYJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hIf-Tr-TtM" secondAttribute="bottom" constant="3.5" id="wte-NP-hzM"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
+                <outlet property="gamePositionChanges" destination="Yzh-sV-UrV" id="be6-JX-dh5"/>
                 <outlet property="gamePositionLabel" destination="hIf-Tr-TtM" id="JgR-Di-dxq"/>
                 <outlet property="userNameLabel" destination="8ic-Md-FZc" id="CYh-Ft-ubj"/>
                 <outlet property="userPositionLabel" destination="TFw-Gs-L3A" id="2VM-tx-OTC"/>
+                <outlet property="userScoreChanges" destination="XcZ-ZE-tAs" id="mjH-6e-mCO"/>
                 <outlet property="userScoreLabel" destination="6C6-eZ-3je" id="w45-fo-UBK"/>
             </connections>
         </tableViewCell>

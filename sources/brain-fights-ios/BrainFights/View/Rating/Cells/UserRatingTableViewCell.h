@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userPositionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gamePositionChanges;
+@property (weak, nonatomic) IBOutlet UILabel *userScoreChanges;
 
 - (void) initCell:(UserProfileModel*)userProfile withIndex:(NSInteger)index;
 
