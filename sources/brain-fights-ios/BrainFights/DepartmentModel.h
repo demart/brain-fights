@@ -32,6 +32,11 @@
 @property NSInteger userCount;
 
 /**
+ * Позициия подразделения среди таких же типов как он
+ */
+@property NSInteger position;
+
+/**
  * Рейтинг подразделения
  */
 @property NSInteger score;

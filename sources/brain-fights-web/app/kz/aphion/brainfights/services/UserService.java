@@ -1,11 +1,10 @@
 package kz.aphion.brainfights.services;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
-
-import org.hibernate.dialect.FirebirdDialect;
 
 import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
@@ -318,7 +317,28 @@ public class UserService {
 	 * @return
 	 */
 	public static Integer getUserGamePosition(User user) {
-		return (int)User.count("deleted = false and score >= ? and lastActivityTime > ?", user.getScore(), user.getLastActivityTime()) + 1;
+		//return (int)User.count("deleted = false and score >= ? and lastActivityTime > ? and id <> ?", user.getScore(), user.getLastActivityTime(), user.getId()) + 1;
+		//return (int)User.count("deleted = false and score >= ?", user.getScore()) + 1;
+		
+		List<Object> result = JPA.em().createNativeQuery("select o.rownum from (select row_number() over (order by score DESC, last_activity_time DESC) as rownum, * from users where deleted = false and score >= :score order by score DESC, last_activity_time DESC) as o where o.id = :userId")
+		.setParameter("score", user.getScore())
+		.setParameter("userId", user.getId())
+		.getResultList();
+		BigInteger resultCount = null;
+		if (result != null && result.size() > 0)
+			resultCount = (BigInteger)result.get(0);
+		
+		if (resultCount == null)
+			return -1;
+		
+		return resultCount.intValue();
+		
+		//user.getScore(), user.getLastActivityTime()
+		// select   row_number() over (order by <field> nulls last) as rownum, *
+		//from     foo_tbl
+		//order by <field>
+
+		
 	}
 	
 }

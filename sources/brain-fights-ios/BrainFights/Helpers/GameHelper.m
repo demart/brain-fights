@@ -35,6 +35,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -146,6 +151,7 @@
                                                           @"lastPosition":@"lastPosition",
                                                           @"lastGlobalPosition":@"lastGlobalPosition",
                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -268,6 +274,7 @@
                                                           @"lastPosition":@"lastPosition",
                                                           @"lastGlobalPosition":@"lastGlobalPosition",
                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -371,6 +378,7 @@
                                                           @"lastPosition":@"lastPosition",
                                                           @"lastGlobalPosition":@"lastGlobalPosition",
                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -475,6 +483,7 @@
                                                           @"lastPosition":@"lastPosition",
                                                           @"lastGlobalPosition":@"lastGlobalPosition",
                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"

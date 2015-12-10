@@ -79,7 +79,7 @@ static UIRefreshControl* refreshControl;
     self.tableView.separatorColor = [UIColor clearColor];
     
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self loadUsersRating];
+    [self loadUsersRating:nil];
     
 }
 
@@ -94,7 +94,7 @@ static UIRefreshControl* refreshControl;
         
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
         
-        [self loadUsersRating];
+        [self loadUsersRating:nil];
     }
     
     if (sender.selectedSegmentIndex == MODE_DEPARTMENTS) {
@@ -107,7 +107,7 @@ static UIRefreshControl* refreshControl;
             
             [self loadDepartmentTypesAndDepartments];
         } else {
-            [self loadDepartmentsRating];
+            [self loadDepartmentsRating:nil];
         }
     }
 }
@@ -132,17 +132,18 @@ static UIRefreshControl* refreshControl;
     [self.records removeAllObjects];
     
     if (self.mode == MODE_USERS) {
-        [self loadUsersRating];
+        [self loadUsersRating:refreshControll];
     } else {
-        [self loadDepartmentsRating];
+        [self loadDepartmentsRating:refreshControll];
     }
-    [refreshControl endRefreshing];
 }
 
 
 // Загружает данные с сервера
--(void) loadUsersRating {
+-(void) loadUsersRating:(UIRefreshControl*) refreshControll {
     [[UserService sharedInstance] retrieveUsersRating:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *userProfiles = (NSMutableArray*)response.data;
             if (userProfiles == nil || [userProfiles count] < 1) {
@@ -169,6 +170,8 @@ static UIRefreshControl* refreshControl;
         [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
     }];
@@ -176,8 +179,10 @@ static UIRefreshControl* refreshControl;
 
 
 // Загружает данные с сервера
--(void) loadDepartmentsRating {
+-(void) loadDepartmentsRating:(UIRefreshControl*) refreshControll {
     [[UserService sharedInstance] retrieveDepartmentsRating:self.departmentType.id withPage:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *departments = (NSMutableArray*)response.data;
             if (departments == nil || [departments count] < 1) {
@@ -205,6 +210,8 @@ static UIRefreshControl* refreshControl;
         [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
     }];
@@ -219,7 +226,7 @@ static UIRefreshControl* refreshControl;
             } else {
                 self.departmentTypes = departmentTypes;
                 self.departmentType = departmentTypes[0];
-                [self loadDepartmentsRating];
+                [self loadDepartmentsRating:nil];
             }
         }
         
@@ -378,7 +385,7 @@ static UIRefreshControl* refreshControl;
         self.page = 0;
         [self.records removeAllObjects];
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-        [self loadDepartmentsRating];
+        [self loadDepartmentsRating:nil];
         
         return;
     }
@@ -405,7 +412,7 @@ static UIRefreshControl* refreshControl;
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.isExistsMoreRecords) {
 //        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-        [self loadUsersRating];
+        [self loadUsersRating:nil];
     }
 }
 

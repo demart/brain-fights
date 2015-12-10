@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UserProfileModel.h"
+#import "AppDelegate.h"
 
 @interface DepartmentRatingTableViewCell : UITableViewCell
 
@@ -15,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentTitle;
 @property (weak, nonatomic) IBOutlet UILabel *departmentUserCount;
 @property (weak, nonatomic) IBOutlet UILabel *departmentScore;
+@property (weak, nonatomic) IBOutlet UILabel *departmentPositionChangesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *departmentScoreChangesLabel;
 
 - (void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index;
 

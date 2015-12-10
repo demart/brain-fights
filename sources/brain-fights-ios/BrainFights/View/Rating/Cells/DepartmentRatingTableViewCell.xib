@@ -61,6 +61,28 @@
                         <color key="textColor" red="0.89411764709999997" green="0.42352941179999998" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+ 100)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fay-Mf-SP9">
+                        <rect key="frame" x="272" y="27" width="30" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="2CS-Xo-9Tm"/>
+                            <constraint firstAttribute="width" constant="30" id="6Ci-2R-gW9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <color key="textColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+ 2)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxd-MO-lk0">
+                        <rect key="frame" x="13" y="27" width="30" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="Jzt-D5-Fte"/>
+                            <constraint firstAttribute="height" constant="12" id="fwD-bC-Yg8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <color key="textColor" red="1" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -76,15 +98,21 @@
                     <constraint firstItem="Nae-XE-XDu" firstAttribute="leading" secondItem="yzl-k5-epS" secondAttribute="trailing" constant="8" id="HFJ-sF-yft"/>
                     <constraint firstItem="Squ-dg-wjL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="17" id="ORb-xB-cPf"/>
                     <constraint firstItem="p4j-vy-0gm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="ZmS-aT-RcM"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Kxd-MO-lk0" secondAttribute="bottom" constant="-3.5" id="axu-C1-yJE"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="fay-Mf-SP9" secondAttribute="bottom" constant="-3.5" id="eSB-XD-A4i"/>
+                    <constraint firstItem="Kxd-MO-lk0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="j3q-qL-gpw"/>
                     <constraint firstItem="yzl-k5-epS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="kXL-re-ctu"/>
                     <constraint firstItem="r4l-ER-xKa" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="lfv-PT-VNI"/>
                     <constraint firstItem="r4l-ER-xKa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xxd-P0-KnP"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fay-Mf-SP9" secondAttribute="trailing" constant="10" id="ydI-fk-oxp"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
                 <outlet property="departmentPosition" destination="yzl-k5-epS" id="fsE-mJ-Qy6"/>
+                <outlet property="departmentPositionChangesLabel" destination="Kxd-MO-lk0" id="RHt-u0-y9k"/>
                 <outlet property="departmentScore" destination="r4l-ER-xKa" id="bEb-Mf-A3t"/>
+                <outlet property="departmentScoreChangesLabel" destination="fay-Mf-SP9" id="Tzb-3D-R1C"/>
                 <outlet property="departmentTitle" destination="p4j-vy-0gm" id="KVp-Xp-lMF"/>
                 <outlet property="departmentUserCount" destination="Squ-dg-wjL" id="4yr-xy-qUK"/>
             </connections>

@@ -7,6 +7,7 @@ import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.persistents.user.Department;
 import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.DepartmentService;
 import kz.aphion.brainfights.services.UserService;
 
 /**
@@ -31,6 +32,11 @@ public class DepartmentModel {
 	 * Кол-во пользователь в подразделении
 	 */
 	public Integer userCount;
+	
+	/**
+	 * Позиция подразделения среди таких же подразделений (Типа среди Филиалов, Департаменты)
+	 */
+	public Integer position;
 	
 	/**
 	 * Рейтинг подразделения
@@ -102,6 +108,7 @@ public class DepartmentModel {
 		model.score = department.getScore();
 		model.userCount = department.getUserCount();
 		
+		model.position = DepartmentService.getDepartmentPosition(department);
 		model.lastScore = department.getLastScore();
 		model.lastPosition = department.getLastPosition();
 		model.lastGlobalPosition = department.getLastGlobalPosition();
