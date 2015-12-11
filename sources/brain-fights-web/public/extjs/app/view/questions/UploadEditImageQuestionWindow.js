@@ -3,38 +3,44 @@ Ext.define('BrainFightsConsole.view.questions.UploadEditImageQuestionWindow', {
     xtype: 'editquestion-image-window',
     
     requires: [
-	'BrainFightsConsole.view.questions.QuestionsEditWindow',
+               'BrainFightsConsole.view.questions.QuestionsEditWindow',
                ],
     
     title: 'Редактирование изображения',
-    width: 800,
-    height: 750,
+    width: 450,
+    height: 450,
     layout: 'fit',
     resizable: true,
     modal: true,
     defaultFocus: 'name',
-    closable: false,
-    //closeAble: false,
+    closable: true,
     id: 'editQuestionFile',
-   // reference: 'catImageFileReference',
     closeAction: 'hide',
     imageLink: "/public/images/favicon.png",
     
     items: [
             {
-        xtype : "component",
-        autoEl : {
-            tag : "iframe",
-            src : "/public/extjs/editQuestionImage.html"
-        },
-        tbar: [
-                  {
-                	  xtype: 'button',
-                	  text: 'Закрыть'
-                  }
-                  ]
-            },
-
-    
-]
+		        xtype : "component",
+		        autoEl : {
+		            tag : "iframe",
+		            src : "/public/extjs/editQuestionImage.html"
+		        },
+		        tbar: [
+		                  {
+		                	  xtype: 'button',
+		                	  text: 'Закрыть'
+		                  }
+		               ]
+		      },
+      ],
+      
+      listeners: {
+  		beforeclose: function() {
+			Ext.getCmp('editImageControl').setText('no');
+  			
+  			Ext.getCmp('nowImageQuestion').setText(document.getElementById('tmpImageLabelQuestion').innerHTML);
+  			Ext.getCmp('questionImage').setSrc(document.getElementById('tmpImageLabelQuestion').innerHTML);
+  			Ext.getCmp('editQuestionFile').destroy();
+  		}
+  	}
 });

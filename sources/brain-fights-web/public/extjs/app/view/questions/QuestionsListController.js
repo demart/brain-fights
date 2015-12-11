@@ -15,9 +15,6 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 		Ext.getCmp('testLabelUploadQuestion').setText('/public/images/no_image.jpg');
 		Ext.getCmp('imageSetQuestionLabel').setVisible(false);
 		Ext.getCmp('imageQuestionEditorButtonId').setVisible(false);
-        //record = Ext.create('BrainFightsConsole.model.CategoryModel');
-		//record.set(win.down("form").getValues());
-		//win.down("form").loadRecord(record);
 		this.windowMode = 'add';
         win.show();
     },
@@ -181,6 +178,9 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
         Ext.getCmp('answer2Text').setVisible(false);
         Ext.getCmp('answer1Text').setVisible(false);
         Ext.getCmp('editImageButtonQuestion').setVisible(false);
+        
+        if (document.getElementById('defaultImageQuestion').innerHTML != 'no')
+        	Ext.getCmp('questionImage').setSrc(document.getElementById('defaultImageQuestion').innerHTML);
     },
     
     onSaveButtonQuestionClick: function() {

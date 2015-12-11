@@ -255,3 +255,21 @@ body {
   background-color: #fff;
   content: "♥";
 }
+
+.tree-icons-parent {
+	width: 20px;
+	height: 20px;
+    background: url('/public/images/tree-parent-ico.png') no-repeat center center !important;
+
+}
+
+.tree-icons-children {
+	width: 20px;
+	height: 20px;
+    background: url('/public/images/tree-children-ico.png') no-repeat center center !important;
+
+}
+
+.noTypeDepartment {
+	background-color: #FFFFE0;
+}

@@ -7,28 +7,33 @@ Ext.define('BrainFightsConsole.view.users.UploadImageUserWindow', {
                ],
     
     title: 'Редактирование изображения',
-    width: 800,
-    height: 750,
+    width: 450,
+    height: 450,
     layout: 'fit',
     resizable: true,
     modal: true,
     defaultFocus: 'name',
-    closable: false,
-    //closeAble: false,
+    closable: true,
     id: 'userImageFile',
-   // reference: 'catImageFileReference',
     closeAction: 'hide',
     imageLink: "/public/images/favicon.png",
     
     items: [
             {
-        xtype : "component",
-        autoEl : {
-            tag : "iframe",
-            src : "/public/extjs/newUserImage.html"
-        },
-          },
-
-    
-]
+		        xtype : "component",
+		        autoEl : {
+		            tag : "iframe",
+		            src : "/public/extjs/newUserImage.html"
+		        },
+		     },
+      ],
+      
+      listeners: {
+  		beforeclose: function() {
+  			Ext.getCmp('editControlAvatar').setText('no');
+  			Ext.getCmp('uploadImageAvatar').setText(document.getElementById('tmpUploadImageAvatar').innerHTML);
+  			Ext.getCmp('imageSetLabelAvatar').setSrc(document.getElementById('tmpUploadImageAvatar').innerHTML);
+  			Ext.getCmp('userImageFile').destroy();
+  		}
+  	}
 });

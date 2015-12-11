@@ -3,18 +3,17 @@ Ext.define('BrainFightsConsole.view.category.UploadImageWindow', {
     xtype: 'category-image-window',
     
     requires: [
-	'BrainFightsConsole.view.category.CategoryEditWindow',
+               'BrainFightsConsole.view.category.CategoryEditWindow',
                ],
     
     title: 'Редактирование изображения',
-    width: 800,
-    height: 750,
+    width: 450,
+    height: 450,
     layout: 'fit',
     resizable: true,
     modal: true,
     defaultFocus: 'name',
-    closable: false,
-    //closeAble: false,
+    closable: true,
     id: 'catImageFile',
     reference: 'catImageFileReference',
     closeAction: 'hide',
@@ -22,19 +21,25 @@ Ext.define('BrainFightsConsole.view.category.UploadImageWindow', {
     
     items: [
             {
-        xtype : "component",
-        autoEl : {
-            tag : "iframe",
-            src : "/public/extjs/newCategoryImage.html"
-        },
-        tbar: [
-                  {
-                	  xtype: 'button',
-                	  text: 'Закрыть'
-                  }
-                  ]
-            },
+		        xtype : "component",
+		        autoEl : {
+		            tag : "iframe",
+		            src : "/public/extjs/newCategoryImage.html"
+		        },
+		        tbar: [
+		                  {
+		                	  xtype: 'button',
+		                	  text: 'Закрыть'
+		                  }
+		                  ]
+		     },
+      ],
 
-    
-]
+	listeners: {
+		beforeclose: function() {
+			Ext.getCmp('testLabelUpload').setText(document.getElementById('testTmpLabelUpload').innerHTML);
+			Ext.getCmp('imageSetLabel').setSrc(document.getElementById('testTmpLabelUpload').innerHTML);
+			Ext.getCmp('catImageFile').destroy();
+		}
+	}
 });

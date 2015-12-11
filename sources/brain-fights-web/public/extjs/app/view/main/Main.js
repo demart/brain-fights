@@ -40,7 +40,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 												
 							{
 								id: 'adminUsersBtn',
-							    text:'Управление администраторами',
+							    text:'Администраторы',
 							    iconCls: null,
 							    scale: 'small',
 							    hidden: true,
@@ -49,7 +49,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 							},
 							{
 								id: 'usersBtn',
-							    text:'Управление игроками',
+							    text:'Игроки',
 							    iconCls: null,
 							    scale: 'small',
 							    hidden: true,
@@ -57,27 +57,9 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 							    
 							},
 							{
-								id: 'categoryBtn',
-							    text:'Управление категориями',
-							    iconCls: null,
-							    scale: 'small',
-							    hidden: true,
-							    listeners : {click : 'onCategoryBtnClick', },
-							    
-							},
-							{
-								id: 'questionBtn',
-							    text:'Управление вопросами',
-							    iconCls: null,
-							    scale: 'small',
-							    hidden: true,
-							    listeners : {click : 'onQuestionBtnClick', },
-							    
-							}, 
-							{
 					        	id: 'departmentsBtn',
 					            xtype:'button',
-					            text:'Управление отделениями',
+					            text:'Подразделения',
 					            iconCls: null,
 					            glyph: 61,
 					            hidden: true,
@@ -93,7 +75,25 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 					                  }
 				                  ]
 					        	},
-							
+							{
+								id: 'categoryBtn',
+							    text:'Категории',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onCategoryBtnClick', },
+							    
+							},
+							{
+								id: 'questionBtn',
+							    text:'Вопросы',
+							    iconCls: null,
+							    scale: 'small',
+							    hidden: true,
+							    listeners : {click : 'onQuestionBtnClick', },
+							    
+							}, 
+						
 							
 							
 							'->',
@@ -147,7 +147,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('usersBtn').setVisible(true);
         		Ext.getCmp('departmentsBtn').setVisible(true);
         		window.document.location = "#admins";
-        		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь администратором.');
+        		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '.');
         	}
         	else {
         		Ext.getCmp('adminUsersBtn').setVisible(false);
@@ -156,7 +156,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('usersBtn').setVisible(false);
         		Ext.getCmp('departmentsBtn').setVisible(false);
         		window.document.location = "#category";
-        		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '. Вы являетесь менеджером.');
+        		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '.');
         	}
 
     	}

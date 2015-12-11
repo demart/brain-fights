@@ -40,6 +40,7 @@ POST	/rest/departments/type/store/create						AdmController.createDepartmentType
 POST	/rest/departments/type/store/update						AdmController.updateDepartmentType
 POST	/rest/departments/type/store/destroy					AdmController.destroyDepartmentType
 POST	/rest/departments/store/update							AdmController.updateDepartment
+GET		/rest/departments/combo/type/store/read					AdmController.readComboDepartmentsType
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

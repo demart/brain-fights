@@ -549,37 +549,43 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				if (StringUtils.isNotEmpty(model.getImage())) {
 					Question questImage = Question.findById(model.getId());
 					
-					if (questImage.getImageUrl() != null) {
-						File del = new File(questImage.getImageUrl().substring(1, questImage.getImageUrl().length()));
-						del.delete();
+					try {
+						
+						if (questImage.getImageUrl() != null) {
+							File del = new File(questImage.getImageUrl().substring(1, questImage.getImageUrl().length()));
+							del.delete();
+						}
+						
+						String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
+						String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
+						
+						String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
+						//System.out.println (imageTmpFormat);
+						
+						
+						
+						//System.out.println (imageTmpFormat);
+						String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
+						
+						byte[] decoded = Base64.decodeBase64(stringInBase64);
+						File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
+						//System.out.println(f.getName());
+						//System.out.println(f.getAbsolutePath());
+						System.out.println(f.getPath());
+						
+						
+						f.createNewFile();
+	
+						
+						FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
+						fileOut.write(decoded);
+						fileOut.close();
+						
+						question.setImageUrl(File.separator + f.getPath());
 					}
-					
-					String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
-					String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
-					
-					String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
-					//System.out.println (imageTmpFormat);
-					
-					
-					
-					//System.out.println (imageTmpFormat);
-					String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
-					
-					byte[] decoded = Base64.decodeBase64(stringInBase64);
-					File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
-					//System.out.println(f.getName());
-					//System.out.println(f.getAbsolutePath());
-					System.out.println(f.getPath());
-					
-					
-					f.createNewFile();
-
-					
-					FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
-					fileOut.write(decoded);
-					fileOut.close();
-					
-					question.setImageUrl(File.separator + f.getPath());
+					catch(Exception e) {
+						throw new PlatformException("0", "Image not save");
+					}
 				}
 			
 			question.setModifiedDate(Calendar.getInstance());
@@ -728,6 +734,11 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 
 	}
 	
+	/**
+	 * Выпадающее меню при редактирование пользователя, а именно выбор его отделения
+	 * @param list
+	 * @return
+	 */
 	public static ArrayList<DepartmentForAdminModel> createDepartmentComboList (List<Department> list) {
 		ArrayList<DepartmentForAdminModel> models = new ArrayList<DepartmentForAdminModel> ();
 		for (Department model: list) {
@@ -739,6 +750,12 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
  		return models;
 	}
 
+	/**
+	 * Формируем список всех игроков
+	 * @param list
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static ArrayList<UserModel> createUsersList(List<User> list) throws PlatformException {
 		ArrayList<UserModel> models = new ArrayList<UserModel>();
 		for (User model: list) {
@@ -763,21 +780,40 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		return models;
 	
 	}
-
+/**
+ * Количество пользователей  из базы данных
+ * @return
+ */
 	public static Long getCountUserNotDeleted() {
 		Query query = JPA.em().createQuery("select count(*) from User where deleted = 'FALSE'");
 		return (Long)query.getSingleResult();
 	}
 
+	/**
+	 * Получаем из базы данных весь список департаментов
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
 	public static List<Department> getDepartmentList(int start, int limit) {
 		return JPA.em().createQuery("from Department where deleted = 'FALSE'").setFirstResult(start).setMaxResults(limit).getResultList();
 	}
 
+	/**
+	 * Получаем из базы данных количество департаментов
+	 * @return
+	 */
 	public static Long getCountDepartmentNotDeleted() {
 		Query query = JPA.em().createQuery("select count(*) from Department where deleted = 'FALSE'");
 		return (Long)query.getSingleResult();
 	}
 
+	/**
+	 * Загрузка фотографии пользователя на сервер и сохранение в базе данных
+	 * @param models
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
 	public static void uploadImage(UserModel[] models) throws PlatformException,IOException{
 		for (UserModel model: models) {
 			if (model == null)
@@ -855,21 +891,41 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		}
 	}
 
+	/**
+	 * Функция поиска пользователя по базе данных
+	 * @param name
+	 * @return
+	 */
 	public static List<User> getSearchUsers(String name) {
 		return JPA.em().createQuery("from User where (lower(login) like lower(:name) or lower(name) like lower(:name) or lower(email) like lower(:name)) and deleted = 'FALSE' order by id")
 				.setParameter("name", "%" + name + "%").getResultList();
 	}
 
+	/**
+	 * Функция поиска всех отделений по базе данных
+	 * @return
+	 */
 	public static List<Department> getDepartments() {
 		return JPA.em().createQuery("from Department where deleted = 'FALSE'").getResultList();
 
 	}
 	
+	/**
+	 * Получаем департаменты, которые являются детьми от департамента с полученным ID из базы данных
+	 * @param id
+	 * @return
+	 */
 	public static List<Department> getDepartmentsById(Long id) {
 		return JPA.em().createQuery("from Department where deleted = 'FALSE' and parent.id = :thisId").setParameter("thisId", id).getResultList();
 
 	}
 
+	/**
+	 * Формируем список департаментов, которые является родителями (то есть не являются поддепартаментами)
+	 * @param listBase
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static DepartmentTreeRootModel createDepartmentsTree(List<Department> listBase) throws PlatformException {
 		DepartmentTreeRootModel root = new DepartmentTreeRootModel();
 		root.setChildren(new ArrayList<DepartmentTreeModel>());
@@ -881,19 +937,21 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		}
 		for (Department model: listBase) {
 			Boolean tmpLeaf = true;
+			String icon = "tree-icons-children";
 
 			if (AdmService.getChildrensDepartment(model.getId()) > 0l) {
 				tmpLeaf = false;
+				icon = "tree-icons-parent";
 			}
 			
 			if (model.getParent() == null) {
 				System.out.println(tmpLeaf);
 				if (model.getType() == null) {
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), "Не указан", 0l,  tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l,  tmpLeaf);
 					root.getChildren().add(mod);
 				}
 				else {
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(),  tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(),  tmpLeaf);
 					root.getChildren().add(mod);
 				}
 				
@@ -902,6 +960,13 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		return root;
 	}
 
+	/**
+	 * Составляем список департаментов, которые являются детьми департамента с полученным ID
+	 * @param listBase
+	 * @param id
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static DepartmentTreeRootModel createChildrensTree(List<Department> listBase, Long id) throws PlatformException {
 		DepartmentTreeRootModel root = new DepartmentTreeRootModel();
 		root.setChildren(new ArrayList<DepartmentTreeModel>());
@@ -909,20 +974,22 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		for (Department model: listBase) {
 				System.out.println(model.getId());
 				Boolean tmpLeaf = true;
+				String icon = "tree-icons-children";
 				
 				if (AdmService.getChildrensDepartment(model.getId()) > 0l) {
 					tmpLeaf = false;
+					icon = "tree-icons-parent";
 				}
 				
 				
 				if (model.getType() == null) {
 
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), "Не указан", 0l, tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l, tmpLeaf);
 					root.getChildren().add(mod);
 				}
 				
 				else {
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), "task-folder", model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(), tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(), tmpLeaf);
 					root.getChildren().add(mod);
 				}
 
@@ -930,14 +997,29 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		return root;
 	}
 
+	/**
+	 * Получаем из базы данных список департаментов, которые являются детьми департамента с полученным ID
+	 * @param id
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static Long getChildrensDepartment(Long id) throws PlatformException {
 			return (Long)JPA.em().createQuery("select count(*) from Department where parent.id = :idParent").setParameter("idParent", id).getSingleResult();
 	}
 
+	/**
+	 * Получаем список всех типов департаментов из базы данных
+	 * @return
+	 */
 	public static List<DepartmentType> getDepartmentsType() {
 		return JPA.em().createQuery("from DepartmentType where deleted = 'FALSE'").getResultList();
 	}
 
+	/**
+	 * Формируем спиок типов департамента
+	 * @param listBase
+	 * @return
+	 */
 	public static ArrayList<DepartmentForAdminModel> createDepartmentsType(List<DepartmentType> listBase) {
 		ArrayList<DepartmentForAdminModel> models = new ArrayList<DepartmentForAdminModel>();
 		for (DepartmentType model: listBase) {
@@ -950,11 +1032,43 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		}
 		return models;
 	}
+	
+	/**
+	 * Составление списка для выпадающего меню при выборе типа департамента
+	 * @param listBase
+	 * @return
+	 */
+	public static ArrayList<DepartmentForAdminModel> createComboDepartmentsType(List<DepartmentType> listBase) {
+		ArrayList<DepartmentForAdminModel> models = new ArrayList<DepartmentForAdminModel>();
+		DepartmentForAdminModel noType = new DepartmentForAdminModel();
+		noType.setId(0l);
+		noType.setName("Не указан");
+		models.add(noType);
+		for (DepartmentType model: listBase) {
+			DepartmentForAdminModel type = new DepartmentForAdminModel();
+			type.setId(model.getId());
+			type.setCreatedDate(model.getCreatedDate().getTime());
+			type.setName(model.getName());
+			type.setModifiedDate(model.getModifiedDate().getTime());
+			models.add(type);
+		}
+		return models;
+	}
+	
 
+	/**
+	 * Количество типов департаментов
+	 * @return
+	 */
 	public static Long getCountTypeDepartments() {
 		return (Long) JPA.em().createQuery("select count(*) from DepartmentType where deleted = 'FALSE'").getSingleResult();
 	}
 
+	/**
+	 * Создание нового типа департамента
+	 * @param models
+	 * @throws PlatformException
+	 */
 	public static void createNewDepartmentType(DepartmentForAdminModel[] models) throws PlatformException {
 		for (DepartmentForAdminModel model: models) {
 			if (model == null)
@@ -970,6 +1084,11 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		
 	}
 
+	/**
+	 * Обновляем департамента, который пришел от клиента
+	 * @param models
+	 * @throws PlatformException
+	 */
 	public static void updateNewDepartmentType(DepartmentForAdminModel[] models) throws PlatformException {
 		for (DepartmentForAdminModel model: models) {
 			if (model == null)

@@ -143,7 +143,7 @@ public class UserService {
 		Long totalCount = User.count("deleted = false and id <> ? and (name like ? or email like ?)", user.id, "%" + searchText + "%", "%" + searchText + "%");
 		Logger.info("Found records:" + totalCount);
 		
-		List<User> users = JPA.em().createQuery("from User where deleted = false and id <> :userId and (name like :searchValue or email like :searchValue)")
+		List<User> users = JPA.em().createQuery("from User where deleted = false and id <> :userId and (lower(name) like lower(:searchValue) or lower(email) like lower(:searchValue))")
 			.setParameter("userId", user.id)
 			.setParameter("searchValue", "%" + searchText + "%")
 		.setMaxResults(50) // Максимально 50 записей за раз

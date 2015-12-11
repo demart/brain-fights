@@ -117,6 +117,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 		        Ext.getCmp('categoryModifiedDate').setText('<b>Дата изменения:</b> ' + Ext.util.Format.date(record.data.modifiedDate, 'm/d/Y H:i') + '<br><br>', false);
                 		    	Ext.getCmp('nowImageCategory').setText(record.data.imageUrl);
                 		        Ext.getCmp('editImageButtonCategory').setVisible(false);
+                		        Ext.getCmp('defaultImageCategory').setText(record.data.imageUrl);
                 	    	}
                 	    }
 
@@ -166,6 +167,12 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
             			       	growMin: 240,
                             },
                         	items: [
+                        	        {
+                        	        	text: '',
+                        	        	xtype: 'label',
+                        	        	hidden: true,
+                        	        	id: 'defaultImageCategory',
+                        	        },
                         	        {
 									    text: '',
 										xtype: 'label',

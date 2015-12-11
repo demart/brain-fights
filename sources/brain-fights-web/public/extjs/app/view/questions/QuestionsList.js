@@ -197,9 +197,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 region: 'west',
                 flex: 2,
                 scroll: true,
-layout: 'fit',
-                //minHeight: 100,
-                //maxHeight: 250,
+                layout: 'fit',
                 items: [{
                 	id: 'questionsGridId',
                 	viewConfig: { 
@@ -210,8 +208,7 @@ layout: 'fit',
                     store: 'QuestionStore',
                 	stateful: false,
                 	scroll: true,
-                	//controller: 'clients.infoClientsAddres',
-                	
+                 	
                 	tbar: [
                 	       { text: 'Добавить новый вопрос', handler: 'showAddWindow' },
                 	       { text: 'Удалить вопрос', handler: 'deleteQuestion'},
@@ -245,11 +242,7 @@ layout: 'fit',
             	    	resize: function() {
             	            var height = Ext.getBody().getSize().height - 265;
             	    		console.log(height);
-            	    		//console.log(grid.container.getHeight());
-            	    		//console.log(Ext.getCmp('categoryStoreId').getColumns());
-            	    		//var firstRow = this.getEl().select('tr.x-grid-row').elements[0].height;
-            	    		//console.log(firstRow);
-            	    	    var rows = Math.floor(height / 25.0);
+            	    		var rows = Math.floor(height / 25.0);
             	    	    console.log(rows);
             	    	    this.store.pageSize = rows;
             	    		this.store.load();
@@ -296,9 +289,9 @@ layout: 'fit',
             		        if (record.data.type == "IMAGE") {
             		        	Ext.getCmp('questionImage').setVisible(true);
             		        	Ext.getCmp('questionImage').setSrc(record.data.image);
-            		        	 Ext.getCmp('questionCreatedDate').setText(' <br><br><b>Дата создания: </b> ' + Ext.util.Format.date(record.data.createdDate, 'm/d/Y H:i') + '<br><br>', false);
+            		        	Ext.getCmp('questionCreatedDate').setText(' <br><br><b>Дата создания: </b> ' + Ext.util.Format.date(record.data.createdDate, 'm/d/Y H:i') + '<br><br>', false);
                    		       	Ext.getCmp('nowImageQuestion').setText(record.data.image);
-            		        	
+            		        	Ext.getCmp('defaultImageQuestion').setText(record.data.image);
             		        }
             		        
             		        else  {
@@ -338,7 +331,6 @@ items: [
     style: 'margin: 10px',
     style: 'margin: 10px',
     height: 800,
-    //width: 500,
     defaults: {
     	labelWidth: 140,
     	width: 370,
@@ -347,6 +339,13 @@ items: [
      },
 
 	items: [
+				{
+					text: 'no',
+					xtype: 'label',
+					hidden: true,
+					id: 'defaultImageQuestion',
+				},
+				
 				{
 				    text: '',
 					xtype: 'label',
