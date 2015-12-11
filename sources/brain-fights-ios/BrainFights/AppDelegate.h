@@ -38,6 +38,8 @@
 // Скрин рейтинга
 @property (nonatomic, strong) UIViewController *authorizationViewController;
 
+// Скрин о программе
+@property (nonatomic, strong) UIViewController *aboutViewController;
 
 + (AppDelegate *)globalDelegate;
 

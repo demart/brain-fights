@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
-    [self.departmentValueTitle setTextColor:[Constants SYSTEM_COLOR_WHITE]];
+    self.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
+    [self.departmentValueTitle setTextColor:[Constants SYSTEM_COLOR_DARK_GREY]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

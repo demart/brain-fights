@@ -15,6 +15,8 @@
 #import "UserService.h"
 #import "UserDepartmentTableViewCell.h"
 #import "UserProfileActionTableViewCell.h"
+#import "UserProfileTableViewCell.h"
+#import "UserProfileStatisticsTableViewCell.h"
 
 #import "GameService.h"
 
@@ -171,7 +173,7 @@ static UIRefreshControl *refreshControl;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0)
-        return 1;
+        return 2;
     if (section == 1)
         return 1 + [self.departmentHierarchy count];
     
@@ -185,6 +187,28 @@ static UIRefreshControl *refreshControl;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            UserProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileCell"];
+            if (!cell) {
+                [tableView registerNib:[UINib nibWithNibName:@"UserProfileTableViewCell" bundle:nil]    forCellReuseIdentifier:@"UserProfileCell"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileCell"];
+            }
+            
+            [cell initCell: [self getUserProfileModel]];
+            return cell;
+        }
+
+        if (indexPath.row == 1) {
+            UserProfileStatisticsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileStatisticsCell"];
+            if (!cell) {
+                [tableView registerNib:[UINib nibWithNibName:@"UserProfileStatisticsTableViewCell" bundle:nil]    forCellReuseIdentifier:@"UserProfileStatisticsCell"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileStatisticsCell"];
+            }
+            
+            [cell initCell: [self getUserProfileModel]];
+            return cell;
+        }
+        /*
+        if (indexPath.row == 0) {
             MenuProfileCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuProfile"];
             if (!cell) {
                 [tableView registerNib:[UINib nibWithNibName:@"MenuProfileCellTableViewCell" bundle:nil]    forCellReuseIdentifier:@"MenuProfile"];
@@ -194,6 +218,7 @@ static UIRefreshControl *refreshControl;
             [cell initCell: [self getUserProfileModel]];
             return cell;
         }
+         */
     }
     if (indexPath.section == 1) {
         UserDepartmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserDepartmentCell"];
@@ -227,34 +252,6 @@ static UIRefreshControl *refreshControl;
         return cell;
 
     }
-    /*
-    if (indexPath.row > 0 && indexPath.row < [self.departmentHierarchy count]) {
-        UserDepartmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserDepartmentCell"];
-        if (!cell) {
-            [tableView registerNib:[UINib nibWithNibName:@"UserDepartmentTableViewCell" bundle:nil]    forCellReuseIdentifier:@"UserDepartmentCell"];
-            cell = [tableView dequeueReusableCellWithIdentifier:@"UserDepartmentCell"];
-        }
-        
-        [cell initCell:self.departmentHierarchy[indexPath.row - 1] withIndex:indexPath.row - 1];
-        return cell;
-    }
-    
-    if (indexPath.row == 2 + [self.departmentHierarchy count]) {
-        UserProfileActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileActionCell"];
-        if (!cell) {
-            [tableView registerNib:[UINib nibWithNibName:@"UserProfileActionTableViewCell" bundle:nil]    forCellReuseIdentifier:@"UserProfileActionCell"];
-            cell = [tableView dequeueReusableCellWithIdentifier:@"UserProfileActionCell"];
-        }
-        
-        [cell initCell:[self getUserProfileModel] onPlayAction:^{
-            [self playAction];
-        } onAddToFriedsAction:^{
-            [self addToFriendsAction];
-        } onRemoveFromFriedsAction:^{
-            [self removeFromFriendsAction];
-        }];
-        return cell;
-    }*/
 
     return nil;
 }
@@ -352,14 +349,20 @@ static UIRefreshControl *refreshControl;
     //CGFloat proportion = tableView.bounds.size.height / HEIGHT;
     //NSLog(@"Proporting View Height: %f", proportion);
     
-    if (indexPath.section == 0)
-        return 250;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            return 170;
+        }
+        if (indexPath.row == 1) {
+            return 60;
+        }
+    }
     
     if (indexPath.section == 1)
         return 40;
 
     if (indexPath.section == 2)
-        return tableView.bounds.size.height - (250 + 40 * [self.departmentHierarchy count]);
+        return tableView.bounds.size.height - (240 + 40 * [self.departmentHierarchy count]);
     
     return 44;
 }

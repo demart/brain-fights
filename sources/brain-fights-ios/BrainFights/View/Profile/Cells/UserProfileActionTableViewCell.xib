@@ -42,7 +42,6 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="bXD-cK-Q1D" secondAttribute="bottom" constant="8" id="2TM-BE-Zbd"/>
                             <constraint firstItem="iAK-ff-V6u" firstAttribute="leading" secondItem="bXD-cK-Q1D" secondAttribute="trailing" constant="8" id="4ok-Gd-TQ6"/>

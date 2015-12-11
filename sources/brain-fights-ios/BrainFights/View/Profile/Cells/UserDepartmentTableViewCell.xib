@@ -30,12 +30,12 @@
                             <constraint firstAttribute="height" constant="21" id="qB6-VH-RD3"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <animations/>
-                <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="kAl-gR-7we" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="8iH-8c-515"/>
                     <constraint firstItem="DTN-od-CRz" firstAttribute="leading" secondItem="kAl-gR-7we" secondAttribute="trailing" constant="8" id="I5V-Ij-Vgh"/>

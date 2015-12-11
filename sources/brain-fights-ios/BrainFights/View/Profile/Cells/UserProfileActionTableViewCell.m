@@ -21,9 +21,9 @@
 @implementation UserProfileActionTableViewCell
 
 - (void)awakeFromNib {
-    self.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
-    self.oneActionView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
-    self.twoActionsView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    self.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
+    //self.oneActionView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    //self.twoActionsView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
     
     [self initButtonView:self.oneActionViewPlayButton];
     [self initButtonView:self.twoActionsViewAddToFriendButton];

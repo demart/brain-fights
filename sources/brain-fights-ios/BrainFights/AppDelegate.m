@@ -37,6 +37,8 @@ static NSString * const UserProfileViewControllerStoryboardID = @"UserProfileVie
 // Идентификатор рейтинга пользователей и орг структур
 static NSString * const RatingViewControllerStoryboardID = @"RatingViewControllerStoryboardID";
 
+// Идентификатор о приложении
+static NSString * const AboutViewControllerStoryboardID = @"AboutViewControllerStoryboardID";
 
 @interface AppDelegate ()
 
@@ -88,7 +90,7 @@ static NSString * const RatingViewControllerStoryboardID = @"RatingViewControlle
 - (void) initDrawerMenu {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.drawerViewController;
-
+    
     self.drawerViewController.leftViewController = self.leftDrawerViewController;
     self.drawerViewController.centerViewController = self.gameMainViewController;
     self.drawerViewController.animator = self.drawerAnimator;
@@ -167,6 +169,13 @@ static NSString * const RatingViewControllerStoryboardID = @"RatingViewControlle
     return _ratingViewController;
 }
 
+
+// Сцена рейтинга
+- (UIViewController *)aboutViewController {
+    if (!_aboutViewController)
+        _aboutViewController = [self.drawersStoryboard instantiateViewControllerWithIdentifier:AboutViewControllerStoryboardID];
+    return _aboutViewController;
+}
 
 
 /// =========================
