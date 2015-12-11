@@ -173,6 +173,8 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
         Ext.getCmp('categoryColorId').setVisible(false);
         Ext.getCmp('categoryEditorId').setTitle('Просмотр информации о категории');
         Ext.getCmp('editImageButtonCategory').setVisible(false);
+        Ext.getCmp('categoryImage').setSrc(document.getElementById('defaultImageCategory').innerHTML);
+        
     },
     
     onSaveButtonClick: function () {

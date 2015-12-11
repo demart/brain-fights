@@ -21,9 +21,11 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
     },
     
     items: [{
-    	//title: 'Отделения',
+    	title: 'Структура компании',
     	region:'center',
         floatable: false,
+        layout: 'fit',
+        scroll: true,
         margin: '5 0 0 0',
         flex: 1,
        // minWidth: 250,
@@ -42,6 +44,11 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
             collapsible : false,
         	store: 'DepartmentsTreeStore',
 			height: 400,
+			viewConfig: {
+				getRowClass: function(record, rowIndex, rowParams, store) {
+		        	  if (record.get('type') == "Не указан") return 'noTypeDepartment';
+		        	 }
+			},
         	columns: [{
                 xtype: 'treecolumn',
                 text: 'Отделения',
@@ -72,7 +79,7 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
             
             tbar: [
                    {
-                	   text: 'Изменить тип отделения',
+                	   text: 'Изменить тип подразделения',
                 	   handler: 'editTypeDepartment',
                    },
                    {

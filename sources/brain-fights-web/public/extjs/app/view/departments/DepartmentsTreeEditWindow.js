@@ -54,7 +54,7 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeEditWindow', {
                     pageSize: 10,
                     proxy: {
                         type: 'ajax',
-                        url: '/rest/departments/type/store/read',
+                        url: '/rest/departments/combo/type/store/read',
                         reader: {
                         	type: 'json',
                             rootProperty: 'data',

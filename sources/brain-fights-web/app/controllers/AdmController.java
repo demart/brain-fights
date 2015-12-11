@@ -478,7 +478,14 @@ public class AdmController extends Controller {
 		
 	}
 	
-	
+	/**
+	 * Чтение всех пользователей из базы данных
+	 * @param page
+	 * @param start
+	 * @param limit
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
 	public static void readUserList (int page, int start, int limit) throws PlatformException, IOException {
 		Logger.info("Read Users List. User is " +  Security.connected());
 		
@@ -496,6 +503,12 @@ public class AdmController extends Controller {
 		}
 	}
 	
+	/**
+	 * Создание списка департаментов при редактирование информации о пользователе
+	 * @param start
+	 * @param limit
+	 * @throws PlatformException
+	 */
 	public static void createDepartmentComboList (int start, int limit) throws PlatformException {
 		Logger.info("Create Department Combo List. User is " +  Security.connected());
 		
@@ -515,7 +528,12 @@ public class AdmController extends Controller {
 
 		}
 	}
-		
+	
+	/**
+	 * Обновление фотографии пользователя
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
 	public static void updateImageUrl () throws PlatformException, IOException {
 		Logger.info("Upload Image. User is " +  Security.connected());
 		
@@ -567,6 +585,11 @@ public class AdmController extends Controller {
 		}
 	}
 	
+	/**
+	 * Дерево департаментов
+	 * @param node
+	 * @throws PlatformException
+	 */
 	public static void getDepartmentsTreeList (Long node) throws PlatformException {
 		Logger.info("Read Departments Tree. User is " + Security.connected());
 		Boolean status = AdmService.checkUser(Security.connected());
@@ -589,6 +612,10 @@ public class AdmController extends Controller {
 		}
 	}
 	
+	/**
+	 * Формирование всех типов департаментов
+	 * @throws PlatformException
+	 */
 	public static void readDepartmentsType () throws PlatformException {
 		Logger.info("Read Departments Type. User is " + Security.connected());
 		Boolean status = AdmService.checkUser(Security.connected());
@@ -605,6 +632,30 @@ public class AdmController extends Controller {
 			
 		}
 	
+	/**
+	 * Список типов департамента при редактирование департамента в дереве
+	 * @throws PlatformException
+	 */
+	public static void readComboDepartmentsType () throws PlatformException {
+		Logger.info("Read Combo Departments Type. User is " + Security.connected());
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			List<DepartmentType> listBase = AdmService.getDepartmentsType();
+			ArrayList<DepartmentForAdminModel> models = AdmService.createComboDepartmentsType(listBase);
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setData(models.toArray());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setTotalCount(AdmService.getCountTypeDepartments().intValue() + 1);
+			renderJSON(wrapper);
+		}
+			
+		}
+	
+	/**
+	 * Создание нового типа департамента
+	 * @throws PlatformException
+	 */
 	public static void createDepartmentType () throws PlatformException {
 		Logger.info("Create Departments Type. User is " + Security.connected());
 		Boolean status = AdmService.checkUser(Security.connected());
@@ -628,6 +679,10 @@ public class AdmController extends Controller {
 			
 		}
 	
+	/**
+	 * Обновление типа департамента
+	 * @throws PlatformException
+	 */
 	public static void updateDepartmentType () throws PlatformException {
 		Logger.info("Update Departments Type. User is " + Security.connected());
 		Boolean status = AdmService.checkUser(Security.connected());
@@ -651,7 +706,12 @@ public class AdmController extends Controller {
 			
 		}
 	
-	
+	/**
+	 * Удаление типа департамента
+	 * @param id
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static Long destroyDepartmentType(Long id) throws PlatformException {
 		Logger.info("Delete Department Type. User is " +  Security.connected());
 		
@@ -681,16 +741,31 @@ public class AdmController extends Controller {
 			return 0l;
 	}
 	
+	/**
+	 * Обновляем тип департамента в дереве
+	 * @param depId
+	 * @param typeId
+	 * @return
+	 * @throws PlatformException
+	 */
 	public static Long updateDepartment(Long depId, Long typeId) throws PlatformException {
 		Logger.info("Update Department (type). User is " +  Security.connected());
 		
 		Boolean status = AdmService.checkUsers(Security.connected());
 		System.out.println ("Is user's role administrator/manager? Answer: " + status);
 		if (status == true) {
-			if (depId == null || depId <= 0)
+			if (typeId == 0l) {
+				Department dep = Department.findById(depId);
+				dep.setType(null);
+				dep.setModifiedDate(Calendar.getInstance());
+				dep.save();
+			}
+			
+			else {			
+			if (depId == null || depId < 0)
 				throw new PlatformException ("0","Department id is 0 or empty");
 			
-			if (typeId == null || typeId <= 0)
+			if (typeId == null || typeId < 0)
 				throw new PlatformException ("0","Department Type id is 0 or empty");
 
 			DepartmentType type = DepartmentType.findById(typeId);
@@ -703,7 +778,8 @@ public class AdmController extends Controller {
 			dep.setType(type);
 			dep.setModifiedDate(Calendar.getInstance());
 			dep.save();
-
+			}
+			
 			return depId;
 			
 		}

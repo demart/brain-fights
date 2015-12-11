@@ -148,16 +148,9 @@ $(function () {
             console.log("save2: " + result.toDataURL());
 
             parent.parent.document.getElementById('testLabelUploadQuestion').innerHTML = result.toDataURL();
-            //console.log(parent.parent.document.getElementById('testLabelUpload').innerHTML);
             pred = parent.parent.document.getElementById('testLabelUploadQuestion').innerHTML;
             console.log (pred);
             parent.parent.window.Ext.getCmp('imageSetQuestionLabel').setSrc(parent.parent.document.getElementById('testLabelUploadQuestion').innerHTML);
-            //parent.window.Ext.getCmp('catImageFile').close();
-            //parent.window.Ext.getCmp('catImageFile').destroy();
-            //parent.window.Ext.getCmp('catImageFile').hide();
-
-            //parent.document.getElementById('imageEditorButtonId').setText("Изображение успешно выбрано");
-          //  parent.document.getElementById('imageEditorButtonId').setDisabled(true);
           }
         }
         break;
@@ -168,11 +161,8 @@ $(function () {
       	break;
         
       case 'getCloseAction':
-      	// parent.parent.document.getElementById('testLabelUpload').innerHTML = pred;
-          parent.parent.document.getElementById('testLabelUploadQuestion').innerHTML = parent.parent.document.getElementById('testTmpLabelUploadQuestion').innerHTML;
-           //console.log (pred);
-           parent.parent.window.Ext.getCmp('imageSetQuestionLabel').setSrc(parent.parent.document.getElementById('testTmpLabelUploadQuestion').innerHTML);
-   
+      	  	  parent.parent.document.getElementById('testLabelUploadQuestion').innerHTML = parent.parent.document.getElementById('testTmpLabelUploadQuestion').innerHTML;
+              parent.parent.window.Ext.getCmp('imageSetQuestionLabel').setSrc(parent.parent.document.getElementById('testTmpLabelUploadQuestion').innerHTML);
               parent.window.Ext.getCmp('catQuestionFile').destroy();
               parent.window.Ext.getCmp('catQuestionFile').hide();
               break;
