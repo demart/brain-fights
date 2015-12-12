@@ -58,18 +58,12 @@
                         <rect key="frame" x="227" y="12" width="75" height="21"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="SA5-BJ-eSr"/>
                             <constraint firstAttribute="height" constant="21" id="gea-dJ-K4W"/>
                             <constraint firstAttribute="width" constant="75" id="xMt-xZ-Edv"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="SA5-BJ-eSr"/>
-                            </mask>
-                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выиграно" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2g-07-GEA">
                         <rect key="frame" x="122" y="32" width="75" height="15"/>
@@ -102,9 +96,7 @@
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstItem="47k-ch-vQP" firstAttribute="leading" secondItem="hHd-wF-odH" secondAttribute="trailing" constant="29" id="1vb-qK-cII"/>
                     <constraint firstAttribute="bottomMargin" secondItem="g2C-5d-s1g" secondAttribute="bottom" constant="18.5" id="36U-R1-TNf"/>
-                    <constraint firstItem="g2C-5d-s1g" firstAttribute="leading" secondItem="47k-ch-vQP" secondAttribute="trailing" constant="30" id="4np-tq-SyY"/>
                     <constraint firstAttribute="bottomMargin" secondItem="z2g-07-GEA" secondAttribute="bottom" constant="4.5" id="7KT-Bu-z4i"/>
                     <constraint firstItem="47k-ch-vQP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="8TL-VW-x59"/>
                     <constraint firstAttribute="bottomMargin" secondItem="cOO-7Z-m2J" secondAttribute="bottom" constant="4.5" id="Ilg-qr-nVc"/>
@@ -116,9 +108,7 @@
                     <constraint firstItem="z2g-07-GEA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="VHE-Rk-6tz"/>
                     <constraint firstAttribute="trailingMargin" secondItem="cOO-7Z-m2J" secondAttribute="trailing" constant="10" id="X8n-e0-nZi"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hHd-wF-odH" secondAttribute="bottom" constant="17.5" id="Ym3-2n-y4g"/>
-                    <constraint firstItem="cOO-7Z-m2J" firstAttribute="leading" secondItem="z2g-07-GEA" secondAttribute="trailing" constant="30" id="dpS-qj-doI"/>
                     <constraint firstItem="47k-ch-vQP" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="ebN-Xv-sJ6"/>
-                    <constraint firstItem="z2g-07-GEA" firstAttribute="leading" secondItem="xVT-5P-a07" secondAttribute="trailing" constant="29" id="fPC-tt-nCI"/>
                     <constraint firstAttribute="bottomMargin" secondItem="xVT-5P-a07" secondAttribute="bottom" constant="4.5" id="jY0-ph-TkC"/>
                     <constraint firstAttribute="trailingMargin" secondItem="g2C-5d-s1g" secondAttribute="trailing" constant="10" id="jbS-3R-TJb"/>
                     <constraint firstItem="z2g-07-GEA" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="u4x-RK-msx"/>

@@ -35,6 +35,14 @@
     self.leftActionView.layer.cornerRadius = 5.0;
     self.leftActionView.layer.masksToBounds = NO;
     
+    [self initCircleImageView:self.iconImage];
+}
+
+-(void)initCircleImageView:(UIImageView*)imageView {
+    imageView.layer.borderWidth = 2.0f;
+    imageView.layer.borderColor = [Constants SYSTEM_COLOR_GREEN].CGColor;
+    imageView.layer.cornerRadius = imageView.frame.size.width / 2;
+    imageView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

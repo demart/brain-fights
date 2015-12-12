@@ -24,19 +24,63 @@
 @property NSMutableArray *departments;
 @property NSMutableArray *users;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
 @end
 
 @implementation OrganizationStructureTableViewController
+
+static UIRefreshControl* refreshControl;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.separatorColor = [UIColor clearColor];
 
+    [self initRefreshControl];
+    
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:1];
+    
     // Загружаем список друзей
-    [self loadDepartmentsAsync];
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    [self loadDepartmentsAsync:nil];
 }
 
-- (void) loadDepartmentsAsync {
+-(void)viewWillDisappear:(BOOL)animated {
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+}
+
+// Указываем родителя
+-(void) setParentDepartment:(DepartmentModel*)department; {
+    self.parentDepartmentModel = department;
+    self.users = department.users;
+    self.navigationItem.title = @"Транстелеком";
+}
+
+
+-(void) initRefreshControl {
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    refreshControl.tintColor = [Constants SYSTEM_COLOR_WHITE];
+    
+    NSMutableAttributedString *mutableString = [[NSMutableAttributedString alloc] initWithString:@"Идет загрузка..."];
+    NSRange range = NSMakeRange(0,mutableString.length);
+    [mutableString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Gill Sans" size:(12.0)] range:range];
+    [mutableString addAttribute:NSForegroundColorAttributeName value:[Constants SYSTEM_COLOR_WHITE] range:range];
+    refreshControl.attributedTitle = mutableString;
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+}
+
+-(void) handleRefresh:(UIRefreshControl*) refreshControll {
+    [self loadDepartmentsAsync:refreshControll];
+}
+
+
+
+- (void) loadDepartmentsAsync:(UIRefreshControl*) refreshControl {
     // Show Loader
     NSInteger parentId = 0;
     if (self.parentDepartmentModel != nil) {
@@ -44,6 +88,10 @@
     }
     
     [[UserService sharedInstance] searchDepartments:parentId onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControl!=nil)
+            [refreshControl endRefreshing];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        
         if ([response.status isEqualToString:SUCCESS]) {
             DepartmentSearchResultModel *model = (DepartmentSearchResultModel*)response.data;
             if (model != nil)
@@ -67,19 +115,76 @@
             // SHOW ERROR
         }
     } onFailure:^(NSError *error) {
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadDepartmentsAsync)];
+        if (refreshControl!=nil)
+            [refreshControl endRefreshing];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        // TODO [self presentErrorViewControllerWithTryAgainSelector:@selector(loadDepartmentsAsync)];
     }];
-    
 }
 
-// Указываем родителя
--(void) setParentDepartment:(DepartmentModel*)department; {
-    self.parentDepartmentModel = department;
-    self.users = department.users;
-    self.navigationItem.title = @"Транстелеком";
-    //self.navigationItem.title = department.name;
-    //self.navigationItem.backBarButtonItem.title = @"Назад";
+
+// Отправить приглашение выбранному пользователю сыграть
+- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            //[self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // TODO SHOW ERROR
+    }];
 }
+
+
+- (void) loadUserAvatarInCell:(UserTableViewCell*) cell onIndexPath:(NSIndexPath*)indexPath withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        cell.iconImage.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    UserTableViewCell *updateCell = (UserTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    if (updateCell != nil && image != nil) {
+                        updateCell.iconImage.image = image;
+                    }
+                    
+                    if (image != nil) {
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:indexPath];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:indexPath];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+}
+
 
 
 #pragma mark - Table view data source
@@ -155,6 +260,9 @@
              [cell initCell:userProfile withDeleteButton:NO onClicked:nil withSendGameInvitationAction:^(NSUInteger userId) {
                  [self sendGameInvitationToSelectedUserAction:userId];
              } onParentViewController:self];
+             
+             [self loadUserAvatarInCell:cell onIndexPath:indexPath withImageUrl:userProfile.imageUrl];
+             
              return cell;
          } else {
              // Подразделения
@@ -184,6 +292,8 @@
                  [self sendGameInvitationToSelectedUserAction:userId];
              } onParentViewController:self];
              
+            [self loadUserAvatarInCell:cell onIndexPath:indexPath withImageUrl:userProfile.imageUrl];
+             
              return cell;
          } else {
 
@@ -200,34 +310,6 @@
      }
  }
 
-
-// Отправить приглашение выбранному пользователю сыграть
-- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
-    
-    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
-        if ([response.status isEqualToString:SUCCESS]) {
-            //[self.navigationController popViewControllerAnimated:YES];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-        
-        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            [DejalBezelActivityView removeViewAnimated:NO];
-            [[AppDelegate globalDelegate] showAuthorizationView:self];
-        }
-        
-        if ([response.status isEqualToString:SERVER_ERROR]) {
-            [DejalBezelActivityView removeViewAnimated:NO];
-            // TODO SHOW ALERT
-        }
-        
-    } onFailure:^(NSError *error) {
-        [DejalBezelActivityView removeViewAnimated:NO];
-        // TODO SHOW ERROR
-    }];
-    
-}
-
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     DepartmentHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
     if (!cell) {
@@ -235,15 +317,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentHeaderCell"];
     }
     
-    /*
-    if (self.parentDepartmentModel == nil) {
-        [cell initCellWithTitle:@"Транстелеком"];
-        return cell;
-    }
-     */
-    
     NSInteger sectionCount = [self.tableView numberOfSections];
-    
+
     // Если ничего нету в подразделении
     if (sectionCount == 1) {
         if (self.parentDepartmentModel == nil) {

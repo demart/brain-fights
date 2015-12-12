@@ -13,12 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *userPosition;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
-@property (weak, nonatomic) IBOutlet UILabel *userTotalGames;
-@property (weak, nonatomic) IBOutlet UILabel *userWinGames;
-@property (weak, nonatomic) IBOutlet UILabel *userLostGames;
 @property (weak, nonatomic) IBOutlet UIView *userImageContainerView;
-@property (weak, nonatomic) IBOutlet UILabel *userScore;
 @property (weak, nonatomic) IBOutlet UILabel *userGamePosition;
+@property (weak, nonatomic) IBOutlet UILabel *userScore;
 
 - (void) initCell:(UserProfileModel*) userProfile;
 

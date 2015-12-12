@@ -103,8 +103,10 @@
             </tableViewCellContentView>
             <animations/>
             <connections>
+                <outlet property="gamerAvatar" destination="c1J-6D-QFF" id="BF2-E2-JAO"/>
                 <outlet property="gamerCorrectAnswerCountLabel" destination="ODT-I0-2YO" id="BmG-EY-52W"/>
                 <outlet property="gamerNameLabel" destination="pHC-Pn-sPJ" id="x5b-Mg-vL0"/>
+                <outlet property="oponentAvatar" destination="3C2-CN-BfS" id="7hU-JM-gM9"/>
                 <outlet property="oponentCorrectAnswerLabel" destination="jYU-9E-DJ2" id="rcu-vH-ijg"/>
                 <outlet property="oponentNameLabel" destination="2My-vG-RG0" id="fnP-Gc-v9J"/>
             </connections>

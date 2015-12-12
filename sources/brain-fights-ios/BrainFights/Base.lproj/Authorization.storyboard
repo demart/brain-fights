@@ -29,7 +29,7 @@
                                             <constraint firstAttribute="width" constant="300" id="y7Z-LK-8Z7"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Логин" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9u-Td-6uM">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Логин" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9u-Td-6uM">
                                         <rect key="frame" x="160" y="247" width="240" height="30"/>
                                         <animations/>
                                         <constraints>
@@ -40,7 +40,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zaN-0l-Bgn">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zaN-0l-Bgn">
                                         <rect key="frame" x="160" y="285" width="240" height="30"/>
                                         <animations/>
                                         <constraints>
@@ -146,13 +146,20 @@
                                     <constraint firstAttribute="height" constant="71" id="bBi-bo-tEu"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eMM-Tr-yVb">
+                                <rect key="frame" x="282" y="401" width="37" height="37"/>
+                                <animations/>
+                                <color key="color" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerY" secondItem="1eD-jF-jwT" secondAttribute="centerY" id="B0v-Ro-2rg"/>
                             <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="UoD-Uh-bpx" secondAttribute="bottom" constant="8" id="F19-R5-99a"/>
+                            <constraint firstItem="eMM-Tr-yVb" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="HZl-cu-I7K"/>
                             <constraint firstItem="ake-1y-IZO" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="IOn-c0-khf"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="eMM-Tr-yVb" secondAttribute="bottom" constant="45" id="JNu-BW-8rE"/>
                             <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="m7f-kl-FZd"/>
                         </constraints>
                     </view>

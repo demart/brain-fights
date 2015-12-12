@@ -20,6 +20,15 @@
     self.userImageContainerView.alpha = 1.0;
     self.userImageContainerView.layer.cornerRadius = 50;
     self.userImageContainerView.backgroundColor = [UIColor whiteColor];
+    
+    [self initCircleImageView:self.userImage];
+}
+
+-(void)initCircleImageView:(UIImageView*)imageView {
+    imageView.layer.borderWidth = 2.0f;
+    imageView.layer.borderColor = [Constants SYSTEM_COLOR_GREEN].CGColor;
+    imageView.layer.cornerRadius = imageView.frame.size.width / 2;
+    imageView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -33,10 +42,6 @@
     [self.userPosition setText:userProfile.position];
     [self.userGamePosition setText:[@(userProfile.gamePosition) stringValue] ];
     [self.userScore setText:[@(userProfile.score) stringValue]];
-    
-    [self.userTotalGames setText:[@(userProfile.totalGames) stringValue]];
-    [self.userWinGames setText:[@(userProfile.wonGames) stringValue]];
-    [self.userLostGames setText:[@(userProfile.loosingGames) stringValue]];
     [self.userScore sizeToFit];
     
 

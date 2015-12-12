@@ -30,6 +30,9 @@
 // Список друзей
 @property NSMutableArray *friends;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
 @end
 
 @implementation NewGameTableViewController
@@ -38,10 +41,15 @@
     [super viewDidLoad];
     
     self.tableView.separatorColor = [UIColor clearColor];
+    
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:1];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated  {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     // Загружаем список друзей
     [self loadFriendsAsync];
 }
@@ -49,6 +57,10 @@
 -(void) viewWillDisappear:(BOOL)animated {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+        
 }
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
@@ -126,6 +138,42 @@
 }
 
 
+- (void) loadUserAvatarInCell:(UserTableViewCell*) cell onIndexPath:(NSIndexPath*)indexPath withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        cell.iconImage.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    UserTableViewCell *updateCell = (UserTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    if (updateCell != nil && image != nil) {
+                        updateCell.iconImage.image = image;
+                    }
+                    
+                    if (image != nil) {
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:indexPath];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:indexPath];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -188,6 +236,8 @@
         } withSendGameInvitationAction:^(NSUInteger userId) {
             [self sendGameInvitationToSelectedUserAction:userId];
         } onParentViewController:self];
+        
+        [self loadUserAvatarInCell:cell onIndexPath:indexPath withImageUrl:userProfile.imageUrl];
         
         return cell;
     }

@@ -24,36 +24,49 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Транстелеком" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTN-od-CRz">
-                        <rect key="frame" x="37" y="9" width="275" height="21"/>
+                        <rect key="frame" x="37" y="9" width="246" height="21"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="qB6-VH-RD3"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leftCircleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="JMO-ex-pRW">
+                        <rect key="frame" x="291" y="10" width="21" height="21"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="3Ch-Ek-Bbb"/>
+                            <constraint firstAttribute="width" constant="21" id="MXR-wX-iAg"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="kAl-gR-7we" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="8iH-8c-515"/>
+                    <constraint firstItem="JMO-ex-pRW" firstAttribute="leading" secondItem="DTN-od-CRz" secondAttribute="trailing" constant="8" id="58j-O6-DZK"/>
                     <constraint firstItem="DTN-od-CRz" firstAttribute="leading" secondItem="kAl-gR-7we" secondAttribute="trailing" constant="8" id="I5V-Ij-Vgh"/>
-                    <constraint firstItem="DTN-od-CRz" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Ptb-wK-QjC"/>
+                    <constraint firstItem="kAl-gR-7we" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-5" id="IO8-GR-YFn"/>
                     <constraint firstItem="kAl-gR-7we" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="RBf-RN-Etd"/>
                     <constraint firstItem="DTN-od-CRz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ViW-K3-aNW"/>
+                    <constraint firstItem="JMO-ex-pRW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XqZ-6z-zLf"/>
+                    <constraint firstItem="JMO-ex-pRW" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="hKG-V8-9Mx"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="departmentValueTitle" destination="DTN-od-CRz" id="6sZ-jg-fYG"/>
                 <outlet property="iconImageView" destination="kAl-gR-7we" id="wCj-Yt-czW"/>
                 <outlet property="iconLeftConstraint" destination="RBf-RN-Etd" id="z64-fH-Ick"/>
+                <outlet property="lastLevelIcon" destination="JMO-ex-pRW" id="39h-Up-KBk"/>
             </connections>
             <point key="canvasLocation" x="252" y="248"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="rightDownIcon" width="50" height="50"/>
+        <image name="leftCircleIcon" width="100" height="100"/>
+        <image name="rightDownIcon" width="100" height="100"/>
     </resources>
 </document>

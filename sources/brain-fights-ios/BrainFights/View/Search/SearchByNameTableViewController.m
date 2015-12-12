@@ -39,6 +39,9 @@
 // Таймер для отсрочки поиска для того чтобы не отправлять на сервер кучу запросов
 @property NSTimer *searchDelayedTimer;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
 @end
 
 @implementation SearchByNameTableViewController
@@ -69,6 +72,10 @@
     self.definesPresentationContext = YES;
     self.extendedLayoutIncludesOpaqueBars = YES;
     self.resultsTableController.extendedLayoutIncludesOpaqueBars = YES;
+    
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:1];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -81,6 +88,48 @@
         if (self.searchControllerSearchFieldWasFirstResponder) {
             [self.searchController.searchBar becomeFirstResponder];
             _searchControllerSearchFieldWasFirstResponder = NO;
+        }
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+}
+
+
+
+- (void) loadUserAvatarInCell:(UserTableViewCell*) cell onIndexPath:(NSIndexPath*)indexPath withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        cell.iconImage.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    UserTableViewCell *updateCell = (UserTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    if (updateCell != nil && image != nil) {
+                        updateCell.iconImage.image = image;
+                    }
+                    
+                    if (image != nil) {
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:indexPath];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:indexPath];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
         }
     }
 }
@@ -113,7 +162,6 @@
     // do something after the search controller is dismissed
 }
 
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -140,6 +188,8 @@
     [cell initCell:userProfile withDeleteButton:NO onClicked:nil withSendGameInvitationAction:^(NSUInteger userId) {
         [self sendGameInvitationToSelectedUserAction:userId];
     } onParentViewController:self];
+    
+    [self loadUserAvatarInCell:cell onIndexPath:indexPath withImageUrl:userProfile.imageUrl];
     
     return cell;
 }
@@ -175,8 +225,12 @@
 // Выполняет поиск асинхронно
 - (void) searchUsersByTextRemotely {
     NSLog(@"remote search text: %@", self.searchController.searchBar.text);
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+    sleep(2);
     [[UserService sharedInstance] searchUsersByTextAsync:self.searchController.searchBar.text onSuccess:^(ResponseWrapperModel *response) {
+        
+        [DejalBezelActivityView removeViewAnimated:YES];
+        isLoadingViewShown = NO;
+
         if ([response.status isEqualToString:SUCCESS]) {
             UserSearchResultModel *model = (UserSearchResultModel*)response.data;
             if (model != nil)
@@ -204,7 +258,7 @@
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // SHOW ERROR
         }
-        [DejalBezelActivityView removeViewAnimated:NO];
+        
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
         //[self presentErrorViewControllerWithTryAgainSelector:@selector(searchUsersByTextRemotely)];
@@ -212,6 +266,8 @@
 }
 
 #pragma mark - UISearchResultsUpdating
+
+static BOOL isLoadingViewShown = NO;
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     // update the filtered array based on the search text
@@ -221,7 +277,14 @@
         [self.searchDelayedTimer invalidate];
     
     if(searchText.length  < 3) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        isLoadingViewShown = NO;
         return;
+    }
+    
+    if (isLoadingViewShown == NO) {
+        [DejalBezelActivityView activityViewForView:self.resultsTableController.tableView withLabel:@"Подождите\nИдет загрузка..."];
+        isLoadingViewShown = YES;
     }
     
     NSLog(@"search text: %@", searchText);

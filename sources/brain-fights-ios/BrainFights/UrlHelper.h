@@ -10,6 +10,9 @@
 
 @interface UrlHelper : NSObject
 
++ (NSString*) aphionUrl;
+
+
 +(NSString*) baseUrl;
 
 // URL для авторизации пользователей

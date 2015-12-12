@@ -8,7 +8,6 @@
 
 #import "LeftFloatingDrawerTableViewController.h"
 
-#import "MenuCells/MenuProfileCellTableViewCell.h"
 #import "MenuCells/MenuItemTableViewCell.h"
 #import "UserProfileTableViewCell.h"
 #import "AboutTableViewCell.h"

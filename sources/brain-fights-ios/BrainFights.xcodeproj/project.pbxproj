@@ -19,8 +19,6 @@
 		8D0E16771C171CA500D5CE8E /* UserGamePlayingStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0E16761C171CA500D5CE8E /* UserGamePlayingStatus.m */; };
 		8D25F5CA1C02688800222C14 /* UserDepartmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */; };
 		8D25F5CB1C02688800222C14 /* UserDepartmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */; };
-		8D25F5CF1C02700E00222C14 /* UserProfileActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5CD1C02700E00222C14 /* UserProfileActionTableViewCell.m */; };
-		8D25F5D01C02700E00222C14 /* UserProfileActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D25F5CE1C02700E00222C14 /* UserProfileActionTableViewCell.xib */; };
 		8D25F5D41C0289A400222C14 /* FriendsHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5D21C0289A400222C14 /* FriendsHeaderTableViewCell.m */; };
 		8D25F5D51C0289A400222C14 /* FriendsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D25F5D31C0289A400222C14 /* FriendsHeaderTableViewCell.xib */; };
 		8D355F031BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D355F021BFE93E700FF12FD /* GamerQuestionAnswerResultModel.m */; };
@@ -68,8 +66,6 @@
 		8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */; };
 		8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */; };
 		8DF18E0F1BEE72860046C27B /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0E1BEE72860046C27B /* UserService.m */; };
-		8DF18E141BEE7F250046C27B /* MenuProfileCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E121BEE7F250046C27B /* MenuProfileCellTableViewCell.m */; };
-		8DF18E151BEE7F250046C27B /* MenuProfileCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E131BEE7F250046C27B /* MenuProfileCellTableViewCell.xib */; };
 		8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */; };
 		8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E181BEE80E50046C27B /* MenuItemTableViewCell.xib */; };
 		8DF18E1F1BEF97F30046C27B /* UserProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E1E1BEF97F30046C27B /* UserProfileTableViewController.m */; };
@@ -113,6 +109,10 @@
 		8DF18E901BF4EFCF0046C27B /* GameStatusActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E8E1BF4EFCF0046C27B /* GameStatusActionTableViewCell.m */; };
 		8DF18E911BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF18E8F1BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib */; };
 		8DF18E941BF4F87A0046C27B /* GameCategoriesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E931BF4F87A0046C27B /* GameCategoriesTableViewController.m */; };
+		8DF2B6971C1AE583008825A5 /* UserProfileActionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF2B6951C1AE583008825A5 /* UserProfileActionsTableViewCell.m */; };
+		8DF2B6981C1AE583008825A5 /* UserProfileActionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF2B6961C1AE583008825A5 /* UserProfileActionsTableViewCell.xib */; };
+		8DF2B69C1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF2B69A1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.m */; };
+		8DF2B69D1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF2B69B1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib */; };
 		8DFB0C9D1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB0C9B1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m */; };
 		8DFB0C9E1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFB0C9C1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib */; };
 		8DFCAC651BEBDD2E0035DE1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC641BEBDD2E0035DE1E /* main.m */; };
@@ -142,9 +142,6 @@
 		8D25F5C71C02688800222C14 /* UserDepartmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDepartmentTableViewCell.h; path = View/Profile/Cells/UserDepartmentTableViewCell.h; sourceTree = "<group>"; };
 		8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDepartmentTableViewCell.m; path = View/Profile/Cells/UserDepartmentTableViewCell.m; sourceTree = "<group>"; };
 		8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserDepartmentTableViewCell.xib; path = View/Profile/Cells/UserDepartmentTableViewCell.xib; sourceTree = "<group>"; };
-		8D25F5CC1C02700E00222C14 /* UserProfileActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileActionTableViewCell.h; path = View/Profile/Cells/UserProfileActionTableViewCell.h; sourceTree = "<group>"; };
-		8D25F5CD1C02700E00222C14 /* UserProfileActionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileActionTableViewCell.m; path = View/Profile/Cells/UserProfileActionTableViewCell.m; sourceTree = "<group>"; };
-		8D25F5CE1C02700E00222C14 /* UserProfileActionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserProfileActionTableViewCell.xib; path = View/Profile/Cells/UserProfileActionTableViewCell.xib; sourceTree = "<group>"; };
 		8D25F5D11C0289A400222C14 /* FriendsHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsHeaderTableViewCell.h; path = View/Search/Cells/FriendsHeaderTableViewCell.h; sourceTree = "<group>"; };
 		8D25F5D21C0289A400222C14 /* FriendsHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsHeaderTableViewCell.m; path = View/Search/Cells/FriendsHeaderTableViewCell.m; sourceTree = "<group>"; };
 		8D25F5D31C0289A400222C14 /* FriendsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendsHeaderTableViewCell.xib; path = View/Search/Cells/FriendsHeaderTableViewCell.xib; sourceTree = "<group>"; };
@@ -231,9 +228,6 @@
 		8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponseStatus.m; path = Data/ServerModels/ResponseStatus.m; sourceTree = "<group>"; };
 		8DF18E0D1BEE72860046C27B /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserService.h; path = Services/UserService.h; sourceTree = "<group>"; };
 		8DF18E0E1BEE72860046C27B /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserService.m; path = Services/UserService.m; sourceTree = "<group>"; };
-		8DF18E111BEE7F250046C27B /* MenuProfileCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuProfileCellTableViewCell.h; path = View/Menu/MenuCells/MenuProfileCellTableViewCell.h; sourceTree = "<group>"; };
-		8DF18E121BEE7F250046C27B /* MenuProfileCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuProfileCellTableViewCell.m; path = View/Menu/MenuCells/MenuProfileCellTableViewCell.m; sourceTree = "<group>"; };
-		8DF18E131BEE7F250046C27B /* MenuProfileCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuProfileCellTableViewCell.xib; path = View/Menu/MenuCells/MenuProfileCellTableViewCell.xib; sourceTree = "<group>"; };
 		8DF18E161BEE80E50046C27B /* MenuItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemTableViewCell.h; path = View/Menu/MenuCells/MenuItemTableViewCell.h; sourceTree = "<group>"; };
 		8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuItemTableViewCell.m; path = View/Menu/MenuCells/MenuItemTableViewCell.m; sourceTree = "<group>"; };
 		8DF18E181BEE80E50046C27B /* MenuItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MenuItemTableViewCell.xib; path = View/Menu/MenuCells/MenuItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -310,6 +304,12 @@
 		8DF18E8F1BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameStatusActionTableViewCell.xib; path = View/Game/Cells/GameStatusActionTableViewCell.xib; sourceTree = "<group>"; };
 		8DF18E921BF4F87A0046C27B /* GameCategoriesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCategoriesTableViewController.h; path = View/Game/GameCategoriesTableViewController.h; sourceTree = "<group>"; };
 		8DF18E931BF4F87A0046C27B /* GameCategoriesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameCategoriesTableViewController.m; path = View/Game/GameCategoriesTableViewController.m; sourceTree = "<group>"; };
+		8DF2B6941C1AE583008825A5 /* UserProfileActionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileActionsTableViewCell.h; path = View/Profile/Cells/UserProfileActionsTableViewCell.h; sourceTree = "<group>"; };
+		8DF2B6951C1AE583008825A5 /* UserProfileActionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileActionsTableViewCell.m; path = View/Profile/Cells/UserProfileActionsTableViewCell.m; sourceTree = "<group>"; };
+		8DF2B6961C1AE583008825A5 /* UserProfileActionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserProfileActionsTableViewCell.xib; path = View/Profile/Cells/UserProfileActionsTableViewCell.xib; sourceTree = "<group>"; };
+		8DF2B6991C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDepartmentHeaderTableViewCell.h; path = View/Profile/Cells/UserDepartmentHeaderTableViewCell.h; sourceTree = "<group>"; };
+		8DF2B69A1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDepartmentHeaderTableViewCell.m; path = View/Profile/Cells/UserDepartmentHeaderTableViewCell.m; sourceTree = "<group>"; };
+		8DF2B69B1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserDepartmentHeaderTableViewCell.xib; path = View/Profile/Cells/UserDepartmentHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		8DFB0C9A1C0F817B00D15022 /* DepartmentHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DepartmentHeaderTableViewCell.h; path = View/Search/Cells/DepartmentHeaderTableViewCell.h; sourceTree = "<group>"; };
 		8DFB0C9B1C0F817B00D15022 /* DepartmentHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DepartmentHeaderTableViewCell.m; path = View/Search/Cells/DepartmentHeaderTableViewCell.m; sourceTree = "<group>"; };
 		8DFB0C9C1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DepartmentHeaderTableViewCell.xib; path = View/Search/Cells/DepartmentHeaderTableViewCell.xib; sourceTree = "<group>"; };
@@ -371,15 +371,18 @@
 				8D25F5C71C02688800222C14 /* UserDepartmentTableViewCell.h */,
 				8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */,
 				8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */,
-				8D25F5CC1C02700E00222C14 /* UserProfileActionTableViewCell.h */,
-				8D25F5CD1C02700E00222C14 /* UserProfileActionTableViewCell.m */,
-				8D25F5CE1C02700E00222C14 /* UserProfileActionTableViewCell.xib */,
 				8D028AA21C19FE4A008C8A5A /* UserProfileTableViewCell.h */,
 				8D028AA31C19FE4A008C8A5A /* UserProfileTableViewCell.m */,
 				8D028AA41C19FE4A008C8A5A /* UserProfileTableViewCell.xib */,
 				8D028AA71C1A826C008C8A5A /* UserProfileStatisticsTableViewCell.h */,
 				8D028AA81C1A826C008C8A5A /* UserProfileStatisticsTableViewCell.m */,
 				8D028AA91C1A826C008C8A5A /* UserProfileStatisticsTableViewCell.xib */,
+				8DF2B6941C1AE583008825A5 /* UserProfileActionsTableViewCell.h */,
+				8DF2B6951C1AE583008825A5 /* UserProfileActionsTableViewCell.m */,
+				8DF2B6961C1AE583008825A5 /* UserProfileActionsTableViewCell.xib */,
+				8DF2B6991C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.h */,
+				8DF2B69A1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.m */,
+				8DF2B69B1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -552,9 +555,6 @@
 		8DF18E101BEE7EF60046C27B /* MenuCells */ = {
 			isa = PBXGroup;
 			children = (
-				8DF18E111BEE7F250046C27B /* MenuProfileCellTableViewCell.h */,
-				8DF18E121BEE7F250046C27B /* MenuProfileCellTableViewCell.m */,
-				8DF18E131BEE7F250046C27B /* MenuProfileCellTableViewCell.xib */,
 				8DF18E161BEE80E50046C27B /* MenuItemTableViewCell.h */,
 				8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */,
 				8DF18E181BEE80E50046C27B /* MenuItemTableViewCell.xib */,
@@ -883,6 +883,7 @@
 				8DB8AA2D1BED1E1D005B7508 /* Authorization.storyboard in Resources */,
 				8DF18E5B1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib in Resources */,
 				8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */,
+				8DF2B69D1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib in Resources */,
 				8DF18E3E1BEFB3830046C27B /* NewGameTableViewCell.xib in Resources */,
 				8D77221D1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib in Resources */,
 				8D3FA4671C0515B1005FDCBE /* ErrorViewController.xib in Resources */,
@@ -898,7 +899,6 @@
 				8DF18E8C1BF4ECB80046C27B /* GameStatusRoundTableViewCell.xib in Resources */,
 				8DF18E7B1BF33C520046C27B /* GameGroupHeaderTableViewCell.xib in Resources */,
 				8D7E3AC51C18AB3400EC4638 /* DepartmentRatingHeaderTableViewCell.xib in Resources */,
-				8D25F5D01C02700E00222C14 /* UserProfileActionTableViewCell.xib in Resources */,
 				8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */,
 				8DFB0C9E1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib in Resources */,
 				8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */,
@@ -906,8 +906,8 @@
 				8DF18E871BF4E50C0046C27B /* GameStatusPlayersTableViewCell.xib in Resources */,
 				8D25F5D51C0289A400222C14 /* FriendsHeaderTableViewCell.xib in Resources */,
 				8DF18E911BF4EFCF0046C27B /* GameStatusActionTableViewCell.xib in Resources */,
+				8DF2B6981C1AE583008825A5 /* UserProfileActionsTableViewCell.xib in Resources */,
 				8D7722131C00D022001E8CC8 /* UserRatingTableViewCell.xib in Resources */,
-				8DF18E151BEE7F250046C27B /* MenuProfileCellTableViewCell.xib in Resources */,
 				8DFCAC6E1BEBDD2E0035DE1E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -952,7 +952,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DF18E141BEE7F250046C27B /* MenuProfileCellTableViewCell.m in Sources */,
 				8D3FA46A1C05214B005FDCBE /* BaseViewController.m in Sources */,
 				8DF18E291BEF9F5D0046C27B /* GameHelper.m in Sources */,
 				8DB8AA181BECD9B7005B7508 /* AuthorizationResponseModel.m in Sources */,
@@ -977,6 +976,7 @@
 				8DB8AA1F1BECDAF4005B7508 /* DepartmentModel.m in Sources */,
 				8D0E16771C171CA500D5CE8E /* UserGamePlayingStatus.m in Sources */,
 				8DB8AA221BECDC02005B7508 /* ResponseWrapperModel.m in Sources */,
+				8DF2B69C1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.m in Sources */,
 				8DF18E521BF0AD940046C27B /* GameTableViewCell.m in Sources */,
 				8DB8AA151BECD92C005B7508 /* AuthorizationRequestModel.m in Sources */,
 				8D3FA46D1C052847005FDCBE /* BaseTableViewController.m in Sources */,
@@ -992,6 +992,7 @@
 				8D7E3AC41C18AB3400EC4638 /* DepartmentRatingHeaderTableViewCell.m in Sources */,
 				8DF18E7E1BF36CE30046C27B /* Constants.m in Sources */,
 				8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */,
+				8DF2B6971C1AE583008825A5 /* UserProfileActionsTableViewCell.m in Sources */,
 				8DF18E6A1BF1C73C0046C27B /* DepartmentSearchResultModel.m in Sources */,
 				8D3FA4661C0515B1005FDCBE /* ErrorViewController.m in Sources */,
 				8D920F031BFBE48000BA29BC /* GameRoundQuestionModel.m in Sources */,
@@ -1001,7 +1002,6 @@
 				8DF18E481BF09CB40046C27B /* NewGameTableViewController.m in Sources */,
 				8DF18E761BF269170046C27B /* SearchByNameResultsTableViewController.m in Sources */,
 				8D7722121C00D022001E8CC8 /* UserRatingTableViewCell.m in Sources */,
-				8D25F5CF1C02700E00222C14 /* UserProfileActionTableViewCell.m in Sources */,
 				8DB8AA1C1BECD9F0005B7508 /* UserProfileModel.m in Sources */,
 				8D920F091BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m in Sources */,
 				8DF18E901BF4EFCF0046C27B /* GameStatusActionTableViewCell.m in Sources */,
@@ -1165,7 +1165,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aede0985-6b8d-4508-86ca-9bf2b01596ff";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1186,7 +1186,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kz.aphion.groupbridge.brainfights.BrainFights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aede0985-6b8d-4508-86ca-9bf2b01596ff";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

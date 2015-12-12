@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UrlHelper.h"
 #import "Constants.h"
 #import "NotificationService.h"
 #import "ErrorViewController.h"

@@ -22,6 +22,11 @@
 - (void)awakeFromNib {
     [self initView:self.gamerBackGroundView];
     [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+    
+    self.userAvatar.layer.borderWidth = 1.0f;
+    self.userAvatar.layer.borderColor = [Constants SYSTEM_COLOR_WHITE].CGColor;
+    self.userAvatar.layer.cornerRadius = self.userAvatar.frame.size.width / 2;
+    self.userAvatar.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -81,11 +86,13 @@
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
         [self.gameStatus setText:@"Ваш ход!"];
+        [self.playGameView setImage:[UIImage imageNamed:@"rightCircleIcon"]];        
         [self.playGameView setHidden:NO];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_ANSWERS]) {
         [self.gameStatus setText:@"Ваш ход!"];
+        [self.playGameView setImage:[UIImage imageNamed:@"rightCircleIcon"]];
         [self.playGameView setHidden:NO];
     }
     

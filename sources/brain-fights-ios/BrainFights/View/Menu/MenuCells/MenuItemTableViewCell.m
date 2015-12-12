@@ -18,7 +18,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     self.backgroundColor = [UIColor clearColor];
-    //[self.menuItemTitleLabel setTextColor:[UIColor whiteColor]];
 }
 
 // Инициализиурем ячейку

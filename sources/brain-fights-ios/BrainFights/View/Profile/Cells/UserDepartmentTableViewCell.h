@@ -13,7 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentValueTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconLeftConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *lastLevelIcon;
 
--(void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index;
+-(void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index lastLevel:(BOOL)last;
 
 @end

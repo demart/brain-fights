@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GameModel.h"
+#import "AppDelegate.h"
 
 @interface GameStatusPlayersTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *gamerNameLabel;
@@ -15,6 +16,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *gamerCorrectAnswerCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *oponentCorrectAnswerLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *gamerAvatar;
+@property (weak, nonatomic) IBOutlet UIImageView *oponentAvatar;
 
 - (void) initCell:(GameModel*) gameModel;
 

@@ -12,8 +12,6 @@
 
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
-    [self.departmentValueTitle setTextColor:[Constants SYSTEM_COLOR_DARK_GREY]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -21,23 +19,24 @@
 }
 
 
--(void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index {
+-(void) initCell:(DepartmentModel*)departmentModel withIndex:(NSInteger)index lastLevel:(BOOL)last {
     if (index == 0) {
         [self.departmentValueTitle setText:@"Транстелеком"];
-        [self.iconImageView setImage:[UIImage imageNamed:@"organizationStructureIcon"]];
-        //[self.iconImageView setHidden:YES];
+        [self.iconImageView setHidden:YES];
+        self.iconLeftConstraint.constant = -18;
     } else {
         [self.departmentValueTitle setText:departmentModel.name];
-        self.iconLeftConstraint.constant = 35 * index;
+        self.iconLeftConstraint.constant = -18 + (45 * (index));
+        [self.iconImageView setHidden:NO];
     }
     
-    //[self.departmentValueTitle setText:[self hierarchyBuilder:userProfileModel.department]];
+    if (last) {
+        // show icon
+        [self.lastLevelIcon setHidden:NO];
+    } else {
+        [self.lastLevelIcon setHidden:YES];
+    }
 }
 
--(NSString*) hierarchyBuilder:(DepartmentModel*)department {
-    if (department == nil)
-        return @"";
-    return [[NSString alloc]initWithFormat:@"%@\n -> %@", [self hierarchyBuilder:department.parent], department.name ];
-}
 
 @end

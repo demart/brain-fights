@@ -22,6 +22,9 @@
 @property UserGameModel *gameModel;
 @property GameModel *model;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
 @end
 
 @implementation GameStatusTableViewController
@@ -32,6 +35,8 @@ static UIRefreshControl* refreshControl;
     [super viewDidLoad];
     [self initRefreshControl];
     self.tableView.separatorColor = [UIColor clearColor];
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:2];
 }
 
 -(void) initRefreshControl {
@@ -68,6 +73,10 @@ static UIRefreshControl* refreshControl;
 -(void) viewWillDisappear:(BOOL)animated {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+
 }
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
@@ -178,6 +187,37 @@ static UIRefreshControl* refreshControl;
     self.gameModel = gameModel;
 }
 
+- (void) loadUserAvatarInImageView:(UIImageView*)imageView withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        imageView.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    if (image != nil) {
+                        imageView.image = image;
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:imageUrl];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:imageUrl];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -203,6 +243,9 @@ static UIRefreshControl* refreshControl;
         }
         
         [cell initCell:self.model];
+        
+        [self loadUserAvatarInImageView:cell.gamerAvatar withImageUrl:self.model.me.user.imageUrl];
+        [self loadUserAvatarInImageView:cell.oponentAvatar withImageUrl:self.model.oponent.user.imageUrl];
         
         return cell;
     }

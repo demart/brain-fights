@@ -30,6 +30,9 @@
 // Загруженные игры пользователя
 @property NSMutableArray *gameGroups;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
 @end
 
 @implementation GameMainTableViewController
@@ -40,6 +43,8 @@ static UIRefreshControl *refreshControl;
     [super viewDidLoad];
     [self initRefreshControl];
     self.tableView.separatorColor = [UIColor clearColor];
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
 }
 
 
@@ -70,11 +75,14 @@ static UIRefreshControl *refreshControl;
 -(void) viewWillDisappear:(BOOL)animated {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+
 }
 
 -(void) handleRefresh:(UIRefreshControl*) refreshControll {
     [self loadGames:refreshControl];
-//    [refreshControl endRefreshing];
 }
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
@@ -209,6 +217,43 @@ static UIRefreshControl *refreshControl;
     [super didReceiveMemoryWarning];
 }
 
+
+- (void) loadUserAvatarInCell:(GameTableViewCell*) cell onIndexPath:(NSIndexPath*)indexPath withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        cell.userAvatar.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    GameTableViewCell *updateCell = (GameTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    if (updateCell != nil && image != nil) {
+                        updateCell.userAvatar.image = image;
+                    }
+                    
+                    if (image != nil) {
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:indexPath];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:indexPath];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -254,7 +299,7 @@ static UIRefreshControl *refreshControl;
     UserGameModel *userGame = gameGroupModel.games[indexPath.row];
 
     [cell initCell:userGame];
-    
+    [self loadUserAvatarInCell:cell onIndexPath:indexPath withImageUrl:userGame.oponent.user.imageUrl];
     
     return cell;
 }
@@ -295,25 +340,6 @@ static UIRefreshControl *refreshControl;
         return 10;
     return 30;
 }
-
-/*
--(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-   if (section == 0)
-       return nil;
-    
-    if (self.gameGroups != nil) {
-        UserGameGroupModel *gameGroup = (UserGameGroupModel*)self.gameGroups[section-1];
-        
-        if ([gameGroup.status isEqualToString:GAME_STATUS_STARTED])
-            return @"Активные";
-        if ([gameGroup.status isEqualToString:GAME_STATUS_WAITING])
-            return @"Ожидающие";
-        if ([gameGroup.status isEqualToString:GAME_STATUS_FINISHED])
-            return @"Завершенные";
-    }
-    return nil;
-}
- */
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)

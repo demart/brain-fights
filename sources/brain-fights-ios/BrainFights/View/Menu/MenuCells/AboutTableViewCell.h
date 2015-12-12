@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @interface AboutTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *minimumGreenViewConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UILabel *aphionLabel;
 
 @end

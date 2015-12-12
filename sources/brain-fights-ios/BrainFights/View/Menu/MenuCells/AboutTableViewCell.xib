@@ -19,10 +19,10 @@
                         <rect key="frame" x="0.0" y="123" width="320" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Aphion Software" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMI-81-Wyp">
-                                <rect key="frame" x="8" y="26" width="304" height="16"/>
+                                <rect key="frame" x="8" y="33" width="304" height="16"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -30,7 +30,7 @@
                         <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="57" id="AnL-LM-Iwz"/>
-                            <constraint firstAttribute="bottom" secondItem="AMI-81-Wyp" secondAttribute="bottom" constant="15" id="Jga-he-gv4"/>
+                            <constraint firstAttribute="bottom" secondItem="AMI-81-Wyp" secondAttribute="bottom" constant="8" id="Jga-he-gv4"/>
                             <constraint firstItem="AMI-81-Wyp" firstAttribute="leading" secondItem="Q22-8t-Tw2" secondAttribute="leading" constant="8" id="jic-iG-3f1"/>
                             <constraint firstAttribute="trailing" secondItem="AMI-81-Wyp" secondAttribute="trailing" constant="8" id="pkw-59-Qpi"/>
                         </constraints>
@@ -38,12 +38,12 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="О приложении" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkB-Th-Fvn">
                         <rect key="frame" x="66" y="80" width="125" height="20.5"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aboutIcon" translatesAutoresizingMaskIntoConstraints="NO" id="etS-yT-cXj">
-                        <rect key="frame" x="33" y="80" width="25" height="25"/>
+                        <rect key="frame" x="33" y="77" width="25" height="25"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="GDh-vZ-2cO"/>
@@ -62,7 +62,7 @@
                 <animations/>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="Q22-8t-Tw2" secondAttribute="bottom" constant="-9" id="BMD-6T-1lU"/>
-                    <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="etS-yT-cXj" secondAttribute="bottom" constant="18" id="H9X-fu-OMj"/>
+                    <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="etS-yT-cXj" secondAttribute="bottom" constant="21" id="H9X-fu-OMj"/>
                     <constraint firstItem="dl8-1t-CfU" firstAttribute="leading" secondItem="UkB-Th-Fvn" secondAttribute="trailing" id="LwQ-3p-cYp"/>
                     <constraint firstItem="UkB-Th-Fvn" firstAttribute="leading" secondItem="etS-yT-cXj" secondAttribute="trailing" constant="8" id="P2M-An-xHm"/>
                     <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="UkB-Th-Fvn" secondAttribute="bottom" constant="22" id="ayQ-b6-WRL"/>
@@ -74,6 +74,7 @@
             </tableViewCellContentView>
             <animations/>
             <connections>
+                <outlet property="aphionLabel" destination="AMI-81-Wyp" id="XdQ-dP-NUJ"/>
                 <outlet property="bottomViewHeightConstraint" destination="AnL-LM-Iwz" id="Mef-XG-var"/>
             </connections>
             <point key="canvasLocation" x="252" y="190"/>

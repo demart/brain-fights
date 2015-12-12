@@ -40,7 +40,7 @@
                                 <rect key="frame" x="51" y="27.5" width="137" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 часа" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="li1-m4-Dai">
@@ -115,6 +115,7 @@
                 <outlet property="gameStatus" destination="ifR-Y6-tu2" id="uMC-I9-b2d"/>
                 <outlet property="gamerBackGroundView" destination="R0y-46-VXi" id="xNI-Gs-PH4"/>
                 <outlet property="playGameView" destination="Bxo-1o-ebk" id="bWJ-eU-FnO"/>
+                <outlet property="userAvatar" destination="OYV-jj-cxf" id="4M1-4e-IFF"/>
                 <outlet property="userName" destination="85D-S2-3Wx" id="3Z3-hU-6LT"/>
                 <outlet property="userPosition" destination="LO8-tt-LEB" id="pOi-53-ZD9"/>
                 <outlet property="waitingTimeLabel" destination="li1-m4-Dai" id="Jy2-Yv-k9U"/>
