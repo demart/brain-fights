@@ -78,4 +78,11 @@ Ext.define('BrainFightsConsole.view.users.UsersListController', {
     	text.reset();
     },
     
+    closeImageWindowUsers: function() {
+			Ext.getCmp('editControlAvatar').setText('no');
+  			Ext.getCmp('uploadImageAvatar').setText(document.getElementById('tmpUploadImageAvatar').innerHTML);
+  			Ext.getCmp('imageSetLabelAvatar').setSrc(document.getElementById('tmpUploadImageAvatar').innerHTML);
+  			Ext.getCmp('userImageFile').destroy();
+    }
+    
 });

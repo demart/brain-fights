@@ -2,13 +2,15 @@ Ext.define('BrainFightsConsole.view.users.UploadImageUserWindow', {
     extend: 'Ext.window.Window',
     xtype: 'question-image-window',
     
+    controller: 'users',
+    
     requires: [
 	//'BrainFightsConsole.view.questions.QuestionsEditWindow',
                ],
     
     title: 'Редактирование изображения',
-    width: 450,
-    height: 450,
+    width: 490,
+    height: 510,
     layout: 'fit',
     resizable: true,
     modal: true,
@@ -27,6 +29,15 @@ Ext.define('BrainFightsConsole.view.users.UploadImageUserWindow', {
 		        },
 		     },
       ],
+      
+      buttons: [
+                {
+                	xtype: 'button',
+                	text: 'Закрыть',
+                	hidden: false,
+                	handler: 'closeImageWindowUsers'
+                }
+                ],
       
       listeners: {
   		beforeclose: function() {

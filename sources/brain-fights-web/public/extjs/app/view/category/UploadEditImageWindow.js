@@ -2,13 +2,16 @@ Ext.define('BrainFightsConsole.view.category.UploadEditImageWindow', {
     extend: 'Ext.window.Window',
     xtype: 'editcategory-image-window',
     
+    controller: 'category',
+    
     requires: [
                'BrainFightsConsole.view.category.CategoryEditWindow',
+          		'BrainFightsConsole.view.category.CategoryListController',
                ],
     
     title: 'Редактирование изображения',
-    width: 450,
-    height: 450,
+    width: 490,
+    height: 510,
     layout: 'fit',
     resizable: true,
     modal: true,
@@ -25,14 +28,18 @@ Ext.define('BrainFightsConsole.view.category.UploadEditImageWindow', {
 		            tag : "iframe",
 		            src : "/public/extjs/editCategoryImage.html"
 		        },
-		        tbar: [
-		                  {
-		                	  xtype: 'button',
-		                	  text: 'Закрыть'
-		                  }
-		        ]
 		     },
             ],
+            
+    buttons: [
+              {
+            	  xtype: 'button',
+            	  text: 'Закрыть',
+            	  hidden: false,
+            	  handler: 'closeEditImageWindowCategory',
+              }
+              
+              ],
 	listeners: {
 		beforeclose: function() {
 			Ext.getCmp('editImageControlCategory').setText('no');

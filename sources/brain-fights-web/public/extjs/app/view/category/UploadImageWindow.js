@@ -2,13 +2,16 @@ Ext.define('BrainFightsConsole.view.category.UploadImageWindow', {
     extend: 'Ext.window.Window',
     xtype: 'category-image-window',
     
+    controller: 'category',
+    
     requires: [
                'BrainFightsConsole.view.category.CategoryEditWindow',
+          		'BrainFightsConsole.view.category.CategoryListController',
                ],
     
     title: 'Редактирование изображения',
-    width: 450,
-    height: 450,
+    width: 490,
+    height: 510,
     layout: 'fit',
     resizable: true,
     modal: true,
@@ -34,6 +37,16 @@ Ext.define('BrainFightsConsole.view.category.UploadImageWindow', {
 		                  ]
 		     },
       ],
+      
+      buttons: [
+                {
+                	xtype: 'button',
+                	text: 'Закрыть',
+                	hidden: false,
+                	handler: 'closeWindowImageCategry'
+                }
+                ],
+
 
 	listeners: {
 		beforeclose: function() {

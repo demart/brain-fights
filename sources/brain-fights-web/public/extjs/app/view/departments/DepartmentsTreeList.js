@@ -45,9 +45,11 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
         	store: 'DepartmentsTreeStore',
 			height: 400,
 			viewConfig: {
+				/*
 				getRowClass: function(record, rowIndex, rowParams, store) {
 		        	  if (record.get('type') == "Не указан") return 'noTypeDepartment';
 		        	 }
+		        	 */
 			},
         	columns: [{
                 xtype: 'treecolumn',
@@ -59,6 +61,12 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
             {
             	text: 'Тип',
             	dataIndex: 'type',
+            	renderer: function (v) {
+            		if (v == "Не указан")
+            			return '<b><span style="color: red;">' + v + '</span></b>';
+            		else
+            			return '<b><span style="color: green;">' + v + '</span></b>';
+            	},
             	width: 250,
             },
             {
@@ -83,6 +91,24 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
                 	   handler: 'editTypeDepartment',
                    },
                    {
+                	   text: 'Обновить',
+                	   handler: 'refreshTree',
+                   },
+                   {
+                       text: 'Свернуть структуру',
+                       handler: function(){
+        	    		console.log('collapse');
+        	           Ext.getCmp('treeDepartmentsPanel').collapseAll();
+        	        },
+                   },
+                   {
+                       text: 'Развернуть структуру',
+                       handler: function(){
+        	    		console.log('expand');
+        	           Ext.getCmp('treeDepartmentsPanel').expandAll();
+        	        },
+                   },
+                   {
                 	   text: '',
                 	   hidden: true,
                 	   id: 'selectedRecordId',
@@ -92,6 +118,11 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
                 	   hidden: true,
                 	   id: 'selectedRecordTypeId',
                    },
+                   {
+                	   text: '',
+                	   hidden: true,
+                	   id: 'selectedRecordNameId'
+                   }
                    
                    ],
         listeners: {
@@ -101,14 +132,19 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
         		console.log(Ext.getCmp('selectedRecordId').getText());
         		Ext.getCmp('selectedRecordTypeId').setText(record.data.typeId);
         		console.log(Ext.getCmp('selectedRecordTypeId').getText());
-        		
-        		
-        	}
+        		Ext.getCmp('selectedRecordNameId').setText(record.data.type);
+        	
+        	},
+        	
+        	
         	
         	        },
+        	        
+       
         
         }],
     }],
+    
     
     initComponent: function() {
         this.callParent(arguments);
