@@ -2,13 +2,15 @@ Ext.define('BrainFightsConsole.view.questions.UploadImageQuestionWindow', {
     extend: 'Ext.window.Window',
     xtype: 'question-image-window',
     
+    controller: 'questions',
+    
     requires: [
 	'BrainFightsConsole.view.questions.QuestionsEditWindow',
                ],
     
     title: 'Редактирование изображения',
-    width: 450,
-    height: 450,
+    width: 490,
+    height: 510,
     layout: 'fit',
     resizable: true,
     modal: true,
@@ -25,14 +27,18 @@ Ext.define('BrainFightsConsole.view.questions.UploadImageQuestionWindow', {
 		            tag : "iframe",
 		            src : "/public/extjs/newQuestionImage.html"
 		        },
-		        tbar: [
-		                  {
-		                	  xtype: 'button',
-		                	  text: 'Закрыть'
-		                  }
-		                  ]
+
 		       },
-		       ],
+		    ],
+		    
+	  buttons: [
+	            {
+	            	xtype: 'button',
+	            	text: 'Закрыть',
+	            	hidden: false,
+	            	handler: 'closeImageWindowQuestion'
+	            }
+	            ],
 		
 	  listeners: {
 		   		beforeclose: function() {

@@ -353,6 +353,19 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 		Ext.getCmp('editImageControl').setText('no');
 		var window = new BrainFightsConsole.view.questions.UploadEditImageQuestionWindow();
 		window.show();
+	},
+	
+	closeImageWindowQuestion: function () {
+			Ext.getCmp('testLabelUploadQuestion').setText(document.getElementById('testTmpLabelUploadQuestion').innerHTML);
+   			Ext.getCmp('imageSetQuestionLabel').setSrc(document.getElementById('testTmpLabelUploadQuestion').innerHTML);
+   			Ext.getCmp('catQuestionFile').destroy();
+	},
+	
+	closeEditImageWindowQuestion: function () {
+			Ext.getCmp('editImageControl').setText('no');
+			Ext.getCmp('nowImageQuestion').setText(document.getElementById('tmpImageLabelQuestion').innerHTML);
+			Ext.getCmp('questionImage').setSrc(document.getElementById('tmpImageLabelQuestion').innerHTML);
+			Ext.getCmp('editQuestionFile').destroy();
 	}
     
 });

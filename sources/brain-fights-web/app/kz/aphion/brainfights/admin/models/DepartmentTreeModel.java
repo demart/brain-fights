@@ -22,6 +22,8 @@ public class DepartmentTreeModel {
 	
 	private Long typeId;
 	
+	private Boolean expanded;
+	
 	public DepartmentTreeModel (Long id, String name, String iconCls, Integer score, Integer count, String type, Long typeId, Boolean leaf) {
 		this.id = id;
 		this.name = name;
@@ -32,6 +34,18 @@ public class DepartmentTreeModel {
 		this.type = type;
 		this.typeId = typeId;
 		//this.isParent= isParent;
+	}
+	
+	public DepartmentTreeModel (Long id, String name, String iconCls, Integer score, Integer count, String type, Long typeId, Boolean leaf, Boolean expanded) {
+		this.id = id;
+		this.name = name;
+		this.iconCls = iconCls;
+		this.count = count;
+		this.score = score;
+		this.leaf = leaf;
+		this.type = type;
+		this.typeId = typeId;
+		this.expanded= expanded;
 	}
 	
 	public DepartmentTreeModel() {

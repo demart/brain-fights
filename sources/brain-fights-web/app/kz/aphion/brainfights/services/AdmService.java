@@ -947,11 +947,11 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			if (model.getParent() == null) {
 				System.out.println(tmpLeaf);
 				if (model.getType() == null) {
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l,  tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l,  tmpLeaf, false);
 					root.getChildren().add(mod);
 				}
 				else {
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(),  tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(),  tmpLeaf, false);
 					root.getChildren().add(mod);
 				}
 				
@@ -984,12 +984,12 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				
 				if (model.getType() == null) {
 
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l, tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l, tmpLeaf, false);
 					root.getChildren().add(mod);
 				}
 				
 				else {
-					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(), tmpLeaf);
+					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), model.getType().getName(), model.getType().getId(), tmpLeaf, false);
 					root.getChildren().add(mod);
 				}
 

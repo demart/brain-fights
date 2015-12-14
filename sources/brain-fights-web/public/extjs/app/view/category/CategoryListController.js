@@ -241,6 +241,19 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
         var window = new BrainFightsConsole.view.category.UploadEditImageWindow();
 
         window.show();
+    },
+    
+    closeWindowImageCategry: function () {
+		Ext.getCmp('testLabelUpload').setText(document.getElementById('testTmpLabelUpload').innerHTML);
+		Ext.getCmp('imageSetLabel').setSrc(document.getElementById('testTmpLabelUpload').innerHTML);
+		Ext.getCmp('catImageFile').destroy();
+    },
+    
+    closeEditImageWindowCategory: function () {
+		Ext.getCmp('editImageControlCategory').setText('no');
+		Ext.getCmp('nowImageCategory').setText(document.getElementById('tmpImageLabelCategory').innerHTML);
+		Ext.getCmp('categoryImage').setSrc(document.getElementById('tmpImageLabelCategory').innerHTML);
+		Ext.getCmp('editCategoryFile').destroy();
     }
     
 });
