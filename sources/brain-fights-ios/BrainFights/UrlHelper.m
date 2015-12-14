@@ -122,17 +122,35 @@
 
 // Базовый URL для картинок по вопросам
 +(NSString*) imageUrlForQuestionWithPath:(NSString*) questionImagePath {
-    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, questionImagePath];
+    if (questionImagePath == nil)
+        return nil;
+    if ([questionImagePath hasPrefix:@"/"]) {
+        return [[NSString alloc] initWithFormat:@"%@%@", UrlHelper.baseUrl, questionImagePath];
+    } else {
+        return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, questionImagePath];
+    }
 }
 
 // Базовый URL для картинок по категориям
 +(NSString*) imageUrlForCategoryWithPath:(NSString*) categoryImagePath {
-    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, categoryImagePath];
+    if (categoryImagePath == nil)
+        return nil;
+    if ([categoryImagePath hasPrefix:@"/"]) {
+        return [[NSString alloc] initWithFormat:@"%@%@", UrlHelper.baseUrl, categoryImagePath];
+    } else {
+        return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, categoryImagePath];
+    }
 }
 
 // Базовый URL для картинок авотаров
 +(NSString*) imageUrlForAvatarWithPath:(NSString*) avatarImagePath {
-    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, avatarImagePath];
+    if (avatarImagePath == nil)
+        return nil;
+    if ([avatarImagePath hasPrefix:@"/"]) {
+        return [[NSString alloc] initWithFormat:@"%@%@", UrlHelper.baseUrl, avatarImagePath];
+    } else {
+        return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, avatarImagePath];
+    }
 }
 
 
