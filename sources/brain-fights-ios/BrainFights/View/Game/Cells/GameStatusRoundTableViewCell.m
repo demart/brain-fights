@@ -86,6 +86,14 @@
         }
     }
     
+    for (GameRoundQuestionAnswerModel *answer in questionModel.answers) {
+        if (answer.isCorrect) {
+            message = [[NSString alloc] initWithFormat:@"%@\n\nПравильный ответ: %@", message, answer.text];
+            break;
+        }
+    }
+    
+    
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
