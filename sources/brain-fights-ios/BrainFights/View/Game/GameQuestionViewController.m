@@ -338,6 +338,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // Подстветить кто как ответил на вопрос
     [self hightLightAnswers:answerIndex withCorrrectAnswer:correctAnswerIndex andOponentAnswer:oponentAnswerIndex];
     // Call server API
+    // TODO show loader
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:userAnswer.id onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
@@ -361,46 +362,73 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     } onFailure:^(NSError *error) {
         // TODO Show ERROR
     }];
+    
 }
 
 // Подсветить коректный ответ и выделить остальные ответы как не правильные
 -(void) hightLightAnswers:(NSInteger)answerIndex withCorrrectAnswer:(NSInteger)correctAnswerIndex andOponentAnswer:(NSInteger)oponentAnswerIndex {
     if (answerIndex == correctAnswerIndex) {
         // TODO add animation
-        [self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
-        [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
+        //[self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
+        //[self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
+        
+        [UIView transitionWithView:self.answerViews[answerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
+         ^{
+             [self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
+             [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
+         } completion:^(BOOL finished) {
+         }];
+        
     } else {
+        [UIView transitionWithView:self.answerViews[correctAnswerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
+         ^{
+             [self.answerViews[correctAnswerIndex] setBackgroundColor:[UIColor greenColor]];
+             [self.answerViewTexts[correctAnswerIndex] setTextColor:[UIColor whiteColor]];
+             
+         } completion:^(BOOL finished) {
+         }];
+
+        [UIView transitionWithView:self.answerViews[answerIndex] duration:.2 options:UIViewAnimationOptionCurveEaseInOut animations:
+         ^{
+             [self.answerViews[answerIndex] setBackgroundColor:[UIColor redColor]];
+             [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
+         } completion:^(BOOL finished) {
+         }];
+        
+        
+        /*
         [self.answerViews[correctAnswerIndex] setBackgroundColor:[UIColor greenColor]];
         [self.answerViewTexts[correctAnswerIndex] setTextColor:[UIColor whiteColor]];
         [self.answerViews[answerIndex] setBackgroundColor:[UIColor redColor]];
         [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
+         */
     }
     
     // Если уже есть ответы чувака, то показываем их выделяя как-то
+
     if (oponentAnswerIndex > -1) {
-        // TODO анимация для вьюхи
-        //[self.answerViewTexts[oponentAnswerIndex] setTextColor:[UIColor purpleColor]];
-        
         UIView *oponentAnswer = self.answerViewTexts[oponentAnswerIndex];
         UILabel *oponentName = [[UILabel alloc] init];
+        [oponentName setFont:[UIFont fontWithName:@"Gill Sans" size:8.0]];
+        [oponentName setTextColor:[Constants SYSTEM_COLOR_BLACK]];
         [oponentName setText:self.gameModel.oponent.user.name];
-        [oponentName setBounds:oponentAnswer.bounds];
-        [oponentAnswer addSubview:oponentName];
-        [oponentName setFont:[UIFont fontWithName:@"Gill Sans" size:10.0]];
-        
-        oponentName.center = CGPointMake(oponentAnswer.frame.size.width  / 2,
-                                         oponentAnswer.frame.size.height / 2);
-        
-        [UIView animateWithDuration:1.0
-                              delay:0.0
-                            options:UIViewAnimationOptionBeginFromCurrentState
+        oponentName.textAlignment = NSTextAlignmentCenter;
+        [oponentName sizeToFit];
+        CGRect newFrame = [oponentAnswer.superview convertRect:oponentAnswer.frame toView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+        [oponentName setFrame:newFrame];
+        [self.view addSubview:oponentName];
+        [self.view bringSubviewToFront:oponentName];
+        [UIView animateWithDuration:1.5
+                              delay:.0
+                            options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState
                          animations:(void (^)(void)) ^{
-                             oponentName.transform=CGAffineTransformMakeScale(oponentName.center.x, oponentName.center.y);
+                             oponentName.transform=CGAffineTransformMakeScale(4,4);
                          }
                          completion:^(BOOL finished){
                              [oponentName removeFromSuperview];
                          }];
     }
+
 }
 
 
@@ -443,17 +471,29 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     // Если нужно ответить на первый вопрос
     if (self.state == STATE_WAITING_ANSWER_1) {
-        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[0] withQuestionIndex:0];
+        [UIView transitionWithView:self.questionView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[0] withQuestionIndex:0];
+        } completion:^(BOOL finished) {
+        }];
+//        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[0] withQuestionIndex:0];
     }
     
     // Если нужно ответить на второй вопрос
     if (self.state == STATE_WAITING_ANSWER_2) {
-        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[1] withQuestionIndex:1];
+        [UIView transitionWithView:self.questionView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[1] withQuestionIndex:1];
+        } completion:^(BOOL finished) {
+        }];
+//        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[1] withQuestionIndex:1];
     }
     
     // Если нужно ответить на третий вопрос
     if (self.state == STATE_WAITING_ANSWER_3) {
-        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[2] withQuestionIndex:2];
+        [UIView transitionWithView:self.questionView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[2] withQuestionIndex:2];
+        } completion:^(BOOL finished) {
+        }];
+//        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[2] withQuestionIndex:2];
     }
 }
 
@@ -589,6 +629,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     GameRoundQuestionModel *question = self.gameRoundModel.questions[questionIndex];
     
     // Call server API
+    // TODO show loader
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:QUESTION_WITHOUT_ANSWER_ID onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
@@ -613,7 +654,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     } onFailure:^(NSError *error) {
         // TODO Show ERROR
     }];
-    
 }
 
 // Показывает сколько осталось времени в виде полоски

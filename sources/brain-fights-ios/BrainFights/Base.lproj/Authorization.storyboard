@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9058" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="djY-6c-4b3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="djY-6c-4b3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +23,6 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="oeM-EX-R1a">
                                         <rect key="frame" x="130" y="15" width="300" height="300"/>
-                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="300" id="48l-TM-CCo"/>
                                             <constraint firstAttribute="width" constant="300" id="y7Z-LK-8Z7"/>
@@ -31,18 +30,16 @@
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Логин" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9u-Td-6uM">
                                         <rect key="frame" x="160" y="247" width="240" height="30"/>
-                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="KEc-aE-3Rz"/>
                                             <constraint firstAttribute="width" constant="240" id="W1a-oq-HDX"/>
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zaN-0l-Bgn">
                                         <rect key="frame" x="160" y="285" width="240" height="30"/>
-                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="240" id="dS2-O4-QAp"/>
                                             <constraint firstAttribute="height" constant="30" id="xU5-b8-Hsn"/>
@@ -53,7 +50,6 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIc-JW-kM2">
                                         <rect key="frame" x="160" y="348" width="240" height="40"/>
-                                        <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="eR9-sE-bDH"/>
@@ -68,7 +64,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="oeM-EX-R1a" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Nfa-3e-2lI"/>
@@ -89,14 +84,12 @@
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="hMq-3A-fp9">
                                 <rect key="frame" x="199" y="513" width="201" height="71"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="8rA-hF-5Zg"/>
                                     <constraint firstAttribute="height" constant="71" id="blc-eR-cmR"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="trailing" secondItem="GbC-PN-kpe" secondAttribute="trailingMargin" id="1vu-W5-mSI"/>
@@ -132,7 +125,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="UoD-Uh-bpx">
                                 <rect key="frame" x="125" y="125" width="350" height="350"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="350" id="O2H-vT-ss2"/>
                                     <constraint firstAttribute="width" constant="350" id="exo-kV-IVg"/>
@@ -140,7 +132,6 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ake-1y-IZO">
                                 <rect key="frame" x="200" y="483" width="201" height="71"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="FhI-Kt-61E"/>
                                     <constraint firstAttribute="height" constant="71" id="bBi-bo-tEu"/>
@@ -148,11 +139,9 @@
                             </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eMM-Tr-yVb">
                                 <rect key="frame" x="282" y="401" width="37" height="37"/>
-                                <animations/>
                                 <color key="color" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerY" secondItem="1eD-jF-jwT" secondAttribute="centerY" id="B0v-Ro-2rg"/>
