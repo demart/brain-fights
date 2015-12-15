@@ -437,6 +437,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="showAuthSceneButton" destination="SsY-Bb-Va5" id="imk-hv-rRf"/>
                         <outlet property="showMenuButton" destination="2C1-7h-dgB" id="b0O-89-Ecf"/>
                         <segue destination="dhH-vj-hO3" kind="show" identifier="FromGamesToNewGame" id="r6w-C4-Rqw"/>
                         <segue destination="Dfp-tP-J4a" kind="show" identifier="FromGamesToGameStatus" id="fkk-kK-ETU"/>

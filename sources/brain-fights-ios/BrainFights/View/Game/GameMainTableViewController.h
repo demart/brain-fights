@@ -14,5 +14,6 @@
 - (IBAction)showMenuAction:(UIBarButtonItem *)sender;
 
 - (IBAction)showAuthScene:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *showAuthSceneButton;
 
 @end

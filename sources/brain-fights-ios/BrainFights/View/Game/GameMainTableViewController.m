@@ -45,6 +45,8 @@ static UIRefreshControl *refreshControl;
     self.tableView.separatorColor = [UIColor clearColor];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
     [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
+    
+    self.showAuthSceneButton.image = nil;
 }
 
 

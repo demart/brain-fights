@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BrainFights/View/Game/GameMainTableViewController.m"
-            timestampString = "471619081.340811"
+            timestampString = "471790439.198345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "-findAndShowFinalResultPromtMessage"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BrainFights/View/Game/GameMainTableViewController.m"
-            timestampString = "471619173.0869"
+            timestampString = "471790439.198345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "-loadUserAvatarInCell:onIndexPath:withImageUrl:"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BrainFights/View/Game/GameMainTableViewController.m"
-            timestampString = "471619186.953819"
+            timestampString = "471790439.198345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "-loadUserAvatarInCell:onIndexPath:withImageUrl:"
             landmarkType = "5">
          </BreakpointContent>
