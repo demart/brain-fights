@@ -30,6 +30,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -53,6 +58,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -86,6 +100,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -109,6 +128,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -179,6 +207,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [userDepartmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -202,6 +235,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -217,6 +259,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -267,6 +314,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -290,6 +342,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -331,9 +392,14 @@
                                                           @"id": @"id",
                                                           @"name": @"name",
                                                           @"userCount": @"userCount",
+                                                          @"position":@"position",
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -357,6 +423,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -412,9 +487,14 @@
                                                               @"id": @"id",
                                                               @"name": @"name",
                                                               @"userCount": @"userCount",
+                                                              @"position":@"position",                                                              
                                                               @"score": @"score",
                                                               @"haveChildren": @"haveChildren",
                                                               @"isUserBelongs": @"isUserBelongs",
+                                                              @"lastScore":@"lastScore",
+                                                              @"lastPosition":@"lastPosition",
+                                                              @"lastGlobalPosition":@"lastGlobalPosition",
+                                                              @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                               }];
     
     [userDepartmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -438,6 +518,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -455,9 +544,18 @@
                                                           @"id": @"id",
                                                           @"name": @"name",
                                                           @"userCount": @"userCount",
+                                                          @"position":@"position",
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -536,6 +634,11 @@
                                                           @"score": @"score",
                                                           @"haveChildren": @"haveChildren",
                                                           @"isUserBelongs": @"isUserBelongs",
+                                                          @"lastScore":@"lastScore",
+                                                          @"lastPosition":@"lastPosition",
+                                                          @"lastGlobalPosition":@"lastGlobalPosition",
+                                                          @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                          @"position":@"position",
                                                           }];
     
     [departmentModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"parent"
@@ -559,6 +662,15 @@
                                                            @"drawnGames": @"drawnGames",
                                                            @"score": @"score",
                                                            @"gamePosition": @"gamePosition",
+                                                           @"playStatus": @"playStatus",
+                                                           @"imageUrl": @"imageUrl",
+                                                           @"lastTotalGames":@"lastTotalGames",
+                                                           @"lastWonGames":@"lastWonGames",
+                                                           @"lastLoosingGames":@"lastLoosingGames",
+                                                           @"lastDrawnGames":@"lastDrawnGames",
+                                                           @"lastScore":@"lastScore",
+                                                           @"lastGamePosition":@"lastGamePosition",
+                                                           @"lastStatisticsUpdate":@"lastStatisticsUpdate",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"

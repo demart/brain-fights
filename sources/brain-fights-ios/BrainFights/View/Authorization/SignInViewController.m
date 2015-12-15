@@ -34,6 +34,30 @@
     // Загружаем логин, который был успешно использован до этого
     [self.loginTextField setText:(NSString*)[LocalStorageService getSettingsValueByKey:AUTH_LOGIN]];
     [self registerForKeyboardNotifications];
+    [self initButtonView:self.signInButton];
+    
+    [self initTextFieldView:self.loginTextField];
+    [self initTextFieldView:self.passwordTextField];
+}
+
+- (void) initTextFieldView:(UITextField*)textField {
+    CALayer *border = [CALayer layer];
+    CGFloat borderWidth = 2;
+    border.borderColor = [Constants SYSTEM_COLOR_GREEN].CGColor;
+    //border.borderColor = [Constants SYSTEM_COLOR_ORANGE].CGColor;
+    border.frame = CGRectMake(0, textField.frame.size.height - borderWidth, textField.frame.size.width, self.loginTextField.frame.size.height);
+    border.borderWidth = borderWidth;
+    [textField.layer addSublayer:border];
+    textField.layer.masksToBounds = YES;
+}
+
+
+-(void) initButtonView:(UIView*) view {
+    view.layer.cornerRadius = 5.0;
+    view.layer.masksToBounds = NO;
+    view.layer.shadowOffset = CGSizeMake(2, 2);
+    view.layer.shadowRadius = 1;
+    view.layer.shadowOpacity = 0.5;
 }
 
 - (void)registerForKeyboardNotifications {

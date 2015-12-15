@@ -10,7 +10,6 @@
 #import "BaseTableViewController.h"
 #import "LMDropdownView.h"
 #import "DepartmentTypeTableViewCell.h"
-#import "DepartmentTypeFilterTableViewCell.h"
 
 @interface RatingTableViewController : BaseTableViewController<LMDropdownViewDelegate>
 

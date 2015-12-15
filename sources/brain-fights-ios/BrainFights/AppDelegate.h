@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UrlHelper.h"
 #import "Constants.h"
 #import "NotificationService.h"
 #import "ErrorViewController.h"
@@ -38,6 +39,8 @@
 // Скрин рейтинга
 @property (nonatomic, strong) UIViewController *authorizationViewController;
 
+// Скрин о программе
+@property (nonatomic, strong) UIViewController *aboutViewController;
 
 + (AppDelegate *)globalDelegate;
 

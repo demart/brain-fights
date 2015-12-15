@@ -30,6 +30,9 @@
 // Список друзей
 @property NSMutableArray *friends;
 
+@property NSMutableDictionary *loadImageOperations;
+@property NSOperationQueue *loadImageOperationQueue;
+
 @end
 
 @implementation NewGameTableViewController
@@ -38,10 +41,15 @@
     [super viewDidLoad];
     
     self.tableView.separatorColor = [UIColor clearColor];
+    
+    self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
+    [self.loadImageOperationQueue setMaxConcurrentOperationCount:1];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated  {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     // Загружаем список друзей
     [self loadFriendsAsync];
 }
@@ -49,6 +57,10 @@
 -(void) viewWillDisappear:(BOOL)animated {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    [_loadImageOperationQueue cancelAllOperations];
+    [_loadImageOperations removeAllObjects];
+        
 }
 
 -(void) appDidBecomeActive:(NSNotification *)notification {
@@ -126,6 +138,42 @@
 }
 
 
+- (void) loadUserAvatarInCell:(UserTableViewCell*) cell onIndexPath:(NSIndexPath*)indexPath withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        cell.iconImage.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    UserTableViewCell *updateCell = (UserTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                    if (updateCell != nil && image != nil) {
+                        updateCell.iconImage.image = image;
+                    }
+                    
+                    if (image != nil) {
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:indexPath];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:indexPath];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -185,7 +233,11 @@
         [cell initCell:userProfile withDeleteButton:YES onClicked:^{
             // remove friend;
             [self removeFriend];
-        }];
+        } withSendGameInvitationAction:^(NSUInteger userId) {
+            [self sendGameInvitationToSelectedUserAction:userId];
+        } onParentViewController:self];
+        
+        [self loadUserAvatarInCell:cell onIndexPath:indexPath withImageUrl:userProfile.imageUrl];
         
         return cell;
     }
@@ -193,6 +245,31 @@
     return nil;
 }
 
+// Отправить приглашение выбранному пользователю сыграть
+- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // TODO SHOW ERROR
+    }];
+    
+}
 
 -(void) removeFriend {
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -272,8 +349,15 @@
     }
     
     if (indexPath.section == 3) {
-        // TODO
-        [self performSegueWithIdentifier:@"FromNewGameToUserProfile" sender:self];
+        // Пользователи
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        UserProfileTableViewController *viewController = [[UserProfileTableViewController alloc] init];
+        [viewController setUserProfile:self.friends[selectedIndexPath.row]];
+        viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Назад"
+                                                                                           style:UIBarButtonItemStylePlain
+                                                                                          target:nil
+                                                                                          action:nil];
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     
 }
@@ -292,17 +376,12 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Если переход на профиль друга
-    if ([segue.destinationViewController isKindOfClass:[UserProfileTableViewController class]]) {
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        [(UserProfileTableViewController*)segue.destinationViewController setUserProfile:self.friends[selectedIndexPath.row]];
-        NSLog(@"NewGame -> UserProfile");
-    }
-    
+
     if ([segue.destinationViewController isKindOfClass:[OrganizationStructureTableViewController class]]) {
         segue.destinationViewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStylePlain target:nil action:nil];
         NSLog(@"NewGame -> OrganizationStructure");
     }
+    
 }
 
 @end

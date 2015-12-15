@@ -1,5 +1,6 @@
 package kz.aphion.brainfights.services;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,7 +233,7 @@ public class DepartmentService {
 		if (authorizedUser == null)
 			throw new AuthorizationException(ErrorCode.AUTH_ERROR, "authorized user is null");
 		
-		List<Department> objects = Department.find("deleted = false and type.id = ? order by score DESC", departmentTypeId).fetch(page, limit);
+		List<Department> objects = Department.find("deleted = false and type.id = ? order by score DESC, userCount ASC", departmentTypeId).fetch(page, limit);
 		if (objects == null)
 			return null;
 		
@@ -243,6 +244,35 @@ public class DepartmentService {
 		}
 		
 		return models;
+	}
+	
+	/**
+	 * Возвращает позицию департамента оносительно других в указанном типе подразделения
+	 * @param user
+	 * @return
+	 */
+	public static Integer getDepartmentPosition(Department department) {
+		List<Object> result;
+		if (department.getType() != null) {
+			result = JPA.em().createNativeQuery("select o.rownum from (select row_number() over (order by score DESC, usercount ASC) as rownum, * from department where deleted = false and score >= :score and type_id = :typeId order by score DESC, usercount ASC) as o where o.id = :departmentId")
+					.setParameter("score", department.getScore())
+					.setParameter("departmentId", department.getId())
+					.setParameter("typeId", department.getType().getId())
+					.getResultList();
+		} else {
+			result = JPA.em().createNativeQuery("select o.rownum from (select row_number() over (order by score DESC, usercount ASC) as rownum, * from department where deleted = false and score >= :score and type_id is null order by score DESC, usercount ASC) as o where o.id = :departmentId")
+					.setParameter("score", department.getScore())
+					.setParameter("departmentId", department.getId())
+					.getResultList();
+		}
+		BigInteger resultCount = null;
+		if (result != null && result.size() > 0)
+			resultCount = (BigInteger)result.get(0);
+		
+		if (resultCount == null)
+			return -1;
+		
+		return resultCount.intValue();
 	}
 	
 }

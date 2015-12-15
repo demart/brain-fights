@@ -16,14 +16,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название раздела" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIx-XL-kb1">
-                        <rect key="frame" x="73" y="11" width="239" height="20.5"/>
+                        <rect key="frame" x="66" y="11" width="246" height="20.5"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2ud-hT-D6i">
-                        <rect key="frame" x="40" y="10" width="25" height="25"/>
+                        <rect key="frame" x="33" y="10" width="25" height="25"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="DUF-nB-kQq"/>
@@ -32,12 +32,13 @@
                     </imageView>
                 </subviews>
                 <animations/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="2ud-hT-D6i" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="21f-uP-TJO"/>
                     <constraint firstItem="ZIx-XL-kb1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Nik-PV-oR9"/>
                     <constraint firstItem="ZIx-XL-kb1" firstAttribute="leading" secondItem="2ud-hT-D6i" secondAttribute="trailing" constant="8" id="Zar-Vr-kQv"/>
                     <constraint firstItem="ZIx-XL-kb1" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="hbN-PD-eIH"/>
-                    <constraint firstItem="2ud-hT-D6i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="32" id="uV6-DC-n60"/>
+                    <constraint firstItem="2ud-hT-D6i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="25" id="uV6-DC-n60"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>

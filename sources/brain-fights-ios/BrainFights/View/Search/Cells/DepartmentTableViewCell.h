@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 #import "DepartmentModel.h"
 #import "UserProfileModel.h"
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentScore;
 @property (weak, nonatomic) IBOutlet UILabel *userBelongsToDepartment;
 @property (weak, nonatomic) IBOutlet UILabel *departmentUserCount;
+@property (weak, nonatomic) IBOutlet UIView *departmentBackgroundView;
 
 // Инициализирует ячейку данными департамента
 - (void) initCell:(DepartmentModel*)model;

@@ -7,6 +7,7 @@ import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
 import kz.aphion.brainfights.persistents.user.Department;
 import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.DepartmentService;
 import kz.aphion.brainfights.services.UserService;
 
 /**
@@ -33,9 +34,34 @@ public class DepartmentModel {
 	public Integer userCount;
 	
 	/**
+	 * Позиция подразделения среди таких же подразделений (Типа среди Филиалов, Департаменты)
+	 */
+	public Integer position;
+	
+	/**
 	 * Рейтинг подразделения
 	 */
 	public Integer score;
+	
+	/**
+	 * Рейтинг подразделения
+	 */
+	public Integer lastScore;
+
+	/**
+	 * Позиция подразделения (прошлая статистика)
+	 */
+	public Integer lastPosition;	
+
+	/**
+	 * Глобальная позиции подразделения (прошлая статистика)
+	 */
+	public Integer lastGlobalPosition;	
+	
+	/**
+	 * Время последнего пересчета статистики
+	 */
+	public String lastStatisticsUpdate;
 	
 	/**
 	 * Есть ли подразделения на уровне ниже
@@ -81,6 +107,12 @@ public class DepartmentModel {
 		model.name = department.getName();
 		model.score = department.getScore();
 		model.userCount = department.getUserCount();
+		
+		model.position = DepartmentService.getDepartmentPosition(department);
+		model.lastScore = department.getLastScore();
+		model.lastPosition = department.getLastPosition();
+		model.lastGlobalPosition = department.getLastGlobalPosition();
+		model.lastStatisticsUpdate = department.getLastStatisticsUpdateDateISO8601();
 		
 		// TODO хреновая проверка, нужно кэшировать походу так как структура статична
 		model.haveChildren = department.getChildren() != null && department.getChildren().size() > 0 ? true : false;

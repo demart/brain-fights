@@ -32,9 +32,34 @@
 @property NSInteger userCount;
 
 /**
+ * Позициия подразделения среди таких же типов как он
+ */
+@property NSInteger position;
+
+/**
  * Рейтинг подразделения
  */
 @property NSInteger score;
+
+/**
+ * Позиция подразделения (прошлая статистика)
+ */
+@property NSInteger lastScore;
+
+/**
+ * Позиция подразделения (прошлая статистика)
+ */
+@property NSInteger lastPosition;
+
+/**
+ * Глобальная позиции подразделения (прошлая статистика)
+ */
+@property NSInteger lastGlobalPosition;
+
+/**
+ * Время последнего пересчета статистики
+ */
+@property NSString *lastStatisticsUpdate;
 
 /**
  * Есть ли подразделения на уровне ниже
@@ -62,5 +87,8 @@
  * Принадлежит ли пользователь к этому подразделению
  */
 @property Boolean isUserBelongs;
+
+// Время последнего обновления в формате
+-(NSDate*) getLastStatisticsUpdateDate;
 
 @end

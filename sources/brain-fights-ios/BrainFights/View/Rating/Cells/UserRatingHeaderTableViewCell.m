@@ -7,10 +7,12 @@
 //
 
 #import "UserRatingHeaderTableViewCell.h"
+#import "AppDelegate.h"
 
 @implementation UserRatingHeaderTableViewCell
 
 - (void)awakeFromNib {
+    self.backgroundColor = [Constants SYSTEM_COLOR_ORANGE];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

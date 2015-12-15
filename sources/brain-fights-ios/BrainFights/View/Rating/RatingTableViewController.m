@@ -13,6 +13,11 @@
 
 #import "UserRatingTableViewCell.h"
 #import "UserRatingHeaderTableViewCell.h"
+
+#import "DepartmentRatingTableViewCell.h"
+#import "DepartmentRatingHeaderTableViewCell.h"
+#import "OrganizationStructureTableViewController.h"
+
 #import "DejalActivityView.h"
 
 #import "UserService.h"
@@ -74,7 +79,7 @@ static UIRefreshControl* refreshControl;
     self.tableView.separatorColor = [UIColor clearColor];
     
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-    [self loadUsersRating];
+    [self loadUsersRating:nil];
     
 }
 
@@ -86,16 +91,23 @@ static UIRefreshControl* refreshControl;
     if (sender.selectedSegmentIndex == MODE_USERS) {
         // MODE USERS
         self.mode = MODE_USERS;
-        [self loadUsersRating];
+        
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+        
+        [self loadUsersRating:nil];
     }
     
     if (sender.selectedSegmentIndex == MODE_DEPARTMENTS) {
         // MODE DEPARTMENTS
         self.mode = MODE_DEPARTMENTS;
+        
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+        
         if (self.departmentTypes == nil || [self.departmentTypes count] < 1) {
+            
             [self loadDepartmentTypesAndDepartments];
         } else {
-            [self loadDepartmentsRating];
+            [self loadDepartmentsRating:nil];
         }
     }
 }
@@ -120,17 +132,18 @@ static UIRefreshControl* refreshControl;
     [self.records removeAllObjects];
     
     if (self.mode == MODE_USERS) {
-        [self loadUsersRating];
+        [self loadUsersRating:refreshControll];
     } else {
-        [self loadDepartmentsRating];
+        [self loadDepartmentsRating:refreshControll];
     }
-    [refreshControl endRefreshing];
 }
 
 
 // Загружает данные с сервера
--(void) loadUsersRating {
+-(void) loadUsersRating:(UIRefreshControl*) refreshControll {
     [[UserService sharedInstance] retrieveUsersRating:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *userProfiles = (NSMutableArray*)response.data;
             if (userProfiles == nil || [userProfiles count] < 1) {
@@ -157,6 +170,8 @@ static UIRefreshControl* refreshControl;
         [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
     }];
@@ -164,8 +179,10 @@ static UIRefreshControl* refreshControl;
 
 
 // Загружает данные с сервера
--(void) loadDepartmentsRating {
+-(void) loadDepartmentsRating:(UIRefreshControl*) refreshControll {
     [[UserService sharedInstance] retrieveDepartmentsRating:self.departmentType.id withPage:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *departments = (NSMutableArray*)response.data;
             if (departments == nil || [departments count] < 1) {
@@ -181,7 +198,7 @@ static UIRefreshControl* refreshControl;
             }
             [self.tableView reloadData];
         }
-        
+
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
@@ -193,6 +210,8 @@ static UIRefreshControl* refreshControl;
         [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
         [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
     }];
@@ -207,7 +226,7 @@ static UIRefreshControl* refreshControl;
             } else {
                 self.departmentTypes = departmentTypes;
                 self.departmentType = departmentTypes[0];
-                [self loadDepartmentsRating];
+                [self loadDepartmentsRating:nil];
             }
         }
         
@@ -235,9 +254,12 @@ static UIRefreshControl* refreshControl;
     }
     
     if (self.mode == MODE_DEPARTMENTS) {
-       return 2; // One for filter
+       return 1; // One for filter
     }
     
+    if (self.mode == MODE_USERS) {
+        return 1; // One for filter
+    }
     
     return 1;
 }
@@ -247,11 +269,6 @@ static UIRefreshControl* refreshControl;
         if (self.departmentTypes == nil)
             return 0;
         return [self.departmentTypes count];
-    }
-
-    if (self.mode == MODE_DEPARTMENTS) {
-        if (section == 0)
-            return 0;    
     }
     
     if (self.records != nil)
@@ -264,7 +281,7 @@ static UIRefreshControl* refreshControl;
     if (tableView == self.menuTableView) {
         return 0;
     }
-    return 40;
+    return 35;
 }
 
 -(UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -272,16 +289,35 @@ static UIRefreshControl* refreshControl;
         return nil;
     }
     
+    if (self.mode == MODE_USERS) {
+        UserRatingHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingHeaderCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"UserRatingHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"UserRatingHeaderCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingHeaderCell"];
+        }
+        
+            [cell initCellWithHeaderTitle:@"Сотрудник"];
+        return cell;
+    }
+    
     if (self.mode == MODE_DEPARTMENTS) {
         if (section == 0) {
-            DepartmentTypeFilterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentTypeFilterCell"];
+            DepartmentRatingHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentRatingHeaderCell"];
             if (!cell) {
-                [tableView registerNib:[UINib nibWithNibName:@"DepartmentTypeFilterTableViewCell" bundle:nil]forCellReuseIdentifier:@"DepartmentTypeFilterCell"];
-                cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentTypeFilterCell"];
+                [tableView registerNib:[UINib nibWithNibName:@"DepartmentRatingHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"DepartmentRatingHeaderCell"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentRatingHeaderCell"];
             }
             
-            [cell initWithSelector:^{
-                // Show menu for select department type
+            NSString *headerTitle = nil;
+            if (self.departmentTypes != nil && [self.departmentTypes count] > 0) {
+                if (self.selectedIndex < 0) {
+                    headerTitle = ((DepartmentTypeModel*)self.departmentTypes[0]).name;
+                } else {
+                    headerTitle = ((DepartmentTypeModel*)self.departmentTypes[self.selectedIndex]).name;
+                }
+            }
+            
+            [cell initCellWithTitle:headerTitle andShowSortingOptionsAction:^{
                 [self.menuTableView reloadData];
                 [self showDropDownView];
             }];
@@ -290,21 +326,7 @@ static UIRefreshControl* refreshControl;
         }
     }
     
-    UserRatingHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingHeaderCell"];
-    if (!cell) {
-        [tableView registerNib:[UINib nibWithNibName:@"UserRatingHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"UserRatingHeaderCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingHeaderCell"];
-    }
-    
-    if (self.mode == MODE_USERS) {
-        [cell initCellWithHeaderTitle:@"Сотрудник"];
-    }
-
-    if (self.mode == MODE_DEPARTMENTS) {
-        [cell initCellWithHeaderTitle:@"Подразделение"];
-    }
-    
-    return cell;
+    return nil;
 }
 
 
@@ -317,27 +339,39 @@ static UIRefreshControl* refreshControl;
         }
         
         DepartmentTypeModel *model = self.departmentTypes[indexPath.row];
-        [cell initCell:model.name];
+        if (self.selectedIndex == indexPath.row) {
+            [cell initCell:model.name isSelected:YES];
+        } else {
+            [cell initCell:model.name isSelected:NO];
+        }
         
         return cell;
     }
     
-    UserRatingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingCell"];
-    if (!cell) {
-        [tableView registerNib:[UINib nibWithNibName:@"UserRatingTableViewCell" bundle:nil]forCellReuseIdentifier:@"UserRatingCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingCell"];
+    if (self.mode == MODE_USERS) {
+        UserRatingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"UserRatingTableViewCell" bundle:nil]forCellReuseIdentifier:@"UserRatingCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"UserRatingCell"];
+        }
+        
+        [cell initCell:self.records[indexPath.row] withIndex:indexPath.row];
+        return cell;
     }
     
-    if (self.mode == MODE_USERS) {
-        [cell initCell:self.records[indexPath.row]];
-    }
     
     if (self.mode == MODE_DEPARTMENTS) {
-        [cell initCellWithDepartment:self.records[indexPath.row]];
+        DepartmentRatingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentRatingCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"DepartmentRatingTableViewCell" bundle:nil]forCellReuseIdentifier:@"DepartmentRatingCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"DepartmentRatingCell"];
+        }
+        
+        [cell initCell:self.records[indexPath.row] withIndex:indexPath.row];
+        return cell;
     }
     
-    return cell;
-    
+    return nil;
 }
 
 
@@ -350,7 +384,8 @@ static UIRefreshControl* refreshControl;
         [self.dropdownView hide];
         self.page = 0;
         [self.records removeAllObjects];
-        [self loadDepartmentsRating];
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
+        [self loadDepartmentsRating:nil];
         
         return;
     }
@@ -360,6 +395,16 @@ static UIRefreshControl* refreshControl;
         [destination setUserProfile:self.records[indexPath.row]];
         [self.navigationController pushViewController:destination animated:YES];
     }
+    
+    if (self.mode == MODE_DEPARTMENTS) {
+        OrganizationStructureTableViewController *viewController = [[OrganizationStructureTableViewController alloc] init];
+        [viewController setParentDepartment:self.records[indexPath.row]];
+        viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Назад"
+                                                                                           style:UIBarButtonItemStylePlain
+                                                                                          target:nil
+                                                                                          action:nil];
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
 }
 
 
@@ -367,7 +412,7 @@ static UIRefreshControl* refreshControl;
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.isExistsMoreRecords) {
 //        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-        [self loadUsersRating];
+        [self loadUsersRating:nil];
     }
 }
 
@@ -391,11 +436,11 @@ static UIRefreshControl* refreshControl;
         self.dropdownView.delegate = self;
         
         // Customize Dropdown style
-        self.dropdownView.closedScale = 0.85;
+        self.dropdownView.closedScale = 0.95;
         self.dropdownView.blurRadius = 5;
         self.dropdownView.blackMaskAlpha = 0.5;
         self.dropdownView.animationDuration = 0.5;
-        self.dropdownView.animationBounceHeight = 20;
+        self.dropdownView.animationBounceHeight = 10;
         self.dropdownView.contentBackgroundColor = [UIColor colorWithRed:40.0/255 green:196.0/255 blue:80.0/255 alpha:1];
     }
     
@@ -415,19 +460,19 @@ static UIRefreshControl* refreshControl;
 }
 
 - (void)dropdownViewWillShow:(LMDropdownView *)dropdownView {
-    NSLog(@"Dropdown view will show");
+    //NSLog(@"Dropdown view will show");
 }
 
 - (void)dropdownViewDidShow:(LMDropdownView *)dropdownView {
-    NSLog(@"Dropdown view did show");
+    //NSLog(@"Dropdown view did show");
 }
 
 - (void)dropdownViewWillHide:(LMDropdownView *)dropdownView {
-    NSLog(@"Dropdown view will hide");
+    //NSLog(@"Dropdown view will hide");
 }
 
 - (void)dropdownViewDidHide:(LMDropdownView *)dropdownView {
-    NSLog(@"Dropdown view did hide");
+    //NSLog(@"Dropdown view did hide");
     
     [self.tableView reloadData];
     /*

@@ -33,6 +33,7 @@
 
 #import "DejalActivityView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 
 @interface DejalActivityView ()
@@ -493,7 +494,7 @@ static DejalActivityView *dejalActivityView = nil;
     self.backgroundColor = [UIColor colorWithRed:102/255.0f
                                            green:204.0f/255.0f
                                             blue:102.0f/255.0f
-                                           alpha:0.35f];;
+                                           alpha:0.35f];
 //	self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.35];
 }
 
@@ -510,10 +511,13 @@ static DejalActivityView *dejalActivityView = nil;
 {
     UIView *view = [super makeBorderView];
   
+    view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+/*
     view.backgroundColor = [UIColor colorWithRed:102/255.0f
                     green:204.0f/255.0f
                      blue:102.0f/255.0f
                     alpha:0.7f];
+ */
 //    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     view.layer.cornerRadius = 10.0;
     

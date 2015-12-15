@@ -1,6 +1,10 @@
 package kz.aphion.brainfights.persistents.user;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +28,12 @@ import kz.aphion.brainfights.persistents.PersistentObject;
 @Table(name = "department")
 public class Department extends PersistentObject {
     
+	public Department() {
+		this.lastScore = 0;
+		this.lastPosition = 0;
+		this.lastGlobalPosition = 0;
+	}
+	
 	@Id
     @GeneratedValue(generator="department_sequence")
 	@SequenceGenerator(name="department_sequence",sequenceName="department_sequence", allocationSize=1)
@@ -63,6 +73,31 @@ public class Department extends PersistentObject {
 	private Integer score;
 	
 	/**
+	 * Последний обновление рейтинга (Для показа смещения вверх или вниз)
+	 */
+	@Column(name="last_score", nullable=false, columnDefinition="integer default 0")
+	private Integer lastScore;
+	
+	/**
+	 * Последнее обноление позиции (Для показа смещения вверх или вниз)
+	 */
+	@Column(name="last_position", nullable=false, columnDefinition="integer default 0")
+	private Integer lastPosition;
+	
+	/**
+	 * Последнее обноление глобальной позиции (Для показа смещения вверх или вниз)
+	 */
+	@Column(name="last_global_position", nullable=false, columnDefinition="integer default 0")
+	private Integer lastGlobalPosition;
+	
+	/**
+	 * Дата последнего обновления статистики
+	 */
+	@Column(name="last_statistics_update")
+	private Calendar lastStatisticsUpdate;
+	
+	
+	/**
 	 * Кол-во игроков внутри всех подразделений
 	 */
 	@Column(nullable=false)
@@ -74,6 +109,18 @@ public class Department extends PersistentObject {
 	@OneToMany(mappedBy="department")
 	private List<User> users;
 
+	
+	public String getLastStatisticsUpdateDateISO8601() {
+		if (lastStatisticsUpdate != null) {
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			df.setTimeZone(tz);
+			String timeAsISO = df.format(lastStatisticsUpdate.getTime());
+			return timeAsISO;
+		}
+		return null;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -126,6 +173,30 @@ public class Department extends PersistentObject {
 	}
 	public void setType(DepartmentType type) {
 		this.type = type;
+	}
+	public Integer getLastScore() {
+		return lastScore;
+	}
+	public void setLastScore(Integer lastScore) {
+		this.lastScore = lastScore;
+	}
+	public Integer getLastPosition() {
+		return lastPosition;
+	}
+	public void setLastPosition(Integer lastPosition) {
+		this.lastPosition = lastPosition;
+	}
+	public Integer getLastGlobalPosition() {
+		return lastGlobalPosition;
+	}
+	public void setLastGlobalPosition(Integer lastGlobalPosition) {
+		this.lastGlobalPosition = lastGlobalPosition;
+	}
+	public Calendar getLastStatisticsUpdate() {
+		return lastStatisticsUpdate;
+	}
+	public void setLastStatisticsUpdate(Calendar lastStatisticsUpdate) {
+		this.lastStatisticsUpdate = lastStatisticsUpdate;
 	}
 	
 }

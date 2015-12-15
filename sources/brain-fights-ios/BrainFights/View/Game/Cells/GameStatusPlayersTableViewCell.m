@@ -11,6 +11,15 @@
 @implementation GameStatusPlayersTableViewCell
 
 - (void)awakeFromNib {
+    [self initCircleImageView:self.gamerAvatar];
+    [self initCircleImageView:self.oponentAvatar];
+}
+
+-(void)initCircleImageView:(UIImageView*)imageView {
+    imageView.layer.borderWidth = 1.0f;
+    imageView.layer.borderColor = [Constants SYSTEM_COLOR_GREEN].CGColor;
+    imageView.layer.cornerRadius = imageView.frame.size.width / 2;
+    imageView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

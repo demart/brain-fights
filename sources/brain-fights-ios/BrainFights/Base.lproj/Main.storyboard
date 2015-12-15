@@ -437,6 +437,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="showAuthSceneButton" destination="SsY-Bb-Va5" id="imk-hv-rRf"/>
                         <outlet property="showMenuButton" destination="2C1-7h-dgB" id="b0O-89-Ecf"/>
                         <segue destination="dhH-vj-hO3" kind="show" identifier="FromGamesToNewGame" id="r6w-C4-Rqw"/>
                         <segue destination="Dfp-tP-J4a" kind="show" identifier="FromGamesToGameStatus" id="fkk-kK-ETU"/>
@@ -693,6 +694,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rk7-XN-71M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1337" y="1247"/>
+        </scene>
+        <!--О приложении-->
+        <scene sceneID="qlk-En-Pzm">
+            <objects>
+                <tableViewController id="biM-4b-gEe" customClass="AboutTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Yi0-Yr-lNC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KQk-IY-kBH">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KQk-IY-kBH" id="Zgj-z1-uKJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="biM-4b-gEe" id="gSp-97-vvn"/>
+                            <outlet property="delegate" destination="biM-4b-gEe" id="1ty-2E-oMZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="О приложении" id="dgO-ZX-Lj8">
+                        <barButtonItem key="leftBarButtonItem" image="leftMenuIcon" id="u7h-Fh-cwk">
+                            <connections>
+                                <action selector="showMenuAction:" destination="biM-4b-gEe" id="BNm-wn-uB8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="showMenuButton" destination="u7h-Fh-cwk" id="eDH-70-nrt"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yWf-gu-PNe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2167" y="-262"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="FIs-Qg-0tO">
+            <objects>
+                <navigationController storyboardIdentifier="AboutViewControllerStoryboardID" id="KLS-fX-L2z" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zn2-SJ-skY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="biM-4b-gEe" kind="relationship" relationship="rootViewController" id="zTe-Lf-jhV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HZQ-W9-h8v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1346" y="-262"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zu7-TV-SQh">

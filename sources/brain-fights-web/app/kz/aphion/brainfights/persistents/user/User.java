@@ -1,7 +1,10 @@
 package kz.aphion.brainfights.persistents.user;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +38,15 @@ import kz.aphion.brainfights.persistents.game.Gamer;
 @Table(name = "users")
 public class User extends PersistentObject {
 
+	public User() {
+		this.lastPosition = 0;
+		this.lastScore = 0;
+		this.lastDrawnGames = 0;
+		this.lastLoosingGames = 0;
+		this.lastTotalGames = 0;
+		this.lastWonGames = 0;
+	}
+	
     @Id
     @GeneratedValue(generator="user_sequence")
 	@SequenceGenerator(name="user_sequence",sequenceName="user_sequence", allocationSize=1)
@@ -89,6 +101,22 @@ public class User extends PersistentObject {
 	 */
 	@Column(nullable=false)
 	private Integer score;
+	/**
+	 * Последняя зафиксированные очки пользователя
+	 * Служба раз в какой-то период времени запоминает позицию, чтобы потом показывать смещение
+	 * Намример раз в неделю
+	 */
+	@Column(name="last_score", nullable=false, columnDefinition="integer default 0")
+	private Integer lastScore;
+	
+	/**
+	 * Последняя зафиксированная позиция в рейтинге
+	 * Служба раз в какой-то период времени запоминает позицию, чтобы потом показывать смещение
+	 * Намример раз в неделю
+	 */
+	@Column(name="last_position", nullable=false, columnDefinition="integer default 0")
+	private Integer lastPosition;
+
 	
 	/**
 	 * Время посденей активности
@@ -150,16 +178,35 @@ public class User extends PersistentObject {
 	private Integer totalGames;
 	
 	/**
+	 * Всего игр
+	 */
+	@Column(name="last_total_games", nullable=false, columnDefinition="integer default 0")
+	private Integer lastTotalGames;
+	
+	
+	/**
 	 * Выиграно игр
 	 */
 	@Column
 	private Integer wonGames;
 	
 	/**
+	 * Выиграно игр
+	 */
+	@Column(name="last_won_games", nullable=false, columnDefinition="integer default 0")
+	private Integer lastWonGames;	
+	
+	/**
 	 * Проиграно игр
 	 */
 	@Column
 	private Integer loosingGames;
+
+	/**
+	 * Проиграно игр
+	 */
+	@Column(name="last_loosing_games", nullable=false, columnDefinition="integer default 0")
+	private Integer lastLoosingGames;
 	
 	/**
 	 * Игр в ничью
@@ -167,6 +214,29 @@ public class User extends PersistentObject {
 	@Column
 	private Integer drawnGames;
 	
+	/**
+	 * Игр в ничью
+	 */
+	@Column(name="last_drawn_games", nullable=false, columnDefinition="integer default 0")
+	private Integer lastDrawnGames;	
+	
+	/**
+	 * Дата последнего обновления статистики
+	 */
+	@Column(name="last_statistics_update")
+	private Calendar lastStatisticsUpdate;
+	
+	
+	public String getLastStatisticsUpdateDateISO8601() {
+		if (lastStatisticsUpdate != null) {
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			df.setTimeZone(tz);
+			String timeAsISO = df.format(lastStatisticsUpdate.getTime());
+			return timeAsISO;
+		}
+		return null;
+	}
 	
 	public String getName() {
 		return name;
@@ -298,6 +368,48 @@ public class User extends PersistentObject {
 	
 	public void setImageUrl (String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+	public Integer getLastScore() {
+		return lastScore;
+	}
+	public void setLastScore(Integer lastScore) {
+		this.lastScore = lastScore;
+	}
+	public Integer getLastPosition() {
+		return lastPosition;
+	}
+	public void setLastPosition(Integer lastPosition) {
+		this.lastPosition = lastPosition;
+	}
+	public Integer getLastTotalGames() {
+		return lastTotalGames;
+	}
+	public void setLastTotalGames(Integer lastTotalGames) {
+		this.lastTotalGames = lastTotalGames;
+	}
+	public Integer getLastWonGames() {
+		return lastWonGames;
+	}
+	public void setLastWonGames(Integer lastWonGames) {
+		this.lastWonGames = lastWonGames;
+	}
+	public Integer getLastLoosingGames() {
+		return lastLoosingGames;
+	}
+	public void setLastLoosingGames(Integer lastLoosingGames) {
+		this.lastLoosingGames = lastLoosingGames;
+	}
+	public Integer getLastDrawnGames() {
+		return lastDrawnGames;
+	}
+	public void setLastDrawnGames(Integer lastDrawnGames) {
+		this.lastDrawnGames = lastDrawnGames;
+	}
+	public Calendar getLastStatisticsUpdate() {
+		return lastStatisticsUpdate;
+	}
+	public void setLastStatisticsUpdate(Calendar lastStatisticsUpdate) {
+		this.lastStatisticsUpdate = lastStatisticsUpdate;
 	}
 
 }

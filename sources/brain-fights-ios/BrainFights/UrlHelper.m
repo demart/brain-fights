@@ -13,17 +13,23 @@
 // Класс хэлпер для ведения URL вызова API
 @implementation UrlHelper
 
++ (NSString*) aphionUrl {
+    return @"http://aphion.kz?source=transtelecom-brain-fights";
+}
+
+
+
 +(NSString*) baseUrl {
 #if DEBUG
     //return @"http://localhost:8080";
-    //return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
-    return @"http://localhost:9000";
+    return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
+    //return @"http://localhost:9000";
     //return @"http://172.20.10.2:9000";
     //return @"http://192.168.0.94:8080";
     //return @"http://api.sushimi.kz/rest-api";
 #else
     return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
-        return @"http://172.20.10.2";
+     //   return @"http://172.20.10.2";
     //return @"http://api.sushimi.kz/rest-api";
 #endif
 }
@@ -116,17 +122,35 @@
 
 // Базовый URL для картинок по вопросам
 +(NSString*) imageUrlForQuestionWithPath:(NSString*) questionImagePath {
-    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, questionImagePath];
+    if (questionImagePath == nil)
+        return nil;
+    if ([questionImagePath hasPrefix:@"/"]) {
+        return [[NSString alloc] initWithFormat:@"%@%@", UrlHelper.baseUrl, questionImagePath];
+    } else {
+        return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, questionImagePath];
+    }
 }
 
 // Базовый URL для картинок по категориям
 +(NSString*) imageUrlForCategoryWithPath:(NSString*) categoryImagePath {
-    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, categoryImagePath];
+    if (categoryImagePath == nil)
+        return nil;
+    if ([categoryImagePath hasPrefix:@"/"]) {
+        return [[NSString alloc] initWithFormat:@"%@%@", UrlHelper.baseUrl, categoryImagePath];
+    } else {
+        return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, categoryImagePath];
+    }
 }
 
 // Базовый URL для картинок авотаров
 +(NSString*) imageUrlForAvatarWithPath:(NSString*) avatarImagePath {
-    return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, avatarImagePath];
+    if (avatarImagePath == nil)
+        return nil;
+    if ([avatarImagePath hasPrefix:@"/"]) {
+        return [[NSString alloc] initWithFormat:@"%@%@", UrlHelper.baseUrl, avatarImagePath];
+    } else {
+        return [[NSString alloc] initWithFormat:@"%@/%@", UrlHelper.baseUrl, avatarImagePath];
+    }
 }
 
 

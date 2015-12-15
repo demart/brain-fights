@@ -20,7 +20,8 @@
     // Configure the view for the selected state
 }
 
-- (void) initCell:(NSString*)title {
+- (void) initCell:(NSString*)title isSelected:(BOOL)selected {
     [self.departmentTypeTitle setText:title];
+    self.selected = selected;
 }
 @end

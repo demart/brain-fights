@@ -74,9 +74,19 @@ public class UserProfileModel {
 	public Integer totalGames;
 	
 	/**
+	 * Всего игр
+	 */
+	public Integer lastTotalGames;	
+	
+	/**
 	 * Выиграно игр
 	 */
 	public Integer wonGames;
+	
+	/**
+	 * Выиграно игр
+	 */
+	public Integer lastWonGames;	
 	
 	/**
 	 * Проиграно игр
@@ -84,9 +94,19 @@ public class UserProfileModel {
 	public Integer loosingGames;
 	
 	/**
+	 * Проиграно игр
+	 */
+	public Integer lastLoosingGames;	
+	
+	/**
 	 * Игр в ничью
 	 */
 	public Integer drawnGames;
+	
+	/**
+	 * Игр в ничью
+	 */
+	public Integer lastDrawnGames;	
 	
 	/**
 	 * Рейтинг пользоваля
@@ -94,9 +114,24 @@ public class UserProfileModel {
 	public Integer score;
 	
 	/**
+	 * Рейтинг пользоваля
+	 */
+	public Integer lastScore;	
+	
+	/**
 	 * Позиция пользователя относиться всех остальных игроков
 	 */
 	public Integer gamePosition;
+	
+	/**
+	 * Позиция пользователя относиться всех остальных игроков
+	 */
+	public Integer lastGamePosition;
+		
+	/**
+	 * Время последнего пересчета статистики
+	 */
+	public String lastStatisticsUpdate;
 	
 	/**
 	 * Состояние игрового процесса по отношению к пользователю.
@@ -139,6 +174,16 @@ public class UserProfileModel {
 		model.playStatus = UserGamePlayingStatus.READY;
 		model.imageUrl = user.getImageUrl();
 		
+		// Last Statistics
+		model.lastDrawnGames = user.getLastDrawnGames();
+		model.lastGamePosition = user.getLastPosition();
+		model.lastLoosingGames = user.getLastLoosingGames();
+		model.lastScore = user.getLastScore();
+		model.lastTotalGames = user.getLastTotalGames();
+		model.lastWonGames = user.getLastWonGames();
+		model.lastStatisticsUpdate = user.getLastStatisticsUpdateDateISO8601();
+		
+		
 		return model;
 	}
 	
@@ -171,7 +216,8 @@ public class UserProfileModel {
 						break;
 					}
 				}
-			} else {
+			}
+			if (model.type == UserType.ME) { 
 				// Не друг, просто опонент
 				model.type = UserType.OPONENT;
 			}

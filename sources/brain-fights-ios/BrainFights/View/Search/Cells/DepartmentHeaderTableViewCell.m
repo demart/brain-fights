@@ -20,7 +20,29 @@
 }
 
 
--(void) initCellWithTitle:(NSString*)title {
+-(void) initCellWithTitle:(NSString*)title  withMainHeader:(BOOL) isMainHeader isDepartment:(BOOL)isDepartment{
+    if (isMainHeader) {
+        self.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+        self.departmentTitle.textColor = [Constants SYSTEM_COLOR_WHITE];
+        self.departmentIcon.image = [UIImage imageNamed:@"organizationStructureIcon"];
+        self.departmentTitleLeftConstraint.priority = 1000;
+        self.departmentTitleWithoutIconConstraint.priority = 500;
+        self.departmentIconLeftContraint.constant = 14;
+    } else {
+        /*
+        if (isDepartment) {
+            self.departmentTitle.textColor = [Constants SYSTEM_COLOR_ORANGE];
+            self.departmentIcon.image = [UIImage imageNamed:@"organizationStructureIconGreen"];
+        } else {
+            self.departmentIcon.image = [UIImage imageNamed:@"gamerIcon"];
+        }*/
+        self.departmentTitleLeftConstraint.priority = 500;
+        self.departmentTitleWithoutIconConstraint.priority = 1000;
+        
+        [self.departmentIcon removeFromSuperview];
+
+    }
+
     [self.departmentTitle setText:title];
 }
 
