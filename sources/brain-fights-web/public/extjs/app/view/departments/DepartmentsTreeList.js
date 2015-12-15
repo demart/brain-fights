@@ -95,6 +95,10 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
                 	   handler: 'refreshTree',
                    },
                    {
+                	 text: 'Синхронизировать',
+                	 handler: 'sinchronization'
+                   },
+                   {
                        text: 'Свернуть структуру',
                        handler: function(){
         	    		console.log('collapse');

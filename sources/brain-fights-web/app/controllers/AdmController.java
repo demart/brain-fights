@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,7 @@ import kz.aphion.brainfights.persistents.user.AdminUser;
 import kz.aphion.brainfights.persistents.user.Department;
 import kz.aphion.brainfights.persistents.user.DepartmentType;
 import kz.aphion.brainfights.persistents.user.User;
+import kz.aphion.brainfights.services.ADService;
 import kz.aphion.brainfights.services.AdmService;
 import kz.aphion.brainfights.models.ResponseStatus;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
@@ -788,6 +790,21 @@ public class AdmController extends Controller {
 			return 0l;
 	}
 	
+	/**
+	 * 
+	 * Синхронизация структуры
+	 * @throws PlatformException
+	 * @throws NamingException
+	 */
+	public static void departmentsTreeSincho () throws PlatformException, NamingException {
+		Logger.info("Sincho Departments. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUser(Security.connected());
+		System.out.println ("Is user's role administrator? Answer: " + status);
+		if (status == true) {
+			ADService.updateAllFromLdap();
+	}
+	}
 	
 
 }
