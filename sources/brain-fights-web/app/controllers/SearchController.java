@@ -39,8 +39,8 @@ public class SearchController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
-	    	//Записываем время последней активности пользователя
-	    	UserService.updateLastActivityTime(user);
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 			
 	    	// Если отправили не Get а Post
 	    	if (searchText == null || "".equals(searchText)) {
@@ -86,8 +86,13 @@ public class SearchController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
+<<<<<<< HEAD
 	    	//Записываем время последней активности пользователя
 	    	UserService.updateLastActivityTime(user);
+=======
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
+>>>>>>> fa16a42
 	    	
 	    	DepartmentSearchResultModel model = new DepartmentService().getChildren(user, id);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -112,8 +117,8 @@ public class SearchController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
-	    	//Записываем время последней активности пользователя
-	    	UserService.updateLastActivityTime(user);
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 	    	
 	    	DepartmentModel model = new DepartmentService().getDepartment(user, id);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));

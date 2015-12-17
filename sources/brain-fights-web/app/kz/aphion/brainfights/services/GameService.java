@@ -824,11 +824,16 @@ public class GameService {
 					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
 						// Ничья
 						gamer.setStatus(GamerStatus.DRAW);
+						gamer.getUser().setDrawnGames(gamer.getUser().getDrawnGames() + 1);
+						gamer.getUser().setTotalGames(gamer.getUser().getTotalGames() + 1);
+						gamer.getUser().save();
+						
 						oponent.setStatus(GamerStatus.DRAW);
+						oponent.getUser().setDrawnGames(oponent.getUser().getDrawnGames() + 1);
+						oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
+						oponent.getUser().save();
 					
-						//Изменяем статистику пользователей. Вначале у gamer, потом у oponent.
-						saveStatisticUsers(gamer.getId(), 0, 0, 1);
-						saveStatisticUsers(oponent.getId(), 0, 0, 1);
+
 												
 						Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
 						NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы закончили игру в ничью!");
@@ -837,15 +842,16 @@ public class GameService {
 						if (gamer.getCorrectAnswerCount() > oponent.getCorrectAnswerCount()) {
 							// Выиграл текущий игрок
 							gamer.setStatus(GamerStatus.WINNER);
+							gamer.getUser().setWonGames(gamer.getUser().getWonGames() + 1);
+							gamer.getUser().setTotalGames(gamer.getUser().getTotalGames() + 1);
 							gamer.getUser().save();
 							
 							// Проиграл опонент
 							oponent.setStatus(GamerStatus.LOOSER);
+							oponent.getUser().setLoosingGames(oponent.getUser().getLoosingGames() + 1);
+							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-							//Изменяем статистику пользователей. Вначале у gamer, потом у oponent.
-							saveStatisticUsers(gamer.getId(), 1,0,0);
-							saveStatisticUsers(oponent.getId(), 0,1,0);
 
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
 							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы проиграли игру!");
@@ -853,15 +859,17 @@ public class GameService {
 						} else {
 							// Проиграл текущий игрок
 							gamer.setStatus(GamerStatus.LOOSER);
+							gamer.getUser().setLoosingGames(gamer.getUser().getLoosingGames() + 1);
+							gamer.getUser().setTotalGames(gamer.getUser().getTotalGames() + 1);
 							gamer.getUser().save();
 							
 							// Выиграл опонент
 							oponent.setStatus(GamerStatus.WINNER);
+							oponent.getUser().setWonGames(oponent.getUser().getWonGames() + 1);
+							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-							//Изменяем статистику пользователей. Вначале у gamer, потом у oponent.
-							saveStatisticUsers(gamer.getId(), 0,1,0);
-							saveStatisticUsers(oponent.getId(), 1,0,0);
+	
 
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
 							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы выиграли игру!");
@@ -943,41 +951,7 @@ public class GameService {
 		lowGamer.getUser().setScore(lowGamer.getUser().getScore()+lowGamer.getScore());
 	}
 	
-	/**
-	 * Метод по изменению статистики пользователя после матча.
-	 * После шестого раунда идет изменение статистики, после подсчета очков пользователя!
-	 * @param userId
-	 * @param win
-	 * @param lose
-	 * @param drawn
-	 * @throws PlatformException
-	 */
-	private static void saveStatisticUsers (Long userId, Integer win, Integer lose, Integer draw) throws PlatformException {
-		if (userId == null || userId == 0l)
-			throw new PlatformException (ErrorCode.VALIDATION_ERROR, "User id is null or 0");
-		
-		User user = User.findById(userId);
-		if (user == null) {
-			throw new PlatformException (ErrorCode.DATA_NOT_FOUND, "Not found user");
-		}
-		
-		try {
-			if (win != 0)
-				user.setWonGames(user.getWonGames() + 1);
-			
-			else if (lose != 0)
-				user.setLoosingGames(user.getLoosingGames() + 1);
-			
-			else if (draw != 0)
-				user.setDrawnGames(user.getDrawnGames() + 1);
-			
-			user.setTotalGames(user.getTotalGames() + 1);
-			user.save();
-		}
-		catch (Exception e) {
-			throw new PlatformException (ErrorCode.VALIDATION_ERROR, "Don't save statistic before game");
-		}
-	}
+
 	
 	
 	/**
@@ -1025,12 +999,16 @@ public class GameService {
 		// TODO Calculate score
 		gamer.setScore(0);
 		gamer.getUser().setScore(gamer.getScore());
+		gamer.getUser().setTotalGames(gamer.getUser().getTotalGames() + 1);
+		gamer.getUser().setLoosingGames(gamer.getUser().getLoosingGames() + 1);
 		gamer.getUser().save();
 		
 		oponent.setStatus(GamerStatus.OPONENT_SURRENDED);
 		// TODO Calculate score
 		oponent.setScore(18);
 		oponent.getUser().setScore(gamer.getScore());
+		oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
+		oponent.getUser().setWonGames(oponent.getUser().getWonGames() + 1);
 		oponent.getUser().save();
 		
 		gamer.save();
@@ -1038,9 +1016,7 @@ public class GameService {
 		
 		game.save();
 		
-		//Изменяем статистику пользователей. Вначале у gamer, потом у oponent.
-		saveStatisticUsers(gamer.getId(), 0, 1, 0);
-		saveStatisticUsers(oponent.getId(), 1, 0, 0);
+
 		
 		Logger.info("PUSH " + oponent.getUser().getName() + " ваш противник сдался!");
 		NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш противник сдался!");
