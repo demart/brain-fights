@@ -341,4 +341,15 @@ public class UserService {
 		
 	}
 	
+	public static void updateUserLastActivityTime (User user) {
+		try{
+			JPA.em().createQuery("update User set lastActivityTime = :date where id = :userId").
+			setParameter("date", Calendar.getInstance()).setParameter("userId", user.getId()).executeUpdate();
+		}
+		
+		catch (Exception e) {
+			Logger.info(e.getMessage());
+		}
+	}
+	
 }

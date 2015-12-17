@@ -38,6 +38,9 @@ public class SearchController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 			
 	    	// Если отправили не Get а Post
 	    	if (searchText == null || "".equals(searchText)) {
@@ -83,6 +86,9 @@ public class SearchController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
+	    	
 	    	DepartmentSearchResultModel model = new DepartmentService().getChildren(user, id);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 			
@@ -105,6 +111,9 @@ public class SearchController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 	    	
 	    	DepartmentModel model = new DepartmentService().getDepartment(user, id);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));

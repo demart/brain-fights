@@ -78,6 +78,9 @@ public class UserController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User authorizedUser = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (authorizedUser);
+	    	
 	    	UserProfileModel model;
 	    	User user = null;
 	    	// Если передали пользователя
@@ -129,6 +132,9 @@ public class UserController extends Controller {
 	    	// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
+	    	
 	    	// Обновляем PUSH токен
 	    	UserService.updateDevicePushToken(user, model);
 	    	renderJSON(ResponseWrapperModel.getSuccess(null));
@@ -156,6 +162,9 @@ public class UserController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
+	    	
 	    	UserFriendsResponseModel models = UserService.getUserFriends(user);
 	    	renderJSON(ResponseWrapperModel.getSuccess(models));
 			
@@ -180,6 +189,9 @@ public class UserController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 
 	    	// Добавляем пользователя
 	    	UserService.addUserFriend(user, id);
@@ -206,6 +218,9 @@ public class UserController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 
 	    	// Добавляем пользователя
 	    	UserService.removeUserFriend(user, id);
