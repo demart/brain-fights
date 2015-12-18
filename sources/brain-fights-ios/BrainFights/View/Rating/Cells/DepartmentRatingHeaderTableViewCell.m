@@ -29,9 +29,9 @@
 
 - (void) initCellWithTitle:(NSString*)title andShowSortingOptionsAction:(void (^)(void))showSortingOptionsAction {
     if (title == nil) {
-        [self.titleLabel setText:@"Подразделения"];
+        [self.titleLabel setText:@"Подразделения ▾"];
     } else {
-        [self.titleLabel setText:title];
+        [self.titleLabel setText:[[NSString alloc] initWithFormat:@"%@ ▾", title]];
     }
     
     // Ставим прошлушку на View

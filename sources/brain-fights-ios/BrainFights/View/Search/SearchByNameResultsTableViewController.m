@@ -10,10 +10,10 @@
 
 #import "UserTableViewCell.h"
 #import "UserProfileModel.h"
+#import "EmptySectionFooterTableViewCell.h"
 
 #import "DejalActivityView.h"
 #import "GameService.h"
-
 
 @interface SearchByNameResultsTableViewController ()
 
@@ -102,8 +102,43 @@
     }
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.filteredUsers.count;
+    if (self.wasSearchQueryRequested) {
+        if (self.filteredUsers.count > 0) {
+            self.tableView.backgroundView = nil;
+            return self.filteredUsers.count;
+        } else {
+            UIView *messageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                                self.tableView.bounds.size.width,
+                                                                                self.tableView.bounds.size.height)];
+            UILabel *messageLbl = [[UILabel alloc] initWithFrame:CGRectMake(self.tableView.bounds.size.width*0.1, self.tableView.bounds.size.height*.4,
+                                                                            self.tableView.bounds.size.width*0.8,
+                                                                            self.tableView.bounds.size.height)];
+            messageLbl.numberOfLines = 0;
+            NSString *text = @"Игроков по указанным данным не найдено.\n\nПопробуйте ввести другие данные для поиска. Поиск умеет искать по ФИО и почтовому ящику. Если вы не нашли сотрудника, которого искали, попросите его установить игру и сыграть с вами.";
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.alignment = NSTextAlignmentJustified;
+            NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15.f],
+                                         NSBaselineOffsetAttributeName: @0,
+                                         NSParagraphStyleAttributeName: paragraphStyle};
+            NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text
+                                                                                 attributes:attributes];
+            messageLbl.attributedText = attributedText;
+            messageLbl.textColor = [Constants SYSTEM_COLOR_DARK_GREY];
+            [messageLbl sizeToFit];
+            [messageContainer addSubview:messageLbl];
+            [messageContainer sizeToFit];
+            self.tableView.backgroundView = messageContainer;
+            return 0;
+        }
+    } else {
+        self.tableView.backgroundView = nil;
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -127,6 +162,25 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 75;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (self.filteredUsers == nil || [self.filteredUsers count] == 0)
+        return 60;
+    return 0;
+}
+
+- (UIView*) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (self.filteredUsers == nil || [self.filteredUsers count] == 0) {
+        EmptySectionFooterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptySectionFooterCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"EmptySectionFooterTableViewCell" bundle:nil]forCellReuseIdentifier:@"EmptySectionFooterCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"EmptySectionFooterCell"];
+        }
+        [cell setEmptySectionText:@"Никого не нашли... Попробуйте ввести другие данные. Поиск ищет по ФИО и почте..."];
+        return cell;
+    }
+    return nil;
 }
 
 @end

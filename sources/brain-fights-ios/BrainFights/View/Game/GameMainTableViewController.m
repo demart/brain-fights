@@ -259,8 +259,33 @@ static UIRefreshControl *refreshControl;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.gameGroups == nil)
+    if (self.gameGroups == nil) {
+        UIView *messageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                            self.tableView.bounds.size.width,
+                                                                            self.tableView.bounds.size.height)];
+        UILabel *messageLbl = [[UILabel alloc] initWithFrame:CGRectMake(self.tableView.bounds.size.width*0.1, self.tableView.bounds.size.height*.4,
+                                                                        self.tableView.bounds.size.width*0.8,
+                                                                        self.tableView.bounds.size.height)];
+        messageLbl.numberOfLines = 0;
+        NSString *text = @"Добро пожаловать! \n\nУ Вас нет ни одной активной игры... Нажмите \"Начать новую игру\" для того, чтобы найти себе соперника.";
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentJustified;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15.f],
+                                     NSBaselineOffsetAttributeName: @0,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text
+                                                                             attributes:attributes];
+        messageLbl.attributedText = attributedText;
+        messageLbl.textColor = [Constants SYSTEM_COLOR_DARK_GREY];
+        [messageLbl sizeToFit];
+        [messageContainer addSubview:messageLbl];
+        [messageContainer sizeToFit];
+        self.tableView.backgroundView = messageContainer;
+
         return 1;
+    } else {
+        self.tableView.backgroundView = nil;
+    }
     return [self.gameGroups count] + 1;
 }
 
@@ -370,8 +395,8 @@ static UIRefreshControl *refreshControl;
     } else
         if ([userGame.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
             // Если мы ждем принятия решения
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Внимание"
-                                                                           message:@"Ожидаем решение опонента."
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Статус игры"
+                                                                           message:@"Ожидаем решение игрока."
                                                                     preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                   handler:^(UIAlertAction * action) {}];
@@ -456,9 +481,7 @@ static UIRefreshControl *refreshControl;
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      if ([segue.destinationViewController isKindOfClass:[GameStatusTableViewController class]]) {
          GameStatusTableViewController *viewController = (GameStatusTableViewController*)segue.destinationViewController;
-         // TODO add Back button title
          NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
-         
          UserGameGroupModel *gameGroupModel = (UserGameGroupModel*)self.gameGroups[indexPath.section-1];
          UserGameModel *gameModel = gameGroupModel.games[indexPath.row];
          [viewController setUserGameModel:gameModel];

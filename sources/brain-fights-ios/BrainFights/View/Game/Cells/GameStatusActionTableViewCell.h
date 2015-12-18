@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GameModel.h"
+#import "AppDelegate.h"
 
 @interface GameStatusActionTableViewCell : UITableViewCell
 

@@ -81,16 +81,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWe-Xz-UEZ">
                                 <rect key="frame" x="20" y="80" width="560" height="226"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lpy-PV-Azv">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lpy-PV-Azv">
                                         <rect key="frame" x="8" y="8" width="544" height="210"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Текст для вопросов картинок" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ys3-wS-UYR">
-                                        <rect key="frame" x="29" y="175" width="501" height="41"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Текст для вопросов картинок" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ys3-wS-UYR">
+                                        <rect key="frame" x="0.0" y="175" width="560" height="41"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="41" id="oQg-N2-dlw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Что вам нравиться больше всего?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="M2L-rq-cfm">
@@ -123,10 +124,10 @@
                                     <constraint firstItem="egd-TD-tI7" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="8" id="g4Y-QO-EZS"/>
                                     <constraint firstAttribute="trailing" secondItem="M2L-rq-cfm" secondAttribute="trailing" constant="30" id="gcr-ya-XcT"/>
                                     <constraint firstItem="M2L-rq-cfm" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="34" id="ntn-22-6Ls"/>
-                                    <constraint firstItem="Ys3-wS-UYR" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="29" id="ogq-ba-Jks"/>
+                                    <constraint firstItem="Ys3-wS-UYR" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" id="ogq-ba-Jks"/>
                                     <constraint firstAttribute="bottom" secondItem="Lpy-PV-Azv" secondAttribute="bottom" constant="8" id="r6l-Ik-3Uz"/>
                                     <constraint firstAttribute="bottom" secondItem="Ys3-wS-UYR" secondAttribute="bottom" constant="10" id="rR7-NO-RfN"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ys3-wS-UYR" secondAttribute="trailing" constant="30" id="tIh-BL-nl0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ys3-wS-UYR" secondAttribute="trailing" id="tIh-BL-nl0"/>
                                     <constraint firstAttribute="trailing" secondItem="Lpy-PV-Azv" secondAttribute="trailing" constant="8" id="w95-A4-zcH"/>
                                 </constraints>
                                 <variation key="default">
@@ -246,6 +247,10 @@
                                     <constraint firstItem="FYA-e1-spb" firstAttribute="top" secondItem="JGD-fG-C8T" secondAttribute="top" constant="8" id="wmL-Bs-AgJ"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0hM-ll-ouE">
+                                <rect key="frame" x="281" y="282" width="37" height="37"/>
+                                <color key="color" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000000000002" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -270,15 +275,11 @@
                             <constraint firstItem="p0D-ce-PNq" firstAttribute="top" secondItem="SaN-xI-teu" secondAttribute="bottom" constant="10" id="eFc-CO-sFZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3qb-QW-95w" secondAttribute="trailing" constant="8" id="iCb-Qb-LKW"/>
                             <constraint firstItem="JGD-fG-C8T" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="bottom" constant="60" id="mCQ-8C-01e"/>
-                            <constraint firstItem="3qb-QW-95w" firstAttribute="trailing" secondItem="6rX-QQ-N0B" secondAttribute="trailingMargin" constant="8" id="p9g-At-W2f"/>
                             <constraint firstItem="eWe-Xz-UEZ" firstAttribute="top" secondItem="1cW-Ir-h5C" secondAttribute="bottom" constant="30" id="qt5-tn-ehs"/>
+                            <constraint firstItem="0hM-ll-ouE" firstAttribute="centerY" secondItem="6rX-QQ-N0B" secondAttribute="centerY" id="wC4-Yb-PgS"/>
+                            <constraint firstItem="0hM-ll-ouE" firstAttribute="centerX" secondItem="6rX-QQ-N0B" secondAttribute="centerX" id="woh-Os-N3w"/>
                             <constraint firstItem="e51-DP-to6" firstAttribute="trailing" secondItem="6rX-QQ-N0B" secondAttribute="trailingMargin" id="zdB-R9-SK6"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="p9g-At-W2f"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="aAnswerView" destination="FYA-e1-spb" id="gFf-aL-ZyP"/>
@@ -292,6 +293,7 @@
                         <outlet property="dAnswerView" destination="LV5-9P-kAN" id="t23-nk-eec"/>
                         <outlet property="dAnswerViewText" destination="tPy-qD-hwZ" id="5kb-bz-X1p"/>
                         <outlet property="firstQuestionAnswerIndicator" destination="1cW-Ir-h5C" id="8dS-9N-Jbc"/>
+                        <outlet property="loadingActivityIndicator" destination="0hM-ll-ouE" id="F2T-5v-kOq"/>
                         <outlet property="oponentNameTitle" destination="e51-DP-to6" id="0vZ-VU-C0x"/>
                         <outlet property="progressView" destination="3qb-QW-95w" id="O24-Re-NKG"/>
                         <outlet property="questionImageTitle" destination="Ys3-wS-UYR" id="J0Q-cz-I3k"/>
@@ -307,7 +309,7 @@
             </objects>
             <point key="canvasLocation" x="3075" y="-1137"/>
         </scene>
-        <!--Game Categories Table View Controller-->
+        <!--Категории-->
         <scene sceneID="mtj-c5-8Uf">
             <objects>
                 <tableViewController id="RU2-ge-tDO" customClass="GameCategoriesTableViewController" sceneMemberID="viewController">
@@ -330,6 +332,7 @@
                             <outlet property="delegate" destination="RU2-ge-tDO" id="7Er-S7-E8r"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Категории" id="wym-f9-ls7"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fxh-BF-dfe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9058" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0001." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzl-k5-epS">
                         <rect key="frame" x="8" y="11" width="40" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="8qF-sp-WRw"/>
                             <constraint firstAttribute="height" constant="21" id="WPv-wu-tux"/>
@@ -28,14 +27,12 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отдел сопровождения ИС" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4j-vy-0gm">
                         <rect key="frame" x="56" y="6" width="198" height="21"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4l-ER-xKa">
                         <rect key="frame" x="262" y="11" width="50" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="KKA-Y7-9Es"/>
                             <constraint firstAttribute="height" constant="21" id="q2Z-Yr-YuU"/>
@@ -46,7 +43,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Колличество игроков" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nae-XE-XDu">
                         <rect key="frame" x="56" y="25" width="125" height="13"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="125" id="e1U-EX-NRK"/>
                         </constraints>
@@ -56,14 +52,12 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Squ-dg-wjL">
                         <rect key="frame" x="178" y="25" width="76" height="13"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" red="0.89411764709999997" green="0.42352941179999998" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+ 2)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxd-MO-lk0">
                         <rect key="frame" x="13" y="27" width="30" height="12"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="Jzt-D5-Fte"/>
                             <constraint firstAttribute="height" constant="12" id="fwD-bC-Yg8"/>
@@ -74,7 +68,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+ 100)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fay-Mf-SP9">
                         <rect key="frame" x="272" y="27" width="30" height="12"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="12" id="2CS-Xo-9Tm"/>
                             <constraint firstAttribute="width" constant="30" id="6Ci-2R-gW9"/>
@@ -85,7 +78,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Мой" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Qe-xg-dOT">
                         <rect key="frame" x="8" y="2" width="40" height="12"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Kx0-18-JRw"/>
                             <constraint firstAttribute="height" constant="12" id="aOy-py-JOW"/>
@@ -95,7 +87,6 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="Squ-dg-wjL" secondAttribute="bottom" constant="-2.5" id="48g-vh-ShH"/>
                     <constraint firstItem="Squ-dg-wjL" firstAttribute="leading" secondItem="Nae-XE-XDu" secondAttribute="trailing" constant="-3" id="6lt-nO-Xz9"/>
@@ -120,7 +111,6 @@
                     <constraint firstAttribute="trailingMargin" secondItem="fay-Mf-SP9" secondAttribute="trailing" constant="10" id="ydI-fk-oxp"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="departmentIsMineLabel" destination="2Qe-xg-dOT" id="kW6-ky-4dy"/>
                 <outlet property="departmentPosition" destination="yzl-k5-epS" id="fsE-mJ-Qy6"/>

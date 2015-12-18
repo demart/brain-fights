@@ -57,10 +57,7 @@ static UIRefreshControl *refreshControl;
 - (void) viewWillAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
-    if (self.userProfileModel != nil) {
-        //[self.showMenuButton setImage:[UIImage imageNamed:@"backArrowIcon"]];
-        //[self.showMenuButton setTitle:@"Назад"];
-    } else {
+    if (self.userProfileModel == nil) {
         [self.showMenuButton setImage:[UIImage imageNamed:@"leftMenuIcon"]];
     }
     
@@ -386,6 +383,27 @@ static UIRefreshControl *refreshControl;
     }
     
     return nil;
+}
+
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        NSLog(@"CELL WIDTH: %f ", cell.frame.size.width);
+        float result = 46;
+        if (cell.frame.size.width > 320)
+            result = cell.frame.size.width - 320 + 22;
+        if (cell.frame.size.width > 375)
+            result = cell.frame.size.width - 320 + 2;
+        NSLog(@"(resized): %f ", result);
+        ((UserProfileTableViewCell*)cell).widthBeforeRating.constant = result;
+    }
+    // 4s  - 320.000000
+    // 5s  - 320.000000
+    // 6s  - 375.000000
+    // 6s+ - 414.000000
+    //
+    //    self.widthBeforeRating.constant
+
 }
 
 - (UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

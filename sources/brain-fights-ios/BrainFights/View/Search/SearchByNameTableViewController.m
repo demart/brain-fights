@@ -225,7 +225,6 @@
 // Выполняет поиск асинхронно
 - (void) searchUsersByTextRemotely {
     NSLog(@"remote search text: %@", self.searchController.searchBar.text);
-    sleep(2);
     [[UserService sharedInstance] searchUsersByTextAsync:self.searchController.searchBar.text onSuccess:^(ResponseWrapperModel *response) {
         
         [DejalBezelActivityView removeViewAnimated:YES];
@@ -236,9 +235,10 @@
             if (model != nil)
                 self.filteredUsers = model.users;
             
-            // hand over the filtered results to our search results table
             SearchByNameResultsTableViewController *tableController = (SearchByNameResultsTableViewController *)self.searchController.searchResultsController;
             tableController.filteredUsers = self.filteredUsers;
+            tableController.wasSearchQueryRequested = YES;
+            
             [tableController.tableView reloadData];
         }
         
@@ -273,12 +273,14 @@ static BOOL isLoadingViewShown = NO;
     // update the filtered array based on the search text
     NSString *searchText = searchController.searchBar.text;
     
-    if (self.searchDelayedTimer != nil)
+    if (self.searchDelayedTimer != nil) {
         [self.searchDelayedTimer invalidate];
+    }
     
     if(searchText.length  < 3) {
         [DejalBezelActivityView removeViewAnimated:YES];
         isLoadingViewShown = NO;
+        self.resultsTableController.wasSearchQueryRequested = NO;
         return;
     }
     

@@ -40,7 +40,7 @@
     view.layer.cornerRadius = 5.0;
     view.layer.masksToBounds = NO;
     view.layer.shadowOffset = CGSizeMake(1, 1);
-    view.layer.shadowRadius = 5;
+    view.layer.shadowRadius = 1;
     view.layer.shadowOpacity = 0.5;
 }
 
@@ -149,10 +149,23 @@
     [self.gameRoundCategoryTitle setText:gameRound.categoryName];
     
     if ([gameRound.status isEqualToString:GAME_ROUND_STATUS_COMPLETED]) {
+        /*
+        if ([self.gameModel.me.status isEqualToString:GAMER_STATUS_SURRENDED]) {
+            [self.gamerStepLabel setHidden:NO];
+            [self.gamerStepLabel setText:@"Сдался!"];
+        }
+        
+        if ([self.gameModel.me.status isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
+            [self.oponentStepLabel setHidden:NO];
+            [self.oponentStepLabel setText:@"Сдался"];
+        }
+         */
+        
         // Показываем всё
         [self hightlightQuestion:gameRound.questions[0] withGamerView:self.gamerQuestion1View andOponentView:self.oponentQuestion1View];
         [self hightlightQuestion:gameRound.questions[1] withGamerView:self.gamerQuestion2View andOponentView:self.oponentQuestion2View];
         [self hightlightQuestion:gameRound.questions[2] withGamerView:self.gamerQuestion3View andOponentView:self.oponentQuestion3View];
+        
     } else {
         if ([self.gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
             // 1. Возможно нужно начать раунд

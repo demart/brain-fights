@@ -133,6 +133,24 @@ static const CGFloat kJVTableViewTopInset = 0.0;
     return nil;
 }
 
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        NSLog(@"CELL WIDTH: %f ", cell.frame.size.width);
+        float result = 46 * (cell.frame.size.width / 320);
+        NSLog(@"(resized): %f ", result);
+        ((UserProfileTableViewCell*)cell).widthBeforeRating.constant = result;
+    }
+    //
+    // 4s  - 280.000000
+    // 5s  - 280.000000
+    // 6s  - 280.000000
+    // 6s+ - 414.000000
+    //
+    //    self.widthBeforeRating.constant
+}
+
+
 static CGFloat HEIGHT = 504;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "52723DF7B6DF6996458524AD"
+               BlueprintIdentifier = "3238569ED74ACEB38E484F3C"
                BuildableName = "libLMDropdownView.a"
                BlueprintName = "LMDropdownView"
                ReferencedContainer = "container:Pods.xcodeproj">

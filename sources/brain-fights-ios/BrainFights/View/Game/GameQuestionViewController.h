@@ -13,7 +13,10 @@
 #import "GamerQuestionAnswerResultModel.h"
 #import "GameStatusTableViewController.h"
 
+#import "DejalActivityView.h"
 #import "BaseViewController.h"
+
+#import "AMPopTip.h"
 
 @interface GameQuestionViewController : BaseViewController
 @property (weak, nonatomic) IBOutlet UIView *firstQuestionAnswerIndicator;
@@ -21,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIView *thirdQuestionAnswerIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *roundNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *oponentNameTitle;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *questionCenterButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitle;
 @property (weak, nonatomic) IBOutlet UIView *categoryTitleBackgroundView;

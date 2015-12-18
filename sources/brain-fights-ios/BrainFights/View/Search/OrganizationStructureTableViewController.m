@@ -205,10 +205,32 @@ static UIRefreshControl* refreshControl;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger sectionCount = [self.tableView numberOfSections];
-    
     if (sectionCount == 1) {
-        // Поидее не должно быть
+        UIView *messageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                            self.tableView.bounds.size.width,
+                                                                            self.tableView.bounds.size.height)];
+        UILabel *messageLbl = [[UILabel alloc] initWithFrame:CGRectMake(self.tableView.bounds.size.width*0.1, self.tableView.bounds.size.height*.4,
+                                                                        self.tableView.bounds.size.width*0.8,
+                                                                        self.tableView.bounds.size.height)];
+        messageLbl.numberOfLines = 0;
+        NSString *text = @"В данном подразделении пока нету игроков. Попробуйте поискать в другом подразделении и/или скорее пригласить сотрудников из данного подразделения сыграть с вами.";
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentJustified;
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15.f],
+                                     NSBaselineOffsetAttributeName: @0,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text
+                                                                             attributes:attributes];
+        messageLbl.attributedText = attributedText;
+        messageLbl.textColor = [Constants SYSTEM_COLOR_DARK_GREY];
+        [messageLbl sizeToFit];
+        [messageContainer addSubview:messageLbl];
+        [messageContainer sizeToFit];
+        self.tableView.backgroundView = messageContainer;
+ 
         return 0;
+    } else {
+        self.tableView.backgroundView = nil;
     }
     
     if (sectionCount == 2) {

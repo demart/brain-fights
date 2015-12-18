@@ -56,6 +56,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 @property UIImage *loadingImage;
 
+@property AMPopTip *popTip;
 
 @end
 
@@ -75,9 +76,12 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     //[self initCategoryTitleView];
     
-    // Показываем что мы ожидаем начала игры
     self.state = STATE_WAITING_START;
     [self initNextStep];
+    
+    // Показываем что мы ожидаем начала игры
+    //self.state = STATE_WAITING_START;
+    //[self initNextStep];
     
     // На вход получаем актуальные вопросы раунда
     // Отображаем категорию и предлагаем начать
@@ -99,8 +103,14 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 
 -(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // Показываем что мы ожидаем начала игры
+    [self showTopTipWithText:@"Нажимите на категорию, чтобы начать отвечать на вопросы."];
     self.progressViewInitialWidth = self.progressView.frame.size.width;
 }
 
@@ -279,6 +289,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         }];
     }
     
+    if (self.popTip != nil && [self.popTip isVisible]) {
+        [self.popTip hide];
+    }
     // Если другое событие то можно ничего не делать
 }
 
@@ -295,16 +308,19 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (self.state == STATE_WAITING_ANSWER_1) {
         [self processSelectedAnswer:0 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
+        [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
     }
 
     if (self.state == STATE_WAITING_ANSWER_2) {
         [self processSelectedAnswer:1 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
+        [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
         [self processSelectedAnswer:2 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
+        [self showTopTipWithText:@"Вы ответили на все вопросы, нажимте на вопрос, чтобы продолжить"];
     }
     
     // Любые другие нажатия, например в момент ожидания перехода к следующему вопросу будут игнорироваться
@@ -339,11 +355,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     [self hightLightAnswers:answerIndex withCorrrectAnswer:correctAnswerIndex andOponentAnswer:oponentAnswerIndex];
     // Call server API
     // TODO show loader
+    [self.loadingActivityIndicator setHidden:NO];
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:userAnswer.id onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
             self.lastAnswerResult = result;
-
             // ISSUE: Из-за того что загрузка на сервер идет долго, то подствечивается на вехрну не сразу
             
             // Показываем что пользователь ответил на вопрос
@@ -359,8 +375,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO Show Error Alert
         }
+        [self.loadingActivityIndicator setHidden:YES];
     } onFailure:^(NSError *error) {
         // TODO Show ERROR
+        [self.loadingActivityIndicator setHidden:YES];
     }];
     
 }
@@ -368,10 +386,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 // Подсветить коректный ответ и выделить остальные ответы как не правильные
 -(void) hightLightAnswers:(NSInteger)answerIndex withCorrrectAnswer:(NSInteger)correctAnswerIndex andOponentAnswer:(NSInteger)oponentAnswerIndex {
     if (answerIndex == correctAnswerIndex) {
-        // TODO add animation
-        //[self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
-        //[self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
-        
         [UIView transitionWithView:self.answerViews[answerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
              [self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
@@ -394,14 +408,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
              [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
          } completion:^(BOOL finished) {
          }];
-        
-        
-        /*
-        [self.answerViews[correctAnswerIndex] setBackgroundColor:[UIColor greenColor]];
-        [self.answerViewTexts[correctAnswerIndex] setTextColor:[UIColor whiteColor]];
-        [self.answerViews[answerIndex] setBackgroundColor:[UIColor redColor]];
-        [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
-         */
     }
     
     // Если уже есть ответы чувака, то показываем их выделяя как-то
@@ -454,6 +460,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // Показываем категорию вопросов
     if (self.state == STATE_WAITING_START) {
         // TODO Показываем картинку
+        [self loadCategoryImageInImageView:self.questionImageView withImageUrl:self.gameRoundModel.category.imageUrl];
         [self.categoryTitle setText:self.gameRoundModel.categoryName];
         [self.categoryTitle sizeToFit];
         [self initCategoryTitleView];
@@ -475,7 +482,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[0] withQuestionIndex:0];
         } completion:^(BOOL finished) {
         }];
-//        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[0] withQuestionIndex:0];
     }
     
     // Если нужно ответить на второй вопрос
@@ -484,7 +490,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[1] withQuestionIndex:1];
         } completion:^(BOOL finished) {
         }];
-//        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[1] withQuestionIndex:1];
     }
     
     // Если нужно ответить на третий вопрос
@@ -493,7 +498,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[2] withQuestionIndex:2];
         } completion:^(BOOL finished) {
         }];
-//        [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[2] withQuestionIndex:2];
     }
 }
 
@@ -630,6 +634,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     // Call server API
     // TODO show loader
+    [self.loadingActivityIndicator setHidden:NO];
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:QUESTION_WITHOUT_ANSWER_ID onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
@@ -651,8 +656,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO Show Error Alert
         }
+        [self.loadingActivityIndicator setHidden:YES];
     } onFailure:^(NSError *error) {
         // TODO Show ERROR
+        [self.loadingActivityIndicator setHidden:YES];
     }];
 }
 
@@ -670,6 +677,57 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     }
 }
 
+
+- (void) loadCategoryImageInImageView:(UIImageView*)imageView withImageUrl:(NSString*)imageUrl {
+    UIImage *loadedImage =(UIImage *)[LocalStorageService  loadImageFromLocalCache:imageUrl];
+    
+    if (loadedImage != nil) {
+        imageView.image = loadedImage;
+    } else {
+        NSBlockOperation *loadImageOperation = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOperation = loadImageOperation;
+        
+        [loadImageOperation addExecutionBlock:^(void){
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                                                                   [UrlHelper imageUrlForAvatarWithPath:imageUrl]
+                                                                                   ]]];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^(void) {
+                if (! weakOperation.isCancelled) {
+                    if (image != nil) {
+                        imageView.image = image;
+                        [LocalStorageService  saveImageToLocalCache:imageUrl withData:image];
+                    }
+                    [self.loadImageOperations removeObjectForKey:imageUrl];
+                }
+            }];
+        }];
+        
+        [_loadImageOperations setObject: loadImageOperation forKey:imageUrl];
+        if (loadImageOperation) {
+            [_loadImageOperationQueue addOperation:loadImageOperation];
+        }
+    }
+}
+
+
+-(void) showTopTipWithText:(NSString*)message {
+    if (self.popTip == nil) {
+        self.popTip = [AMPopTip popTip];
+    }
+    
+    self.popTip.shouldDismissOnTap = YES;
+    self.popTip.edgeMargin = 5;
+    self.popTip.offset = 2;
+    self.popTip.edgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
+    self.popTip.shouldDismissOnTap = YES;
+    self.popTip.popoverColor = [Constants SYSTEM_COLOR_ORANGE];
+    [self.popTip showText:message direction:AMPopTipDirectionDown maxWidth:self.questionView.frame.size.width inView:self.view fromFrame:self.questionView.frame duration:15];
+    self.popTip.tapHandler = ^{
+    };
+    self.popTip.dismissHandler = ^{
+    };
+}
+
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_loadImageOperationQueue cancelAllOperations];
@@ -685,6 +743,5 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
 
 @end

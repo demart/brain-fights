@@ -57,9 +57,6 @@
 -(void) initWaitingGame {
     [self.userName setText:self.gameModel.oponent.user.name];
     [self.userPosition setText:self.gameModel.oponent.user.position];
-    
-//    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_DARK_GREY]];
-//    [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
     [self.gamerBackGroundView setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {

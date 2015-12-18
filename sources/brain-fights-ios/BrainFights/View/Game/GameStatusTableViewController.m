@@ -296,6 +296,7 @@ static UIRefreshControl* refreshControl;
     if ([self.model.me.status isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
         // Начинаем новый раунд
         GameCategoriesTableViewController *destinationController = [[GameCategoriesTableViewController alloc] init];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Назад" style:UIBarButtonItemStylePlain target:nil action:nil];
         [destinationController initViewController:self.model fromGameStatus:self];
         [self.navigationController pushViewController:destinationController animated:YES];
     }

@@ -17,6 +17,9 @@
 		8D028AB31C1ABCAC008C8A5A /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D028AB21C1ABCAC008C8A5A /* AboutTableViewController.m */; };
 		8D094D011C0668EF00C1D66B /* UserSearchRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D094D001C0668EF00C1D66B /* UserSearchRequestModel.m */; };
 		8D0E16771C171CA500D5CE8E /* UserGamePlayingStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0E16761C171CA500D5CE8E /* UserGamePlayingStatus.m */; };
+		8D13ED741C22CB0600E87A6C /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D13ED731C22CB0600E87A6C /* CMPopTipView.m */; };
+		8D13ED791C230E7B00E87A6C /* EmptySectionFooterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D13ED771C230E7B00E87A6C /* EmptySectionFooterTableViewCell.m */; };
+		8D13ED7A1C230E7B00E87A6C /* EmptySectionFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D13ED781C230E7B00E87A6C /* EmptySectionFooterTableViewCell.xib */; };
 		8D25F5CA1C02688800222C14 /* UserDepartmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */; };
 		8D25F5CB1C02688800222C14 /* UserDepartmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */; };
 		8D25F5D41C0289A400222C14 /* FriendsHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D25F5D21C0289A400222C14 /* FriendsHeaderTableViewCell.m */; };
@@ -139,6 +142,11 @@
 		8D094D001C0668EF00C1D66B /* UserSearchRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSearchRequestModel.m; path = Data/ServerModels/UserSearchRequestModel.m; sourceTree = "<group>"; };
 		8D0E16751C171CA500D5CE8E /* UserGamePlayingStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserGamePlayingStatus.h; path = Data/ServerModels/UserGamePlayingStatus.h; sourceTree = "<group>"; };
 		8D0E16761C171CA500D5CE8E /* UserGamePlayingStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserGamePlayingStatus.m; path = Data/ServerModels/UserGamePlayingStatus.m; sourceTree = "<group>"; };
+		8D13ED721C22CB0600E87A6C /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMPopTipView.h; path = ThirdParty/CMPopTipView/CMPopTipView.h; sourceTree = "<group>"; };
+		8D13ED731C22CB0600E87A6C /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CMPopTipView.m; path = ThirdParty/CMPopTipView/CMPopTipView.m; sourceTree = "<group>"; };
+		8D13ED761C230E7B00E87A6C /* EmptySectionFooterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmptySectionFooterTableViewCell.h; path = View/Common/Cell/EmptySectionFooterTableViewCell.h; sourceTree = "<group>"; };
+		8D13ED771C230E7B00E87A6C /* EmptySectionFooterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmptySectionFooterTableViewCell.m; path = View/Common/Cell/EmptySectionFooterTableViewCell.m; sourceTree = "<group>"; };
+		8D13ED781C230E7B00E87A6C /* EmptySectionFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptySectionFooterTableViewCell.xib; path = View/Common/Cell/EmptySectionFooterTableViewCell.xib; sourceTree = "<group>"; };
 		8D25F5C71C02688800222C14 /* UserDepartmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDepartmentTableViewCell.h; path = View/Profile/Cells/UserDepartmentTableViewCell.h; sourceTree = "<group>"; };
 		8D25F5C81C02688800222C14 /* UserDepartmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDepartmentTableViewCell.m; path = View/Profile/Cells/UserDepartmentTableViewCell.m; sourceTree = "<group>"; };
 		8D25F5C91C02688800222C14 /* UserDepartmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserDepartmentTableViewCell.xib; path = View/Profile/Cells/UserDepartmentTableViewCell.xib; sourceTree = "<group>"; };
@@ -349,6 +357,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8D13ED711C22CAFA00E87A6C /* CMPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				8D13ED721C22CB0600E87A6C /* CMPopTipView.h */,
+				8D13ED731C22CB0600E87A6C /* CMPopTipView.m */,
+			);
+			name = CMPopTipView;
+			sourceTree = "<group>";
+		};
+		8D13ED751C230E2D00E87A6C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8D13ED761C230E7B00E87A6C /* EmptySectionFooterTableViewCell.h */,
+				8D13ED771C230E7B00E87A6C /* EmptySectionFooterTableViewCell.m */,
+				8D13ED781C230E7B00E87A6C /* EmptySectionFooterTableViewCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		8D25F5C51C022F2E00222C14 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +417,7 @@
 		8D3FA4621C051543005FDCBE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8D13ED751C230E2D00E87A6C /* Cell */,
 				8D3FA4631C0515B1005FDCBE /* ErrorViewController.h */,
 				8D3FA4641C0515B1005FDCBE /* ErrorViewController.m */,
 				8D3FA4651C0515B1005FDCBE /* ErrorViewController.xib */,
@@ -442,6 +470,7 @@
 		8D7722141C00D8F5001E8CC8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8D13ED711C22CAFA00E87A6C /* CMPopTipView */,
 				8D7722151C00D997001E8CC8 /* DejalActivityView */,
 			);
 			name = Components;
@@ -902,6 +931,7 @@
 				8DF18E1A1BEE80E50046C27B /* MenuItemTableViewCell.xib in Resources */,
 				8DFB0C9E1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib in Resources */,
 				8D920F111BFBEFC900BA29BC /* CategoryTableViewCell.xib in Resources */,
+				8D13ED7A1C230E7B00E87A6C /* EmptySectionFooterTableViewCell.xib in Resources */,
 				8D028AAB1C1A826C008C8A5A /* UserProfileStatisticsTableViewCell.xib in Resources */,
 				8DF18E871BF4E50C0046C27B /* GameStatusPlayersTableViewCell.xib in Resources */,
 				8D25F5D51C0289A400222C14 /* FriendsHeaderTableViewCell.xib in Resources */,
@@ -1006,6 +1036,7 @@
 				8D920F091BFBE56D00BA29BC /* GameRoundQuestionAnswerModel.m in Sources */,
 				8DF18E901BF4EFCF0046C27B /* GameStatusActionTableViewCell.m in Sources */,
 				8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */,
+				8D13ED791C230E7B00E87A6C /* EmptySectionFooterTableViewCell.m in Sources */,
 				8D028AAA1C1A826C008C8A5A /* UserProfileStatisticsTableViewCell.m in Sources */,
 				8D028AB31C1ABCAC008C8A5A /* AboutTableViewController.m in Sources */,
 				8D25F5CA1C02688800222C14 /* UserDepartmentTableViewCell.m in Sources */,
@@ -1026,6 +1057,7 @@
 				8DF18E4B1BF09CD90046C27B /* OrganizationStructureTableViewController.m in Sources */,
 				8DF18E661BF111C90046C27B /* UserTableViewCell.m in Sources */,
 				8DF18E301BEFA0EE0046C27B /* UserGameModel.m in Sources */,
+				8D13ED741C22CB0600E87A6C /* CMPopTipView.m in Sources */,
 				8D7722181C00D9A8001E8CC8 /* DejalActivityView.m in Sources */,
 				8DF18E391BEFA3CA0046C27B /* GamerModel.m in Sources */,
 				8DF18E411BEFBFED0046C27B /* UserGamesGroupedModel.m in Sources */,

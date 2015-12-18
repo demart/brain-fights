@@ -83,7 +83,7 @@
                                 </variation>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="hMq-3A-fp9">
-                                <rect key="frame" x="199" y="513" width="201" height="71"/>
+                                <rect key="frame" x="224.5" y="513" width="201" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="8rA-hF-5Zg"/>
                                     <constraint firstAttribute="height" constant="71" id="blc-eR-cmR"/>
@@ -95,7 +95,7 @@
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="trailing" secondItem="GbC-PN-kpe" secondAttribute="trailingMargin" id="1vu-W5-mSI"/>
                             <constraint firstItem="m5S-6T-gmB" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="bottom" id="IDM-oo-Fch"/>
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="leading" secondItem="GbC-PN-kpe" secondAttribute="leadingMargin" id="YvB-A2-4c0"/>
-                            <constraint firstItem="hMq-3A-fp9" firstAttribute="centerX" secondItem="GbC-PN-kpe" secondAttribute="centerX" id="ZXl-F0-gqY"/>
+                            <constraint firstItem="hMq-3A-fp9" firstAttribute="centerX" secondItem="GbC-PN-kpe" secondAttribute="centerX" constant="25" id="ZXl-F0-gqY"/>
                             <constraint firstItem="m5S-6T-gmB" firstAttribute="top" secondItem="hMq-3A-fp9" secondAttribute="bottom" constant="16" id="b0L-GV-sm9"/>
                             <constraint firstItem="Sih-EV-NCP" firstAttribute="top" secondItem="GbC-PN-kpe" secondAttribute="topMargin" id="gAx-12-zpc"/>
                         </constraints>

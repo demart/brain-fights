@@ -13,8 +13,8 @@
 #import "UserProfileTableViewController.h"
 
 #import "OrganizationStructureTableViewController.h"
-
 #import "FriendsHeaderTableViewCell.h"
+#import "EmptySectionFooterTableViewCell.h"
 
 #import "AppDelegate.h"
 #import "GameService.h"
@@ -174,6 +174,69 @@
 }
 
 
+
+// Отправить приглашение выбранному пользователю сыграть
+- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
+    
+    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        if ([response.status isEqualToString:SUCCESS]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            [[AppDelegate globalDelegate] showAuthorizationView:self];
+        }
+        
+        if ([response.status isEqualToString:SERVER_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
+            // TODO SHOW ALERT
+        }
+        
+    } onFailure:^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:NO];
+        // TODO SHOW ERROR
+    }];
+    
+}
+
+-(void) removeFriend {
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    UserProfileModel *userProfile = self.friends[selectedIndexPath.row];
+    if (userProfile != nil) {
+        [[UserService sharedInstance] removeUserFriendAsync:userProfile.id onSuccess:^(ResponseWrapperModel *response) {
+            if ([response.status isEqualToString:SUCCESS]) {
+                // REMOVE ROW
+                [self.friends removeObject:userProfile];
+                [self.tableView reloadData];
+            }
+            
+            if ([response.status isEqualToString:NO_CONTENT]) {
+                NSLog(@"response.status: %@", response.status);
+            }
+            
+            if ([response.status isEqualToString:BAD_REQUEST]) {
+                NSLog(@"response.status: %@", response.status);
+            }
+            
+            if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+                [[AppDelegate globalDelegate] showAuthorizationView:self];
+            }
+            
+            if ([response.status isEqualToString:SERVER_ERROR]) {
+                NSLog(@"response.status: %@", response.status);
+                // SHOW ERROR ALERT
+            }
+            
+        } onFailure:^(NSError *error) {
+            NSLog(@"error: %@", error);
+            [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+        }];
+    }
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -245,92 +308,13 @@
     return nil;
 }
 
-// Отправить приглашение выбранному пользователю сыграть
-- (void) sendGameInvitationToSelectedUserAction:(NSUInteger) userId {
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
-    
-    [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
-        if ([response.status isEqualToString:SUCCESS]) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        
-        if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            [DejalBezelActivityView removeViewAnimated:NO];
-            [[AppDelegate globalDelegate] showAuthorizationView:self];
-        }
-        
-        if ([response.status isEqualToString:SERVER_ERROR]) {
-            [DejalBezelActivityView removeViewAnimated:NO];
-            // TODO SHOW ALERT
-        }
-        
-    } onFailure:^(NSError *error) {
-        [DejalBezelActivityView removeViewAnimated:NO];
-        // TODO SHOW ERROR
-    }];
-    
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0)
+        return 75;
+    return 75;
 }
 
--(void) removeFriend {
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    UserProfileModel *userProfile = self.friends[selectedIndexPath.row];
-    if (userProfile != nil) {
-            [[UserService sharedInstance] removeUserFriendAsync:userProfile.id onSuccess:^(ResponseWrapperModel *response) {
-                if ([response.status isEqualToString:SUCCESS]) {
-                    // REMOVE ROW
-                    [self.friends removeObject:userProfile];
-                    [self.tableView reloadData];
-                }
-                
-                if ([response.status isEqualToString:NO_CONTENT]) {
-                    NSLog(@"response.status: %@", response.status);
-                }
-                
-                if ([response.status isEqualToString:BAD_REQUEST]) {
-                    NSLog(@"response.status: %@", response.status);
-                }
-                
-                if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-                    [[AppDelegate globalDelegate] showAuthorizationView:self];
-                }
-                
-                if ([response.status isEqualToString:SERVER_ERROR]) {
-                    NSLog(@"response.status: %@", response.status);
-                    // SHOW ERROR ALERT
-                }
-                
-            } onFailure:^(NSError *error) {
-                NSLog(@"error: %@", error);
-                [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
-            }];
-    }
-}
-
-
--(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section < 3)
-        return 0;
-    return 35;
-}
-
-- (UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 3) {
-        FriendsHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendsHeaderCell"];
-        if (!cell) {
-            [tableView registerNib:[UINib nibWithNibName:@"FriendsHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"FriendsHeaderCell"];
-            cell = [tableView dequeueReusableCellWithIdentifier:@"FriendsHeaderCell"];
-        }
-        return cell;
-    }
-    return nil;
-}
-
--(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 3) {
-        return @"Мои друзья";
-    }
-    return nil;
-}
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Случайный игрок
@@ -363,10 +347,55 @@
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0)
-        return 75;
-    return 75;
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section < 3)
+        return 0;
+    return 35;
+}
+
+- (UIView*) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 3) {
+        FriendsHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendsHeaderCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"FriendsHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"FriendsHeaderCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"FriendsHeaderCell"];
+        }
+        return cell;
+    }
+    return nil;
+}
+
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 3) {
+        return @"Мои друзья";
+    }
+    return nil;
+}
+
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 3)
+        if (self.friends == nil || [self.friends count] == 0)
+            return 80;
+    return 0;
+}
+
+- (UIView*) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section == 3) {
+        if (self.friends == nil || [self.friends count] == 0) {
+            EmptySectionFooterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptySectionFooterCell"];
+            if (!cell) {
+                [tableView registerNib:[UINib nibWithNibName:@"EmptySectionFooterTableViewCell" bundle:nil]forCellReuseIdentifier:@"EmptySectionFooterCell"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"EmptySectionFooterCell"];
+            }
+            [cell setEmptySectionText:@"У вас пока нет друзей, вы можете добавить их играя или просматривая профили соперников"];
+            return cell;
+        }
+        
+        return nil;
+    } else {
+        return nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

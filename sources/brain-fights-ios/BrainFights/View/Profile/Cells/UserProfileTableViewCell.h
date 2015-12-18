@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *userImageContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *userGamePosition;
 @property (weak, nonatomic) IBOutlet UILabel *userScore;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthBeforeRating;
 
 - (void) initCell:(UserProfileModel*) userProfile;
 

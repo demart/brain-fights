@@ -88,21 +88,20 @@ static UIRefreshControl* refreshControl;
     self.page = 0;
     [self.records removeAllObjects];
     
+    if (self.dropdownView)
+        [self.dropdownView hide];
+    
     if (sender.selectedSegmentIndex == MODE_USERS) {
         // MODE USERS
-        self.mode = MODE_USERS;
-        
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-        
+        self.mode = MODE_USERS;
         [self loadUsersRating:nil];
     }
     
     if (sender.selectedSegmentIndex == MODE_DEPARTMENTS) {
         // MODE DEPARTMENTS
-        self.mode = MODE_DEPARTMENTS;
-        
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
-        
+        self.mode = MODE_DEPARTMENTS;
         if (self.departmentTypes == nil || [self.departmentTypes count] < 1) {
             
             [self loadDepartmentTypesAndDepartments];

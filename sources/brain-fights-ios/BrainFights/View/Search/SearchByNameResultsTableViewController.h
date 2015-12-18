@@ -13,4 +13,7 @@
 // Отфильтрованные пользователи
 @property NSMutableArray *filteredUsers;
 
+// Был ли запрос поиска кого-то пользователем
+@property BOOL wasSearchQueryRequested;
+
 @end

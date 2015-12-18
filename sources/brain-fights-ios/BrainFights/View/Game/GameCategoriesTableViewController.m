@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self.navigationItem setTitle:@"Категории"];
     self.tableView.separatorColor = [Constants SYSTEM_COLOR_GREEN];
     self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];

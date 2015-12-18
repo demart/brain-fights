@@ -18,7 +18,7 @@
 }
 
 -(void) initButtonView:(UIView*) view {
-    view.layer.cornerRadius = 10.0;
+    view.layer.cornerRadius = 5.0;
     view.layer.masksToBounds = NO;
     view.layer.shadowOffset = CGSizeMake(2, 2);
     view.layer.shadowRadius = 2;

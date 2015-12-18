@@ -68,12 +68,14 @@
         if ([gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_ANSWERS] ||
             [gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
             // Ход текущего игрока
-            [self.playButton setTitle:@"Ваш ход!" forState:UIControlStateNormal];
+            [self.playButton setTitle:@"Играть!" forState:UIControlStateNormal];
+            [self.playButton setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
         }
         
         if ([gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_OPONENT]) {
             // Ожидаем игрока
             [self.playButton setTitle:@"Ждем" forState:UIControlStateNormal];
+            [self.playButton setBackgroundColor:[Constants SYSTEM_COLOR_LIGHT_GREY]];
             [self.playButton setEnabled:NO];
         }
     }
