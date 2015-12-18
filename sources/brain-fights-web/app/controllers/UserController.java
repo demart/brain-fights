@@ -78,6 +78,9 @@ public class UserController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User authorizedUser = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(authorizedUser);
+	    	
 	    	UserProfileModel model;
 	    	User user = null;
 	    	// Если передали пользователя
@@ -156,6 +159,9 @@ public class UserController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
+	    	
 	    	UserFriendsResponseModel models = UserService.getUserFriends(user);
 	    	renderJSON(ResponseWrapperModel.getSuccess(models));
 			
@@ -180,6 +186,9 @@ public class UserController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	// Добавляем пользователя
 	    	UserService.addUserFriend(user, id);
@@ -206,6 +215,9 @@ public class UserController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	// Добавляем пользователя
 	    	UserService.removeUserFriend(user, id);

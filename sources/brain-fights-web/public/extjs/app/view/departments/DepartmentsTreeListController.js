@@ -50,6 +50,27 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeListController', 
     	var tree = Ext.getCmp('treeDepartmentsPanel');
 		tree.getRootNode().removeAll();
 		tree.store.load();
+	},
+	
+	sinchronization: function () {
+		var box = Ext.MessageBox.wait('Ожидайте, Ваш запрос выполняется', 'Выполнение запроса');
+		Ext.Ajax.request({
+		    url: '/rest/departments/tree/sinchronization/read',
+		    waitMsg    :    'Выполняется синхронизация',
+		    method: 'POST',
+		    
+		    success: function(response){
+		    	Ext.MessageBox.alert('Успешно','Cинхронизация выполнена');
+		    	box.hide();
+		    	var tree = Ext.getCmp('treeDepartmentsPanel');
+				tree.getRootNode().removeAll();
+				tree.store.load();
+			
+		    },
+		    failure: function(batch) {
+				Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
+			}
+		});
 	}
 
 });

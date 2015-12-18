@@ -41,6 +41,7 @@ POST	/rest/departments/type/store/update						AdmController.updateDepartmentType
 POST	/rest/departments/type/store/destroy					AdmController.destroyDepartmentType
 POST	/rest/departments/store/update							AdmController.updateDepartment
 GET		/rest/departments/combo/type/store/read					AdmController.readComboDepartmentsType
+POST	/rest/departments/tree/sinchronization/read				AdmController.departmentsTreeSincho
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

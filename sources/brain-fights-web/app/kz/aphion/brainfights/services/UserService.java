@@ -341,4 +341,18 @@ public class UserService {
 		
 	}
 	
+	/**
+	 * Метод по сохранению времени последней активности пользователя
+	 * @param user
+	 */
+	public static void updateLastActivityTime (User user) {
+		try {
+			JPA.em().createQuery("update User set lastActivityTime = :today where id = :userId").
+			setParameter("today", Calendar.getInstance()).setParameter("userId", user.getId()).executeUpdate();
+		}
+		catch (Exception e) {
+			JPA.em().getTransaction().rollback();
+		}
+	}
+	
 }
