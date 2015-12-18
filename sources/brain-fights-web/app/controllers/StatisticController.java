@@ -30,8 +30,8 @@ public class StatisticController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
-	    	//Записываем время последней активности пользователя
-	    	UserService.updateLastActivityTime(user);
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 			
 	    	// Формируем список людей по указанному тексту, кроме указанного пользователя
 	    	List<UserProfileModel> model = UserService.getUserStatistics(user, page, limit);	
@@ -64,8 +64,8 @@ public class StatisticController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
-	    	//Записываем время последней активности пользователя
-	    	UserService.updateLastActivityTime(user);
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 			
 	    	// Формируем список людей по указанному тексту, кроме указанного пользователя
 	    	List<DepartmentModel> model = DepartmentService.getDepartmentStatisticsByType(user, departmentTypeId, page, limit);	
@@ -89,8 +89,8 @@ public class StatisticController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
-	    	//Записываем время последней активности пользователя
-	    	UserService.updateLastActivityTime(user);
+	    	//Изменяем время последней активности пользователя
+	    	UserService.updateUserLastActivityTime (user);
 			
 	    	// Формируем список людей по указанному тексту, кроме указанного пользователя
 	    	List<DepartmentTypeModel> model = DepartmentService.getDepartmentTypes(user);	
