@@ -137,7 +137,7 @@ static const CGFloat kJVTableViewTopInset = 0.0;
     
     if (indexPath.section == 0) {
         NSLog(@"CELL WIDTH: %f ", cell.frame.size.width);
-        float result = 46 * (cell.frame.size.width / 320);
+        float result = 48 * (cell.frame.size.width / 320);
         NSLog(@"(resized): %f ", result);
         ((UserProfileTableViewCell*)cell).widthBeforeRating.constant = result;
     }

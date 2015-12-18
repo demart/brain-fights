@@ -282,6 +282,13 @@
 			remoteGlobalIDString = D16FB354494E9A2715D7EA811CA73B95;
 			remoteInfo = RKValueTransformers;
 		};
+		8DBD0A141C24985E00BE1F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBD0A101C24985E00BE1F5C /* LNNotificationsUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 39FC4F8319B8EFB400E45E37;
+			remoteInfo = LNNotificationsUI;
+		};
 		911D0D19868D9D765FA66B904A4C8024 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -484,6 +491,7 @@
 		8B521FF0C82B79C4BA11F04BB245D3AD /* RKRequestDescriptor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RKRequestDescriptor.h; path = Code/Network/RKRequestDescriptor.h; sourceTree = "<group>"; };
 		8B62D9AD5CDC11C216E0871A1E30CF16 /* RKMIMETypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RKMIMETypes.m; path = Code/Support/RKMIMETypes.m; sourceTree = "<group>"; };
 		8B93150D00B31A6AA70DB23B61FF989F /* RKObjectRequestOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RKObjectRequestOperation.m; path = Code/Network/RKObjectRequestOperation.m; sourceTree = "<group>"; };
+		8DBD0A101C24985E00BE1F5C /* LNNotificationsUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LNNotificationsUI.xcodeproj; path = "../../../../../Downloads/LNNotificationsUI-master-2/LNNotificationsUI/LNNotificationsUI.xcodeproj"; sourceTree = "<group>"; };
 		8E1EA66526FB3D6316BA6E7E1F5C47E2 /* ISO8601DateFormatterValueTransformer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ISO8601DateFormatterValueTransformer.xcconfig; sourceTree = "<group>"; };
 		8E43F93E0F83D614A87E724D8E805729 /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFXMLRequestOperation.h; path = AFNetworking/AFXMLRequestOperation.h; sourceTree = "<group>"; };
 		8E4E05208A0A1B2DFCC2D82DD7730FAC /* LMDropdownView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LMDropdownView.m; path = LMDropdownView/LMDropdownView.m; sourceTree = "<group>"; };
@@ -937,6 +945,7 @@
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
+				8DBD0A101C24985E00BE1F5C /* LNNotificationsUI.xcodeproj */,
 				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
 				F4CDA5FA9197A41E0081E84F932906EB /* Frameworks */,
 				5BC0F9FF063EE0986DC7CAD1BC29C3FF /* Pods */,
@@ -955,6 +964,14 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/TransitionKit";
+			sourceTree = "<group>";
+		};
+		8DBD0A111C24985E00BE1F5C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DBD0A151C24985E00BE1F5C /* LNNotificationsUI.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		90E553CB42BE849486F07DE0A366065F /* Support Files */ = {
@@ -1625,6 +1642,12 @@
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
 			productRefGroup = CCA510CFBEA2D207524CDA0D73C3B561 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8DBD0A111C24985E00BE1F5C /* Products */;
+					ProjectRef = 8DBD0A101C24985E00BE1F5C /* LNNotificationsUI.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9508C1084ED6FCCC9C611D3382EB965A /* AFNetworking */,
@@ -1641,6 +1664,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8DBD0A151C24985E00BE1F5C /* LNNotificationsUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LNNotificationsUI.framework;
+			remoteRef = 8DBD0A141C24985E00BE1F5C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		041F5745CB6575F1CE6A588ADBA8E4D0 /* Sources */ = {

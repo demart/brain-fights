@@ -24,6 +24,7 @@
 #import "ResponseWrapperModel.h"
 
 #import "DejalActivityView.h"
+#import "../../../LNNotificationsUI/LNNotificationsUI/LNNotificationsUI.h"
 
 @interface GameMainTableViewController ()
 
@@ -45,7 +46,6 @@ static UIRefreshControl *refreshControl;
     self.tableView.separatorColor = [UIColor clearColor];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
     [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
-    
     self.showAuthSceneButton.image = nil;
 }
 
@@ -72,6 +72,7 @@ static UIRefreshControl *refreshControl;
     
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
     [self loadGames:nil];
+        
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -259,6 +260,7 @@ static UIRefreshControl *refreshControl;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     if (self.gameGroups == nil) {
         UIView *messageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                                             self.tableView.bounds.size.width,

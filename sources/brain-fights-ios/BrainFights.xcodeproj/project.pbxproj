@@ -67,6 +67,8 @@
 		8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA2F1BED4655005B7508 /* LocalStorageService.m */; };
 		8DB8AA331BED4D04005B7508 /* UrlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA321BED4D04005B7508 /* UrlHelper.m */; };
 		8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */; };
+		8DBD0A1E1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DBD0A1D1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets */; };
+		8DBD0A401C24998700BE1F5C /* LNNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */; };
 		8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */; };
 		8DF18E0F1BEE72860046C27B /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0E1BEE72860046C27B /* UserService.m */; };
 		8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */; };
@@ -125,6 +127,23 @@
 		8DFCAC701BEBDD2E0035DE1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */; };
 		8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC711BEBDD2E0035DE1E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8DBD0A1A1C24988200BE1F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBD0A161C24988200BE1F5C /* LNNotificationsUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 39FC4F8319B8EFB400E45E37;
+			remoteInfo = LNNotificationsUI;
+		};
+		8DBD0A3E1C24996100BE1F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBD0A321C24996100BE1F5C /* LNNotificationsUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 39FC4F8319B8EFB400E45E37;
+			remoteInfo = LNNotificationsUI;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8D028AA21C19FE4A008C8A5A /* UserProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileTableViewCell.h; path = View/Profile/Cells/UserProfileTableViewCell.h; sourceTree = "<group>"; };
@@ -232,6 +251,9 @@
 		8DB8AA341BED51AE005B7508 /* AuthorizationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthorizationHelper.h; path = Helpers/AuthorizationHelper.h; sourceTree = "<group>"; };
 		8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthorizationHelper.m; path = Helpers/AuthorizationHelper.m; sourceTree = "<group>"; };
 		8DB8AA371BED544F005B7508 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRestKit.a; path = "Pods/../build/Debug-iphoneos/libRestKit.a"; sourceTree = "<group>"; };
+		8DBD0A161C24988200BE1F5C /* LNNotificationsUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LNNotificationsUI.xcodeproj; path = LNNotificationsUI/LNNotificationsUI.xcodeproj; sourceTree = "<group>"; };
+		8DBD0A1D1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LNNotificationsUIAssets.xcassets; path = LNNotificationsUI/LNNotificationsUIAssets.xcassets; sourceTree = "<group>"; };
+		8DBD0A321C24996100BE1F5C /* LNNotificationsUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LNNotificationsUI.xcodeproj; path = LNNotificationsUI/LNNotificationsUI.xcodeproj; sourceTree = "<group>"; };
 		8DF18E0A1BEE6CA40046C27B /* ResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponseStatus.h; path = Data/ServerModels/ResponseStatus.h; sourceTree = "<group>"; };
 		8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponseStatus.m; path = Data/ServerModels/ResponseStatus.m; sourceTree = "<group>"; };
 		8DF18E0D1BEE72860046C27B /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserService.h; path = Services/UserService.h; sourceTree = "<group>"; };
@@ -341,6 +363,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DBD0A401C24998700BE1F5C /* LNNotificationsUI.framework in Frameworks */,
 				3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,6 +604,22 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
+		8DBD0A171C24988200BE1F5C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DBD0A1B1C24988200BE1F5C /* LNNotificationsUI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8DBD0A331C24996100BE1F5C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8DF18E101BEE7EF60046C27B /* MenuCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -731,6 +770,8 @@
 		8DFCAC571BEBDD2E0035DE1E = {
 			isa = PBXGroup;
 			children = (
+				8DBD0A1D1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets */,
+				8DBD0A321C24996100BE1F5C /* LNNotificationsUI.xcodeproj */,
 				8DFCAC621BEBDD2E0035DE1E /* BrainFights */,
 				8DFCAC611BEBDD2E0035DE1E /* Products */,
 				801FEBB67E042E921D245B86 /* Pods */,
@@ -835,6 +876,7 @@
 		B819977A69033E686EB79CF6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8DBD0A161C24988200BE1F5C /* LNNotificationsUI.xcodeproj */,
 				8DB8AA371BED544F005B7508 /* libRestKit.a */,
 				A15ECDAFD1D601557B8BD78E /* libPods-BrainFights.a */,
 			);
@@ -897,6 +939,16 @@
 			mainGroup = 8DFCAC571BEBDD2E0035DE1E;
 			productRefGroup = 8DFCAC611BEBDD2E0035DE1E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8DBD0A331C24996100BE1F5C /* Products */;
+					ProjectRef = 8DBD0A321C24996100BE1F5C /* LNNotificationsUI.xcodeproj */;
+				},
+				{
+					ProductGroup = 8DBD0A171C24988200BE1F5C /* Products */;
+					ProjectRef = 8DBD0A161C24988200BE1F5C /* LNNotificationsUI.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8DFCAC5F1BEBDD2E0035DE1E /* BrainFights */,
@@ -904,12 +956,30 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		8DBD0A1B1C24988200BE1F5C /* LNNotificationsUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LNNotificationsUI.framework;
+			remoteRef = 8DBD0A1A1C24988200BE1F5C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LNNotificationsUI.framework;
+			remoteRef = 8DBD0A3E1C24996100BE1F5C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		8DFCAC5E1BEBDD2E0035DE1E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8DB8AA2D1BED1E1D005B7508 /* Authorization.storyboard in Resources */,
+				8DBD0A1E1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets in Resources */,
 				8DF18E5B1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib in Resources */,
 				8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */,
 				8DF2B69D1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib in Resources */,

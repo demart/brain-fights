@@ -389,7 +389,7 @@ static UIRefreshControl *refreshControl;
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         NSLog(@"CELL WIDTH: %f ", cell.frame.size.width);
-        float result = 46;
+        float result = 51;
         if (cell.frame.size.width > 320)
             result = cell.frame.size.width - 320 + 22;
         if (cell.frame.size.width > 375)

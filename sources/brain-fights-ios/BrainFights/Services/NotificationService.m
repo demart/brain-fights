@@ -7,6 +7,7 @@
 //
 
 #import "NotificationService.h"
+#import "../../LNNotificationsUI/LNNotificationsUI/LNNotificationsUI.h"
 
 
 @implementation NotificationService
@@ -87,21 +88,34 @@
         // Получаем когда приложение запущено и пользователь его видит
         NSLog(@"PUSH: application state: %@", @"Active");
         
-        handler(UIBackgroundFetchResultNewData);
+        NSDictionary *aps = (NSDictionary*)[userInfo valueForKey:@"aps"];
+        NSString *alert = [aps valueForKey:@"alert"];
+
+        LNNotification* notification = [LNNotification notificationWithMessage:alert];
+        notification.title = @"Уведомление";
+        notification.date = [[NSDate date] dateByAddingTimeInterval:-60 * 24];
+        
+        notification.defaultAction = [LNNotificationAction actionWithTitle:@"View" handler:^(LNNotificationAction *action) {
+            [[AppDelegate globalDelegate] gameMainViewController];
+        }];
+        
+        [[LNNotificationCenter defaultCenter] presentNotification:notification forApplicationIdentifier:@"games"];
+        
+        handler(UIBackgroundFetchResultNoData);
     }
     
     if (application.applicationState == UIApplicationStateInactive) {
         // Получаем когда приложение запущено но пользователь свернул его
         NSLog(@"PUSH: application state: %@", @"Inactive");
         
-        handler(UIBackgroundFetchResultNewData);
+        handler(UIBackgroundFetchResultNoData);
     }
     
     if (application.applicationState == UIApplicationStateBackground) {
         // Получаем когда приложение закрыто
         NSLog(@"PUSH: application state: %@", @"Background");
         
-        handler(UIBackgroundFetchResultNewData);
+        handler(UIBackgroundFetchResultNoData);
     }
     
 }

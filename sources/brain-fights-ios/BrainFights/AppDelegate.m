@@ -12,6 +12,7 @@
 
 #import "SignInViewController.h"
 
+#import "../LNNotificationsUI/LNNotificationsUI/LNNotificationsUI.h"
 
 // Название StoryBoard
 static NSString * const MenuDrawersStoryboardName = @"Main";
@@ -56,6 +57,8 @@ static NSString * const AboutViewControllerStoryboardID = @"AboutViewControllerS
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self initDesignScheme];
     
+    [[LNNotificationCenter defaultCenter] registerApplicationWithIdentifier:@"games" name:@"GREEn" icon:[UIImage imageNamed:@"AppIcon"] defaultSettings:LNNotificationDefaultAppSettings];
+    
     return YES;
 }
 
@@ -88,17 +91,22 @@ static NSString * const AboutViewControllerStoryboardID = @"AboutViewControllerS
 }
 
 - (void) initDrawerMenu {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.drawerViewController;
-    
-    self.drawerViewController.leftViewController = self.leftDrawerViewController;
-    self.drawerViewController.centerViewController = self.gameMainViewController;
-    self.drawerViewController.animator = self.drawerAnimator;
-    
+
     self.drawerViewController.backgroundImage = [Constants imageFromColor: [Constants SYSTEM_COLOR_GREEN]];
-    
-    [self.window makeKeyAndVisible];
-    
+//    self.drawerViewController.centerViewController = self.gameMainViewController;
+    self.drawerViewController.leftViewController = self.leftDrawerViewController;
+    self.drawerViewController.animator = self.drawerAnimator;
+
+    [UIView animateWithDuration:.5
+                     animations:^{
+                         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+                         self.drawerViewController.centerViewController = self.gameMainViewController;
+                         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.window.rootViewController.view cache:NO];
+                     }];
+
+    //[self.window makeKeyAndVisible];
     // Подаписываемся на получение пуш уведомлений
     [NotificationService registerForRemoteNotification];
 }
