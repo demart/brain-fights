@@ -8,6 +8,10 @@
 
 #import "AboutTableViewController.h"
 
+#import "AboutInformationHeaderTableViewCell.h"
+#import "AboutInformationContentTableViewCell.h"
+
+
 @interface AboutTableViewController ()
 
 @end
@@ -16,6 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorColor = [UIColor clearColor];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,24 +36,43 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return 2;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    if (indexPath.row == 0) {
+        AboutInformationHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AboutInformationHeaderCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"AboutInformationHeaderTableViewCell" bundle:nil]forCellReuseIdentifier:@"AboutInformationHeaderCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"AboutInformationHeaderCell"];
+        }
+        return cell;
+    }
     
-    // Configure the cell...
+    if (indexPath.row == 1) {
+        AboutInformationContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AboutInformationContentCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"AboutInformationContentTableViewCell" bundle:nil]forCellReuseIdentifier:@"AboutInformationContentCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"AboutInformationContentCell"];
+        }
+        return cell;
+    }
     
-    return cell;
+    return nil;
 }
-*/
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0)
+        return 170;
+    if (indexPath.row == 1)
+        return 150;
+    return 44;
+}
 
 /*
 // Override to support conditional editing of the table view.

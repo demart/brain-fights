@@ -71,6 +71,10 @@
 		8DBCAB181C270F3C003FFDD0 /* LNNotificationsUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8DBD0A1E1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DBD0A1D1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets */; };
 		8DBD0A401C24998700BE1F5C /* LNNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */; };
+		8DD2E9D71C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD2E9D51C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.m */; };
+		8DD2E9D81C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DD2E9D61C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.xib */; };
+		8DD2E9DD1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD2E9DB1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.m */; };
+		8DD2E9DE1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DD2E9DC1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.xib */; };
 		8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */; };
 		8DF18E0F1BEE72860046C27B /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0E1BEE72860046C27B /* UserService.m */; };
 		8DF18E191BEE80E50046C27B /* MenuItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E171BEE80E50046C27B /* MenuItemTableViewCell.m */; };
@@ -276,6 +280,12 @@
 		8DBD0A161C24988200BE1F5C /* LNNotificationsUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LNNotificationsUI.xcodeproj; path = LNNotificationsUI/LNNotificationsUI.xcodeproj; sourceTree = "<group>"; };
 		8DBD0A1D1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = LNNotificationsUIAssets.xcassets; path = LNNotificationsUI/LNNotificationsUIAssets.xcassets; sourceTree = "<group>"; };
 		8DBD0A321C24996100BE1F5C /* LNNotificationsUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LNNotificationsUI.xcodeproj; path = LNNotificationsUI/LNNotificationsUI.xcodeproj; sourceTree = "<group>"; };
+		8DD2E9D41C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutInformationHeaderTableViewCell.h; path = View/Menu/MenuCells/AboutInformationHeaderTableViewCell.h; sourceTree = "<group>"; };
+		8DD2E9D51C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutInformationHeaderTableViewCell.m; path = View/Menu/MenuCells/AboutInformationHeaderTableViewCell.m; sourceTree = "<group>"; };
+		8DD2E9D61C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutInformationHeaderTableViewCell.xib; path = View/Menu/MenuCells/AboutInformationHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		8DD2E9DA1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutInformationContentTableViewCell.h; path = View/Menu/MenuCells/AboutInformationContentTableViewCell.h; sourceTree = "<group>"; };
+		8DD2E9DB1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutInformationContentTableViewCell.m; path = View/Menu/MenuCells/AboutInformationContentTableViewCell.m; sourceTree = "<group>"; };
+		8DD2E9DC1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutInformationContentTableViewCell.xib; path = View/Menu/MenuCells/AboutInformationContentTableViewCell.xib; sourceTree = "<group>"; };
 		8DF18E0A1BEE6CA40046C27B /* ResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponseStatus.h; path = Data/ServerModels/ResponseStatus.h; sourceTree = "<group>"; };
 		8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponseStatus.m; path = Data/ServerModels/ResponseStatus.m; sourceTree = "<group>"; };
 		8DF18E0D1BEE72860046C27B /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserService.h; path = Services/UserService.h; sourceTree = "<group>"; };
@@ -650,6 +660,12 @@
 				8D028AAC1C1AB035008C8A5A /* AboutTableViewCell.h */,
 				8D028AAD1C1AB035008C8A5A /* AboutTableViewCell.m */,
 				8D028AAE1C1AB035008C8A5A /* AboutTableViewCell.xib */,
+				8DD2E9D41C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.h */,
+				8DD2E9D51C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.m */,
+				8DD2E9D61C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.xib */,
+				8DD2E9DA1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.h */,
+				8DD2E9DB1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.m */,
+				8DD2E9DC1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.xib */,
 			);
 			name = MenuCells;
 			sourceTree = "<group>";
@@ -1004,8 +1020,10 @@
 				8DF18E5B1BF0BD760046C27B /* ChoiceSearchActionTableViewCell.xib in Resources */,
 				8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */,
 				8DF2B69D1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.xib in Resources */,
+				8DD2E9D81C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.xib in Resources */,
 				8DF18E3E1BEFB3830046C27B /* NewGameTableViewCell.xib in Resources */,
 				8D77221D1C00EB3F001E8CC8 /* UserRatingHeaderTableViewCell.xib in Resources */,
+				8DD2E9DE1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.xib in Resources */,
 				8D3FA4671C0515B1005FDCBE /* ErrorViewController.xib in Resources */,
 				8D028AA61C19FE4A008C8A5A /* UserProfileTableViewCell.xib in Resources */,
 				8DF18E671BF111C90046C27B /* UserTableViewCell.xib in Resources */,
@@ -1099,6 +1117,7 @@
 				8DB8AA221BECDC02005B7508 /* ResponseWrapperModel.m in Sources */,
 				8DF2B69C1C1B052D008825A5 /* UserDepartmentHeaderTableViewCell.m in Sources */,
 				8DF18E521BF0AD940046C27B /* GameTableViewCell.m in Sources */,
+				8DD2E9DD1C282BFA00F5FA3B /* AboutInformationContentTableViewCell.m in Sources */,
 				8DB8AA151BECD92C005B7508 /* AuthorizationRequestModel.m in Sources */,
 				8D3FA46D1C052847005FDCBE /* BaseTableViewController.m in Sources */,
 				8DB8AA0D1BEBF0BA005B7508 /* AuthorizationService.m in Sources */,
@@ -1130,6 +1149,7 @@
 				8D028AAA1C1A826C008C8A5A /* UserProfileStatisticsTableViewCell.m in Sources */,
 				8D028AB31C1ABCAC008C8A5A /* AboutTableViewController.m in Sources */,
 				8D25F5CA1C02688800222C14 /* UserDepartmentTableViewCell.m in Sources */,
+				8DD2E9D71C282A5C00F5FA3B /* AboutInformationHeaderTableViewCell.m in Sources */,
 				8D7E3AC91C18C7B300EC4638 /* DepartmentRatingTableViewCell.m in Sources */,
 				8DB8AA0A1BEBEFCC005B7508 /* AuthorizationCheckedViewController.m in Sources */,
 				8DF18E811BF372050046C27B /* GameStatusTableViewController.m in Sources */,

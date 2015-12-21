@@ -67,7 +67,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+//    self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
 //    self.view.backgroundColor = [Constants SYSTEM_COLOR_LIGHT_GREY];
     self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];

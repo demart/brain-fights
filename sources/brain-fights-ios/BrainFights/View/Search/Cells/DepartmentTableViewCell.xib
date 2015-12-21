@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9058" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="organizationStructureIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Ul8-z0-tlj">
                                 <rect key="frame" x="8" y="10" width="40" height="40"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="D7v-Za-iuZ"/>
                                     <constraint firstAttribute="width" constant="40" id="mfZ-9O-Hfy"/>
@@ -28,7 +27,6 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lon-1a-Rq3">
                                 <rect key="frame" x="56" y="27" width="60" height="21"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="NYx-Gd-kma"/>
                                     <constraint firstAttribute="height" constant="21" id="RlU-Ww-frR"/>
@@ -39,14 +37,12 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Название департамента" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Dld-4P-1yg">
                                 <rect key="frame" x="56" y="11" width="207" height="21"/>
-                                <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2300" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPl-bW-wy1">
                                 <rect key="frame" x="220" y="27" width="36" height="21"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="MAy-XB-5mr"/>
                                     <constraint firstAttribute="height" constant="21" id="XEL-Or-jkm"/>
@@ -57,7 +53,6 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iM1-AJ-zYl">
                                 <rect key="frame" x="111" y="27" width="52" height="21"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="52" id="An7-AC-yzY"/>
                                     <constraint firstAttribute="height" constant="21" id="Ooc-tF-L4q"/>
@@ -68,7 +63,6 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Игроков:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uFs-du-L7W">
                                 <rect key="frame" x="162" y="27" width="60" height="21"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="bRE-Yp-nAW"/>
                                     <constraint firstAttribute="height" constant="21" id="rPj-9m-PDE"/>
@@ -80,7 +74,6 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forwardArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Jb8-CP-Kab">
                                 <rect key="frame" x="271" y="14" width="25" height="30"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="DAa-LF-p8W"/>
                                     <constraint firstAttribute="width" constant="25" id="Qpp-c6-hMb"/>
@@ -88,13 +81,11 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Я здесь работаю" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VE-YY-lto">
                                 <rect key="frame" x="162" y="36" width="96" height="21"/>
-                                <animations/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                 <color key="textColor" red="0.79754738979999995" green="1" blue="0.74810020489999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" red="0.0" green="0.69803921570000005" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Lon-1a-Rq3" firstAttribute="leading" secondItem="Ul8-z0-tlj" secondAttribute="trailing" constant="8" id="1Ai-Yv-2sv"/>
@@ -119,7 +110,6 @@
                         </constraints>
                     </view>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="Nv8-d7-YxE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3bi-hA-Mzb"/>
                     <constraint firstItem="Nv8-d7-YxE" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Dif-68-gJR"/>
@@ -127,7 +117,6 @@
                     <constraint firstItem="Nv8-d7-YxE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="bkb-Ih-R8Q"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="departmentBackgroundView" destination="Nv8-d7-YxE" id="1Wl-WG-tNq"/>
                 <outlet property="departmentName" destination="Dld-4P-1yg" id="WbT-b2-Mc4"/>
