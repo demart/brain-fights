@@ -68,6 +68,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     [super viewDidLoad];
     
     self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+//    self.view.backgroundColor = [Constants SYSTEM_COLOR_LIGHT_GREY];
     self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
     [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
@@ -207,7 +208,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 
 - (void) initHeader {
-    [self.roundNumberTitle setText: [[NSString alloc] initWithFormat:@"Раунд %li",[self.gameModel.gameRounds count]]];
+    if ([self.gameModel.gameRounds count] == 0) {
+        [self.roundNumberTitle setText:@"Раунд 1"];
+    } else {
+        [self.roundNumberTitle setText:[[NSString alloc] initWithFormat:@"Раунд %li",[self.gameModel.gameRounds count]]];
+    }
     [self.oponentNameTitle setText:self.gameModel.oponent.user.name];
     
     GameRoundQuestionModel *firstQuestion = self.gameRoundModel.questions[0];

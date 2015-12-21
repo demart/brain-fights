@@ -97,6 +97,7 @@
         
         notification.defaultAction = [LNNotificationAction actionWithTitle:@"View" handler:^(LNNotificationAction *action) {
             [[AppDelegate globalDelegate] gameMainViewController];
+            // TODO сделать обновление списка игр, так как будет переход но всё будет старое
         }];
         
         [[LNNotificationCenter defaultCenter] presentNotification:notification forApplicationIdentifier:@"games"];

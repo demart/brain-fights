@@ -39,6 +39,11 @@ import kz.aphion.brainfights.persistents.game.Gamer;
 public class User extends PersistentObject {
 
 	public User() {
+		this.score = 0;
+		this.wonGames = 0;
+		this.loosingGames = 0;
+		this.totalGames = 0;
+		
 		this.lastPosition = 0;
 		this.lastScore = 0;
 		this.lastDrawnGames = 0;
@@ -99,7 +104,7 @@ public class User extends PersistentObject {
 	/**
 	 * Счет или рейтинг
 	 */
-	@Column(nullable=false)
+	@Column(nullable=false, columnDefinition="integer default 0")
 	private Integer score;
 	/**
 	 * Последняя зафиксированные очки пользователя
@@ -174,7 +179,7 @@ public class User extends PersistentObject {
 	/**
 	 * Всего игр
 	 */
-	@Column
+	@Column(nullable=false, columnDefinition="integer default 0")
 	private Integer totalGames;
 	
 	/**
@@ -187,7 +192,7 @@ public class User extends PersistentObject {
 	/**
 	 * Выиграно игр
 	 */
-	@Column
+	@Column(nullable=false, columnDefinition="integer default 0")
 	private Integer wonGames;
 	
 	/**
@@ -199,7 +204,7 @@ public class User extends PersistentObject {
 	/**
 	 * Проиграно игр
 	 */
-	@Column
+	@Column(nullable=false, columnDefinition="integer default 0")
 	private Integer loosingGames;
 
 	/**
@@ -211,7 +216,7 @@ public class User extends PersistentObject {
 	/**
 	 * Игр в ничью
 	 */
-	@Column
+	@Column(nullable=false, columnDefinition="integer default 0")
 	private Integer drawnGames;
 	
 	/**

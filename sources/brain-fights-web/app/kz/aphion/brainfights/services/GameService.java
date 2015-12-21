@@ -819,7 +819,6 @@ public class GameService {
 
 					// Считаем очки
 					calculateScore(gamer, oponent);
-					
 										
 					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
 						// Ничья
@@ -832,9 +831,7 @@ public class GameService {
 						oponent.getUser().setDrawnGames(oponent.getUser().getDrawnGames() + 1);
 						oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 						oponent.getUser().save();
-					
-
-												
+							
 						Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
 						NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы закончили игру в ничью!");
 						
@@ -852,7 +849,6 @@ public class GameService {
 							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
 							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы проиграли игру!");
 							
@@ -869,8 +865,6 @@ public class GameService {
 							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-	
-
 							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
 							NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " вы выиграли игру!");
 							
@@ -906,9 +900,10 @@ public class GameService {
 				gamer.save();
 				
 				oponent.setStatus(GamerStatus.WAITING_ANSWERS);
+				oponent.save();
+				
 				Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
 				NotificationService.sendPushNotificaiton(oponent.getUser(), "Кайдзен", oponent.getUser().getName() + " ваш ход!");
-				oponent.save();
 			}
 		} else {
 			// Если меньше 3х ответов, то пока еще нужно отвечать
