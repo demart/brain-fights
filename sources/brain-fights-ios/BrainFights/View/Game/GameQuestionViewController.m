@@ -67,24 +67,25 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
-//    self.view.backgroundColor = [Constants SYSTEM_COLOR_LIGHT_GREY];
+    self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+//    self.view.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
+//    self.questionView.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
+    self.questionView.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
     self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
     [self.loadImageOperationQueue setMaxConcurrentOperationCount:3];
-    
+
     [self initViewLayouts];
     [self initHeader];
     [self initTapGestureRecognizer];
+
+    //[self.progressView setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
+    [self.progressView setBackgroundColor:[UIColor orangeColor]];
     
     //[self initCategoryTitleView];
     
     self.state = STATE_WAITING_START;
     [self initNextStep];
-    
-    // Показываем что мы ожидаем начала игры
-    //self.state = STATE_WAITING_START;
-    //[self initNextStep];
     
     // На вход получаем актуальные вопросы раунда
     // Отображаем категорию и предлагаем начать
@@ -103,7 +104,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         // При продолжении возвращаем пользователя на статус игры
             // Показываем окно результата
             // Обновляем данные и показваем что да как
-    
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -122,6 +122,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
                                                        userInfo:nil
                                                         repeats:NO];
     
+    [self initButtonView:self.questionView];
     self.progressViewInitialWidth = self.progressView.frame.size.width;
 }
 
@@ -136,7 +137,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 }
 
 - (void) initCategoryTitleView {
-    CGRect backgroundView = CGRectMake(self.categoryTitle.layer.bounds.origin.x, self.categoryTitle.layer.bounds.origin.y, self.categoryTitle.layer.bounds.size.width + 20, self.categoryTitle.layer.bounds.size.height + 3);
+    CGRect backgroundView = CGRectMake(self.categoryTitle.layer.bounds.origin.x, self.categoryTitle.layer.bounds.origin.y, self.categoryTitle.layer.bounds.size.width + 25, self.categoryTitle.layer.bounds.size.height + 3);
     
     [self.categoryTitleBackgroundView setBounds:backgroundView];
     CAShapeLayer *mask = [[CAShapeLayer alloc] init];
@@ -149,7 +150,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     CGPathMoveToPoint(path, nil, 0, 0);
     CGPathAddLineToPoint(path, nil, width, 0);
-    CGPathAddLineToPoint(path, nil, self.categoryTitle.layer.bounds.size.width + 15, height);
+    CGPathAddLineToPoint(path, nil, self.categoryTitle.layer.bounds.size.width + 20, height);
     CGPathAddLineToPoint(path, nil, 0, height);
     CGPathAddLineToPoint(path, nil, 0, 0);
     CGPathCloseSubpath(path);
@@ -165,8 +166,13 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     shape.strokeColor = self.categoryTitleBackgroundView.backgroundColor.CGColor;
     shape.fillColor = self.categoryTitleBackgroundView.backgroundColor.CGColor;
     
+    shape.cornerRadius = 5.0f;
+    shape.masksToBounds = NO;
+    
     [self.categoryTitleBackgroundView.layer insertSublayer: shape atIndex:0];
     CGPathRelease(path);
+    
+
 }
 
 // Инициализируем основные элементы экрана
@@ -228,11 +234,16 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (gameRoundQuestionModel.answer != nil) {
         if (gameRoundQuestionModel.answer.isCorrect) {
             targetView.backgroundColor = [UIColor greenColor];
+//            targetView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
         } else {
             targetView.backgroundColor = [UIColor redColor];
+//            targetView.backgroundColor = [Constants SYSTEM_COLOR_RED];
         }
     } else {
         targetView.backgroundColor = [UIColor whiteColor];
+//        targetView.backgroundColor = [UIColor lightGrayColor];
+//        targetView.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
+//        targetView.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
     }
 }
 
@@ -438,6 +449,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.answerViews[answerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
              [self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
+             //[self.answerViews[answerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
              [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
          } completion:^(BOOL finished) {
          }];
@@ -446,6 +458,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.answerViews[correctAnswerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
              [self.answerViews[correctAnswerIndex] setBackgroundColor:[UIColor greenColor]];
+             //[self.answerViews[correctAnswerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
              [self.answerViewTexts[correctAnswerIndex] setTextColor:[UIColor whiteColor]];
              
          } completion:^(BOOL finished) {
@@ -557,6 +570,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if (answerView.isHidden)
             [answerView setHidden:NO];
         [answerView setBackgroundColor:[UIColor whiteColor]];
+        //[answerView setBackgroundColor:[UIColor grayColor]];
+        //[answerView setBackgroundColor:[Constants SYSTEM_COLOR_LIGHTER_GREY]];
+        //[answerView setBackgroundColor:[Constants SYSTEM_COLOR_WHITE]];
+        
     }
     if (self.progressView.isHidden)
         [self.progressView setHidden:NO];
@@ -789,6 +806,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     self.popTip.edgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
     self.popTip.shouldDismissOnTap = YES;
     self.popTip.popoverColor = [Constants SYSTEM_COLOR_ORANGE];
+    self.popTip.popoverColor = [UIColor orangeColor];
+//    self.popTip.popoverColor = [Constants SYSTEM_COLOR_GREEN];
     [self.popTip showText:message direction:AMPopTipDirectionDown maxWidth:self.questionView.frame.size.width inView:self.view fromFrame:self.questionView.frame duration:15];
     self.popTip.tapHandler = ^{
     };

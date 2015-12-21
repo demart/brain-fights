@@ -128,6 +128,9 @@
     [self.gameRoundTitle setText: [[NSString alloc] initWithFormat:@"Раунд %li", gameRoundIndex]];
     [self initEmptyRound];
     if (gameRound == nil) {
+        // Если кто-то сдался, то нужно написать что тот сдался
+        
+        // Нормальный процесс
         if ((gameModel.gameRounds == nil && gameRoundIndex == 1) || ([gameModel.gameRounds count] == gameRoundIndex-1 && [((GameRoundModel*)gameModel.gameRounds[gameRoundIndex-2]).status isEqualToString:GAME_ROUND_STATUS_COMPLETED])) {
             if ([gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_OPONENT]) {
                 [self.oponentStepLabel setHidden:NO];
