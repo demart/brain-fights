@@ -598,7 +598,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			if (model.getAnswers() != null) {
 				
 				try {
-					JPA.em().createQuery("delete Answer where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
+					JPA.em().createQuery("update Answer set deleted = 'TRUE' where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
 					question.setAnswers(new ArrayList<Answer>());
 					for (Answer answer: model.getAnswers() ) {
 						Answer tmp = new Answer();
