@@ -645,6 +645,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:0];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                             target:self
+                                                           selector:@selector(showPressToContinueToolTip:)
+                                                           userInfo:nil
+                                                            repeats:NO];
     }
     
     if (self.state == STATE_WAITING_ANSWER_2) {
@@ -653,6 +658,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:1];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                             target:self
+                                                           selector:@selector(showPressToContinueToolTip:)
+                                                           userInfo:nil
+                                                            repeats:NO];
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
@@ -661,6 +671,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:2];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                             target:self
+                                                           selector:@selector(showPressToCompleteRoundToolTip:)
+                                                           userInfo:nil
+                                                            repeats:NO];
     }
     
     [timer invalidate];
@@ -669,6 +684,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 // Метод ожидает когда закончиться время и показывает все вопросы красными и отправляет на сервер информацию
 // что пользователь не успел ответить
 -(void) showAnswerTimeout:(NSInteger)questionIndex {
+    [self.goForwardImageView setHidden:NO];
     for (int i=0; i < [self.answerViews count]; i++) {
         [self.answerViews[i] setBackgroundColor:[UIColor redColor]];
         [self.answerViewTexts[i] setTextColor:[UIColor whiteColor]];

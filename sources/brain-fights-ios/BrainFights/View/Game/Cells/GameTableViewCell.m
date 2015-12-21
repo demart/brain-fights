@@ -61,15 +61,16 @@
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OPONENT_DECISION]) {
         [self.gameStatus setText:@"Ждем игрока"];
+        [self.playGameView setHidden:NO];
         [self.playGameView setImage:[UIImage imageNamed:@"waitingIcon"]];
     }
     
     if ([self.gameModel.gamerStatus isEqualToString:GAMER_STATUS_WAITING_OWN_DECISION]) {
         [self.gameStatus setText:@"Сыграем?"];
         [self.playGameView setHidden:NO];
+        [self.playGameView setImage:[UIImage imageNamed:@"willYouPlayWithMeIcon"]];
     }
     [self calculateWaitingTime];
-    
 }
 
 // Инициализируем запущеную игру
