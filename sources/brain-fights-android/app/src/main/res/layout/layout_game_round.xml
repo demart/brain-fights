@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="2">
+    <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
+        android:id="@+id/game_round_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="100sp"
+        android:text="РАУНД 1"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:gravity="center"/>
+    <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
+        android:id="@+id/game_round_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="100sp"
+        android:text="Тематика вопросов раунда"
+        android:gravity="center"
+        android:layout_weight="1"
+        />
+</LinearLayout>

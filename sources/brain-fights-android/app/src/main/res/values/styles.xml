@@ -9,9 +9,44 @@
         <item name="android:background" tools:ignore="NewApi">@color/ttk_green</item>
         <item name="background">@color/ttk_green</item>
     </style>
+    <style name="AppTheme.Login" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <item name="colorButtonNormal">@color/ttk_green</item>
+        <item name="android:colorButtonNormal" tools:ignore="NewApi">@color/ttk_green</item>
+        <item name="colorControlNormal">@color/ttk_lightGreen</item>
+        <item name="colorControlActivated">@color/ttk_green</item>
+        <item name="colorControlHighlight">@color/ttk_orange</item>
+        <item name="android:textColorHint">@color/ttk_lightGray</item>
+    </style>
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/ttk_white</item>
         <item name="android:textColorPrimary">@color/ttk_white</item>
         <item name="android:background">@color/ttk_green</item>
     </style>
+    <style name="QuizAnswerButton" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/quiz_answer_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@color/ttk_lightGreenT</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <style name="QuizLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">180dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@color/ttk_white</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="elevation">2dp</item>
+    </style>
+    <style name="RatingUserHeader" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">@color/ttk_white</item>
+    </style>
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="180dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:background="@color/ttk_white"-->
+    <!--android:visibility="visible"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:elevation="2dp"-->
 </resources>

@@ -7,13 +7,13 @@ import java.util.List;
  */
 public class Department {
 
-    public static Department getTestDepartment(){
-        Department department = new Department();
-        department.setId(Long.valueOf(1));
-        department.setName("HR department");
-        department.setHaveChildren(false);
-        return department;
-    }
+//    public static Department getTestDepartment(){
+//        Department department = new Department();
+//        department.setId(Long.valueOf(1));
+//        department.setName("HR department");
+//        department.setHaveChildren(false);
+//        return department;
+//    }
     /**
      * Идентификатор записи
      */
@@ -30,9 +30,34 @@ public class Department {
     public Integer userCount;
 
     /**
+     * Позиция подразделения среди таких же подразделений (Типа среди Филиалов, Департаменты)
+     */
+    public Integer position;
+
+    /**
      * Рейтинг подразделения
      */
     public Integer score;
+
+    /**
+     * Рейтинг подразделения
+     */
+    public Integer lastScore;
+
+    /**
+     * Позиция подразделения (прошлая статистика)
+     */
+    public Integer lastPosition;
+
+    /**
+     * Глобальная позиции подразделения (прошлая статистика)
+     */
+    public Integer lastGlobalPosition;
+
+    /**
+     * Время последнего пересчета статистики
+     */
+    public String lastStatisticsUpdate;
 
     /**
      * Есть ли подразделения на уровне ниже
@@ -59,75 +84,5 @@ public class Department {
      */
     public Boolean isUserBelongs;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getUserCount() {
-        return userCount;
-    }
-
-    public void setUserCount(Integer userCount) {
-        this.userCount = userCount;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public Boolean getHaveChildren() {
-        return haveChildren;
-    }
-
-    public void setHaveChildren(Boolean haveChildren) {
-        this.haveChildren = haveChildren;
-    }
-
-    public List<Department> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Department> children) {
-        this.children = children;
-    }
-
-    public Department getParent() {
-        return parent;
-    }
-
-    public void setParent(Department parent) {
-        this.parent = parent;
-    }
-
-    public List<UserProfile> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserProfile> users) {
-        this.users = users;
-    }
-
-    public Boolean getIsUserBelongs() {
-        return isUserBelongs;
-    }
-
-    public void setIsUserBelongs(Boolean isUserBelongs) {
-        this.isUserBelongs = isUserBelongs;
-    }
 }

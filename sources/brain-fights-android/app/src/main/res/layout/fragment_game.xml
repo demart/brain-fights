@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5"
+        android:padding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:weightSum="13"
+            android:paddingBottom="5dp">
+            <LinearLayout
+                android:id="@+id/game_me_profile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+                <include layout="@layout/card_user_game"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5">
+                <include layout="@layout/layout_game_scores"/>
+            </LinearLayout>
+
+                <include layout="@layout/card_user_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:id="@+id/game_opponent_profile_layout"
+                    android:layout_margin="2dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/game_round_list"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:weightSum="3">
+            <Button
+                android:id="@+id/game_surrend_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Сдаться"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/ttk_white"
+                android:elevation="5dp"
+                android:background="@drawable/button_shape"/>
+            <Button
+                android:id="@+id/game_game_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Играть"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/ttk_white"
+                android:elevation="5dp"
+                android:background="@drawable/button_shape"/>
+            <Button
+                android:id="@+id/game_friend_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="+Друг"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/ttk_white"
+                android:elevation="5dp"
+                android:background="@drawable/button_shape"/>
+        </LinearLayout>
+    </LinearLayout>
+    <include layout="@layout/layout_loading_panel"/>
+</RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>

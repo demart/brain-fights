@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        sothree:umanoPanelHeight="0dp"
+        sothree:umanoShadowHeight="4dp"
+        sothree:umanoParallaxOffset="200dp"
+        sothree:umanoDragView="@+id/rating_department_type_layout"
+        sothree:umanoOverlay="false"
+        sothree:umanoScrollableView="@+id/rating_departments_type_list">
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="Рейтинг департамента"-->
+            <!--android:id="@+id/textView2"-->
+            <!--android:layout_gravity="center_horizontal" />-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7"
+                android:layout_margin="0dp"
+                android:background="@color/ttk_orange2"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="№"
+                    android:layout_weight="1"
+
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/ttk_white"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:id="@+id/rating_departments_type_name_choiced"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="Филиалы"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/ttk_white"
+                    android:textSize="22dp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Очки"-->
+                    <!--android:layout_weight="2"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:textColor="@color/ttk_white"-->
+                    <!--android:textSize="22dp"/>-->
+                <ImageView
+                    android:id="@+id/rating_departments_open_choice"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/list"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rating_departments_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rating_department_type_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ccffffff"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="false">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rating_departments_type_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:alpha="1"
+                android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:orientation="horizontal">-->
+                <!--<Bu         -->
+
+            <!--</LinearLayout>-->
+            <Button
+                android:id="@+id/types_layout_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Закрыть"
+                android:layout_gravity="right"
+                android:background="@color/ttk_orange2"
+                android:textColor="@color/ttk_white"
+                android:layout_margin="15dp"/>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    <include layout="@layout/layout_loading_panel"/>
+</RelativeLayout>

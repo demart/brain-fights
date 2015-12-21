@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?android:colorBackground">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="1"
+    tools:context=".controllers.GamesListsFragment">
+    <Button
+        android:id="@+id/btn_new_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Начать новую игру"
+        android:textSize="20dp"
+        android:background="@drawable/button_shape"
+        android:textColor="@color/ttk_white"
+        android:stateListAnimator="@animator/raise"
+        android:elevation="5dp"/>
+
+    <TextView
+        android:id="@+id/active_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Активные"
+        android:textSize="18dp"
+        android:textColor="@color/ttk_orange"
+
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/game_list_active"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scrollbars="none"
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"
+
+        />
+    <TextView
+        android:id="@+id/waiting_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Ожидающие"
+        android:textSize="18dp"
+        android:textColor="@color/ttk_orange"
+
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/games_list_waiting"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"        />
+    <TextView
+        android:id="@+id/ended_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Завершенные"
+        android:textSize="18dp"
+        android:textColor="@color/ttk_orange"
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/games_list_finished"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="@dimen/game_list_left_right_margin"
+        android:layout_marginRight="@dimen/game_list_left_right_margin"/>
+
+</LinearLayout>
+    <include layout="@layout/layout_loading_panel"/>
+    </RelativeLayout>
+    </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>

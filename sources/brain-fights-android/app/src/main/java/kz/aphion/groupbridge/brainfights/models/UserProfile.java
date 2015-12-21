@@ -19,7 +19,7 @@ public class UserProfile {
         profile.drawnGames = 0;
         profile.score = 666;
         profile.gamePosition=23;
-        profile.department = Department.getTestDepartment();
+//        profile.department = Department.getTestDepartment();
         return profile;
     }
 
@@ -41,6 +41,11 @@ public class UserProfile {
      * Должность пользователя
      */
     public String position;
+
+    /**
+     * Аватар пользователя
+     */
+    public String imageUrl;
 
     /**
      * Логин пользователя
@@ -76,9 +81,19 @@ public class UserProfile {
     public Integer totalGames;
 
     /**
+     * Всего игр
+     */
+    public Integer lastTotalGames;
+
+    /**
      * Выиграно игр
      */
     public Integer wonGames;
+
+    /**
+     * Выиграно игр
+     */
+    public Integer lastWonGames;
 
     /**
      * Проиграно игр
@@ -86,9 +101,19 @@ public class UserProfile {
     public Integer loosingGames;
 
     /**
+     * Проиграно игр
+     */
+    public Integer lastLoosingGames;
+
+    /**
      * Игр в ничью
      */
     public Integer drawnGames;
+
+    /**
+     * Игр в ничью
+     */
+    public Integer lastDrawnGames;
 
     /**
      * Рейтинг пользоваля
@@ -96,9 +121,31 @@ public class UserProfile {
     public Integer score;
 
     /**
+     * Рейтинг пользоваля
+     */
+    public Integer lastScore;
+
+    /**
      * Позиция пользователя относиться всех остальных игроков
      */
     public Integer gamePosition;
+
+    /**
+     * Позиция пользователя относиться всех остальных игроков
+     */
+    public Integer lastGamePosition;
+
+    /**
+     * Время последнего пересчета статистики
+     */
+    public String lastStatisticsUpdate;
+
+    /**
+     * Состояние игрового процесса по отношению к пользователю.
+     * (Играем или не играем с пользователем)
+     */
+    public UserGamePlayingStatus playStatus;
+
 
 
     public Long getId() {
