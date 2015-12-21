@@ -18,13 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEz-bG-QQz">
-                                <rect key="frame" x="158" y="10" width="105" height="30"/>
-                                <state key="normal" title="Dismiss View"/>
-                                <connections>
-                                    <action selector="dismissView:" destination="z8W-k9-DJO" eventType="touchUpInside" id="mz6-0c-t6O"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1cW-Ir-h5C">
                                 <rect key="frame" x="20" y="30" width="30" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,6 +103,13 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forwardArrowGreenIcon" translatesAutoresizingMaskIntoConstraints="NO" id="4o7-Mb-BwE">
+                                        <rect key="frame" x="532" y="93" width="28" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="3Gf-Qv-9Bf"/>
+                                            <constraint firstAttribute="width" constant="28" id="qdX-4g-0Dr"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -118,8 +118,10 @@
                                     <constraint firstItem="egd-TD-tI7" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="2" id="Gwf-YV-Crg"/>
                                     <constraint firstItem="6JW-4u-wef" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" id="Hfa-Ng-P66"/>
                                     <constraint firstAttribute="trailing" secondItem="egd-TD-tI7" secondAttribute="trailing" constant="8" id="Ho2-Ws-24h"/>
+                                    <constraint firstAttribute="trailing" secondItem="4o7-Mb-BwE" secondAttribute="trailing" id="MeT-vs-2Wb"/>
                                     <constraint firstItem="6JW-4u-wef" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" id="N3y-Na-Hk2"/>
                                     <constraint firstAttribute="bottom" secondItem="M2L-rq-cfm" secondAttribute="bottom" constant="34" id="Oj2-wl-iJv"/>
+                                    <constraint firstItem="4o7-Mb-BwE" firstAttribute="centerY" secondItem="eWe-Xz-UEZ" secondAttribute="centerY" id="PDg-q7-L3S"/>
                                     <constraint firstItem="Lpy-PV-Azv" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="top" constant="8" id="aGE-1h-fxX"/>
                                     <constraint firstItem="egd-TD-tI7" firstAttribute="leading" secondItem="eWe-Xz-UEZ" secondAttribute="leading" constant="8" id="g4Y-QO-EZS"/>
                                     <constraint firstAttribute="trailing" secondItem="M2L-rq-cfm" secondAttribute="trailing" constant="30" id="gcr-ya-XcT"/>
@@ -247,10 +249,10 @@
                                     <constraint firstItem="FYA-e1-spb" firstAttribute="top" secondItem="JGD-fG-C8T" secondAttribute="top" constant="8" id="wmL-Bs-AgJ"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0hM-ll-ouE">
-                                <rect key="frame" x="281" y="282" width="37" height="37"/>
-                                <color key="color" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0o-W3-weJ">
+                                <rect key="frame" x="168" y="8" width="61" height="30"/>
+                                <state key="normal" title="Dismiss"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000000000002" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -276,8 +278,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="3qb-QW-95w" secondAttribute="trailing" constant="8" id="iCb-Qb-LKW"/>
                             <constraint firstItem="JGD-fG-C8T" firstAttribute="top" secondItem="eWe-Xz-UEZ" secondAttribute="bottom" constant="60" id="mCQ-8C-01e"/>
                             <constraint firstItem="eWe-Xz-UEZ" firstAttribute="top" secondItem="1cW-Ir-h5C" secondAttribute="bottom" constant="30" id="qt5-tn-ehs"/>
-                            <constraint firstItem="0hM-ll-ouE" firstAttribute="centerY" secondItem="6rX-QQ-N0B" secondAttribute="centerY" id="wC4-Yb-PgS"/>
-                            <constraint firstItem="0hM-ll-ouE" firstAttribute="centerX" secondItem="6rX-QQ-N0B" secondAttribute="centerX" id="woh-Os-N3w"/>
                             <constraint firstItem="e51-DP-to6" firstAttribute="trailing" secondItem="6rX-QQ-N0B" secondAttribute="trailingMargin" id="zdB-R9-SK6"/>
                         </constraints>
                     </view>
@@ -293,9 +293,10 @@
                         <outlet property="dAnswerView" destination="LV5-9P-kAN" id="t23-nk-eec"/>
                         <outlet property="dAnswerViewText" destination="tPy-qD-hwZ" id="5kb-bz-X1p"/>
                         <outlet property="firstQuestionAnswerIndicator" destination="1cW-Ir-h5C" id="8dS-9N-Jbc"/>
-                        <outlet property="loadingActivityIndicator" destination="0hM-ll-ouE" id="F2T-5v-kOq"/>
+                        <outlet property="goForwardImageView" destination="4o7-Mb-BwE" id="jHF-46-DSe"/>
                         <outlet property="oponentNameTitle" destination="e51-DP-to6" id="0vZ-VU-C0x"/>
                         <outlet property="progressView" destination="3qb-QW-95w" id="O24-Re-NKG"/>
+                        <outlet property="questionCenterButton" destination="r0o-W3-weJ" id="d6J-ma-c6s"/>
                         <outlet property="questionImageTitle" destination="Ys3-wS-UYR" id="J0Q-cz-I3k"/>
                         <outlet property="questionImageView" destination="Lpy-PV-Azv" id="eRY-oz-woS"/>
                         <outlet property="questionText" destination="M2L-rq-cfm" id="7XS-JG-dbD"/>
@@ -736,6 +737,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="forwardArrowGreenIcon" width="32" height="32"/>
         <image name="leftMenuIcon" width="19" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>

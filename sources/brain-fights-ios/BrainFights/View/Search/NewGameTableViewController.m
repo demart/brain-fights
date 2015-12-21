@@ -275,7 +275,7 @@
         }
     
         if (indexPath.section == 1) {
-            [cell initCell:@"Поиск по орг структуре" withImage:@"organizationStructureIcon"];
+            [cell initCell:@"Поиск по Орг. структуре" withImage:@"organizationStructureIcon"];
         }
     
         if (indexPath.section == 2) {

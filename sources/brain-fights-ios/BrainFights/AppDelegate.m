@@ -57,7 +57,7 @@ static NSString * const AboutViewControllerStoryboardID = @"AboutViewControllerS
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self initDesignScheme];
     
-    [[LNNotificationCenter defaultCenter] registerApplicationWithIdentifier:@"games" name:@"GREEn" icon:[UIImage imageNamed:@"AppIcon"] defaultSettings:LNNotificationDefaultAppSettings];
+    [[LNNotificationCenter defaultCenter] registerApplicationWithIdentifier:@"games" name:@"GREEn" icon:[UIImage imageNamed:@"AppNotificationIcon"] defaultSettings:LNNotificationDefaultAppSettings];
     
     return YES;
 }

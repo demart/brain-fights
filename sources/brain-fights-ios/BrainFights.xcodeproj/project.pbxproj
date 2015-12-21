@@ -67,6 +67,8 @@
 		8DB8AA301BED4655005B7508 /* LocalStorageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA2F1BED4655005B7508 /* LocalStorageService.m */; };
 		8DB8AA331BED4D04005B7508 /* UrlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA321BED4D04005B7508 /* UrlHelper.m */; };
 		8DB8AA361BED51AE005B7508 /* AuthorizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB8AA351BED51AE005B7508 /* AuthorizationHelper.m */; };
+		8DBCAB171C270F3C003FFDD0 /* LNNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */; };
+		8DBCAB181C270F3C003FFDD0 /* LNNotificationsUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8DBD0A1E1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DBD0A1D1C24994000BE1F5C /* LNNotificationsUIAssets.xcassets */; };
 		8DBD0A401C24998700BE1F5C /* LNNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DBD0A3F1C24996100BE1F5C /* LNNotificationsUI.framework */; };
 		8DF18E0C1BEE6CA40046C27B /* ResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF18E0B1BEE6CA40046C27B /* ResponseStatus.m */; };
@@ -122,13 +124,19 @@
 		8DFB0C9E1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DFB0C9C1C0F817B00D15022 /* DepartmentHeaderTableViewCell.xib */; };
 		8DFCAC651BEBDD2E0035DE1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC641BEBDD2E0035DE1E /* main.m */; };
 		8DFCAC681BEBDD2E0035DE1E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */; };
-		8DFCAC6B1BEBDD2E0035DE1E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */; };
 		8DFCAC6E1BEBDD2E0035DE1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6C1BEBDD2E0035DE1E /* Main.storyboard */; };
 		8DFCAC701BEBDD2E0035DE1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */; };
 		8DFCAC731BEBDD2E0035DE1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFCAC711BEBDD2E0035DE1E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8DBCAB191C270F3C003FFDD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBD0A321C24996100BE1F5C /* LNNotificationsUI.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 39FC4F8219B8EFB400E45E37;
+			remoteInfo = LNNotificationsUI;
+		};
 		8DBD0A1A1C24988200BE1F5C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8DBD0A161C24988200BE1F5C /* LNNotificationsUI.xcodeproj */;
@@ -144,6 +152,20 @@
 			remoteInfo = LNNotificationsUI;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DBCAB1B1C270F3D003FFDD0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8DBCAB181C270F3C003FFDD0 /* LNNotificationsUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8D028AA21C19FE4A008C8A5A /* UserProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileTableViewCell.h; path = View/Profile/Cells/UserProfileTableViewCell.h; sourceTree = "<group>"; };
@@ -347,8 +369,6 @@
 		8DFCAC641BEBDD2E0035DE1E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8DFCAC661BEBDD2E0035DE1E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8DFCAC691BEBDD2E0035DE1E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8DFCAC6D1BEBDD2E0035DE1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DFCAC721BEBDD2E0035DE1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -363,6 +383,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DBCAB171C270F3C003FFDD0 /* LNNotificationsUI.framework in Frameworks */,
 				8DBD0A401C24998700BE1F5C /* LNNotificationsUI.framework in Frameworks */,
 				3DF7128837210A293B63E6C2 /* libPods-BrainFights.a in Frameworks */,
 			);
@@ -796,8 +817,6 @@
 				8DFCAC7F1BEBEDF70035DE1E /* Helpers */,
 				8DFCAC661BEBDD2E0035DE1E /* AppDelegate.h */,
 				8DFCAC671BEBDD2E0035DE1E /* AppDelegate.m */,
-				8DFCAC691BEBDD2E0035DE1E /* ViewController.h */,
-				8DFCAC6A1BEBDD2E0035DE1E /* ViewController.m */,
 				8DFCAC6C1BEBDD2E0035DE1E /* Main.storyboard */,
 				8DFCAC6F1BEBDD2E0035DE1E /* Assets.xcassets */,
 				8DFCAC711BEBDD2E0035DE1E /* LaunchScreen.storyboard */,
@@ -895,10 +914,12 @@
 				8DFCAC5D1BEBDD2E0035DE1E /* Frameworks */,
 				8DFCAC5E1BEBDD2E0035DE1E /* Resources */,
 				AB9642B6EB9BB5329B9A20C3 /* Copy Pods Resources */,
+				8DBCAB1B1C270F3D003FFDD0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8DBCAB1A1C270F3C003FFDD0 /* PBXTargetDependency */,
 			);
 			name = BrainFights;
 			productName = BrainFights;
@@ -1081,7 +1102,6 @@
 				8DB8AA151BECD92C005B7508 /* AuthorizationRequestModel.m in Sources */,
 				8D3FA46D1C052847005FDCBE /* BaseTableViewController.m in Sources */,
 				8DB8AA0D1BEBF0BA005B7508 /* AuthorizationService.m in Sources */,
-				8DFCAC6B1BEBDD2E0035DE1E /* ViewController.m in Sources */,
 				8DF18E5F1BF10B6C0046C27B /* UserFriendsModel.m in Sources */,
 				8DF18E2D1BEF9FF80046C27B /* UserGamesModel.m in Sources */,
 				8DF18E3D1BEFB3830046C27B /* NewGameTableViewCell.m in Sources */,
@@ -1142,6 +1162,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8DBCAB1A1C270F3C003FFDD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LNNotificationsUI;
+			targetProxy = 8DBCAB191C270F3C003FFDD0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8DB8AA2B1BED1E1D005B7508 /* Authorization.storyboard */ = {

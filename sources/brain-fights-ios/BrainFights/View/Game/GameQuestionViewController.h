@@ -24,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIView *thirdQuestionAnswerIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *roundNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *oponentNameTitle;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *questionCenterButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitle;
@@ -49,6 +48,7 @@
 @property (weak, nonatomic) IBOutlet UIView *dAnswerView;
 @property (weak, nonatomic) IBOutlet UILabel *dAnswerViewText;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
+@property (weak, nonatomic) IBOutlet UIImageView *goForwardImageView;
 
 - (IBAction)dismissView:(UIButton *)sender;
 

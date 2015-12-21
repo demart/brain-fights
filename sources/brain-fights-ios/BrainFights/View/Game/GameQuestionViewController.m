@@ -38,6 +38,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 @property NSTimer *timeoutTimer;
 // Таймер сокращения полоски прогресса
 @property NSTimer *progressTimer;
+// Таймер для показа подсказки
+@property NSTimer *toolTipTimer;
 
 @property NSInteger state;
 //  0 - Waiting when user tap to start answering questions
@@ -110,8 +112,20 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 -(void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // Показываем что мы ожидаем начала игры
-    [self showTopTipWithText:@"Нажимите на категорию, чтобы начать отвечать на вопросы."];
+    
+    // Показывать стрелочку
+    [self.goForwardImageView setHidden:NO];
+    self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                         target:self
+                                                       selector:@selector(showPressToStartRoundToolTip:)
+                                                       userInfo:nil
+                                                        repeats:NO];
+    
     self.progressViewInitialWidth = self.progressView.frame.size.width;
+}
+
+- (void)showPressToStartRoundToolTip:(NSTimer*) timer {
+    [self showTopTipWithText:@"Нажимите на категорию, чтобы начать отвечать на вопросы."];
 }
 
 - (void) initView:(UIViewController*) gameStatusViewController withGameModel:(GameModel*)gameModel withGameRoundModel:(GameRoundModel*)gameRoundModel{
@@ -289,6 +303,12 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         }];
     }
     
+    // Сбрасываем таймер
+    if (self.toolTipTimer != nil) {
+        [self.toolTipTimer invalidate];
+        self.timeoutTimer = nil;
+    }
+    
     if (self.popTip != nil && [self.popTip isVisible]) {
         [self.popTip hide];
     }
@@ -308,23 +328,48 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (self.state == STATE_WAITING_ANSWER_1) {
         [self processSelectedAnswer:0 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
-        [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                             target:self
+                                                           selector:@selector(showPressToContinueToolTip:)
+                                                           userInfo:nil
+                                                            repeats:NO];
+        //[self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
     }
 
     if (self.state == STATE_WAITING_ANSWER_2) {
         [self processSelectedAnswer:1 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
-        [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                             target:self
+                                                           selector:@selector(showPressToContinueToolTip:)
+                                                           userInfo:nil
+                                                            repeats:NO];
+//        [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
         [self processSelectedAnswer:2 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
-        [self showTopTipWithText:@"Вы ответили на все вопросы, нажимте на вопрос, чтобы продолжить"];
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                             target:self
+                                                           selector:@selector(showPressToCompleteRoundToolTip:)
+                                                           userInfo:nil
+                                                            repeats:NO];
+//        [self showTopTipWithText:@"Вы ответили на все вопросы, нажимте на вопрос, чтобы продолжить"];
     }
     
     // Любые другие нажатия, например в момент ожидания перехода к следующему вопросу будут игнорироваться
 }
+
+
+- (void) showPressToContinueToolTip:(NSTimer*) timer {
+    [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
+}
+
+- (void) showPressToCompleteRoundToolTip:(NSTimer*) timer {
+    [self showTopTipWithText:@"Вы ответили на все вопросы, нажимте на вопрос, чтобы продолжить"];
+}
+
 
 
 -(void) processSelectedAnswer:(NSInteger)questionIndex withAnswerIndex:(NSInteger)answerIndex {
@@ -353,19 +398,17 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     // Подстветить кто как ответил на вопрос
     [self hightLightAnswers:answerIndex withCorrrectAnswer:correctAnswerIndex andOponentAnswer:oponentAnswerIndex];
-    // Call server API
-    // TODO show loader
-    [self.loadingActivityIndicator setHidden:NO];
+    
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Сохраняем Ваш ответ..."];
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:userAnswer.id onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
             self.lastAnswerResult = result;
-            // ISSUE: Из-за того что загрузка на сервер идет долго, то подствечивается на вехрну не сразу
-            
             // Показываем что пользователь ответил на вопрос
             question.answer = userAnswer;
             // Если игра закончилась то сообщить игроку об этом
             [self initHeader];
+            [self.goForwardImageView setHidden:NO];
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -375,10 +418,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO Show Error Alert
         }
-        [self.loadingActivityIndicator setHidden:YES];
+        
+        [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
         // TODO Show ERROR
-        [self.loadingActivityIndicator setHidden:YES];
+        [DejalBezelActivityView removeViewAnimated:YES];
     }];
     
 }
@@ -474,6 +518,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self.progressView setHidden:YES];
         [self.questionImageTitle setHidden:YES];
         [self.questionText setText:nil];
+        [self.goForwardImageView setHidden:NO];
     }
     
     // Если нужно ответить на первый вопрос
@@ -502,6 +547,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 }
 
 - (void) prepareViewForAnswerQuestion:(GameRoundQuestionModel*)question withQuestionIndex:(NSInteger)questionIndex {
+    [self.goForwardImageView setHidden:YES];
     for (UIView *answerView in self.answerViews) {
         if (answerView.isHidden)
             [answerView setHidden:NO];
@@ -634,7 +680,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     // Call server API
     // TODO show loader
-    [self.loadingActivityIndicator setHidden:NO];
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Сохраняем Ваш ответ..."];
+    
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:QUESTION_WITHOUT_ANSWER_ID onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
@@ -656,10 +703,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO Show Error Alert
         }
-        [self.loadingActivityIndicator setHidden:YES];
+        [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
         // TODO Show ERROR
-        [self.loadingActivityIndicator setHidden:YES];
+        [DejalBezelActivityView removeViewAnimated:YES];
     }];
 }
 
