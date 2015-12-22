@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_quiz_opponent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_quiz"/>
+        <LinearLayout
+            android:id="@+id/card_quiz_label_game_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
+                android:id="@+id/card_quiz_text_game"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="none"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textSize="100sp"
+                android:text="Играет"
+                android:textAllCaps="true"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:textColor="@color/ttk_green"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

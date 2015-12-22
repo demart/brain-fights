@@ -1,5 +1,10 @@
 package kz.aphion.groupbridge.brainfights;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -21,7 +26,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import kz.aphion.groupbridge.brainfights.models.UserProfile;
+import kz.aphion.groupbridge.brainfights.stores.CurrentUser;
+import kz.aphion.groupbridge.brainfights.stores.CurrentUserProfile;
+import kz.aphion.groupbridge.brainfights.utils.Const;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -59,6 +70,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private View mCurrentView;
+
     public NavigationDrawerFragment() {
     }
 
@@ -68,6 +81,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
@@ -92,7 +106,7 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=  inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ListView) view.findViewById(R.id.menu_list);
-
+        mCurrentView = view;
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,16 +122,49 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section0),
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
                         getString(R.string.title_section4)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        registerBroadcastReceivers();
         return view;
     }
+    private void registerBroadcastReceivers(){
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mUserProfileUpdatedReceiver, new IntentFilter(Const.BM_USER_PROFILE_UPDATE));
+    }
+    private BroadcastReceiver mUserProfileUpdatedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setMenuProfileInfo();
+        }
+    };
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setMenuProfileInfo();
+    }
+
+    private void setMenuProfileInfo(){
+        UserProfile currentUserProfile = CurrentUserProfile.getInstance();
+        if(currentUserProfile!=null){
+            try {
+                ((TextView) this.mCurrentView.findViewById(R.id.menu_profile_rating)).setText("Рейтинг: "+Integer.toString(currentUserProfile.getScore()));
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_game_position)).setText("Место: "+Integer.toString(currentUserProfile.getGamePosition()));
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_position)).setText(currentUserProfile.getPosition());
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_department)).setText(currentUserProfile.getDepartment().name);
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_name)).setText(currentUserProfile.getName());
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_won)).setText(Integer.toString(currentUserProfile.getWonGames()));
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_draw)).setText(Integer.toString(currentUserProfile.getDrawnGames()));
+                ((TextView) mCurrentView.findViewById(R.id.menu_profile_lose)).setText(Integer.toString(currentUserProfile.getLoosingGames()));
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }

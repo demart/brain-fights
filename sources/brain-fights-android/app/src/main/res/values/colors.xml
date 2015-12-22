@@ -3,9 +3,14 @@
     <color name="ttk_green">#00B050</color>
     <color name="ttk_black">#1F1A17</color>
     <color name="ttk_lightGray">#C0C0C0</color>
+    <color name="ttk_lightGrayT">#44C0C0C0</color>
     <color name="ttk_darkGary">#969696</color>
     <color name="ttk_lightGreen">#8AD75F</color>
+    <color name="ttk_lightGreenT">#448AD75F</color>
     <color name="ttk_orange">#E46C0A</color>
+    <color name="ttk_orange2">#FF9A02</color>
     <color name="ttk_red">#C00000</color>
     <color name="ttk_white">#FFFFFF</color>
+    <color name="ttk_quiz_background_color">#E46C0A</color>
+    <color name="ttk_row_bg">#F0F0F0</color>
 </resources>

@@ -1,30 +1,46 @@
 package kz.aphion.groupbridge.brainfights;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
+import kz.aphion.groupbridge.brainfights.controllers.AboutFragment;
+import kz.aphion.groupbridge.brainfights.controllers.GamesListsFragment;
 import kz.aphion.groupbridge.brainfights.controllers.LoginActivity;
+import kz.aphion.groupbridge.brainfights.controllers.SplashActivity;
+import kz.aphion.groupbridge.brainfights.controllers.UserProfileFragment;
+import kz.aphion.groupbridge.brainfights.controllers.UserProfileFragment2;
+import kz.aphion.groupbridge.brainfights.controllers.rating.RatingParentFragment;
+import kz.aphion.groupbridge.brainfights.push.RegistrationIntentService;
+import kz.aphion.groupbridge.brainfights.stores.CurrentUser;
+import kz.aphion.groupbridge.brainfights.utils.Colors;
+import kz.aphion.groupbridge.brainfights.utils.Const;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public static int MY_GAMES_FRAGMENT;
+    public static int SPLASH_CHECK_AUTH_REQUEST;
+    static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -37,26 +53,118 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+//        CurrentUser.init(this);
+//        CurrentUser currentUser = CurrentUser.getInstance();
+////        currentUser.removeAuthToken();
+//        if(currentUser==null){
+//            StartLoginActivity();
+//        }else if(currentUser.getAuthToken()==null){
+//            StartLoginActivity();
+//        }
+//        else{
+//            StartSplashActivity();
+//        }
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
+        Colors.initGameColors(getApplicationContext());
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+//        FragmentManager fragmentManager  = getSupportFragmentManager();
+//        GamesListsFragment gamesListsFragment = new GamesListsFragment();
+//        fragmentManager.beginTransaction().add(R.id.container, gamesListsFragment, "myFirstFragment").commit();
+        if(checkPlayServices()) {
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+        registerBroadcastReceivers();
     }
 
+    private void registerBroadcastReceivers(){
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mUnauthorizedMessageReceiver, new IntentFilter(Const.BM_USER_UNAUTHTORIZED));
+    }
+
+    private BroadcastReceiver mUnauthorizedMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            StartLoginActivity();
+            finish();
+        }
+    };
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Toast.makeText(getApplicationContext(),"Устроиство не поддерживает push уведомления", Toast.LENGTH_LONG);
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+    private void StartLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+    private void StartSplashActivity(){
+        Intent intent = new Intent(this, SplashActivity.class);
+        startActivityForResult(intent, SPLASH_CHECK_AUTH_REQUEST);
+    }
+    public static void StartMainActivity(Activity currentActivity){
+        Intent intent = new Intent(currentActivity, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        currentActivity.startActivity(intent);
+        currentActivity.finish();
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if(SPLASH_CHECK_AUTH_REQUEST==requestCode){
+//            if(RESULT_CANCELED==resultCode){
+//                StartLoginActivity();
+//            }
+//        }
+    }
+    private Fragment getSelectedFragment(int position){
+        switch (position){
+            case 1:
+                GamesListsFragment gamesListsFragment = new GamesListsFragment();
+                return gamesListsFragment;
+            case 2:
+                UserProfileFragment2 userProfileFragment = new UserProfileFragment2();
+                return userProfileFragment;
+            case 3:
+                RatingParentFragment ratingParentFragment = new RatingParentFragment();
+                return ratingParentFragment;
+            case 4:
+                AboutFragment aboutFragment = new AboutFragment();
+                return aboutFragment;
+            default:
+                return PlaceholderFragment.newInstance(position);
+        }
+    }
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .add(R.id.container, getSelectedFragment(position+1))
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -72,6 +180,22 @@ public class MainActivity extends AppCompatActivity
                 mTitle = getString(R.string.title_section3);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getSupportFragmentManager().getBackStackEntryCount()<=1){
+            getSupportFragmentManager().popBackStack();
+        }
+        if(getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-1).getName()!=null&&
+                getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-1).getName().equals("GameList")){
+            for(Fragment fragment:getSupportFragmentManager().getFragments()){
+                if(fragment instanceof GamesListsFragment){
+                   ((GamesListsFragment) fragment).UpdateGamesLists();
+                }
+            }
+        }
+        super.onBackPressed();
     }
 
     public void restoreActionBar() {
@@ -141,8 +265,15 @@ public class MainActivity extends AppCompatActivity
                                  Bundle savedInstanceState) {
             View rootView = null;
             switch (getArguments().getInt(ARG_SECTION_NUMBER)){
-                case 0:
-                    rootView = inflater.inflate(R.layout.my_games_fragment, container, false);
+                case 1:
+                    GamesListsFragment gamesListsFragment = new GamesListsFragment();
+//                    FragmentManager fragmentManager = getSupportFragmentManager();
+//                    fragmentManager.beginTransaction()
+//                            .replace(R.id.container, gamesListsFragment)
+//                            .addToBackStack(null)
+//                            .commit();
+//                    rootView = inflater.inflate(R.layout.fragment_my_games, container, false);
+
                     break;
                 default:
                     rootView = inflater.inflate(R.layout.fragment_main, container, false);

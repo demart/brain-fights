@@ -6,4 +6,14 @@
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="game_list_left_right_margin">10dp</dimen>
+    <dimen name="game_card_height">60dp</dimen>
+    <dimen name="game_card_evaluation">2dp</dimen>
+    <dimen name="user_card_name_margin_right">5dp</dimen>
+    <dimen name="user_card_position_margin_right">10dp</dimen>
+    <dimen name="user_card_name_margin_left">5dp</dimen>
+    <dimen name="user_card_margin_left">5dp</dimen>
+    <dimen name="user_card_name_margin_top">5dp</dimen>
+    <dimen name="user_card_name_margin_bottom">5dp</dimen>
+    <dimen name="quiz_answer_height">120dp</dimen>
 </resources>

@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:colorBackground">
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!-->-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="@color/ttk_green"-->
+            <!--app:layout_scrollFlags="scroll|enterAlways"-->
+             <!--/>-->
+
+        <!-- -->
+    <!--</android.support.design.widget.AppBarLayout>-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/rating_parent_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ttk_green"
+        app:tabSelectedTextColor="@color/ttk_white"
+        app:tabIndicatorColor="@color/ttk_white"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        android:layout_marginBottom="0dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/rating_parent_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+</LinearLayout>

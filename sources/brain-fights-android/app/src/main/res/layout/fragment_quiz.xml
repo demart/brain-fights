@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+    <RelativeLayout
+        android:id="@+id/quiz_image_quiz_layout"
+        style="@style/QuizLayout"
+        android:visibility="visible"
+
+        android:elevation="2dp">
+        <ImageView
+            android:id="@+id/quiz_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_image"
+            />
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/category_shape">-->
+        <TextView
+            android:id="@+id/quiz_image_quiz_category"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Категория"
+            android:textSize="16dp"
+            android:textColor="@color/ttk_white"
+            android:textAllCaps="true"
+            android:paddingTop="5dp"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:paddingBottom="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/category_shape"
+            />
+        <!--</View>-->
+        <TextView
+            android:id="@+id/quiz_image_quiz_text"
+            android:singleLine="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:background="@color/ttk_lightGrayT"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Текст вопроса не загружен"
+            android:textSize="20dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/quiz_text_quiz_layout"
+        style="@style/QuizLayout"
+        android:elevation="5dp"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/quiz_text_quiz_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Категория"
+            android:textSize="16dp"
+            android:textColor="@color/ttk_white"
+            android:textAllCaps="true"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="5dp"
+            android:background="@color/ttk_green"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/quiz_text_quiz_text"
+            android:singleLine="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Текст вопроса не загружен"
+            android:textColor="@color/ttk_black"
+            android:textSize="20dp"/>
+        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1,0"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <Button
+                android:id="@+id/quiz_answer1"
+                style="@style/QuizAnswerButton"
+                android:text="Текст ответа 1"/>
+
+            <Button
+                android:id="@+id/quiz_answer2"
+                style="@style/QuizAnswerButton"
+                android:text="Текст ответа 2"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <Button
+                android:id="@+id/quiz_answer3"
+                style="@style/QuizAnswerButton"
+                android:text="Текст ответа 3"/>
+            <Button
+                android:id="@+id/quiz_answer4"
+                style="@style/QuizAnswerButton"
+                android:text="Текст ответа 4"
+                />
+        </TableRow>
+    </TableLayout>
+        <TextView
+            android:id="@+id/quiz_answer_opponent_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Имя оппонента"
+            android:textColor="@color/ttk_white"
+            android:textSize="14dp"
+            android:gravity="center_horizontal"
+            android:singleLine="false"
+            android:alpha="1"/>
+    </RelativeLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/quiz_progressBar"
+        android:layout_gravity="center_horizontal"
+        android:progressDrawable="@drawable/ttk_progress_bar"
+        />
+
+</LinearLayout>

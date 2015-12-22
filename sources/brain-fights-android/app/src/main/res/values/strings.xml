@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BrainFights</string>
+    <string name="app_name">Green</string>
 
     <string name="title_section0">Играть</string>
     <string name="title_section1">Мои игры</string>
@@ -13,4 +13,5 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+    <string name="close">Закрыть</string>
 </resources>
