@@ -26,7 +26,7 @@ public class ADService {
     public static final String CONTEXT_FACTORY="com.sun.jndi.ldap.LdapCtxFactory";
 //    public static final String LDAP_URL = "ldap://169.254.148.46:389";
 //    public static final String LDAP_URL = "ldap://alimjanns.ddns.net:390";
-    public static final String LDAP_URL = "ldap://alimjanns.ddns.net:80";   
+    public static final String LDAP_URL = "ldap://alimjanns85.ddns.net:389";
     public static final String LDAP_AUTH_TYPE = "simple";
     public static final String LDAP_DOMAIN = "transtelecom.kz";
     public static final String LDAP_SECURITY_PRINCIPAL = "cn=Alimjan Nurpeissov,cn=users,dc=transtelecom,dc=kz";
@@ -96,7 +96,12 @@ public class ADService {
                 if(response!=null&&response.hasMoreElements()){
                     SearchResult result = response.next();
                     user = new User();
-                    user.setLogin(login);
+                    String ldapLogin = getLdapLogin(result.getAttributes());
+                    if(ldapLogin!=null){
+                        user.setLogin(ldapLogin);
+                    }else{
+                        user.setLogin(login);
+                    }
                     user.setPassword(password);//TODO: Надо удалить сохранение пароля
                     user = setUserDataFromResult(user,result.getAttributes());
                     user.setScore(0);
@@ -118,6 +123,14 @@ public class ADService {
             e.printStackTrace();
             return null;
         }
+    }
+    private static String getLdapLogin(Attributes attributes)  {
+        try {
+            return getLdapAttrValue("samaccountname", attributes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
     private static User setUserDataFromResult(User user, Attributes attributes) throws NamingException {
         user.setPosition(getLdapAttrValue("description", attributes));
