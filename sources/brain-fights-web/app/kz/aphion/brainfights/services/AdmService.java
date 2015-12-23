@@ -30,6 +30,7 @@ import kz.aphion.brainfights.persistents.user.User;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.yaml.snakeyaml.events.Event.ID;
 
 import play.Logger;
 import play.db.jpa.JPA;
@@ -497,7 +498,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					System.out.println(answer.getName());
 					tmp.setDeleted(false);
 					tmp.setQuestion(question);
-					//question.getAnswers().add(tmp);
+					question.getAnswers().add(tmp);
 				}
 				//question.setAnswers(listModels);
 			}
@@ -583,7 +584,18 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				question.setText(model.getText());
 			
 			
+			for (AnswersModel answerModel : model.getAnswers()) {
+				for (Answer answer : question.getAnswers()) {
+					if (answerModel.getId().longValue() == answer.getId().longValue()) {
+						answer.setCorrect(answerModel.getCorrect());
+						answer.setName(answerModel.getName());
+						answer.save();
+						break;
+					}
+				}
+			}
 			
+			/*
 			if (model.getAnswers() != null) {
 				try {
 					JPA.em().createQuery("update Answer set deleted = 'TRUE' where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
@@ -605,7 +617,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				//System.out.println(question.getAnswers().get(0).getName());
 				//question.setAnswers(listModels);
 			}
-			
+			*/
 			question.save();
 			
 					
@@ -662,6 +674,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				for (Answer answers: model.getAnswers()) {
 					AnswersModel ans = new AnswersModel();
 					if (answers.getDeleted() == false) {
+						ans.setId(answers.getId());
 						ans.setName(answers.getName());
 						ans.setCorrect(answers.getCorrect());
 						question.getAnswers().add(ans);

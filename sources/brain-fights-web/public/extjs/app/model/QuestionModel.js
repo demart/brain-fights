@@ -16,6 +16,6 @@ Ext.define('BrainFightsConsole.model.QuestionModel', {
 	    model: 'BrainFightsConsole.model.AnswersModel',
 	    name: 'answers',
 	    primaryKey: 'id',
-		foreignKey: 'ownerId',
+		foreignKey: 'id',
 	},
 });

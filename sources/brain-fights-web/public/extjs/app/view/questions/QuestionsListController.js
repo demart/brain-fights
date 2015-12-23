@@ -189,11 +189,14 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 		 if (Ext.getCmp('categoryComboForQuestionsText').getValue() > 0 && Ext.getCmp('categoryComboForQuestionsText').getValue() < 100000000000000)
 			  model.data.categoryId = Ext.getCmp('categoryComboForQuestionsText').getValue();
 		 
+		 var grid = Ext.getCmp('questionsGridId');
+	     var record = grid.getSelectionModel().getSelection()[0];
+		 
 		 model.data.answers = new Array();
-		 model.data.answers[0] = {name: Ext.getCmp('answer1Text').getValue(), correct: false};
-		 model.data.answers[1] = {name: Ext.getCmp('answer2Text').getValue(), correct: false};
-		 model.data.answers[2] = {name: Ext.getCmp('answer3Text').getValue(), correct: false};
-		 model.data.answers[3] = {name: Ext.getCmp('answer4Text').getValue(), correct: false};
+		 model.data.answers[0] = {id: record.data.answers[0].id, name: Ext.getCmp('answer1Text').getValue(), correct: false};
+		 model.data.answers[1] = {id: record.data.answers[1].id, name: Ext.getCmp('answer2Text').getValue(), correct: false};
+		 model.data.answers[2] = {id: record.data.answers[2].id, name: Ext.getCmp('answer3Text').getValue(), correct: false};
+		 model.data.answers[3] = {id: record.data.answers[3].id, name: Ext.getCmp('answer4Text').getValue(), correct: false};
 		 
 		 for (var i=0; i<4; i++) {
 			 if (Ext.getCmp('answerTrueText').getValue() == i)
