@@ -1,32 +1,16 @@
 package kz.aphion.brainfights.services;
 
-import play.Logger;
-import play.db.jpa.JPA;
-import java.util.List;
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
-
-import kz.aphion.brainfights.persistents.user.DepartmentType;
-
-import javax.imageio.ImageIO;
 import javax.persistence.Query;
 
-import kz.aphion.brainfights.persistents.game.question.Answer;
-import kz.aphion.brainfights.persistents.game.question.Category;
-import kz.aphion.brainfights.persistents.game.question.Question;
-import kz.aphion.brainfights.persistents.game.question.QuestionType;
-import kz.aphion.brainfights.persistents.user.*;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
+import kz.aphion.brainfights.admin.models.AnswersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
 import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
 import kz.aphion.brainfights.admin.models.DepartmentTreeModel;
@@ -34,7 +18,21 @@ import kz.aphion.brainfights.admin.models.DepartmentTreeRootModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
 import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
-import kz.aphion.brainfights.models.*;
+import kz.aphion.brainfights.persistents.game.question.Answer;
+import kz.aphion.brainfights.persistents.game.question.Category;
+import kz.aphion.brainfights.persistents.game.question.Question;
+import kz.aphion.brainfights.persistents.game.question.QuestionType;
+import kz.aphion.brainfights.persistents.user.AdminUser;
+import kz.aphion.brainfights.persistents.user.AdminUserRole;
+import kz.aphion.brainfights.persistents.user.Department;
+import kz.aphion.brainfights.persistents.user.DepartmentType;
+import kz.aphion.brainfights.persistents.user.User;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
+
+import play.Logger;
+import play.db.jpa.JPA;
 
 /**
  * Сервич для работы с админской панелью
@@ -458,8 +456,8 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				throw new PlatformException("0", "Category not found");
 				
 			question.setImageUrl("0");
-			
 			question.setType(model.getType());
+			question.setDeleted(false);
 			
 			if (model.getType() == QuestionType.IMAGE) {
 				String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
@@ -467,8 +465,6 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				
 				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
 				//System.out.println (imageTmpFormat);
-				
-				
 				
 				//System.out.println (imageTmpFormat);
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
@@ -479,36 +475,29 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				//System.out.println(f.getAbsolutePath());
 				System.out.println(f.getPath());
 				
-				
 				f.createNewFile();
 
-				
 				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 				fileOut.write(decoded);
 				fileOut.close();
 				
 				question.setImageUrl(File.separator + f.getPath());
 				
-				
 			}
 			
-			
-			question.setDeleted(false);
-			
-					
 			if (StringUtils.isNotEmpty(model.getText()))
 				question.setText(model.getText());
 			
 			if (model.getAnswers() != null) {
 				question.setAnswers(new ArrayList<Answer>());
-				for (Answer answer: model.getAnswers() ) {
+				for (AnswersModel answer: model.getAnswers() ) {
 					Answer tmp = new Answer();
 					tmp.setCorrect(answer.getCorrect());
 					tmp.setName(answer.getName());
 					System.out.println(answer.getName());
 					tmp.setDeleted(false);
 					tmp.setQuestion(question);
-					question.getAnswers().add(tmp);
+					//question.getAnswers().add(tmp);
 				}
 				//question.setAnswers(listModels);
 			}
@@ -596,17 +585,16 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			
 			
 			if (model.getAnswers() != null) {
-				
 				try {
 					JPA.em().createQuery("update Answer set deleted = 'TRUE' where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
-					question.setAnswers(new ArrayList<Answer>());
-					for (Answer answer: model.getAnswers() ) {
+					//question.setAnswers(new ArrayList<Answer>());
+					for (AnswersModel answer: model.getAnswers() ) {
 						Answer tmp = new Answer();
 						tmp.setCorrect(answer.getCorrect());
 						tmp.setName(answer.getName());
 						System.out.println(answer.getName());
 						tmp.setDeleted(false);
-						tmp.setQuestion(question);
+						//tmp.setQuestion(question);
 						question.getAnswers().add(tmp);
 					}
 				}
@@ -670,9 +658,9 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			QuestionModel question = new QuestionModel();
 			question.setText(model.getText());
 			question.setType(model.getType());
-			question.setAnswers(new ArrayList<Answer>());
+			question.setAnswers(new ArrayList<AnswersModel>());
 				for (Answer answers: model.getAnswers()) {
-					Answer ans = new Answer();
+					AnswersModel ans = new AnswersModel();
 					if (answers.getDeleted() == false) {
 						ans.setName(answers.getName());
 						ans.setCorrect(answers.getCorrect());

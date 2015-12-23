@@ -11,7 +11,7 @@ public class QuestionModel {
 	private String text;
 	private String categoryName;
 	private Long categoryId;
-	private List<Answer> answers;
+	private List<AnswersModel> answers;
 	private Date createdDate;
 	private Date modifiedDate;
 	private QuestionType type;
@@ -58,11 +58,11 @@ public class QuestionModel {
 		this.categoryId = categoryId;
 	}
 	
-	public List<Answer> getAnswers () {
+	public List<AnswersModel> getAnswers () {
 		return answers;
 	}
 	
-	public void setAnswers (List<Answer> answers) {
+	public void setAnswers (List<AnswersModel> answers) {
 		this.answers = answers;
 	}
 	
