@@ -34,6 +34,9 @@ public class GameController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	// Создаем приглашение и отправляем уведомления
 	    	UserGameModel model = null;
@@ -66,6 +69,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	accept = accept == null ? true: accept;
 	    	
@@ -107,6 +113,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	UserGamesModel model = GameService.getUserGames(user);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -126,6 +135,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	UserGamesGroupedModel model = GameService.getUserGamesGrouped(user);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -151,6 +163,9 @@ public class GameController extends Controller {
 		try {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	GameModel model = GameService.getGameInformation(user, gameId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -174,6 +189,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 
 	    	GameRoundModel model = GameService.generateGameRound(user, gameId, categoryId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -201,6 +219,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 	    	
 	    	GameRoundModel model = GameService.getRoundQuestions(user, gameId, roundId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -231,6 +252,9 @@ public class GameController extends Controller {
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
 	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
+	    	
 	    	GamerQuestionAnswerResultModel model = GameService.answerQuestions(user, gameId, roundId, questionId, answerId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
 	    	
@@ -249,6 +273,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 	    	
 	    	GameModel model = GameService.surrenderGame(user, gameId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
@@ -273,6 +300,9 @@ public class GameController extends Controller {
 		try {	
 			// Проверяем авторизован ли пользователь
 	    	User user = UserService.getUserByAuthToken(authToken);
+	    	
+	    	//Записываем время последней активности пользователя
+	    	UserService.updateLastActivityTime(user);
 	    	
 	    	GameModel model = GameService.markGameResultAsViewed(user, gameId, gamerId);
 	    	renderJSON(ResponseWrapperModel.getSuccess(model));
