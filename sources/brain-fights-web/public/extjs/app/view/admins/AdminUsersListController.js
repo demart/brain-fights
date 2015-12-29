@@ -98,36 +98,49 @@ Ext.define('BrainFightsConsole.view.admins.AdminUsersListController', {
         		record.id = '0';
         		record.data.id = '0';
            		this.view.getStore().add(record);
+    			Ext.Ajax.request({
+    			    url: 'rest/check/name',
+    			    params: {
+    			        name: record.data.login,
+    			    },
+    			    success: function(response){
+            	    	var json = Ext.util.JSON.decode(response.responseText);
+            	    	console.log(json.status);
+            	    	if (json.status == "SUCCESS") {
+    			        	Ext.getCmp('adminListId').getStore().sync({
+    							success: function() {
+    								form.reset();
+    								view.lookupReference('adminsEditWindow').hide();
+    								view.view.getStore().reload();
+    							},
+    							failure: function(batch) {
+    								Ext.MessageBox.alert('Внимание','Ошибка при добавление пользователя');
+    							}
+    						});
+            	    	}
+            	    	else 
+            	    		Ext.MessageBox.alert('Внимание','Данный логин уже существует в системе');
+    			    },
+    			    failure: function(batch) {
+    					Ext.MessageBox.alert('Внимание','Ошибка при отправке запроса на проверку логина');
+    				}
+    			});
         	}
         	
-			Ext.Ajax.request({
-			    url: 'rest/check/name',
-			    params: {
-			        name: record.data.login,
-			    },
-			    success: function(response){
-        	    	var json = Ext.util.JSON.decode(response.responseText);
-        	    	console.log(json.status);
-        	    	if (json.status == "SUCCESS") {
-			        	Ext.getCmp('adminListId').getStore().sync({
-							success: function() {
-								form.reset();
-								view.lookupReference('adminsEditWindow').hide();
-								view.view.getStore().reload();
-							},
-							failure: function(batch) {
-								Ext.MessageBox.alert('Внимание','Ошибка при добавление пользователя');
-							}
-						});
-        	    	}
-        	    	else 
-        	    		Ext.MessageBox.alert('Внимание','Данный логин уже существует в системе');
-			    },
-			    failure: function(batch) {
-					Ext.MessageBox.alert('Внимание','Ошибка при отправке запроса на проверку логина');
-				}
-			});
-
+        	else {
+	        	Ext.getCmp('adminListId').getStore().sync({
+					success: function() {
+						form.reset();
+						view.lookupReference('adminsEditWindow').hide();
+						view.view.getStore().reload();
+					},
+					failure: function(batch) {
+						Ext.MessageBox.alert('Внимание','Ошибка при добавление пользователя');
+					}
+				});
+							
+        	}
+        	
         }
     }
     

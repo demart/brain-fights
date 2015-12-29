@@ -19,6 +19,52 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
         win.show();
     },
     
+    onWindowImportCancel: function () {
+        Ext.getCmp('importQuestionsWindowId').hide();
+		 var store = Ext.getCmp('questionsImportGridId');
+		 store.getStore().removeAll();
+    },
+    
+    onWindowDownloadCancel: function() {
+        Ext.getCmp('downloadQuestionsWindowId').hide();
+    },
+    
+    importQuestions: function() {
+        Ext.getCmp('downloadQuestionsWindowId').destroy();
+        Ext.getCmp('formDownload').destroy();
+    	  var win = this.lookupReference('importQuestionsWindow');
+          if (!win) {
+              win = new BrainFightsConsole.view.questions.ImportQuestionsWindow();
+              this.getView().add(win);
+          }
+
+          win.show();
+    },
+    
+    onWindowDonwloadOpen: function() {
+    	/*
+    	var importQuestionsStore = Ext.getCmp('questionsImportGridId');
+    	importQuestionsStore.store.proxy.api.read = '/rest/upload/file';
+    	importQuestionsStore.getStore().reload();
+  	  */
+    	
+    var win = this.lookupReference('downloadQuestionsWindow');
+      if (!win) {
+          win = new BrainFightsConsole.view.questions.DownloadWindow();
+          this.getView().add(win);
+      }
+
+		 var store = Ext.getCmp('questionsImportGridId');
+		 store.getStore().removeAll();
+		 
+      win.show();
+
+      
+    },
+    
+    
+    
+    
     onAddNewQuestion: function() {
     	 var formPanel = this.lookupReference('questionsEditWindowForm');
      	 var model = new BrainFightsConsole.model.QuestionModel();
@@ -369,6 +415,46 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 			Ext.getCmp('nowImageQuestion').setText(document.getElementById('tmpImageLabelQuestion').innerHTML);
 			Ext.getCmp('questionImage').setSrc(document.getElementById('tmpImageLabelQuestion').innerHTML);
 			Ext.getCmp('editQuestionFile').destroy();
+	},
+	
+	onImportQuestions: function () {
+		var models = new Array();
+		var grid = Ext.getCmp('questionsImportGridId');
+		var data;
+    	var i = 0;
+ 		grid.getStore().each(function(record) {
+    		var model = new BrainFightsConsole.model.QuestionModel();
+    		model.data.text = record.data.text;
+    		model.data.categoryName = record.data.categoryName;
+    		model.data.id = 0;
+    		model.data.categoryId = record.data.categoryId;
+    		model.data.control = record.data.control;
+	    	model.data.answers = new Array();
+	    	model.data.answers[0] = {name: record.data.answers[0].name, correct: record.data.answers[0].correct};
+	    	model.data.answers[1] = {name: record.data.answers[1].name, correct: record.data.answers[1].correct};
+	    	model.data.answers[2] = {name: record.data.answers[2].name, correct: record.data.answers[2].correct};
+	    	model.data.answers[3] = {name: record.data.answers[3].name, correct: record.data.answers[3].correct};
+    		
+	    	 data = model.getData();
+	       	models[i] = data;
+	    	 i = i +1;
+    	});
+ 		
+ 		console.log(models);
+	
+ 		//var data = models.getData();
+ 		
+ 		Ext.Ajax.request({
+		    url: '/rest/import/questions',
+		    jsonData : models,
+		    
+		    success: function(response){
+		    	var json = Ext.util.JSON.decode(response.responseText);
+		    	  	Ext.MessageBox.alert('Успешно','Загружено вопросов ' + json.downloadQuestions + ' из ' + json.modelsQuestions);
+		    	  	Ext.getCmp('saveImportQuestionId').disable();
+		    }
+ 		});
+	
 	}
     
 });

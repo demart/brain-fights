@@ -4,7 +4,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
     
     windowMode : 'add',
     
-    showAddWindow: function() {
+    showAddCategoryWindow: function() {
         var win = this.lookupReference('categoryEditWindow');
         if (!win) {
             win = new BrainFightsConsole.view.category.CategoryEditWindow();
@@ -37,7 +37,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
     },  
     
     // Удалить запись
-    onDeleteRecord : function() {
+    onDeleteCategoryRecord : function() {
     	var store = Ext.getCmp('categoryStoreId');
     	var selectedRecord = store.getSelectionModel().getSelection()[0];
     	console.log(selectedRecord);

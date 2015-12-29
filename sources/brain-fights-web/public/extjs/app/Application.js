@@ -25,6 +25,7 @@ Ext.define('BrainFightsConsole.Application', {
              'DepartmentComboStore',
              'DepartmentsTreeStore',
              'DepartmentsTypeStore',
+             'ImportQuestionsStore',
         
     ],
     

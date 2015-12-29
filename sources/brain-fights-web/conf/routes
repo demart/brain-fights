@@ -42,6 +42,9 @@ POST	/rest/departments/type/store/destroy					AdmController.destroyDepartmentTyp
 POST	/rest/departments/store/update							AdmController.updateDepartment
 GET		/rest/departments/combo/type/store/read					AdmController.readComboDepartmentsType
 POST	/rest/departments/tree/sinchronization/read				AdmController.departmentsTreeSincho
+GET 	/rest/upload/file										AdmController.saveFileXml
+POST	/rest/import/questions									AdmController.importQuestions
+POST	/rest/upload											AdmController.saveFileOnServer
 
 # USER COMMON
 POST	/user/auth												UserController.authenticate

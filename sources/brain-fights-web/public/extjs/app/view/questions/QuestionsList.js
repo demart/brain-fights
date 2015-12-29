@@ -12,6 +12,9 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
    	    'BrainFightsConsole.model.QuestionModel',
    	    'BrainFightsConsole.view.questions.UploadImageQuestionWindow',
    	    'BrainFightsConsole.view.questions.UploadEditImageQuestionWindow',
+    	//'BrainFightsConsole.view.questions.ImportQuestionsWindow',
+    	//'BrainFightsConsole.view.questions.DownloadWindow',
+    	
 	],
 
 	layout: 'border',
@@ -211,6 +214,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                  	
                 	tbar: [
                 	       { text: 'Добавить новый вопрос', handler: 'showAddWindow' },
+                	     
                 	       { text: 'Удалить вопрос', handler: 'deleteQuestion'},
         	        ],
                 	
