@@ -85,14 +85,25 @@ Ext.define('BrainFightsConsole.view.main.Main', {
 							    
 							},
 							{
-								id: 'questionBtn',
-							    text:'Вопросы',
-							    iconCls: null,
-							    scale: 'small',
-							    hidden: true,
-							    listeners : {click : 'onQuestionBtnClick', },
-							    
-							}, 
+					        	id: 'questionBtn',
+					            xtype:'button',
+					            text:'Вопросы',
+					            iconCls: null,
+					            glyph: 61,
+					            hidden: true,
+					            scale: 'small',
+					            menu:[
+									{
+										text:'Вопросы',
+									    listeners : {click : 'onQuestionBtnClick', },
+									    
+									}, 
+									{
+										id: 'questionImportBtn',
+									    text:'Импорт вопросов',
+									    listeners : {click : 'onQuestionImportBtnClick', },
+									}, 
+									]},
 						
 							
 							
@@ -146,7 +157,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('questionBtn').setVisible(true);
         		Ext.getCmp('usersBtn').setVisible(true);
         		Ext.getCmp('departmentsBtn').setVisible(true);
-        		window.document.location = "#admins";
+        		window.document.location = "#question";
         		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '.');
         	}
         	else {
@@ -155,7 +166,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
         		Ext.getCmp('questionBtn').setVisible(true);
         		Ext.getCmp('usersBtn').setVisible(false);
         		Ext.getCmp('departmentsBtn').setVisible(false);
-        		window.document.location = "#category";
+        		window.document.location = "#question";
         		Ext.getCmp('authUserNameLabel').setText('Вы авторизовались, как ' + name + '.');
         	}
 

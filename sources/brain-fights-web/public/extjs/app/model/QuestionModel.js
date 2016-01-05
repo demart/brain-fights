@@ -10,6 +10,7 @@ Ext.define('BrainFightsConsole.model.QuestionModel', {
 		{ name: 'modifiedDate'},
 		{ name: 'text'},
 		{ name: 'image'},
+		{ name: 'control'},
 	],
 	
 	hasMany: {
