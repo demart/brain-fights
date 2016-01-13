@@ -875,7 +875,7 @@ public class AdmController extends Controller {
 		if (status == true) {
 		AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
 		wrapper.setStatus(ResponseStatus.BAD_REQUEST);
-		System.out.println (photo[0]);
+		//System.out.println (photo[0]);
 		
 		String format = "csv";
 		String format2 = "lsx";
@@ -887,8 +887,8 @@ public class AdmController extends Controller {
 			ArrayList<QuestionModel> models = AdmService.readCsvFile(photo[0].getPath());
 			
 			wrapper.setData(models.toArray());
-		//	wrapper.setDownloadQuestions(AdmService.count-1);
-		//	wrapper.setModelQuestions(models.size());
+			wrapper.setDownloadQuestions(AdmService.count-1);
+			wrapper.setModelQuestions(models.size());
 			wrapper.setStatus(ResponseStatus.SUCCESS);
 		
 		}
@@ -898,8 +898,8 @@ public class AdmController extends Controller {
 			ArrayList<QuestionModel> models = AdmService.readExcelFile(photo[0].getPath());
 			
 			wrapper.setData(models.toArray());
-		//	wrapper.setDownloadQuestions(AdmService.count-1);
-		//	wrapper.setModelQuestions(models.size());
+			wrapper.setDownloadQuestions(AdmService.count-1);
+			wrapper.setModelQuestions(models.size());
 			wrapper.setStatus(ResponseStatus.SUCCESS);
 			
 			

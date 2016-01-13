@@ -1170,7 +1170,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 						model.setCategoryId(category.get(0).getId());
 					}
 					else {
-						model.setCategoryName("Категория не найдена");
+						model.setCategoryName("<font color=" + "red" + ">" + row.getCell(0).getStringCellValue() + "</font>");
 						model.setControl(1);
 					}
 					
@@ -1254,7 +1254,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				
                 	
                 models.add(model);
-                System.out.println("----");
+               // System.out.println("----");
             	}
             	count++;
             }
@@ -1338,7 +1338,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					}
 					
 					else {
-						model.setCategoryName("Категория не найдена");
+						model.setCategoryName("<font color=" + "red" + ">" + questions[0] + "</font>");
 						model.setControl(1);
 					}
 				}
