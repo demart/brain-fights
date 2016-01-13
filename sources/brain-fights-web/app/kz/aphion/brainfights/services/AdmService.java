@@ -1,32 +1,20 @@
 package kz.aphion.brainfights.services;
 
-import play.Logger;
-import play.db.jpa.JPA;
-import java.util.List;
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
-
-import kz.aphion.brainfights.persistents.user.DepartmentType;
-
-import javax.imageio.ImageIO;
 import javax.persistence.Query;
 
-import kz.aphion.brainfights.persistents.game.question.Answer;
-import kz.aphion.brainfights.persistents.game.question.Category;
-import kz.aphion.brainfights.persistents.game.question.Question;
-import kz.aphion.brainfights.persistents.game.question.QuestionType;
-import kz.aphion.brainfights.persistents.user.*;
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
+import kz.aphion.brainfights.admin.models.AnswersModel;
 import kz.aphion.brainfights.admin.models.CategoryModel;
 import kz.aphion.brainfights.admin.models.DepartmentForAdminModel;
 import kz.aphion.brainfights.admin.models.DepartmentTreeModel;
@@ -34,7 +22,26 @@ import kz.aphion.brainfights.admin.models.DepartmentTreeRootModel;
 import kz.aphion.brainfights.admin.models.QuestionModel;
 import kz.aphion.brainfights.admin.models.UserModel;
 import kz.aphion.brainfights.exceptions.PlatformException;
-import kz.aphion.brainfights.models.*;
+import kz.aphion.brainfights.persistents.game.question.Answer;
+import kz.aphion.brainfights.persistents.game.question.Category;
+import kz.aphion.brainfights.persistents.game.question.Question;
+import kz.aphion.brainfights.persistents.game.question.QuestionType;
+import kz.aphion.brainfights.persistents.user.AdminUser;
+import kz.aphion.brainfights.persistents.user.AdminUserRole;
+import kz.aphion.brainfights.persistents.user.Department;
+import kz.aphion.brainfights.persistents.user.DepartmentType;
+import kz.aphion.brainfights.persistents.user.User;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.yaml.snakeyaml.events.Event.ID;
+
+import play.Logger;
+import play.db.jpa.JPA;
 
 /**
  * Сервич для работы с админской панелью
@@ -42,6 +49,10 @@ import kz.aphion.brainfights.models.*;
  *
  */
 public class AdmService {
+	
+	private static final int ArrayList = 0;
+	public static Integer count = 0;
+	public static Integer countImport = 0;
 	
 	/**
 	 * Проверяем существует ли пользователь
@@ -286,7 +297,7 @@ public class AdmService {
 	 * @throws PlatformException
 	 */
 	public static void createNewCategory(CategoryModel[] models) throws PlatformException, IOException {
-		Integer count = 0;
+		count = 0;
 		for (CategoryModel model: models) {
 			if (model == null)
 				throw new PlatformException("0", "Category model is null");
@@ -458,8 +469,8 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				throw new PlatformException("0", "Category not found");
 				
 			question.setImageUrl("0");
-			
 			question.setType(model.getType());
+			question.setDeleted(false);
 			
 			if (model.getType() == QuestionType.IMAGE) {
 				String strTmpOne = model.getImage().substring(model.getImage().indexOf("base64,"), model.getImage().length());
@@ -467,8 +478,6 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				
 				String imageTmpFormat = model.getImage().substring(11, model.getImage().indexOf(";base64,"));
 				//System.out.println (imageTmpFormat);
-				
-				
 				
 				//System.out.println (imageTmpFormat);
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
@@ -479,29 +488,22 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				//System.out.println(f.getAbsolutePath());
 				System.out.println(f.getPath());
 				
-				
 				f.createNewFile();
 
-				
 				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 				fileOut.write(decoded);
 				fileOut.close();
 				
 				question.setImageUrl(File.separator + f.getPath());
 				
-				
 			}
 			
-			
-			question.setDeleted(false);
-			
-					
 			if (StringUtils.isNotEmpty(model.getText()))
 				question.setText(model.getText());
 			
 			if (model.getAnswers() != null) {
 				question.setAnswers(new ArrayList<Answer>());
-				for (Answer answer: model.getAnswers() ) {
+				for (AnswersModel answer: model.getAnswers() ) {
 					Answer tmp = new Answer();
 					tmp.setCorrect(answer.getCorrect());
 					tmp.setName(answer.getName());
@@ -594,19 +596,29 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				question.setText(model.getText());
 			
 			
+			for (AnswersModel answerModel : model.getAnswers()) {
+				for (Answer answer : question.getAnswers()) {
+					if (answerModel.getId().longValue() == answer.getId().longValue()) {
+						answer.setCorrect(answerModel.getCorrect());
+						answer.setName(answerModel.getName());
+						answer.save();
+						break;
+					}
+				}
+			}
 			
+			/*
 			if (model.getAnswers() != null) {
-				
 				try {
-					JPA.em().createQuery("delete Answer where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
-					question.setAnswers(new ArrayList<Answer>());
-					for (Answer answer: model.getAnswers() ) {
+					JPA.em().createQuery("update Answer set deleted = 'TRUE' where question.id = :quest").setParameter("quest", model.getId()).executeUpdate();
+					//question.setAnswers(new ArrayList<Answer>());
+					for (AnswersModel answer: model.getAnswers() ) {
 						Answer tmp = new Answer();
 						tmp.setCorrect(answer.getCorrect());
 						tmp.setName(answer.getName());
 						System.out.println(answer.getName());
 						tmp.setDeleted(false);
-						tmp.setQuestion(question);
+						//tmp.setQuestion(question);
 						question.getAnswers().add(tmp);
 					}
 				}
@@ -617,7 +629,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				//System.out.println(question.getAnswers().get(0).getName());
 				//question.setAnswers(listModels);
 			}
-			
+			*/
 			question.save();
 			
 					
@@ -670,10 +682,11 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			QuestionModel question = new QuestionModel();
 			question.setText(model.getText());
 			question.setType(model.getType());
-			question.setAnswers(new ArrayList<Answer>());
+			question.setAnswers(new ArrayList<AnswersModel>());
 				for (Answer answers: model.getAnswers()) {
-					Answer ans = new Answer();
+					AnswersModel ans = new AnswersModel();
 					if (answers.getDeleted() == false) {
+						ans.setId(answers.getId());
 						ans.setName(answers.getName());
 						ans.setCorrect(answers.getCorrect());
 						question.getAnswers().add(ans);
@@ -704,6 +717,12 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 	public static List<Question> searchQuestions(String name) {
 			return JPA.em().createQuery("from Question where lower(text) like lower(:name) and deleted = 'FALSE' order by id")
 				.setParameter("name", "%" + name + "%").getResultList();
+
+	}
+	
+	public static List<Category> searchCategory(String name) {
+		return JPA.em().createQuery("from Category where lower(name) like lower(:name) and deleted = 'FALSE'")
+			.setParameter("name", "%" + name + "%").getResultList();
 
 	}
 
@@ -1104,6 +1123,312 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			type.save();
 						
 			Logger.info("Department type updated successfully");
+		}
+		
+	}
+
+	/**
+	 * Чтение из Excel файла
+	 * @param fileName
+	 * @return
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
+	public static java.util.ArrayList<QuestionModel> readExcelFile (String fileName) throws PlatformException, IOException {
+		ArrayList<QuestionModel> models = new ArrayList<QuestionModel>();
+		count = 0;
+		try
+        {
+            FileInputStream file = new FileInputStream(new File(fileName));
+            
+           
+            //Create Workbook instance holding reference to .xlsx file
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+ 
+            //Get first/desired sheet from the workbook
+            XSSFSheet sheet = workbook.getSheetAt(0);
+ 
+            //Iterate through each rows one by one
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext())
+            {
+            	
+                Row row = rowIterator.next();
+                if (count > 0) {
+                QuestionModel model = new QuestionModel();
+                
+                model.setControl(0);
+                if (row.getCell(0) == null) {
+                	model.setControl(1);
+                	model.setText("Отсутствует категория");
+                }
+                
+                else {
+                	List<Category> category = AdmService.searchCategory(row.getCell(0).getStringCellValue());
+					if (category.size() != 0) {
+						model.setCategoryName(row.getCell(0).getStringCellValue());
+						model.setCategoryId(category.get(0).getId());
+					}
+					else {
+						model.setCategoryName("<font color=" + "red" + ">" + row.getCell(0).getStringCellValue() + "</font>");
+						model.setControl(1);
+					}
+					
+                }
+                
+                if (row.getCell(1) == null) {
+                	model.setControl(1);
+                	model.setText("Отсутствует текст вопроса");
+                }
+                
+                else
+                	model.setText(row.getCell(1).getStringCellValue());
+                
+                
+				ArrayList<AnswersModel> answers = new ArrayList<AnswersModel>();
+				for (int i=2; i<6; i++) {
+					AnswersModel answer = new AnswersModel();
+					if (row.getCell(i) != null) {
+						if (row.getCell(i).getCellType() == 1)
+							answer.setName(row.getCell(i).getStringCellValue());
+						
+						else if (row.getCell(i).getCellType() == 0)
+							answer.setName(String.valueOf(row.getCell(i).getNumericCellValue()));
+						
+						else if (row.getCell(i).getCellType() == 2)
+							answer.setName(String.valueOf(row.getCell(i).getCellFormula()));
+						
+						else if (row.getCell(i).getCellType() == 4)
+							answer.setName(String.valueOf(row.getCell(i).getBooleanCellValue()));
+						
+						else if (row.getCell(i).getCellType() == 5)
+							answer.setName(String.valueOf(row.getCell(i).getErrorCellValue()));
+						
+						
+						if (row.getCell(6) != null) {
+							double tmp = 0;
+							if (row.getCell(6).getCellType() == 0)
+								tmp = row.getCell(6).getNumericCellValue();
+							if (row.getCell(6).getCellType() == 1) {
+								String temp;
+								temp = row.getCell(6).getStringCellValue();
+								tmp = Double.parseDouble(temp);
+							}
+							
+							if (StringUtils.equals(String.valueOf((int)tmp - 1), Integer.toString(i-2))) {
+								answer.setCorrect(true);
+							}
+							else
+								answer.setCorrect(false);
+						
+						}
+						else {
+							model.setControl(1);
+						}
+					}
+					
+					else {
+						answer.setName("Отсутствует ответ");
+						model.setControl(1);
+					}
+				
+					answers.add(answer);
+				}
+				model.setAnswers(answers);
+                
+				if (row.getCell(6) != null) {
+					double tmp = 0;
+					if (row.getCell(6).getCellType() == 0)
+						tmp = row.getCell(6).getNumericCellValue();
+					if (row.getCell(6).getCellType() == 1) {
+						String temp;
+						temp = row.getCell(6).getStringCellValue();
+						tmp = Double.parseDouble(temp);
+					}
+					model.setCorrectAnswer(String.valueOf((int)tmp));
+				}
+				else {
+					model.setCorrectAnswer("Отсутсвует правильный ответ");
+					model.setControl(1);
+				}
+				
+                	
+                models.add(model);
+               // System.out.println("----");
+            	}
+            	count++;
+            }
+            file.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+		return models;
+	}
+	
+	/**
+	 * Чтение из csv файла
+	 * @param fileName
+	 * @return
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
+	public static ArrayList<QuestionModel> readCsvFile(String fileName) throws PlatformException, IOException{
+		ArrayList<QuestionModel> models = new ArrayList<QuestionModel>();
+		//String csvFile = string;
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		
+		count = 0;
+		
+		try {
+
+			br = new BufferedReader(new FileReader(fileName));
+			while ((line = br.readLine()) != null) {
+				if (count > 0) {
+			        // use comma as separator
+				String[] questions = line.split(cvsSplitBy);
+				QuestionModel model = new QuestionModel();
+				
+				model.setControl(0);
+				
+				if (StringUtils.isNotEmpty(questions[1]))
+					model.setText(questions[1]);
+				else {
+					model.setText("Отсутствует текст вопроса");
+					model.setControl(1);
+				}
+
+				
+				
+				ArrayList<AnswersModel> answers = new ArrayList<AnswersModel>();
+				for (int i=2; i<6; i++) {
+					AnswersModel answer = new AnswersModel();
+					if (StringUtils.isNotEmpty(questions[i])) {
+						answer.setName(questions[i]);
+						if (StringUtils.isNotEmpty(questions[6])) {
+							int num = Integer.parseInt(questions[6]) - 1;
+							if (StringUtils.equals(String.valueOf(num), Integer.toString(i-2))) {
+								answer.setCorrect(true);
+							}
+							else
+								answer.setCorrect(false);
+						}
+						else {
+							model.setControl(1);
+						}
+					}
+					
+					else {
+						answer.setName("Отсутствует ответ");
+						model.setControl(1);
+					}
+				
+					answers.add(answer);
+				}
+				model.setAnswers(answers);
+				
+				if (StringUtils.isNotEmpty(questions[0])) {
+					List<Category> category = AdmService.searchCategory(questions[0].trim());
+					if (category.size() != 0) {
+						model.setCategoryName(questions[0]);
+						model.setCategoryId(category.get(0).getId());
+					}
+					
+					else {
+						model.setCategoryName("<font color=" + "red" + ">" + questions[0] + "</font>");
+						model.setControl(1);
+					}
+				}
+				else {
+					model.setCategoryName("Отсутствует категория");
+					model.setControl(1);
+				}
+				
+				if (StringUtils.isNotEmpty(questions[6])) {
+					int num = Integer.parseInt(questions[6]);
+					model.setCorrectAnswer(String.valueOf(num));
+				}
+				else {
+					model.setCorrectAnswer("Отсутсвует правильный ответ");
+					model.setControl(1);
+				}
+					
+					
+				
+				
+				models.add(model);
+				
+				//System.out.println ("Category: " + model.getCategoryName());
+				//System.out.println ("Text: " + model.getText());
+				//System.out.println ("--------");
+				}
+				count++;
+			}
+
+			System.out.println ("File read status: OK!");
+
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return models;
+		
+		
+		
+	}
+
+	/**
+	 * Сохранение импортированных вопросов
+	 * @param models
+	 * @throws PlatformException
+	 */
+	public static void saveImportQuestion(QuestionModel[] models) throws PlatformException {
+		countImport = 0;
+		for (QuestionModel model: models) {
+			if (model == null)
+				throw new PlatformException("0", "Question model is null");
+			Question question = new Question();
+			
+			if (model.getControl() == 0) {
+				question.setText(model.getText());
+				question.setType(QuestionType.TEXT);
+				Category category = Category.findById(model.getCategoryId());
+				question.setCategory(category);
+				
+				if (model.getAnswers() != null) {
+					question.setAnswers(new ArrayList<Answer>());
+					for (AnswersModel answer: model.getAnswers() ) {
+						Answer tmp = new Answer();
+						tmp.setCorrect(answer.getCorrect());
+						tmp.setName(answer.getName());
+						//System.out.println(answer.getName());
+						tmp.setDeleted(false);
+						tmp.setQuestion(question);
+						question.getAnswers().add(tmp);
+					}
+					//question.setAnswers(listModels);
+				}
+				
+				question.setDeleted(false);
+				
+				question.save();
+				countImport++;
+				
+			}
 		}
 		
 	}

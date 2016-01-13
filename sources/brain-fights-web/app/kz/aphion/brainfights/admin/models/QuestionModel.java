@@ -11,11 +11,25 @@ public class QuestionModel {
 	private String text;
 	private String categoryName;
 	private Long categoryId;
-	private List<Answer> answers;
+	private List<AnswersModel> answers;
 	private Date createdDate;
 	private Date modifiedDate;
 	private QuestionType type;
 	private String image;
+	private String correctAnswer;
+	private Integer control;
+	
+	public void setControl (Integer control) {
+		this.control = control;
+	}
+	
+	public Integer getControl () {
+		return control;
+	}
+	
+	public void setCorrectAnswer(String correctAnswer) {
+		this.correctAnswer = correctAnswer;
+	}
 
 	public String getImage () {
 		return image;
@@ -58,11 +72,11 @@ public class QuestionModel {
 		this.categoryId = categoryId;
 	}
 	
-	public List<Answer> getAnswers () {
+	public List<AnswersModel> getAnswers () {
 		return answers;
 	}
 	
-	public void setAnswers (List<Answer> answers) {
+	public void setAnswers (List<AnswersModel> answers) {
 		this.answers = answers;
 	}
 	

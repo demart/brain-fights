@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -44,6 +45,7 @@ import kz.aphion.brainfights.models.ResponseStatus;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
 import play.Logger;
 import play.Play;
+import play.data.validation.Required;
 import play.db.jpa.JPA;
 
 /**
@@ -806,7 +808,111 @@ public class AdmController extends Controller {
 	}
 	}
 	
+	/*
+	public static void saveFileXml () throws PlatformException, IOException {
+		File[] files = params.get("file", File[].class);
+		Logger.info (" FILE: \n" + files);
+		ArrayList<QuestionModel> models = AdmService.readExcelFile();
+		
+		
+		//ArrayList<QuestionModel> models = AdmService.readCsvFile();
+		
+		AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+		wrapper.setData(models.toArray());
+		wrapper.setDownloadQuestions(AdmService.count-1);
+		wrapper.setModelQuestions(models.size());
+		wrapper.setStatus(ResponseStatus.SUCCESS);
+		renderJSON(wrapper);
+		
+		
+	}
+	*/
+	/**
+	 * Сохранение импортированных вопросов
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
+	public static void importQuestions () throws PlatformException, IOException {
+		Logger.info("Import Question. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		
+		if (status == true) {
+			String requestBody = params.current().get("body");
+			//Logger.info (" Import Question: \n" + requestBody);
+			
+			if (!requestBody.startsWith("["))
+				requestBody = "[" + requestBody + "]";
+			
+				Gson gson = new Gson();
+			QuestionModel[] models = gson.fromJson(requestBody, QuestionModel[].class);
+			Logger.info("\n Model.lenght: " + models.length);
+			
+			
+			AdmService.saveImportQuestion(models);
+			
+			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			wrapper.setModelQuestions(models.length);
+			wrapper.setDownloadQuestions(AdmService.countImport);
+			renderJSON(wrapper);
+		}
+	}
+	
+	/**
+	 * Сохраняем файл на сервер
+	 * @param photo
+	 * @throws PlatformException
+	 * @throws IOException
+	 */
+	public static void saveFileOnServer (File[] photo) throws PlatformException, IOException {
+		Logger.info("Save File with Question. User is " +  Security.connected());
+		
+		Boolean status = AdmService.checkUsers(Security.connected());
+		System.out.println ("Is user's role administrator/manager? Answer: " + status);
+		
+		if (status == true) {
+		AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+		wrapper.setStatus(ResponseStatus.BAD_REQUEST);
+		//System.out.println (photo[0]);
+		
+		String format = "csv";
+		String format2 = "lsx";
+		String formatFile = photo[0].getName().substring(photo[0].getName().length() - 3, photo[0].getName().length());
+		
+		if (StringUtils.equals(format, formatFile)) {
+			
+			System.out.println ("CSV file");
+			ArrayList<QuestionModel> models = AdmService.readCsvFile(photo[0].getPath());
+			
+			wrapper.setData(models.toArray());
+			wrapper.setDownloadQuestions(AdmService.count-1);
+			wrapper.setModelQuestions(models.size());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+		
+		}
+		
+		else if (StringUtils.equals(format2, formatFile)) {
+			System.out.println ("Excel file");
+			ArrayList<QuestionModel> models = AdmService.readExcelFile(photo[0].getPath());
+			
+			wrapper.setData(models.toArray());
+			wrapper.setDownloadQuestions(AdmService.count-1);
+			wrapper.setModelQuestions(models.size());
+			wrapper.setStatus(ResponseStatus.SUCCESS);
+			
+			
+			
 
+					}
+		
+		renderJSON(wrapper);
+		
+			}
+	}
+	
+	
 }
 
 

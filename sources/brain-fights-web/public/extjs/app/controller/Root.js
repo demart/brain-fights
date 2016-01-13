@@ -18,7 +18,15 @@ Ext.define('BrainFightsConsole.controller.Root', {
     	'users' : 'onUsers',
     	'departments': 'onDepartments',
     	'departmentsType' : 'onDepartmentsType',
+    	'importQuestions' : 'onImportQuestions',
     },
+    
+    onImportQuestions: function() {
+    	 console.log("onImportQuestionsList route");
+         this.getMain().getComponent('mainBody').removeAll(true);
+         this.getMain().getComponent('mainBody').add(Ext.create('BrainFightsConsole.view.questions.ImportQuestionsList'));
+    
+    }, 	
     
     //Управление администраторами/менеджерами
     onAdmins : function() {

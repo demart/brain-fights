@@ -49,18 +49,18 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 	id: 'categoryStoreId',
                 	region: 'center',
                     xtype: 'grid',
-                   
+                    controller: 'category',
                 	scroll: true,
                 	
                 	tbar: [{
                         text: 'Создать новую категорию',
                         id: 'addCategoryIdBtn',
                         hidden: false,
-                        handler: 'showAddWindow'
+                        handler: 'showAddCategoryWindow'
                     },
                     {
                     	text: 'Удалить категорию',
-                    	handler: 'onDeleteRecord',
+                    	handler: 'onDeleteCategoryRecord',
                     },
 
                     ],

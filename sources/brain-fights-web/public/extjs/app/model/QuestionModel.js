@@ -10,12 +10,13 @@ Ext.define('BrainFightsConsole.model.QuestionModel', {
 		{ name: 'modifiedDate'},
 		{ name: 'text'},
 		{ name: 'image'},
+		{ name: 'control'},
 	],
 	
 	hasMany: {
 	    model: 'BrainFightsConsole.model.AnswersModel',
 	    name: 'answers',
 	    primaryKey: 'id',
-		foreignKey: 'ownerId',
+		foreignKey: 'id',
 	},
 });

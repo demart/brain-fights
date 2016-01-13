@@ -10,7 +10,6 @@ sources/brain-fights-web/.DS_Store
 sources/brain-fights-web/tmp/*
 sources/brain-fights-web/eclipse/*
 sources/brain-fights-web/precompiled/*
-sources/brain-fights-web/lib/*
 sources/brain-fights-web/test-result/*
 sources/brain-fights-web/public/images/categories/*
 sources/brain-fights-web/public/images/questions/*

@@ -662,7 +662,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:0];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                              target:self
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
@@ -675,7 +675,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:1];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                              target:self
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
@@ -688,7 +688,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:2];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                              target:self
                                                            selector:@selector(showPressToCompleteRoundToolTip:)
                                                            userInfo:nil
@@ -719,7 +719,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // Call server API
     // TODO show loader
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Сохраняем Ваш ответ..."];
-    
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:QUESTION_WITHOUT_ANSWER_ID onSuccess:^(ResponseWrapperModel *response) {
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
@@ -732,6 +731,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             question.answer.isMissingAnswer = YES;
             // Если игра закончилась то сообщить игроку об этом
             [self initHeader];
+            
+            // Включаем таймер на тул тип
+            
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {

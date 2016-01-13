@@ -52,7 +52,7 @@ public class Question extends PersistentObject {
 	@Column(name="image_url", length=255)
 	private String imageUrl;
 	
-	@OneToMany(mappedBy="question", cascade={CascadeType.PERSIST})
+	@OneToMany(mappedBy="question", cascade={CascadeType.ALL})
 	@OrderBy("id ASC")
 	private List<Answer> answers;
 
