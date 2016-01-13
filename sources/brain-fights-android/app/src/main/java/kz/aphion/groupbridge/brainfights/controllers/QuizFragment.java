@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,6 +30,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import kz.aphion.groupbridge.brainfights.R;
+import kz.aphion.groupbridge.brainfights.animation.ButtonAnswerAnimation;
+import kz.aphion.groupbridge.brainfights.components.FlipAnimation;
 import kz.aphion.groupbridge.brainfights.models.GameModel;
 import kz.aphion.groupbridge.brainfights.models.GameRoundModel;
 import kz.aphion.groupbridge.brainfights.models.GameRoundQuestionAnswerModel;
@@ -63,6 +68,14 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     Button btnA2;
     Button btnA3;
     Button btnA4;
+    ButtonAnswerAnimation btn1Anim;
+    ButtonAnswerAnimation btn2Anim;
+    ButtonAnswerAnimation btn3Anim;
+    ButtonAnswerAnimation btn4Anim;
+    View q1State;
+    View q2State;
+    View q3State;
+    View[] quizesStates;
     Button btns[] = new Button[4];
     GameRoundQuestionModel actualQuiz;
     ProgressBar progressBar;
@@ -72,16 +85,70 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     boolean prevAnswerSaved = true;
     Animation animationFade;
     boolean gameEnd = false;
+//    Animation animationFlipIn = null;
+//    Animation animationFlipOut = null;
+    RelativeLayout animLayout;
+//    AnimationSet animateSlideQuiz;
+    FlipAnimation categoryLayoutAnim;
+    RelativeLayout activeLayout;
+    Animation blinkCurrentQuizStateAnim;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_quiz, container, false);
+
+//        animationFlipIn = AnimationUtils.loadAnimation(getContext(), R.anim.category_flip_in);
+//        animationFlipOut = AnimationUtils.loadAnimation(getContext(), R.anim.category_flip_out);
+//        animateSlideQuiz = new AnimationSet(true);
+//        animateSlideQuiz.setFillAfter(true);
+//
+////        animateSlideQuiz.addAnimation(animationFlipOut);
+////        animateSlideQuiz.addAnimation(animationFlipIn);
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        final float screen_width_half = metrics.widthPixels;
+//        final float distance = screen_width_half;
+//        Animation animation =
+//                new TranslateAnimation(0, -distance, +100, 0);
+//        animation.setDuration(1000);
+//        animation.setStartOffset(1000);
+////        animation.setRepeatCount(0);
+////        animation.setFillAfter(false);
+//        animateSlideQuiz.addAnimation(animation);
+//        Animation animation2 =
+//                new TranslateAnimation(distance, 0, 0, 0);
+////        animation2.setStartOffset(1000);
+//        animation2.setDuration(1000);
+////        animation2.setFillAfter(false);
+////        animation2.setRepeatCount(0);
+//        animateSlideQuiz.addAnimation(animation2);
+//        animationFlipOut.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                animLayout.startAnimation(animationFlipIn);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+
         setComponents();
+        categoryLayoutAnim = new FlipAnimation(textQuizLayout, textQuizLayout);
         loadQuiz();
         return v;
     }
 
     private void loadQuiz() {
+        if(actualQuiz!=null&&actualQuiz.answer==null){
+            return;
+        }
         actualQuiz = findActualQuiz();
         if(actualQuiz!=null){
             loadActualQuiz(actualQuiz);
@@ -93,13 +160,30 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
                 gameFragment.gameEndNotification = gameEnd;
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .add(R.id.container, gameFragment)
+                        .add(R.id.flContent, gameFragment)
                         .commit();
            // }
 
         }
     }
-
+    private void setQuizesState(){
+        if(round!=null&&round.questions!=null&&round.questions.size()==3){
+            for(int i=0;i<3;i++){
+                quizesStates[i].clearAnimation();
+                if(round.questions.get(i).answer!=null){
+                    if(round.questions.get(i).answer.isCorrect){
+                        quizesStates[i].setBackgroundColor(getResources().getColor(R.color.ttk_green));
+                    }else{
+                        quizesStates[i].setBackgroundColor(getResources().getColor(R.color.ttk_red));
+                    }
+                }else{
+                    quizesStates[i].setBackgroundColor(getResources().getColor(R.color.ttk_orange));
+                    quizesStates[i].startAnimation(blinkCurrentQuizStateAnim);
+                    return;
+                }
+            }
+        }
+    }
     private void loadActualQuiz(GameRoundQuestionModel actualQuiz) {
         if(actualQuiz!=null){
             opponentName.setVisibility(View.GONE);
@@ -107,11 +191,19 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
                 opponentName.clearAnimation();
             }
             v.setVisibility(View.GONE);
+            setQuizesState();
             switch (actualQuiz.type){
                 case IMAGE:
+                    if(activeLayout!=null){
+                        categoryLayoutAnim = new FlipAnimation(activeLayout,imageQuizLayout,imageQuizText,actualQuiz.text,null);
+                        categoryLayoutAnim.setDuration(500);
+                        imageQuizLayout.startAnimation(categoryLayoutAnim);
+                    }else{
+                        imageQuizText.setText(actualQuiz.text);
+                    }
                     textQuizLayout.setVisibility(View.GONE);
                     imageQuizLayout.setVisibility(View.VISIBLE);
-                    imageQuizText.setText(actualQuiz.text);
+                    activeLayout = imageQuizLayout;
                     imageQuizCategory.setText(round.category.name);
                     try {
                         if(actualQuiz.imageUrl!=null){
@@ -133,12 +225,29 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
                     }
                     break;
                 case TEXT:
+                    if(activeLayout!=null){
+                        categoryLayoutAnim = new FlipAnimation(activeLayout,textQuizLayout, textQuizText, actualQuiz.text, null);
+                        categoryLayoutAnim.setDuration(500);
+                        textQuizLayout.startAnimation(categoryLayoutAnim);
+                    }else{
+                        textQuizText.setText(actualQuiz.text);
+                    }
+                    animLayout = textQuizLayout;
                     textQuizLayout.setVisibility(View.VISIBLE);
                     imageQuizLayout.setVisibility(View.GONE);
-                    textQuizText.setText(actualQuiz.text);
+
                     textQuizCategory.setText(round.category.name);
+                    activeLayout = textQuizLayout;
+//                    textQuizCategory.setBackgroundResource(0);
+//                    textQuizCategory.invalidate();
+//                    textQuizCategory.refreshDrawableState();
+//                    textQuizCategory.setBackgroundResource(R.drawable.category_shape);
+//                    textQuizCategory.refreshDrawableState();
+//                    textQuizCategory.invalidate();
+
                     loadAnswersToView(actualQuiz);
                     startTimer();
+//                    textQuizLayout.startAnimation(animationFlipIn);
                     break;
             }
             v.setVisibility(View.VISIBLE);
@@ -159,19 +268,42 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
 
     private void loadAnswersToView(GameRoundQuestionModel actualQuiz) {
         if(actualQuiz.answers.size()>0) {
-            btnA1.setText(actualQuiz.answers.get(0).text);
+            if(btn1Anim!=null){
+                btn1Anim.start(actualQuiz.answers.get(0).text);
+            }else{
+                btnA1.setText(actualQuiz.answers.get(0).text);
+                btn1Anim = new ButtonAnswerAnimation(btnA1,true, getActivity());
+            }
             btnA1.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
         }
         if(actualQuiz.answers.size()>1) {
-            btnA2.setText(actualQuiz.answers.get(1).text);
+            if(btn2Anim!=null){
+                btn2Anim.start(actualQuiz.answers.get(1).text);
+            }else{
+                btnA2.setText(actualQuiz.answers.get(1).text);
+                btn2Anim = new ButtonAnswerAnimation(btnA2,false, getActivity());
+            }
+//            btnA2.setText(actualQuiz.answers.get(1).text);
             btnA2.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
         }
         if(actualQuiz.answers.size()>2) {
-            btnA3.setText(actualQuiz.answers.get(2).text);
+            if(btn3Anim!=null){
+                btn3Anim.start(actualQuiz.answers.get(2).text);
+            }else{
+                btnA3.setText(actualQuiz.answers.get(2).text);
+                btn3Anim = new ButtonAnswerAnimation(btnA3,true, getActivity());
+            }
+//            btnA3.setText(actualQuiz.answers.get(2).text);
             btnA3.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
         }
         if(actualQuiz.answers.size()>3) {
-            btnA4.setText(actualQuiz.answers.get(3).text);
+            if(btn4Anim!=null){
+                btn4Anim.start(actualQuiz.answers.get(3).text);
+            }else{
+                btnA4.setText(actualQuiz.answers.get(3).text);
+                btn4Anim = new ButtonAnswerAnimation(btnA4,false, getActivity());
+            }
+//            btnA4.setText(actualQuiz.answers.get(3).text);
             btnA4.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
         }
         setAnswerButtonState(true);
@@ -209,23 +341,24 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     private void setAnswer(int i) {
         timer.cancel();
         setAnswerButtonState(false);
-        GameRoundQuestionAnswerModel answer = actualQuiz.answers.get(i);
-        actualQuiz.answer = answer;
-        saveAnswer(answer);
-        if(answer.isCorrect){
-            btns[i].setBackgroundColor(getResources().getColor(R.color.ttk_green));
-        }else {
-            btns[i].setBackgroundColor(getResources().getColor(R.color.ttk_red));
-            btns[findCorrectAnswer()].setBackgroundColor(getResources().getColor(R.color.ttk_green));
-            Animation animation1 = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
-            btns[findCorrectAnswer()].startAnimation(animation1);
+        if(i<actualQuiz.answers.size()) {
+            GameRoundQuestionAnswerModel answer = actualQuiz.answers.get(i);
+            actualQuiz.answer = answer;
+            saveAnswer(answer);
+            if (answer.isCorrect) {
+                btns[i].setBackgroundColor(getResources().getColor(R.color.ttk_green));
+            } else {
+                btns[i].setBackgroundColor(getResources().getColor(R.color.ttk_red));
+                btns[findCorrectAnswer()].setBackgroundColor(getResources().getColor(R.color.ttk_green));
+                Animation animation1 = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
+                btns[findCorrectAnswer()].startAnimation(animation1);
+            }
+            if (actualQuiz.oponentAnswer != null) {
+                int p = findAnswerById(actualQuiz.oponentAnswer.id);
+                if (p >= 0)
+                    viewOpponentName(btns[p]);
+            }
         }
-        if(actualQuiz.oponentAnswer!=null){
-            int p = findAnswerById(actualQuiz.oponentAnswer.id);
-            if(p>=0)
-            viewOpponentName(btns[p]);
-        }
-
     }
 
     private void viewOpponentName(Button btn) {
@@ -281,6 +414,10 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     private void setComponents() {
         imageQuizLayout = (RelativeLayout) v.findViewById(R.id.quiz_image_quiz_layout);
         textQuizLayout = (RelativeLayout) v.findViewById(R.id.quiz_text_quiz_layout);
+        q1State = v.findViewById(R.id.q1_state);
+        q2State = v.findViewById(R.id.q2_state);
+        q3State = v.findViewById(R.id.q3_state);
+        quizesStates = new View[]{q1State, q2State, q3State};
         imageQuizImage = (ImageView) imageQuizLayout.findViewById(R.id.quiz_image);
         imageQuizCategory = (TextView) imageQuizLayout.findViewById(R.id.quiz_image_quiz_category);
         imageQuizText = (TextView)imageQuizLayout.findViewById(R.id.quiz_image_quiz_text);
@@ -347,6 +484,7 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
 
             }
         });
+        blinkCurrentQuizStateAnim = AnimationUtils.loadAnimation(getContext(), R.anim.blink_quiz_state);
     }
 
     @Override

@@ -12,14 +12,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-            <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
+            <TextView
                 android:id="@+id/card_quiz_text_game"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ellipsize="none"
                 android:gravity="center"
                 android:maxLines="1"
-                android:textSize="100sp"
+                android:textSize="16dp"
                 android:text="Играет"
                 android:textAllCaps="true"
                 android:padding="5dp"

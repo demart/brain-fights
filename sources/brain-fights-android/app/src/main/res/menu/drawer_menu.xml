@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_first_fragment"
+            android:icon="@drawable/my_games"
+            android:title="Мои игры"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_second_fragment"
+            android:icon="@drawable/my_profile"
+            android:title="Мой профиль" />
+        <item
+            android:id="@+id/nav_third_fragment"
+            android:icon="@drawable/rating"
+            android:title="Рейтинг"
+            />
+        <!--<item-->
+
+            <!--android:id="@+id/nav_four_fragment2"-->
+            <!--android:icon="@drawable/about_info"-->
+            <!--android:title="О приложении"-->
+            <!--app:actionLayout="@layout/layout_green"-->
+            <!--android:gravity="top|center_vertical"-->
+            <!--app:showAsAction="always"-->
+
+            <!--/>-->
+        <item android:title="">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item app:actionLayout="@layout/layout_green"
+                    android:id="@+id/nav_four_fragment"
+                    android:icon="@drawable/about_info"
+                    android:title="О приложении"
+
+
+                    />
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>
+    <!--app:actionLayout="@layout/layout_green"-->
+    <!--android:gravity="top|center_vertical"-->
+    <!--app:showAsAction="always"-->

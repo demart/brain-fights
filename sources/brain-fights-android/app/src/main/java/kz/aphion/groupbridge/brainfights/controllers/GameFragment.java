@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
     public boolean gameEndNotification;
     Button btnSurrender;
     Button btnFriend;
+    LinearLayout playersLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v =inflater.inflate(R.layout.fragment_game, container, false);
@@ -57,10 +59,11 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
         rv = (RecyclerView)v.findViewById(R.id.game_round_list);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         loadingPanel = (RelativeLayout) v.findViewById(R.id.loadingPanel);
+        playersLayout = (LinearLayout) v.findViewById(R.id.players_layout);
         loadingPanel.setVisibility(View.VISIBLE);
         score = (TextView) v.findViewById(R.id.game_score_text);
-        meProfile = new GameUserProfileHelper(v.findViewById(R.id.game_me_profile_layout));
-        opponentProfile = new GameUserProfileHelper(v.findViewById(R.id.game_opponent_profile_layout));
+        meProfile = new GameUserProfileHelper(v.findViewById(R.id.game_me_profile_layout), getContext());
+        opponentProfile = new GameUserProfileHelper(v.findViewById(R.id.game_opponent_profile_layout), getContext());
         Button btnGame = (Button) v.findViewById(R.id.game_game_button);
         btnGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +85,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                 setFriendlyStatus();
             }
         });
+        playersLayout.setAlpha(0);
         LoadGameInfo();
 
         return v;
@@ -119,7 +123,11 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
     }
     private void setScore(){
         if(game!=null&&game.me!=null&&game.oponent!=null){
-            score.setText(game.me.correctAnswerCount+" : "+game.oponent.correctAnswerCount);
+            String meScore = "-";
+            if(game.me.correctAnswerCount!=null)meScore=String.valueOf(game.me.correctAnswerCount);
+            String opponentScore = "-";
+            if(game.oponent.correctAnswerCount!=null)opponentScore=String.valueOf(game.oponent.correctAnswerCount);
+            score.setText(meScore+" : "+opponentScore);
         }else{
             score.setText("0 : 0");
         }
@@ -135,6 +143,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                     setScore();
                     meProfile.setData(game.me.user);
                     opponentProfile.setData(game.oponent.user);
+                    playersLayout.setAlpha(1);
                     updateRoundList();
 //                    if(oldGame!=null){
 //                        if(oldGame!=null&&game!=null&&
@@ -240,7 +249,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                 cqf.game = game;
                 fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .add(R.id.container, cqf)
+                        .add(R.id.flContent, cqf)
                         //.addToBackStack(null)
                         .commit();
                 break;
@@ -251,7 +260,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                 categoryFragment.fromGame=true;
                 fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, categoryFragment)
+                        .replace(R.id.flContent, categoryFragment)
                         //.addToBackStack(null)
                         .commit();
                 break;

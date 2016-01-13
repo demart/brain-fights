@@ -292,7 +292,7 @@ public class RatingDepartmentChoiceFragment extends Fragment implements RestTask
         searchOrgStructureFragment.parent = department;
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, searchOrgStructureFragment)
+                .add(R.id.flContent, searchOrgStructureFragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(null)
                 .commit();
