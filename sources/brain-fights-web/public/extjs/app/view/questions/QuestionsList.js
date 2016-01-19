@@ -5,7 +5,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
     requires: [
    		'Ext.MessageBox',
    		'Ext.layout.container.Border',
-   		'Ext.toolbar.Paging',
+  
    		
    	    'BrainFightsConsole.view.questions.QuestionsListController',
    	    'BrainFightsConsole.view.questions.QuestionsEditWindow',
@@ -235,20 +235,6 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
 
                 	listeners: {
                 		viewready: function() {
-            	            var height = Ext.getBody().getSize().height - 265;
-            	    		console.log(height);
-            	    	    var rows = Math.floor(height / 25.0);
-            	    	    console.log(rows);
-            	    	    this.store.pageSize = rows;
-            	    		this.store.load();
-            	    	},
-            	    	
-            	    	resize: function() {
-            	            var height = Ext.getBody().getSize().height - 265;
-            	    		console.log(height);
-            	    		var rows = Math.floor(height / 25.0);
-            	    	    console.log(rows);
-            	    	    this.store.pageSize = rows;
             	    		this.store.load();
             	    	},
             	    	
@@ -312,15 +298,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 		
                 },
 ],
-bbar:            	 {
- 	xtype: 'pagingtoolbar',
-     store: 'QuestionStore',
-     displayInfo: true,
-     dock: 'bottom',
-     displayMsg: 'Показано записей {0} - {1} из {2}',
-     emptyMsg: "",
-     items:[]
- },
+
             },
 {
 region: 'center',

@@ -75,26 +75,10 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
                 	    
                 	    listeners: {
                 	    	viewready: function() {
-                	            var height = Ext.getBody().getSize().height - 215;
-                	    		console.log(height);
-                	    	    var rows = Math.floor(height / 25.0);
-                	    	    console.log(rows);
-                	    	    this.store.pageSize = rows;
                 	    		this.store.load();
                 	    	},
                 	    	
-                	    	resize: function() {
-                	            var height = Ext.getBody().getSize().height - 215;
-                	    		console.log(height);
-                	    		//console.log(grid.container.getHeight());
-                	    		//console.log(Ext.getCmp('categoryStoreId').getColumns());
-                	    		//var firstRow = this.getEl().select('tr.x-grid-row').elements[0].height;
-                	    		//console.log(firstRow);
-                	    	    var rows = Math.floor(height / 25.0);
-                	    	    console.log(rows);
-                	    	    this.store.pageSize = rows;
-                	    		this.store.load();
-                	    	},
+                	    	
                 	    	
                 	    	cellclick: function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
                 		        var record = iView.getRecord(iRowEl);
@@ -127,16 +111,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryList' ,{
 
                 
                    ],
-                   bbar: [
-                                          {
-        	    	xtype: 'pagingtoolbar',
-        	        store: 'CategoryStore',
-        	        region: 'south',
-        	        dock: 'bottom',
-        	        displayInfo: true,
-        	        displayMsg: 'Показано записей {0} - {1} из {2}',
-        	        items:[]
-        	    }],
+                  
                 
    
             },

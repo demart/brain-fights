@@ -109,22 +109,27 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
 	                
 	                var data = record.getData();
 	                console.log(data);
-	                Ext.Ajax.request({
-	    			    url: '/rest/category/store/create',
-	    			    jsonData : data,
-	    			    
-	    			    success: function(response){
-	    			    	Ext.MessageBox.alert('Успешно','Категория создана');
-							view.lookupReference('categoryEditWindow').hide();
-	    			    	Ext.getCmp('categoryStoreId').getStore().reload();
-	    	
-	    			     	 
-	    			    	
-	    			    },
-	    			    failure: function(batch) {
-	    					Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
-	    				}
-	    			});
+	                if (document.getElementById('testLabelUpload').innerHTML == '/public/images/no_image.jpg')
+	               	 Ext.Msg.alert('Внимание', 'Выберите изображение категории!');
+	                
+	                else {
+		                Ext.Ajax.request({
+		    			    url: '/rest/category/store/create',
+		    			    jsonData : data,
+		    			    
+		    			    success: function(response){
+		    			    	Ext.MessageBox.alert('Успешно','Категория создана');
+								view.lookupReference('categoryEditWindow').hide();
+		    			    	Ext.getCmp('categoryStoreId').getStore().reload();
+		    	
+		    			     	 
+		    			    	
+		    			    },
+		    			    failure: function(batch) {
+		    					Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
+		    				}
+		    			});
+	                }
 	        /*	grid.getStore().sync({
 					success: function() {
 						form.reset();
@@ -186,6 +191,7 @@ Ext.define('BrainFightsConsole.view.category.CategoryListController', {
          var record = grid.getSelectionModel().getSelection()[0];
          
          model.data.id = record.data.id;
+         
          
 		 if (document.getElementById('editImageControlCategory').innerHTML == 'yes') {
 			 model.data.imageUrl = document.getElementById('nowImageCategory').innerHTML;
