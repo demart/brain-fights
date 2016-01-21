@@ -1215,6 +1215,11 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 						else if (row.getCell(i).getCellType() == 5)
 							answer.setName(String.valueOf(row.getCell(i).getErrorCellValue()));
 						
+						if (StringUtils.isEmpty(answer.getName()) || answer.getName() == null) {
+							model.setControl(1);
+							answer.setName("Отсутствует ответ");
+						}
+						
 						
 						if (row.getCell(6) != null) {
 							double tmp = 0;
