@@ -36,7 +36,7 @@ public class Answer extends PersistentObject {
 	/**
 	 * Текст ответа
 	 */
-	@Column(length=100, nullable=false)
+	@Column(length=255, nullable=false)
 	private String name;
 	
 	/**

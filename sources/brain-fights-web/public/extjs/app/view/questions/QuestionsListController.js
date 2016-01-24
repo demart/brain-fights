@@ -443,9 +443,11 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
  		console.log(models);
 	
  		//var data = models.getData();
+	  	Ext.getCmp('saveImportQuestionId').disable();
  		
  		Ext.Ajax.request({
 		    url: '/rest/import/questions',
+            waitMsg: 'Загрузка...',
 		    jsonData : models,
 		    
 		    success: function(response){

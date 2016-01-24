@@ -19,6 +19,7 @@ POST	/rest/admin/users/store/create							AdmController.createAdminUser
 POST	/rest/admin/users/store/update							AdmController.updateAdminUser
 POST	/rest/admin/users/store/destroy							AdmController.destroyAdminUser
 GET 	/rest/category/store/read								AdmController.readCategoryList
+GET		/rest/category/forcombo/store/read						AdmController.readCategoryComboList
 POST	/rest/category/store/create								AdmController.createNewCategory
 POST	/rest/category/store/update								AdmController.updateCategory
 POST	/rest/category/store/destroy							AdmController.destroyCategory

@@ -118,13 +118,13 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsEditWindow', {
                 valueField: 'id',
                 anchor: '-15',
                 labelWidth: 130,
-                pageSize: 300,
+                pageSize: 10,
                 store: {
                     model: 'BrainFightsConsole.model.CategoryModel',
-                    pageSize: 300,
+                    pageSize: 10,
                     proxy: {
                         type: 'ajax',
-                        url: '/rest/category/store/read',
+                        url: '/rest/category/forcombo/store/read',
                         reader: {
                         	type: 'json',
                             rootProperty: 'data',

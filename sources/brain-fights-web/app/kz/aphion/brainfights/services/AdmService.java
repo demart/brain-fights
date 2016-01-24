@@ -243,6 +243,17 @@ public class AdmService {
 	 * @throws PlatformException
 	 */
 	public static List<Category> getCategoryList(int start, int limit) throws PlatformException {
+		return JPA.em().createQuery("from Category where deleted = 'FALSE' order by id asc").getResultList();
+	}
+	
+	/**
+	 * Список категорий из базы данных для выбора категории у вопроса
+	 * @param start
+	 * @param limit
+	 * @return
+	 * @throws PlatformException
+	 */
+	public static List<Category> getCategoryComboList(int start, int limit) throws PlatformException {
 		return JPA.em().createQuery("from Category where deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).getResultList();
 	}
 	
@@ -649,10 +660,10 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 	 */
 	public static List<Question> getQuestionsList(Long categoryId, int start, int limit) throws PlatformException{
 		if (categoryId == null) {
-			return JPA.em().createQuery("from Question where deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).getResultList();
+			return JPA.em().createQuery("from Question where deleted = 'FALSE' order by id asc").getResultList();
 		}
 		else
-			return JPA.em().createQuery("from Question where category.id = :categoryId and deleted = 'FALSE' order by id asc").setFirstResult(start).setMaxResults(limit).setParameter("categoryId", categoryId).getResultList();
+			return JPA.em().createQuery("from Question where category.id = :categoryId and deleted = 'FALSE' order by id asc").setParameter("categoryId", categoryId).getResultList();
 	}
 	
 
@@ -1204,6 +1215,11 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 						else if (row.getCell(i).getCellType() == 5)
 							answer.setName(String.valueOf(row.getCell(i).getErrorCellValue()));
 						
+						if (StringUtils.isEmpty(answer.getName()) || answer.getName() == null) {
+							model.setControl(1);
+							answer.setName("Отсутствует ответ");
+						}
+						
 						
 						if (row.getCell(6) != null) {
 							double tmp = 0;
@@ -1404,6 +1420,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			Question question = new Question();
 			
 			if (model.getControl() == 0) {
+				//System.out.println(model.getControl() + "-" + model.getCategoryId());
 				question.setText(model.getText());
 				question.setType(QuestionType.TEXT);
 				Category category = Category.findById(model.getCategoryId());
@@ -1415,7 +1432,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 						Answer tmp = new Answer();
 						tmp.setCorrect(answer.getCorrect());
 						tmp.setName(answer.getName());
-						//System.out.println(answer.getName());
+						//System.out.println(answer.getName() + "-" + answer.getCorrect());
 						tmp.setDeleted(false);
 						tmp.setQuestion(question);
 						question.getAnswers().add(tmp);
