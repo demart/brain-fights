@@ -29,10 +29,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+
 import kz.aphion.groupbridge.brainfights.models.UserProfile;
 import kz.aphion.groupbridge.brainfights.stores.CurrentUser;
 import kz.aphion.groupbridge.brainfights.stores.CurrentUserProfile;
 import kz.aphion.groupbridge.brainfights.utils.Const;
+import kz.aphion.groupbridge.brainfights.utils.UserProfileUtil;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -144,7 +147,13 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setMenuProfileInfo();
+        UserProfile currentUserProfile = CurrentUserProfile.getInstance();
+        try {
+            UserProfileUtil.setUserProfileUpData(currentUserProfile, mCurrentView, getContext());
+        } catch (ParseException e) {
+            Toast.makeText(getContext(),"Ошибка отрисовки пользователя "+e.getMessage(),Toast.LENGTH_LONG);
+        }
+//        setMenuProfileInfo();
     }
 
     private void setMenuProfileInfo(){

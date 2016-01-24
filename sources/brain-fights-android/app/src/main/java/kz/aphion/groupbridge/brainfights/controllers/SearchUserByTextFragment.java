@@ -124,7 +124,7 @@ public class SearchUserByTextFragment extends Fragment implements RestTask.RestT
                 public void run() {
                     List<SearchOrgStructModel> list = new ArrayList<>();
                     SearchOrgStructModel.addUserArrayToList(list, users);
-                    final SearchOrgStructureAdapter rvAdapter = new SearchOrgStructureAdapter(R.layout.card_search_orgstruct,list,SearchUserByTextFragment.this);
+                    final SearchOrgStructureAdapter rvAdapter = new SearchOrgStructureAdapter(R.layout.card_search_orgstruct,list,SearchUserByTextFragment.this, getContext());
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

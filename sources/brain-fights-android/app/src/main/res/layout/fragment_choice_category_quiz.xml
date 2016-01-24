@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/no_image"
+        android:background="@color/ttk_white"
         android:padding="10dp">
         <TextView
             android:id="@+id/category_quiz_c1_text"
@@ -21,7 +21,7 @@
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal|bottom"
             android:singleLine="false"
-            android:textColor="@color/ttk_white"
+            android:textColor="@color/ttk_green"
             />
     </LinearLayout>
     <LinearLayout
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/no_image"
+        android:background="@color/ttk_white"
         android:padding="10dp">
         <TextView
             android:id="@+id/category_quiz_c2_text"
@@ -41,7 +41,7 @@
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal|bottom"
             android:singleLine="false"
-            android:textColor="@color/ttk_white"
+            android:textColor="@color/ttk_green"
             />
     </LinearLayout>
     <LinearLayout
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/no_image"
+        android:background="@color/ttk_white"
         android:padding="10dp">
         <TextView
             android:id="@+id/category_quiz_c3_text"
@@ -61,7 +61,7 @@
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal|bottom"
             android:singleLine="false"
-            android:textColor="@color/ttk_white"
+            android:textColor="@color/ttk_green"
             />
     </LinearLayout>
 

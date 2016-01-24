@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.text.ParseException;
@@ -16,6 +19,7 @@ import java.util.List;
 
 import kz.aphion.groupbridge.brainfights.R;
 import kz.aphion.groupbridge.brainfights.models.GameModel;
+import kz.aphion.groupbridge.brainfights.utils.Const;
 import kz.aphion.groupbridge.brainfights.utils.Util;
 
 /**
@@ -164,9 +168,12 @@ public class GamesRecycleAdapter extends RecyclerView.Adapter<GamesRecycleAdapte
                 }
 //                holder.opponent.setText("против: "+game.oponent.user.getName());
                 holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.ttk_darkGary));
+                holder.avatar.setAlpha((float) 0.5);
                 break;
         }
         holder.gamePosition = position;
+        if(game.oponent.user.imageUrl!=null&&game.oponent.user.imageUrl.length()>0)
+            Picasso.with(context).load(Const.BASE_URL+game.oponent.user.imageUrl).into(holder.avatar);
     }
 
     @Override
@@ -187,6 +194,7 @@ public class GamesRecycleAdapter extends RecyclerView.Adapter<GamesRecycleAdapte
         public TextView status;
         public CardView cardView;
         ImageView gameIcon;
+        CircularImageView avatar;
 
         public ViewHolder(View itemView, final GamesRecycleOnClickCallback callback, final GamesListType gamesListType ) {
             super(itemView);
@@ -204,6 +212,7 @@ public class GamesRecycleAdapter extends RecyclerView.Adapter<GamesRecycleAdapte
             opponentName = (TextView) cardView.findViewById(R.id.gamer_name);
             opponentPosition = (TextView) cardView.findViewById(R.id.gamer_position);
             gameIcon = (ImageView) cardView.findViewById(R.id.game_icon);
+            avatar = (CircularImageView) cardView.findViewById(R.id.user_profile_avatar);
 //            activeAction = (TextView) cardView.findViewById(R.id.game_card_active_action);
 //            opponent = (TextView) cardView.findViewById(R.id.game_card_opponent);
 //            status = (TextView)cardView.findViewById(R.id.game_card_status);

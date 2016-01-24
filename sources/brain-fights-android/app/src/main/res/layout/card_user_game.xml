@@ -1,56 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+
+    >
+    <!--<ImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:src="@mipmap/ic_default_avatar"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:layout_weight="6"/>-->
+    <com.github.siyamed.shapeimageview.CircularImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/user_profile_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_default_avatar2"
+        android:scaleType="fitCenter"
+        app:siBorderWidth="0dp"
+        app:siBorderColor="@color/ttk_white"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_circle_small"
+        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3">
+        <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
+            android:id="@+id/game_user_profile_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="Alimzhan Nurpeissov"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="10"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_default_avatar"
-                android:scaleType="fitCenter"
-                android:layout_weight="6"/>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:weightSum="3">
-                <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
-                    android:id="@+id/game_user_profile_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Alimzhan Nurpeissov"
-                    android:layout_weight="1"
-                    android:ellipsize="none"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:layout_marginRight="@dimen/user_card_name_margin_right"
-                    android:textStyle="normal"
-                    android:layout_marginLeft="@dimen/user_card_margin_left"
-                    android:layout_marginTop="@dimen/user_card_margin_left"
-                    android:layout_marginBottom="@dimen/user_card_name_margin_bottom"
-                    android:textSize="100sp"
-                    android:textColor="@color/ttk_black"/>
-                <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
-                    android:id="@+id/game_user_profile_position"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="most important head"
-                    android:layout_weight="2"
-                    android:ellipsize="none"
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:layout_marginRight="@dimen/user_card_position_margin_right"
-                    android:layout_marginLeft="@dimen/user_card_position_margin_right"
-                    android:layout_marginBottom="@dimen/user_card_name_margin_bottom"
-                    android:textSize="100sp"/>
-            </LinearLayout>
+            android:ellipsize="none"
+            android:gravity="center"
+            android:maxLines="1"
+            android:layout_marginRight="@dimen/user_card_name_margin_right"
+            android:textStyle="normal"
+            android:layout_marginLeft="@dimen/user_card_margin_left"
+            android:layout_marginTop="@dimen/user_card_margin_left"
+            android:layout_marginBottom="@dimen/user_card_name_margin_bottom"
+            android:textSize="100sp"
+            android:textColor="@color/ttk_black"/>
+        <kz.aphion.groupbridge.brainfights.components.AutoResizeTextView
+            android:id="@+id/game_user_profile_position"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="most important head"
+            android:layout_weight="2"
+            android:ellipsize="none"
+            android:gravity="center"
+            android:maxLines="2"
+            android:layout_marginRight="@dimen/user_card_position_margin_right"
+            android:layout_marginLeft="@dimen/user_card_position_margin_right"
+            android:layout_marginBottom="@dimen/user_card_name_margin_bottom"
+            android:textSize="100sp"
+            />
+    </LinearLayout>
 
 
 
-        </LinearLayout>
+</LinearLayout>
 

@@ -25,6 +25,7 @@ public class SplashActivity extends AppCompatActivity implements RestTask.RestTa
         setContentView(R.layout.activity_splash);
         CurrentUser.init(this);
         CurrentUser currentUser = CurrentUser.getInstance();
+
         if(currentUser==null){
             StartLoginActivity();
         }else if(currentUser.getAuthToken()==null){
@@ -63,6 +64,11 @@ public class SplashActivity extends AppCompatActivity implements RestTask.RestTa
             if (taskResult.getTaskStatus() == RestTask.TaskStatus.SUCCESS) {
                 StatusSingle<UserProfile> response = (StatusSingle<UserProfile>) taskResult.getResponseData();
                 if (response.getStatus() == ResponseStatus.SUCCESS) {
+//                    try {
+//                        Thread.sleep(30000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                     MainActivity.StartMainActivity(this);
                 } else {
                     StartLoginActivity();

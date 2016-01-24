@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -74,12 +75,13 @@ public class CategoryFragment extends Fragment implements RestTask.RestTaskCallb
             if(category!=null){
                 TextView name = (TextView) v.findViewById(R.id.category_quiz_text);
                 name.setText(category.name);
-                LinearLayout layout = (LinearLayout) v.findViewById(R.id.category_quiz_layout);
+                RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.category_quiz_layout);
+                ImageView categoryImage = (ImageView)v.findViewById(R.id.category_quiz_image);
                 if(category.imageUrl!=null){
-                    Picasso.with(getContext()).load(Const.BASE_URL+category.imageUrl).into(Util.getTargetLayoutBg(layout));
+                    Picasso.with(getContext()).load(Const.BASE_URL+category.imageUrl).into(categoryImage);
                 }else if(category.imageUrlBase64!=null){
                     try {
-                        Picasso.with(getContext()).load(new String(Base64.decode(category.imageUrlBase64, Base64.DEFAULT), "UTF-8")).into(Util.getTargetLayoutBg(layout));
+                        Picasso.with(getContext()).load(new String(Base64.decode(category.imageUrlBase64, Base64.DEFAULT), "UTF-8")).into(categoryImage);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -103,7 +105,7 @@ public class CategoryFragment extends Fragment implements RestTask.RestTaskCallb
         quizFragment.fromGame=true;
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, quizFragment)
+                .add(R.id.flContent, quizFragment)
                 .commit();
     }
 

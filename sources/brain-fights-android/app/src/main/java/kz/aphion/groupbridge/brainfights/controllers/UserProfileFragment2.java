@@ -261,7 +261,7 @@ public class UserProfileFragment2 extends Fragment implements RestTask.RestTaskC
         fragment.profile = user;
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(R.id.flContent, fragment)
                 .addToBackStack(null)
                 .commit();
     }
