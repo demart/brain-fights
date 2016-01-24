@@ -66,9 +66,9 @@ public class GcmManager {
 						
 						Result result = sender.send(message.getMessage(), message.getDeviceToken(), RETRY_COUNT);
 						if (result.getErrorCodeName() == null || "".equals(result.getErrorCodeName())) {
-		                    System.out.println(message.toString() + "GCM Notification is sent successfully" + result.toString());
+							Logger.info(message.toString() + "GCM Notification is sent successfully" + result.toString());
 		                } else {
-		                	System.out.println("Error occurred while sending push notification :" + result.getErrorCodeName());
+		                	Logger.error("Error occurred while sending push notification :" + result.getErrorCodeName());
 		                }
 					} catch (InterruptedException | IOException e) {
 						Logger.error("Error sending push to google, ex: " + e.getMessage());
