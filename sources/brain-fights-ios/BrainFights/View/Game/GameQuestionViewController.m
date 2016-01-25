@@ -433,6 +433,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO Show Error Alert
+            if ([response.errorCode isEqualToString:@"002"]) {
+                // Игра закончена
+                [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+            }
         }
         
         [DejalBezelActivityView removeViewAnimated:YES];
@@ -742,6 +746,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO Show Error Alert
+            if ([response.errorCode isEqualToString:@"002"]) {
+                // Игра закончена
+                [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+            }
         }
         [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {

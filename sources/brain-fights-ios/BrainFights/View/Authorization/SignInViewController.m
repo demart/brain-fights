@@ -122,8 +122,11 @@
         
         
     } onFailure:^(NSError *error) {
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(signInAction)];
-        [DejalBezelActivityView removeViewAnimated:NO];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        NSString* message = [[NSString alloc] initWithFormat:@"Операция завершилась с ошибкой. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self showAlertWithTitle:@"Ошибка" andMessage:message];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(signInAction)];
+
     }];
 }
 

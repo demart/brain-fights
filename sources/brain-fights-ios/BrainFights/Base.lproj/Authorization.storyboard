@@ -22,10 +22,10 @@
                                 <rect key="frame" x="20" y="0.0" width="560" height="600"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="oeM-EX-R1a">
-                                        <rect key="frame" x="130" y="15" width="300" height="300"/>
+                                        <rect key="frame" x="184" y="-19" width="192" height="185"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="300" id="48l-TM-CCo"/>
-                                            <constraint firstAttribute="width" constant="300" id="y7Z-LK-8Z7"/>
+                                            <constraint firstAttribute="height" constant="185" id="48l-TM-CCo"/>
+                                            <constraint firstAttribute="width" constant="192" id="y7Z-LK-8Z7"/>
                                         </constraints>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Логин" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t9u-Td-6uM">
@@ -63,16 +63,25 @@
                                             <action selector="signInButtonAction:" destination="vIm-7d-Fwv" eventType="touchUpInside" id="UFa-oA-DlH"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="corpQIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kJP-cW-fcS">
+                                        <rect key="frame" x="155" y="139" width="250" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="nAl-BQ-fqK"/>
+                                            <constraint firstAttribute="width" constant="250" id="zfq-od-luq"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="oeM-EX-R1a" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Nfa-3e-2lI"/>
                                     <constraint firstItem="zaN-0l-Bgn" firstAttribute="top" secondItem="t9u-Td-6uM" secondAttribute="bottom" constant="8" id="OOQ-au-Oxt"/>
                                     <constraint firstItem="zaN-0l-Bgn" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Ppt-MS-3mI"/>
+                                    <constraint firstItem="kJP-cW-fcS" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="Qxq-rO-ehz"/>
+                                    <constraint firstItem="oeM-EX-R1a" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="WEr-nf-T2l"/>
                                     <constraint firstItem="t9u-Td-6uM" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="WYB-Wb-EvX"/>
-                                    <constraint firstItem="oeM-EX-R1a" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="15" id="mBz-JP-iow"/>
+                                    <constraint firstItem="oeM-EX-R1a" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="-19" id="cbU-Ab-bGF"/>
+                                    <constraint firstItem="kJP-cW-fcS" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="139" id="nWv-tm-lhs"/>
                                     <constraint firstItem="TIc-JW-kM2" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="qWL-i1-bvr"/>
-                                    <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="oeM-EX-R1a" secondAttribute="bottom" constant="33" id="tcJ-qO-QsN"/>
+                                    <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="kJP-cW-fcS" secondAttribute="bottom" constant="109" id="uHt-hg-5L4"/>
                                     <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="zaN-0l-Bgn" secondAttribute="bottom" constant="33" id="z5y-JW-RVe"/>
                                 </constraints>
                             </scrollView>
@@ -118,32 +127,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="UoD-Uh-bpx">
-                                <rect key="frame" x="125" y="125" width="350" height="350"/>
+                                <rect key="frame" x="180" y="-30" width="241" height="232"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="350" id="O2H-vT-ss2"/>
-                                    <constraint firstAttribute="width" constant="350" id="exo-kV-IVg"/>
+                                    <constraint firstAttribute="height" constant="232" id="O2H-vT-ss2"/>
+                                    <constraint firstAttribute="width" constant="241" id="exo-kV-IVg"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ake-1y-IZO">
-                                <rect key="frame" x="214.5" y="483" width="201" height="71"/>
+                                <rect key="frame" x="214" y="450" width="201" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="FhI-Kt-61E"/>
                                     <constraint firstAttribute="height" constant="71" id="bBi-bo-tEu"/>
                                 </constraints>
                             </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eMM-Tr-yVb">
-                                <rect key="frame" x="282" y="401" width="37" height="37"/>
+                                <rect key="frame" x="282" y="393" width="37" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="1KX-G9-XpT"/>
+                                    <constraint firstAttribute="width" constant="37" id="TKL-jv-rHo"/>
+                                </constraints>
                                 <color key="color" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="corpQIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CLm-MB-rli">
+                                <rect key="frame" x="175" y="250" width="250" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="3lW-kA-BG8"/>
+                                    <constraint firstAttribute="height" constant="100" id="cVG-ZF-gqp"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerY" secondItem="1eD-jF-jwT" secondAttribute="centerY" id="B0v-Ro-2rg"/>
-                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="UoD-Uh-bpx" secondAttribute="bottom" constant="8" id="F19-R5-99a"/>
-                            <constraint firstItem="eMM-Tr-yVb" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="HZl-cu-I7K"/>
-                            <constraint firstItem="ake-1y-IZO" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" constant="15" id="IOn-c0-khf"/>
-                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="eMM-Tr-yVb" secondAttribute="bottom" constant="45" id="JNu-BW-8rE"/>
-                            <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="m7f-kl-FZd"/>
+                            <constraint firstItem="UoD-Uh-bpx" firstAttribute="top" secondItem="1eD-jF-jwT" secondAttribute="topMargin" constant="-30" id="7h9-t3-ays"/>
+                            <constraint firstItem="eMM-Tr-yVb" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="7os-aA-d3z"/>
+                            <constraint firstItem="CLm-MB-rli" firstAttribute="centerY" secondItem="1eD-jF-jwT" secondAttribute="centerY" id="HzN-KO-pM1"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" constant="15" id="Jfb-1Z-N1w"/>
+                            <constraint firstItem="CLm-MB-rli" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="LcE-qE-pPV"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="eMM-Tr-yVb" secondAttribute="bottom" constant="20" id="UzO-U0-99T"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="CLm-MB-rli" secondAttribute="bottom" constant="100" id="kFa-fv-9Me"/>
+                            <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="yN7-2Y-MsJ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -156,6 +178,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="corpQIcon" width="1028" height="346"/>
         <image name="splashScreen" width="781" height="781"/>
         <image name="transtelecomLogo" width="300" height="110"/>
     </resources>

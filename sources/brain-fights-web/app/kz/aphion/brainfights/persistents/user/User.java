@@ -243,6 +243,18 @@ public class User extends PersistentObject {
 		return null;
 	}
 	
+	public String getLastActivityTimeISO8601() {
+		if (lastActivityTime != null) {
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			df.setTimeZone(tz);
+			String timeAsISO = df.format(lastActivityTime.getTime());
+			return timeAsISO;
+		}
+		return null;
+	}
+	
+	
 	public String getName() {
 		return name;
 	}

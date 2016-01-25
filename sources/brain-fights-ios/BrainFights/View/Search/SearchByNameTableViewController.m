@@ -200,23 +200,31 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите..."];
     
     [GameService createGameInvitation:userId onSuccess:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:YES];
         if ([response.status isEqualToString:SUCCESS]) {
             [self.navigationController popToRootViewControllerAnimated:YES];
+            return;
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
-            [DejalBezelActivityView removeViewAnimated:NO];
             [[AppDelegate globalDelegate] showAuthorizationView:self];
+            return;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            [DejalBezelActivityView removeViewAnimated:NO];
-            // TODO SHOW ALERT
+            NSString* message = [[NSString alloc] initWithFormat:@"Не удалось отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
+            return;
         }
+        
+        NSString* message = [[NSString alloc] initWithFormat:@"Не удалось отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
         // TODO SHOW ERROR
+        NSString* message = [[NSString alloc] initWithFormat:@"Не удалось отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
     
 }

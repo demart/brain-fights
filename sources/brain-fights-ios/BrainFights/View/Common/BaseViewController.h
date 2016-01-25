@@ -14,4 +14,7 @@
 
 - (void) presentErrorViewControllerWithTryAgainSelector:(SEL) tryAgainSelector;
 
+// Показывает сообщение об ошибке
+- (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message;
+
 @end

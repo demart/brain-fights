@@ -58,6 +58,7 @@
             }
             
         } onFailure:^(NSError *error) {
+            //[self showAlertWithTitle:@"Ошибка" andMessage:@"Не удалось получить профиль пользователя. Проверьте соединение с интернетом, закройте и войдите в приложение снова."];
             // Если ошибка, то скорее всего сети нужно показать скрин и передать функцию на перевызов
             [self presentErrorViewControllerWithTryAgainSelector:@selector(checkAuthorization)];
         }];

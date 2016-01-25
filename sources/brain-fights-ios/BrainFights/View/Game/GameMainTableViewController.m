@@ -117,14 +117,18 @@ static UIRefreshControl *refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewController];
+            NSString* message = [[NSString alloc] initWithFormat:@"Не удалось загрузить список игр. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
+//            [self presentErrorViewController];
         }
         
     } onFailure:^(NSError *error) {
         if (refreshControl != nil)
             [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewController];
+        NSString* message = [[NSString alloc] initWithFormat:@"Операция завершилась с ошибкой. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
+        //[self presentErrorViewController];
     }];
 }
 
