@@ -37,7 +37,7 @@
 }
 
 
-- (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message {
+- (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message  {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -49,5 +49,17 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+// Показывает сообщение об ошибке
+- (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message onAction:(void (^)(void))onActionBlock {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              onActionBlock();
+                                                          }];
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 @end

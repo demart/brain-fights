@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BrainFights/View/Rating/RatingTableViewController.m"
-            timestampString = "472115212.636897"
+            timestampString = "475403745.227797"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "-loadDepartmentTypesAndDepartments"
             landmarkType = "5">
          </BreakpointContent>

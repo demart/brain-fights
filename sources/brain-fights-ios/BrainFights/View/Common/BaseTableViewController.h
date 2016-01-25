@@ -17,4 +17,5 @@
 
 - (void) presentSimpleAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message;
 
+- (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message onAction:(void (^)(void))onActionBlock;
 @end

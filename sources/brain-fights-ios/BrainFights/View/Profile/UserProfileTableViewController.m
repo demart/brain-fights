@@ -107,6 +107,7 @@ static UIRefreshControl *refreshControl;
     }
 
     [[UserService sharedInstance] retrieveUserProfileByIdAsync:userId onSuccess:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:YES];
         if (refreshControl != nil)
             [refreshControl endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
@@ -126,14 +127,17 @@ static UIRefreshControl *refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить профиль игрока. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
-        [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
         if (refreshControl != nil)
             [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(reloadProfile)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить профиль игрока. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -190,11 +194,15 @@ static UIRefreshControl *refreshControl;
             [DejalBezelActivityView removeViewAnimated:NO];
             // TODO SHOW ALERT
             //            [self presentErrorViewControllerWithTryAgainSelector:@selector(playAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(playAction)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(playAction)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
     
 }
@@ -215,11 +223,15 @@ static UIRefreshControl *refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(addToFriendsAction)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(addToFriendsAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке добавить в друзья. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(addToFriendsAction)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(addToFriendsAction)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке добавить в друзья. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -239,11 +251,15 @@ static UIRefreshControl *refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(removeFromFriendsAction)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(removeFromFriendsAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке убрать из друзей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(removeFromFriendsAction)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(removeFromFriendsAction)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке убрать из друзей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 

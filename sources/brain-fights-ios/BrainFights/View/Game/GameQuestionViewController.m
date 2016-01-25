@@ -68,8 +68,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     [super viewDidLoad];
     
     self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
-//    self.view.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
-//    self.questionView.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
     self.questionView.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
     self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
@@ -79,10 +77,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     [self initHeader];
     [self initTapGestureRecognizer];
 
-    //[self.progressView setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
     [self.progressView setBackgroundColor:[UIColor orangeColor]];
-    
-    //[self initCategoryTitleView];
     
     self.state = STATE_WAITING_START;
     [self initNextStep];
@@ -234,16 +229,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (gameRoundQuestionModel.answer != nil) {
         if (gameRoundQuestionModel.answer.isCorrect) {
             targetView.backgroundColor = [UIColor greenColor];
-//            targetView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
         } else {
             targetView.backgroundColor = [UIColor redColor];
-//            targetView.backgroundColor = [Constants SYSTEM_COLOR_RED];
         }
     } else {
         targetView.backgroundColor = [UIColor whiteColor];
-//        targetView.backgroundColor = [UIColor lightGrayColor];
-//        targetView.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
-//        targetView.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
     }
 }
 
@@ -349,7 +339,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
-        //[self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
     }
 
     if (self.state == STATE_WAITING_ANSWER_2) {
@@ -360,7 +349,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
-//        [self showTopTipWithText:@"Нажмите на вопрос для продолжения"];
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
@@ -371,7 +359,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
                                                            selector:@selector(showPressToCompleteRoundToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
-//        [self showTopTipWithText:@"Вы ответили на все вопросы, нажимте на вопрос, чтобы продолжить"];
     }
     
     // Любые другие нажатия, например в момент ожидания перехода к следующему вопросу будут игнорироваться
@@ -417,6 +404,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Сохраняем Ваш ответ..."];
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:userAnswer.id onSuccess:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
             self.lastAnswerResult = result;
@@ -432,17 +421,26 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // TODO Show Error Alert
             if ([response.errorCode isEqualToString:@"002"]) {
                 // Игра закончена
                 [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+            } else {
+                NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить ответ на сервер. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+                [self showAlertWithTitle:@"Ошибка" andMessage:message onAction:^{
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+                    }];
+                }];
             }
         }
-        
-        [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
-        // TODO Show ERROR
-        [DejalBezelActivityView removeViewAnimated:YES];
+        [DejalBezelActivityView removeViewAnimated:NO];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить ответ на сервер. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self showAlertWithTitle:@"Ошибка" andMessage:message onAction:^{
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+            }];
+        }];
     }];
     
 }
@@ -453,7 +451,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.answerViews[answerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
              [self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
-             //[self.answerViews[answerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
              [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
          } completion:^(BOOL finished) {
          }];
@@ -462,7 +459,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.answerViews[correctAnswerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
              [self.answerViews[correctAnswerIndex] setBackgroundColor:[UIColor greenColor]];
-             //[self.answerViews[correctAnswerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
              [self.answerViewTexts[correctAnswerIndex] setTextColor:[UIColor whiteColor]];
              
          } completion:^(BOOL finished) {
@@ -574,9 +570,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if (answerView.isHidden)
             [answerView setHidden:NO];
         [answerView setBackgroundColor:[UIColor whiteColor]];
-        //[answerView setBackgroundColor:[UIColor grayColor]];
-        //[answerView setBackgroundColor:[Constants SYSTEM_COLOR_LIGHTER_GREY]];
-        //[answerView setBackgroundColor:[Constants SYSTEM_COLOR_WHITE]];
         
     }
     if (self.progressView.isHidden)
@@ -724,6 +717,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // TODO show loader
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Сохраняем Ваш ответ..."];
     [GameService answerOnQuestion:game.id withRound:gameRound.id withQuestionId:question.id withAnswer:QUESTION_WITHOUT_ANSWER_ID onSuccess:^(ResponseWrapperModel *response) {
+        
+        [DejalBezelActivityView removeViewAnimated:YES];
+        
         if ([response.status isEqualToString:SUCCESS]) {
             GamerQuestionAnswerResultModel *result = (GamerQuestionAnswerResultModel*)response.data;
             self.lastAnswerResult = result;
@@ -749,12 +745,23 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             if ([response.errorCode isEqualToString:@"002"]) {
                 // Игра закончена
                 [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+            } else {
+                NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить ответ на сервер. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+                [self showAlertWithTitle:@"Ошибка" andMessage:message onAction:^{
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+                    }];
+                }];
             }
         }
-        [DejalBezelActivityView removeViewAnimated:YES];
     } onFailure:^(NSError *error) {
-        // TODO Show ERROR
-        [DejalBezelActivityView removeViewAnimated:YES];
+        [DejalBezelActivityView removeViewAnimated:NO];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить ответ на сервер. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self showAlertWithTitle:@"Ошибка" andMessage:message onAction:^{
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+            }];
+        }];
     }];
 }
 

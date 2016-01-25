@@ -17,4 +17,7 @@
 // Показывает сообщение об ошибке
 - (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message;
 
+// Показывает сообщение об ошибке
+- (void) showAlertWithTitle:(NSString*)title andMessage:(NSString*) message onAction:(void (^)(void))onActionBlock;
+
 @end
