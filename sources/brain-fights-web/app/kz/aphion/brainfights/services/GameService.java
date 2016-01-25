@@ -929,6 +929,8 @@ public class GameService {
 		System.out.println("hiGamerScores="+hiGamerScores);
 		int lowGamerScores = lowGamer.getUser().getScore();
 		System.out.println("lowGamerScores="+lowGamerScores);
+		System.out.println("hiGamer.getCorrectAnswerCount()="+hiGamer.getCorrectAnswerCount());
+		System.out.println("lowGamer.getCorrectAnswerCount()="+lowGamer.getCorrectAnswerCount());
 		int diff = hiGamer.getCorrectAnswerCount()-lowGamer.getCorrectAnswerCount();
 		System.out.println("diff="+diff);
 		float prop;
