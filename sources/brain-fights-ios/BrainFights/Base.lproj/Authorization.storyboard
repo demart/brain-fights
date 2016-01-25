@@ -64,9 +64,9 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="corpQIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kJP-cW-fcS">
-                                        <rect key="frame" x="155" y="139" width="250" height="100"/>
+                                        <rect key="frame" x="155" y="155" width="250" height="84"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="nAl-BQ-fqK"/>
+                                            <constraint firstAttribute="height" constant="84" id="nAl-BQ-fqK"/>
                                             <constraint firstAttribute="width" constant="250" id="zfq-od-luq"/>
                                         </constraints>
                                     </imageView>
@@ -79,7 +79,7 @@
                                     <constraint firstItem="oeM-EX-R1a" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="WEr-nf-T2l"/>
                                     <constraint firstItem="t9u-Td-6uM" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="WYB-Wb-EvX"/>
                                     <constraint firstItem="oeM-EX-R1a" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="-19" id="cbU-Ab-bGF"/>
-                                    <constraint firstItem="kJP-cW-fcS" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="139" id="nWv-tm-lhs"/>
+                                    <constraint firstItem="kJP-cW-fcS" firstAttribute="top" secondItem="Sih-EV-NCP" secondAttribute="top" constant="155" id="nWv-tm-lhs"/>
                                     <constraint firstItem="TIc-JW-kM2" firstAttribute="centerX" secondItem="Sih-EV-NCP" secondAttribute="centerX" id="qWL-i1-bvr"/>
                                     <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="kJP-cW-fcS" secondAttribute="bottom" constant="109" id="uHt-hg-5L4"/>
                                     <constraint firstItem="TIc-JW-kM2" firstAttribute="top" secondItem="zaN-0l-Bgn" secondAttribute="bottom" constant="33" id="z5y-JW-RVe"/>
@@ -134,14 +134,14 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transtelecomLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ake-1y-IZO">
-                                <rect key="frame" x="214" y="450" width="201" height="71"/>
+                                <rect key="frame" x="214" y="458" width="201" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="FhI-Kt-61E"/>
                                     <constraint firstAttribute="height" constant="71" id="bBi-bo-tEu"/>
                                 </constraints>
                             </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eMM-Tr-yVb">
-                                <rect key="frame" x="282" y="393" width="37" height="37"/>
+                                <rect key="frame" x="282" y="401" width="37" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="1KX-G9-XpT"/>
                                     <constraint firstAttribute="width" constant="37" id="TKL-jv-rHo"/>
@@ -149,10 +149,10 @@
                                 <color key="color" red="0.0" green="0.69019607839999997" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="corpQIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CLm-MB-rli">
-                                <rect key="frame" x="175" y="250" width="250" height="100"/>
+                                <rect key="frame" x="175" y="258" width="250" height="84"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="3lW-kA-BG8"/>
-                                    <constraint firstAttribute="height" constant="100" id="cVG-ZF-gqp"/>
+                                    <constraint firstAttribute="height" constant="84" id="cVG-ZF-gqp"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -164,7 +164,7 @@
                             <constraint firstItem="ake-1y-IZO" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" constant="15" id="Jfb-1Z-N1w"/>
                             <constraint firstItem="CLm-MB-rli" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="LcE-qE-pPV"/>
                             <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="eMM-Tr-yVb" secondAttribute="bottom" constant="20" id="UzO-U0-99T"/>
-                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="CLm-MB-rli" secondAttribute="bottom" constant="100" id="kFa-fv-9Me"/>
+                            <constraint firstItem="ake-1y-IZO" firstAttribute="top" secondItem="CLm-MB-rli" secondAttribute="bottom" constant="116" id="kFa-fv-9Me"/>
                             <constraint firstItem="UoD-Uh-bpx" firstAttribute="centerX" secondItem="1eD-jF-jwT" secondAttribute="centerX" id="yN7-2Y-MsJ"/>
                         </constraints>
                     </view>

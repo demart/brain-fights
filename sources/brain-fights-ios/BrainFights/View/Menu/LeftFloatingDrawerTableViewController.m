@@ -77,6 +77,7 @@ static const CGFloat kJVTableViewTopInset = 0.0;
         
         UserProfileModel *userProfileMdodel = [[UserService sharedInstance] getUserProfile];
         [cell initCell:userProfileMdodel];
+        [cell.lastActivityTimeLabel setHidden:YES];
         
         return cell;
     }

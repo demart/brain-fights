@@ -174,4 +174,12 @@
 // Время последнего обновления в формате
 -(NSDate*) getLastStatisticsUpdateDate;
 
+/**
+ * Время последнего активности пользователя
+ */
+@property NSString *lastActivityTime;
+
+// Время последней активности пользователя в формате даты
+-(NSDate*) getLastActivityTime;
+
 @end
