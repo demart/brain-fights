@@ -24,7 +24,7 @@
 
 +(void)saveImageToLocalCache:(NSString *)imageName withData:(UIImage*)uiImage {
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* path = [[NSString alloc] initWithFormat: @"%@/Images/%@", documentsPath, imageName];
+    NSString* path = [[NSString alloc] initWithFormat: @"%@/Images%@", documentsPath, imageName];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:[path stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error];
@@ -47,7 +47,7 @@
 +(UIImage *)loadImageFromLocalCache:(NSString *)imageName {
     //    NSLog(@"loadImageFromLocalCache with %@", imageName);
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* path = [[NSString alloc] initWithFormat: @"%@/Images/%@", documentsPath, imageName];
+    NSString* path = [[NSString alloc] initWithFormat: @"%@/Images%@", documentsPath, imageName];
     
     //return nil;
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];

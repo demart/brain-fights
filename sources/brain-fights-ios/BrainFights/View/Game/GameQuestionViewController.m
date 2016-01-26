@@ -55,6 +55,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 @property NSMutableDictionary *loadImageOperations;
 @property NSOperationQueue *loadImageOperationQueue;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressBarConstraint;
 
 @property UIImage *loadingImage;
 
@@ -228,9 +229,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 -(void) fillColorOnHeaderQuestionsView:(GameRoundQuestionModel*)gameRoundQuestionModel onView:(UIView*)targetView {
     if (gameRoundQuestionModel.answer != nil) {
         if (gameRoundQuestionModel.answer.isCorrect) {
-            targetView.backgroundColor = [UIColor greenColor];
+            //targetView.backgroundColor = [UIColor greenColor];
+            targetView.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
         } else {
-            targetView.backgroundColor = [UIColor redColor];
+            //targetView.backgroundColor = [UIColor redColor];
+            targetView.backgroundColor = [Constants SYSTEM_COLOR_RED];
         }
     } else {
         targetView.backgroundColor = [UIColor whiteColor];
@@ -334,31 +337,37 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (self.state == STATE_WAITING_ANSWER_1) {
         [self processSelectedAnswer:0 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
+        /*
         self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                              target:self
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
+         */
     }
 
     if (self.state == STATE_WAITING_ANSWER_2) {
         [self processSelectedAnswer:1 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
+        /*
         self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                              target:self
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
+         */
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
         [self processSelectedAnswer:2 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
+        /*
         self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                              target:self
                                                            selector:@selector(showPressToCompleteRoundToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
+         */
     }
     
     // Любые другие нажатия, например в момент ожидания перехода к следующему вопросу будут игнорироваться
@@ -372,7 +381,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void) showPressToCompleteRoundToolTip:(NSTimer*) timer {
     [self showTopTipWithText:@"Вы ответили на все вопросы, нажимте на вопрос, чтобы продолжить"];
 }
-
 
 
 -(void) processSelectedAnswer:(NSInteger)questionIndex withAnswerIndex:(NSInteger)answerIndex {
@@ -414,6 +422,20 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             // Если игра закончилась то сообщить игроку об этом
             [self initHeader];
             [self.goForwardImageView setHidden:NO];
+            
+            if (questionIndex < 2) {
+                self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                                     target:self
+                                                                   selector:@selector(showPressToContinueToolTip:)
+                                                                   userInfo:nil
+                                                                    repeats:NO];
+            } else {
+                self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                                     target:self
+                                                                   selector:@selector(showPressToCompleteRoundToolTip:)
+                                                                   userInfo:nil
+                                                                    repeats:NO];
+            }
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
@@ -450,7 +472,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (answerIndex == correctAnswerIndex) {
         [UIView transitionWithView:self.answerViews[answerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
-             [self.answerViews[answerIndex] setBackgroundColor:[UIColor greenColor]];
+             [self.answerViews[answerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
              [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
          } completion:^(BOOL finished) {
          }];
@@ -458,7 +480,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     } else {
         [UIView transitionWithView:self.answerViews[correctAnswerIndex] duration:.5 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
-             [self.answerViews[correctAnswerIndex] setBackgroundColor:[UIColor greenColor]];
+             [self.answerViews[correctAnswerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
              [self.answerViewTexts[correctAnswerIndex] setTextColor:[UIColor whiteColor]];
              
          } completion:^(BOOL finished) {
@@ -466,7 +488,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
         [UIView transitionWithView:self.answerViews[answerIndex] duration:.2 options:UIViewAnimationOptionCurveEaseInOut animations:
          ^{
-             [self.answerViews[answerIndex] setBackgroundColor:[UIColor redColor]];
+             [self.answerViews[answerIndex] setBackgroundColor:[Constants SYSTEM_COLOR_RED]];
              [self.answerViewTexts[answerIndex] setTextColor:[UIColor whiteColor]];
          } completion:^(BOOL finished) {
          }];
@@ -544,6 +566,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.questionView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
             [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[0] withQuestionIndex:0];
         } completion:^(BOOL finished) {
+            [self hideTopTip];
         }];
     }
     
@@ -552,6 +575,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.questionView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
             [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[1] withQuestionIndex:1];
         } completion:^(BOOL finished) {
+            [self hideTopTip];
         }];
     }
     
@@ -560,8 +584,10 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [UIView transitionWithView:self.questionView duration:1.0 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
             [self prepareViewForAnswerQuestion:self.gameRoundModel.questions[2] withQuestionIndex:2];
         } completion:^(BOOL finished) {
+            [self hideTopTip];
         }];
     }
+    
 }
 
 - (void) prepareViewForAnswerQuestion:(GameRoundQuestionModel*)question withQuestionIndex:(NSInteger)questionIndex {
@@ -639,17 +665,18 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 // инициализируем таймер для автоматического ответа если чувак сам пролетел
 -(void) initTimers {
+    
+    self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                          target:self
+                                                        selector:@selector(changeProgressView:)
+                                                        userInfo:nil
+                                                         repeats:YES];
+    
     self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:30.0
                                      target:self
                                    selector:@selector(expiredTimeForWaitingAnswer:)
                                    userInfo:nil
                                     repeats:NO];
-    
-    self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.2
-                                     target:self
-                                    selector:@selector(changeProgressView:)
-                                    userInfo:nil
-                                    repeats:YES];
 }
 
 -(void) expiredTimeForWaitingAnswer:(NSTimer *)timer {
@@ -659,11 +686,13 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:0];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
+        /*
         self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                              target:self
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
+         */
     }
     
     if (self.state == STATE_WAITING_ANSWER_2) {
@@ -672,11 +701,13 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:1];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
+        /*
         self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                              target:self
                                                            selector:@selector(showPressToContinueToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
+         */
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
@@ -685,14 +716,17 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         [self showAnswerTimeout:2];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
+        /*
         self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                              target:self
                                                            selector:@selector(showPressToCompleteRoundToolTip:)
                                                            userInfo:nil
                                                             repeats:NO];
+         */
     }
     
-    [timer invalidate];
+    if (timer != nil)
+        [timer invalidate];
 }
 
 // Метод ожидает когда закончиться время и показывает все вопросы красными и отправляет на сервер информацию
@@ -733,6 +767,19 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             [self initHeader];
             
             // Включаем таймер на тул тип
+            if (questionIndex < 2) {
+                self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                                     target:self
+                                                                   selector:@selector(showPressToContinueToolTip:)
+                                                                   userInfo:nil
+                                                                    repeats:NO];
+            } else {
+                self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                                     target:self
+                                                                   selector:@selector(showPressToCompleteRoundToolTip:)
+                                                                   userInfo:nil
+                                                                    repeats:NO];
+            }
             
         }
         
@@ -767,7 +814,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 // Показывает сколько осталось времени в виде полоски
 -(void) changeProgressView:(NSTimer *)timer {
-    long stepToDescease = self.progressViewInitialWidth / 110;
+    float stepToDescease = self.progressViewInitialWidth / 30;
+    NSLog(@"Steps count: %f", stepToDescease);
     CGRect bounds = self.progressView.frame;
     if (bounds.size.width - stepToDescease > 0) {
         CGRect newRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - stepToDescease, bounds.size.height);
@@ -831,6 +879,12 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     self.popTip.dismissHandler = ^{
     };
 }
+
+-(void)hideTopTip {
+    if (self.popTip != nil)
+        [self.popTip hide];
+}
+
 
 -(void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

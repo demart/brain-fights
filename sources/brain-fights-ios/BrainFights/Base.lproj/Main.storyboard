@@ -45,7 +45,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWe-Xz-UEZ">
                                 <rect key="frame" x="20" y="80" width="560" height="226"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lpy-PV-Azv">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lpy-PV-Azv">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="226"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Текст для вопросов картинок" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Ys3-wS-UYR">
@@ -116,7 +116,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FYA-e1-spb">
                                         <rect key="frame" x="8" y="8" width="266" height="69.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="YeA-tD-1PY">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="YeA-tD-1PY">
                                                 <rect key="frame" x="8" y="8" width="250" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -134,7 +134,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPs-tI-ddY">
                                         <rect key="frame" x="8" y="86" width="266" height="69.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="H8p-EX-gzg">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="H8p-EX-gzg">
                                                 <rect key="frame" x="8" y="8" width="250" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
@@ -151,7 +151,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MqQ-UV-dEp">
                                         <rect key="frame" x="286" y="8" width="266" height="69.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="bLk-qw-fOn">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="bLk-qw-fOn">
                                                 <rect key="frame" x="8" y="8" width="250" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -169,7 +169,7 @@
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LV5-9P-kAN">
                                         <rect key="frame" x="286" y="85" width="266" height="69.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="tPy-qD-hwZ">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="tPy-qD-hwZ">
                                                 <rect key="frame" x="8" y="8" width="250" height="53.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
@@ -260,6 +260,7 @@
                         <outlet property="dAnswerViewText" destination="tPy-qD-hwZ" id="5kb-bz-X1p"/>
                         <outlet property="firstQuestionAnswerIndicator" destination="1cW-Ir-h5C" id="8dS-9N-Jbc"/>
                         <outlet property="goForwardImageView" destination="4o7-Mb-BwE" id="jHF-46-DSe"/>
+                        <outlet property="progressBarConstraint" destination="iCb-Qb-LKW" id="b2S-I7-gjd"/>
                         <outlet property="progressView" destination="3qb-QW-95w" id="O24-Re-NKG"/>
                         <outlet property="questionImageTitle" destination="Ys3-wS-UYR" id="J0Q-cz-I3k"/>
                         <outlet property="questionImageView" destination="Lpy-PV-Azv" id="eRY-oz-woS"/>
