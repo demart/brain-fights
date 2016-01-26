@@ -23,6 +23,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
 	defaults: {
        // collapsible: true,
         split: true,
+       // autoScroll: true,
+        scroll: true,
         bodyPadding: '0 0 0 0'
     },
     items: [ 
@@ -305,14 +307,20 @@ region: 'center',
 title: 'Просмотр информации о вопросе',
 flex: 1,
 layout: 'fit',
-scroll: true,
+//autoScroll: true,
+//scroll: true,
 id: 'viewQuestionInformationId',
 items: [
 {
     defaultType: 'textfield',
     style: 'margin: 10px',
+    //scroll: true,
+    autoHeight: true,
+    autoScroll: true,
+    width: 500,
     style: 'margin: 10px',
-    height: 800,
+   // minHeight: 550,
+    //maxheight: 800,
     defaults: {
     	labelWidth: 140,
     	width: 370,
