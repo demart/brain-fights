@@ -98,9 +98,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
      			 document.getElementById('testLabelUploadQuestion').innerHTML == '/public/images/no_image.jpg' )
         		Ext.Msg.alert('Внимание', 'Пожалуйста, выберите картинку!');	 
      	 
-
-      
-     	 else {
+     	 
+         else {
 	    	 model.data.id = 0;
 	    	 model.data.text = Ext.getCmp('nameQuestion').getValue();
 	    	 model.data.categoryId = Ext.getCmp('categoryComboForQuestions').getValue();
@@ -111,12 +110,23 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 	    	 model.data.answers[2] = {name: Ext.getCmp('answer3').getValue(), correct: false};
 	    	 model.data.answers[3] = {name: Ext.getCmp('answer4').getValue(), correct: false};
 	    	 
-	    	 for (var i=0; i<4; i++) {
-	    		 if (Ext.getCmp('answerTrue').getValue() == i)
+	    	 var count = "0";
+	    	 
+	    	 for (var i=1; i<5; i++) {
+	    		 if (Ext.getCmp('answerTrue').getValue() == (i + "")) {
 	    			 model.data.answers[i-1].correct = true;
+	    			 count = "1";
+	    		 }
 	    	 }
 	    	 
+	    	 console.log(count);
+	    	 if (count == "0") {
+	        		Ext.Msg.alert('Внимание', 'Пожалуйста, выберите правильный вариант ответа!');
 
+	    	 }
+
+	    	 else {
+	    	 
 	     	 if (document.getElementById('valueRadioGroup').innerHTML == 'text')
 	     		 model.data.type = "TEXT";
 	     	 else {
@@ -148,6 +158,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 					Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
 				}
 			});
+	    	 }
      	 }
     },
     
@@ -231,6 +242,21 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
     
     onSaveButtonQuestionClick: function() {
 	   	 var model = new BrainFightsConsole.model.QuestionModel();
+	   	 
+	   	  if (Ext.getCmp('answer1Text').getValue() == "")
+	     		Ext.Msg.alert('Внимание', 'Пожалуйста, введите 1-ый вариант ответа!');
+	   
+	     	 else if (Ext.getCmp('answer2Text').getValue() == "")
+	      		Ext.Msg.alert('Внимание', 'Пожалуйста, введите 2-ой вариант ответа!');
+	     	 
+	     	 else if (Ext.getCmp('answer3Text').getValue() == "")
+	      		Ext.Msg.alert('Внимание', 'Пожалуйста, введите 3-ий вариант ответа!');
+	     	 
+	     	 else if (Ext.getCmp('answer4Text').getValue() == "")
+	      		Ext.Msg.alert('Внимание', 'Пожалуйста, введите 4-ый вариант ответа!');
+	   	  
+	     	 else {
+	   	 console.log(Ext.getCmp('answerTrueText').getValue());
 		 model.data.text = Ext.getCmp('nameQuestionText').getValue();
 		 if (Ext.getCmp('categoryComboForQuestionsText').getValue() > 0 && Ext.getCmp('categoryComboForQuestionsText').getValue() < 100000000000000)
 			  model.data.categoryId = Ext.getCmp('categoryComboForQuestionsText').getValue();
@@ -244,12 +270,21 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 		 model.data.answers[2] = {id: record.data.answers[2].id, name: Ext.getCmp('answer3Text').getValue(), correct: false};
 		 model.data.answers[3] = {id: record.data.answers[3].id, name: Ext.getCmp('answer4Text').getValue(), correct: false};
 		 
-		 for (var i=0; i<4; i++) {
-			 if (Ext.getCmp('answerTrueText').getValue() == i)
+		 var count = "0";
+		 
+		 for (var i=1; i<5; i++) {
+			 if (Ext.getCmp('answerTrueText').getValue() == (i + "")) {
 				 model.data.answers[i-1].correct = true;
+				 count = "1";
+			 }
 		 }
 
-		 
+		 if (count == "0") {
+     		Ext.Msg.alert('Внимание', 'Пожалуйста, выберите правильный вариант ответа!');
+
+ 	 }
+
+ 	 else {
 		 if (document.getElementById('editImageControl').innerHTML == 'yes') {
 			 model.data.image = document.getElementById('nowImageQuestion').innerHTML;
 			 console.log('editedImage');
@@ -304,6 +339,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsListController', {
 				Ext.MessageBox.alert('Внимание','Ошибка выполнения запроса');
 			}
 		});
+ 	 }
+	     	 }
     },
     
     showAllQuestion: function() {
