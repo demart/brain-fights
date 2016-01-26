@@ -888,12 +888,19 @@ public class GameService {
 					}
 				}
 				
+				// Указываем время изменения статус игроков
+				gamer.setLastUpdateStatusDate(Calendar.getInstance());
+				oponent.setLastUpdateStatusDate(Calendar.getInstance());
 				// В любом случае изменются состояния двух игроков
 				// Поэтому созранения из каждого условия вынес сюда
 				gamer.save();
 				oponent.save();
 				
 			} else {
+				// Указываем время изменения статус игроков
+				gamer.setLastUpdateStatusDate(Calendar.getInstance());
+				oponent.setLastUpdateStatusDate(Calendar.getInstance());
+				
 				// Если противник еще не ответил на вопросы тогда нужно изменить статус и ждать его ответов
 				// Пора менять статус на опонента
 				gamer.setStatus(GamerStatus.WAITING_OPONENT);
