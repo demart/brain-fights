@@ -279,7 +279,7 @@ static UIRefreshControl* refreshControl;
             [tableView registerNib:[UINib nibWithNibName:@"GameStatusActionTableViewCell" bundle:nil]forCellReuseIdentifier:@"GameStatusActionCell"];
             cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusActionCell"];
         }
-        
+        /*
         [cell initCell:self.model onPlayAction:^{
             [self onPlayAction];
         } onSurrenderAction:^{
@@ -289,6 +289,8 @@ static UIRefreshControl* refreshControl;
         } onRevancheAction:^{
             [self onRevancheAction];
         }];
+        */
+        [cell initCell:self.model parentTableViewController:self];
         
         return cell;
     }

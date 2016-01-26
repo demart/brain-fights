@@ -129,6 +129,21 @@
     [self initEmptyRound];
     if (gameRound == nil) {
         // Если кто-то сдался, то нужно написать что тот сдался
+        if ([gameModel.me.status isEqualToString:GAMER_STATUS_SURRENDED]) {
+            [self.oponentStepLabel setHidden:NO];
+            [self.oponentStepLabel setText:@""];
+            [self.gamerStepLabel setHidden:NO];
+            [self.gamerStepLabel setText:@"Сдался"];
+            return;
+        }
+        
+        if ([gameModel.oponent.status isEqualToString:GAMER_STATUS_SURRENDED]) {
+            [self.oponentStepLabel setHidden:NO];
+            [self.oponentStepLabel setText:@"Сдался"];
+            [self.gamerStepLabel setHidden:NO];
+            [self.gamerStepLabel setText:@""];
+            return;
+        }
         
         // Нормальный процесс
         if ((gameModel.gameRounds == nil && gameRoundIndex == 1) || ([gameModel.gameRounds count] == gameRoundIndex-1 && [((GameRoundModel*)gameModel.gameRounds[gameRoundIndex-2]).status isEqualToString:GAME_ROUND_STATUS_COMPLETED])) {

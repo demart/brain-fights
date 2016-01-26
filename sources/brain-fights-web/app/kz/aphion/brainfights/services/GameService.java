@@ -352,6 +352,7 @@ public class GameService {
 		completedStatuses.add(GamerStatus.DRAW);
 		completedStatuses.add(GamerStatus.LOOSER);
 		completedStatuses.add(GamerStatus.SURRENDED);
+		completedStatuses.add(GamerStatus.OPONENT_SURRENDED);
 		completedStatuses.add(GamerStatus.WINNER);
 
 		// Достаем законченные игры (последние 5 штук)
@@ -420,6 +421,7 @@ public class GameService {
 		completedStatuses.add(GamerStatus.DRAW);
 		completedStatuses.add(GamerStatus.LOOSER);
 		completedStatuses.add(GamerStatus.SURRENDED);
+		completedStatuses.add(GamerStatus.OPONENT_SURRENDED);
 		completedStatuses.add(GamerStatus.WINNER);
 		
 		// Достаем законченные игры (последние 5 штук)

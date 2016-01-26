@@ -20,6 +20,8 @@
 - (IBAction)surrenderAction:(UIButton *)sender;
 - (IBAction)addToFrindsAction:(UIButton *)sender;
 
+- (void) initCell:(GameModel*) gameModel parentTableViewController:(UITableViewController*) parentTableViewController;
+
 - (void) initCell:(GameModel*) gameModel onPlayAction:(void (^)(void))playAction onSurrenderAction:(void (^)(void))surrenderAction onAddToFriendsAction:(void (^)(void))addToFriendsAction onRevancheAction:(void (^)(void))onRevancheAction;
 
 @end

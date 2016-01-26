@@ -28,7 +28,7 @@
                             <action selector="playAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nBs-cA-TFp"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Laj-Nu-5ur">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Laj-Nu-5ur">
                         <rect key="frame" x="235" y="20" width="70" height="28"/>
                         <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -43,7 +43,7 @@
                             <action selector="addToFrindsAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="U51-O4-dbb"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-rS-wkC">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-rS-wkC">
                         <rect key="frame" x="15" y="20" width="70" height="28"/>
                         <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -63,7 +63,9 @@
                     <constraint firstItem="jVp-Gb-Tru" firstAttribute="leading" secondItem="xq7-rS-wkC" secondAttribute="trailing" constant="30" id="0p5-mi-XAM"/>
                     <constraint firstItem="jVp-Gb-Tru" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PUl-ZJ-ycH"/>
                     <constraint firstItem="Laj-Nu-5ur" firstAttribute="leading" secondItem="jVp-Gb-Tru" secondAttribute="trailing" constant="30" id="QML-aq-s1E"/>
+                    <constraint firstItem="Laj-Nu-5ur" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e9d-x5-jkB"/>
                     <constraint firstItem="jVp-Gb-Tru" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="fNe-0N-2tu"/>
+                    <constraint firstItem="xq7-rS-wkC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vFG-wm-Aya"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

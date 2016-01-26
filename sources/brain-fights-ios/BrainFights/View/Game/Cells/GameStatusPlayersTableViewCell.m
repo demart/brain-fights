@@ -31,7 +31,27 @@
     [self.oponentNameLabel setText:gameModel.oponent.user.name];
     
     [self.gamerCorrectAnswerCountLabel setText:[@(gameModel.me.correctAnswerCount) stringValue]];
-    [self.oponentCorrectAnswerLabel setText:[@(gameModel.oponent.correctAnswerCount) stringValue]];
+    
+    // Берем последний раунд
+    if (gameModel.gameRounds!= nil && gameModel.gameRounds.count > 0) {
+        GameRoundModel *gameRound = (GameRoundModel*)gameModel.gameRounds[gameModel.gameRounds.count -1];
+        
+        // Если он еще не завершен то показывать результат нельзя игроку. Так как он его либо сам не закончил
+        // Либо его не закончил опонент
+        if ([gameRound.status isEqualToString:GAME_ROUND_STATUS_COMPLETED]) {
+            [self.oponentCorrectAnswerLabel setText:[@(gameModel.oponent.correctAnswerCount) stringValue]];
+        } else {
+            int oponentCorrectAnswerCount = 0;
+            for (GameRoundQuestionModel *questionModel in gameRound.questions) {
+                if (questionModel.oponentAnswer != nil && questionModel.oponentAnswer.isCorrect == YES) {
+                    oponentCorrectAnswerCount +=1;
+                }
+            }
+            [self.oponentCorrectAnswerLabel setText:[@(gameModel.oponent.correctAnswerCount-oponentCorrectAnswerCount) stringValue]];
+        }
+    } else {
+        [self.oponentCorrectAnswerLabel setText:[@(gameModel.oponent.correctAnswerCount) stringValue]];
+    }    
 }
 
 

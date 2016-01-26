@@ -315,7 +315,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     // Сбрасываем таймер
     if (self.toolTipTimer != nil) {
         [self.toolTipTimer invalidate];
-        self.timeoutTimer = nil;
     }
     
     if (self.popTip != nil && [self.popTip isVisible]) {
@@ -337,37 +336,16 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     if (self.state == STATE_WAITING_ANSWER_1) {
         [self processSelectedAnswer:0 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
-        /*
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
-                                                             target:self
-                                                           selector:@selector(showPressToContinueToolTip:)
-                                                           userInfo:nil
-                                                            repeats:NO];
-         */
     }
 
     if (self.state == STATE_WAITING_ANSWER_2) {
         [self processSelectedAnswer:1 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
-        /*
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
-                                                             target:self
-                                                           selector:@selector(showPressToContinueToolTip:)
-                                                           userInfo:nil
-                                                            repeats:NO];
-         */
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
         [self processSelectedAnswer:2 withAnswerIndex:answerIndex];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
-        /*
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
-                                                             target:self
-                                                           selector:@selector(showPressToCompleteRoundToolTip:)
-                                                           userInfo:nil
-                                                            repeats:NO];
-         */
     }
     
     // Любые другие нажатия, например в момент ожидания перехода к следующему вопросу будут игнорироваться
@@ -445,7 +423,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             if ([response.errorCode isEqualToString:@"002"]) {
                 // Игра закончена
-                [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+                }];
             } else {
                 NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить ответ на сервер. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
                 [self showAlertWithTitle:@"Ошибка" andMessage:message onAction:^{
@@ -587,7 +567,6 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             [self hideTopTip];
         }];
     }
-    
 }
 
 - (void) prepareViewForAnswerQuestion:(GameRoundQuestionModel*)question withQuestionIndex:(NSInteger)questionIndex {
@@ -665,12 +644,17 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 // инициализируем таймер для автоматического ответа если чувак сам пролетел
 -(void) initTimers {
+    if (self.progressTimer != nil)
+        [self.progressTimer invalidate];
     
     self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                           target:self
                                                         selector:@selector(changeProgressView:)
                                                         userInfo:nil
                                                          repeats:YES];
+
+    if (self.timeoutTimer != nil)
+        [self.timeoutTimer invalidate];
     
     self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:30.0
                                      target:self
@@ -681,48 +665,21 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 -(void) expiredTimeForWaitingAnswer:(NSTimer *)timer {
     if (self.state == STATE_WAITING_ANSWER_1) {
-        // Show error to the user
-        // Send data to server without answer
         [self showAnswerTimeout:0];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_1_CONTINUE;
-        /*
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                             target:self
-                                                           selector:@selector(showPressToContinueToolTip:)
-                                                           userInfo:nil
-                                                            repeats:NO];
-         */
     }
     
     if (self.state == STATE_WAITING_ANSWER_2) {
-        // Show error to the user
-        // Send data to server without answer
         [self showAnswerTimeout:1];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_2_CONTINUE;
-        /*
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                             target:self
-                                                           selector:@selector(showPressToContinueToolTip:)
-                                                           userInfo:nil
-                                                            repeats:NO];
-         */
     }
     
     if (self.state == STATE_WAITING_ANSWER_3) {
-        // Show error to the user
-        // Send data to server without answer
         [self showAnswerTimeout:2];
         [self initHeader];
         self.state = STATE_WAITING_ANSWER_3_CONTINUE;
-        /*
-        self.toolTipTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                             target:self
-                                                           selector:@selector(showPressToCompleteRoundToolTip:)
-                                                           userInfo:nil
-                                                            repeats:NO];
-         */
     }
     
     if (timer != nil)
@@ -740,6 +697,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     
     if (self.progressTimer != nil)
         [self.progressTimer invalidate];
+    if (self.timeoutTimer != nil)
+        [self.timeoutTimer invalidate];
     
     // TODO Вызываем API чтобы показать что чувак не ответил на вопрос
     
@@ -791,7 +750,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
             // TODO Show Error Alert
             if ([response.errorCode isEqualToString:@"002"]) {
                 // Игра закончена
-                [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.gameStatusViewController.navigationController popToViewController:self.gameStatusViewController animated:YES];
+                }];
             } else {
                 NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить ответ на сервер. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
                 [self showAlertWithTitle:@"Ошибка" andMessage:message onAction:^{
