@@ -666,7 +666,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 // инициализируем таймер для автоматического ответа если чувак сам пролетел
 -(void) initTimers {
     
-    self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1
+    self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                           target:self
                                                         selector:@selector(changeProgressView:)
                                                         userInfo:nil
@@ -814,12 +814,11 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 
 // Показывает сколько осталось времени в виде полоски
 -(void) changeProgressView:(NSTimer *)timer {
-    float stepToDescease = self.progressViewInitialWidth / 30;
-    NSLog(@"Steps count: %f", stepToDescease);
+    float stepToDescease = self.progressViewInitialWidth / (30 / 0.5 * 2);
     CGRect bounds = self.progressView.frame;
     if (bounds.size.width - stepToDescease > 0) {
         CGRect newRect = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - stepToDescease, bounds.size.height);
-        [self.progressView setFrame:newRect];
+        [self.progressView setFrame:newRect ];
     } else {
         CGRect newRect = CGRectMake(bounds.origin.x, bounds.origin.y, 0, bounds.size.height);
         [self.progressView setFrame:newRect];
