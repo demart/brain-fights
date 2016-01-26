@@ -926,24 +926,36 @@ public class GameService {
 			lowGamer = gamer;
 		}
 		int hiGamerScores = hiGamer.getUser().getScore();
+		System.out.println("hiGamerScores="+hiGamerScores);
 		int lowGamerScores = lowGamer.getUser().getScore();
+		System.out.println("lowGamerScores="+lowGamerScores);
+		System.out.println("hiGamer.getCorrectAnswerCount()="+hiGamer.getCorrectAnswerCount());
+		System.out.println("lowGamer.getCorrectAnswerCount()="+lowGamer.getCorrectAnswerCount());
 		int diff = hiGamer.getCorrectAnswerCount()-lowGamer.getCorrectAnswerCount();
+		System.out.println("diff="+diff);
 		float prop;
 		if(hiGamerScores+lowGamerScores==0){
 			prop = (float) ((1+hiGamerScores)*1.00/((hiGamerScores+1)+(lowGamerScores+1)));
 		}else{
 			prop = (float) (hiGamerScores*1.00/(hiGamerScores+lowGamerScores));
 		}
-		double hiScore =  (diff*(((1+Math.signum(diff))/2)-Math.signum(diff)*prop) + (0.5-prop)*(1-Math.abs(Math.signum(diff))));
+		System.out.println("prop="+prop);
+		double hiScore =  (diff*(((1.00+Math.signum(diff))/2.00)-Math.signum(diff)*prop) + (0.5-prop)*(1-Math.abs(Math.signum(diff))));
+		System.out.println("hiScore="+hiScore);
 		if(hiScore<0){
 			hiScore=-Math.ceil(-hiScore);
 		}else {
 			hiScore =  Math.ceil(hiScore);
 		}
+		if(hiScore==0&&diff!=0){
+			if(diff>0)hiScore=1;
+			else hiScore=-1;
+		}
 		hiGamer.setScore((int) hiScore);
 		lowGamer.setScore((int) (-hiScore));
 		hiGamer.getUser().setScore(hiGamer.getUser().getScore()+hiGamer.getScore());
 		lowGamer.getUser().setScore(lowGamer.getUser().getScore()+lowGamer.getScore());
+		System.out.println("Calculate score "+hiGamer.getUser().getLogin()+":"+lowGamer.getUser().getLogin()+" scores "+hiGamer.getScore()+":"+lowGamer.getScore());
 	}
 	
 

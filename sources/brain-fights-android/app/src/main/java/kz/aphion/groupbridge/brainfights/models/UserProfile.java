@@ -147,6 +147,13 @@ public class UserProfile {
     public UserGamePlayingStatus playStatus;
 
 
+    /**
+     * Время последней активности
+     */
+    public String lastActivityTime;
+
+
+
 
     public Long getId() {
         return id;

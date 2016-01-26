@@ -15,10 +15,15 @@
 
         <ImageView android:src="@drawable/logo_green"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
             />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/corpq_512"/>
 
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout
