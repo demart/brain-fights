@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity
 //        if(getSupportFragmentManager().getBackStackEntryCount()<=1){
 //            getSupportFragmentManager().popBackStack();
 //        }
-        if(getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-1).getName()!=null&&
+        if(getSupportFragmentManager().getBackStackEntryCount()>0&&getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-1).getName()!=null&&
                 getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount()-1).getName().equals("GameList")){
             for(Fragment fragment:getSupportFragmentManager().getFragments()){
                 if(fragment instanceof GamesListsFragment){

@@ -35,7 +35,7 @@ public class UserProfileUtil {
         }
 // /        avatar.bringToFront();
         if (user.lastStatisticsUpdate!=null) {
-            Date lastEntranceDate = Util.getDateFromString(user.lastStatisticsUpdate);
+            Date lastEntranceDate = Util.getDateFromString(user.lastActivityTime);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
             lastEntrance.setText("Заходил "+sdf.format(lastEntranceDate));
         }

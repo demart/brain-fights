@@ -63,7 +63,7 @@ public class GameRoundRecyclerAdapter extends RecyclerView.Adapter<GameRoundRecy
             if(round.status.equals(GameRoundStatus.WAITING_ANSWER)){
                 if(game.me.status.equals(GamerStatus.WAITING_OPONENT)){
                     holder.roundCategoryName.setText(round.categoryName);
-                    if(round.questions.get(0).answer!=null){
+                    if(round.questions!=null&&round.questions.size()>0&&round.questions.get(0).answer!=null){
                         setAnswers(round, holder, true);
                     }else {
                         holder.me_quiz_layout.setVisibility(View.GONE);

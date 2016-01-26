@@ -92,6 +92,7 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     FlipAnimation categoryLayoutAnim;
     RelativeLayout activeLayout;
     Animation blinkCurrentQuizStateAnim;
+    TextView labelNext;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -186,6 +187,7 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     }
     private void loadActualQuiz(GameRoundQuestionModel actualQuiz) {
         if(actualQuiz!=null){
+            labelNext.setVisibility(View.GONE);
             opponentName.setVisibility(View.GONE);
             if(animationFade!=null){
                 opponentName.clearAnimation();
@@ -267,7 +269,17 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
     }
 
     private void loadAnswersToView(GameRoundQuestionModel actualQuiz) {
+        btnA1.setAlpha(0);
+        btnA1.setEnabled(false);
+        btnA2.setAlpha(0);
+        btnA2.setEnabled(false);
+        btnA3.setAlpha(0);
+        btnA3.setEnabled(false);
+        btnA4.setAlpha(0);
+        btnA4.setEnabled(false);
         if(actualQuiz.answers.size()>0) {
+            System.out.println("answer:"+actualQuiz.answers.get(0).text);
+            if(actualQuiz.answers.get(0).text!=null)actualQuiz.answers.get(0).text = actualQuiz.answers.get(0).text.trim();
             if(btn1Anim!=null){
                 btn1Anim.start(actualQuiz.answers.get(0).text);
             }else{
@@ -275,8 +287,12 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
                 btn1Anim = new ButtonAnswerAnimation(btnA1,true, getActivity());
             }
             btnA1.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
+            btnA1.setAlpha(1);
+            btnA1.setEnabled(true);
         }
         if(actualQuiz.answers.size()>1) {
+            System.out.println("answer:"+actualQuiz.answers.get(1).text);
+            if(actualQuiz.answers.get(1).text!=null)actualQuiz.answers.get(1).text = actualQuiz.answers.get(1).text.trim();
             if(btn2Anim!=null){
                 btn2Anim.start(actualQuiz.answers.get(1).text);
             }else{
@@ -285,8 +301,12 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
             }
 //            btnA2.setText(actualQuiz.answers.get(1).text);
             btnA2.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
+            btnA2.setAlpha(1);
+            btnA2.setEnabled(true);
         }
         if(actualQuiz.answers.size()>2) {
+            System.out.println("answer:"+actualQuiz.answers.get(2).text);
+            if(actualQuiz.answers.get(2).text!=null)actualQuiz.answers.get(2).text = actualQuiz.answers.get(2).text.trim();
             if(btn3Anim!=null){
                 btn3Anim.start(actualQuiz.answers.get(2).text);
             }else{
@@ -295,8 +315,12 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
             }
 //            btnA3.setText(actualQuiz.answers.get(2).text);
             btnA3.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
+            btnA3.setAlpha(1);
+            btnA3.setEnabled(true);
         }
         if(actualQuiz.answers.size()>3) {
+            System.out.println("answer:"+actualQuiz.answers.get(3).text);
+            if(actualQuiz.answers.get(3).text!=null)actualQuiz.answers.get(3).text = actualQuiz.answers.get(3).text.trim();
             if(btn4Anim!=null){
                 btn4Anim.start(actualQuiz.answers.get(3).text);
             }else{
@@ -304,8 +328,14 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
                 btn4Anim = new ButtonAnswerAnimation(btnA4,false, getActivity());
             }
 //            btnA4.setText(actualQuiz.answers.get(3).text);
+            btnA4.setAlpha(1);
+            btnA4.setEnabled(true);
             btnA4.setBackgroundColor(getResources().getColor(R.color.ttk_lightGreen));
         }
+        setAnswerButtonPostion(btnA1);
+        setAnswerButtonPostion(btnA2);
+        setAnswerButtonPostion(btnA3);
+        setAnswerButtonPostion(btnA4);
         setAnswerButtonState(true);
     }
 
@@ -338,9 +368,19 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
         }
         return -1;
     }
+    private void setAnswerButtonPostion(Button btn){
+        if(btn.getTop()!=15){
+//            TableRow.LayoutParams params = (TableRow.LayoutParams) btn.getLayoutParams();
+//
+//            System.out.println("TOOP WRONG");
+            btn.setTop(15);
+        }
+    }
     private void setAnswer(int i) {
         timer.cancel();
         setAnswerButtonState(false);
+        labelNext.setText("Сохранение ответа...");
+        labelNext.setVisibility(View.VISIBLE);
         if(i<actualQuiz.answers.size()) {
             GameRoundQuestionAnswerModel answer = actualQuiz.answers.get(i);
             actualQuiz.answer = answer;
@@ -447,24 +487,77 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
             @Override
             public void onClick(View v) {
                 setAnswer(0);
+                setAnswerButtonPostion(btnA1);
+            }
+        });
+        btnA1.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+                if(top!=15){
+                    v.setTop(15);
+                    TableRow.LayoutParams params = (TableRow.LayoutParams) v.getLayoutParams();
+                    params.setMargins(15,15,15,15);
+                    params.height=360;
+                    v.invalidate();;
+                }
+            }
+        });
+        btnA2.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if(top!=15){
+                    v.setTop(15);
+                    TableRow.LayoutParams params = (TableRow.LayoutParams) v.getLayoutParams();
+                    params.setMargins(15,15,15,15);
+                    params.height=360;
+                    v.invalidate();
+                }
+            }
+        });
+        btnA3.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if(top!=15){
+                    v.setTop(15);
+                    TableRow.LayoutParams params = (TableRow.LayoutParams) v.getLayoutParams();
+                    params.setMargins(15,15,15,15);
+                    params.height=360;
+                    v.invalidate();
+                }
+            }
+        });
+        btnA4.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if(top!=15){
+                    v.setTop(15);
+                    TableRow.LayoutParams params = (TableRow.LayoutParams) v.getLayoutParams();
+                    params.setMargins(15,15,15,15);
+                    params.height=360;
+                    v.invalidate();
+                }
             }
         });
         btnA2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setAnswer(1);
+                setAnswerButtonPostion(btnA2);
             }
         });
         btnA3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setAnswer(2);
+                setAnswerButtonPostion(btnA3);
             }
         });
         btnA4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setAnswer(3);
+                setAnswerButtonPostion(btnA4);
             }
         });
         animationFade = AnimationUtils.loadAnimation(getContext(), R.anim.fade);
@@ -485,6 +578,7 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
             }
         });
         blinkCurrentQuizStateAnim = AnimationUtils.loadAnimation(getContext(), R.anim.blink_quiz_state);
+        labelNext = (TextView) v.findViewById(R.id.quiz_next_label);
     }
 
     @Override
@@ -493,12 +587,27 @@ public class QuizFragment extends Fragment implements RestTask.RestTaskCallback 
             if (taskResult.getTaskStatus() == RestTask.TaskStatus.SUCCESS) {
                 StatusSingle<GamerQuestionAnswerResultModel> status = (StatusSingle) taskResult.getResponseData();
                 if (status.getStatus() == ResponseStatus.SUCCESS) {
+                    labelNext.setText("Нажмите на вопрос для продолжения...");
                     prevAnswerSaved = true;
                     if(status.getData().gameStatus.equals(GameStatus.FINISHED)){
                         gameEnd=true;
                     }
                 }
+                else{
+                    if(status!=null&&status.getErrorCode()!=null&&status.getErrorCode().equals("002")){
+                        GameFragment gameFragment = new GameFragment();
+                        gameFragment.gameId = game.id;
+                        gameFragment.gameEndNotification = gameEnd;
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .add(R.id.flContent, gameFragment)
+                                .commit();
+                    }
+                }
+            }else{
             }
+        }else{
+
         }
     }
 

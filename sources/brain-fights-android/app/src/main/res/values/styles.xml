@@ -28,7 +28,7 @@
         <item name="android:background">@color/ttk_green</item>
     </style>
     <style name="QuizAnswerButton" parent="@android:style/Widget.Button">
-        <item name="android:layout_width">match_parent</item>
+        <!--<item name="android:layout_width">match_parent</item>-->
         <item name="android:layout_height">@dimen/quiz_answer_height</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@color/ttk_lightGreenT</item>
