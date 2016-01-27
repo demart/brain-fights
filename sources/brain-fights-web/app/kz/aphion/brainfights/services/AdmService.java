@@ -1,5 +1,6 @@
 package kz.aphion.brainfights.services;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +12,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import play.Play;
+
+import javax.imageio.ImageIO;
 import javax.persistence.Query;
 
 import kz.aphion.brainfights.admin.models.AdminUsersModel;
@@ -31,6 +35,9 @@ import kz.aphion.brainfights.persistents.user.AdminUserRole;
 import kz.aphion.brainfights.persistents.user.Department;
 import kz.aphion.brainfights.persistents.user.DepartmentType;
 import kz.aphion.brainfights.persistents.user.User;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
+import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +48,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.yaml.snakeyaml.events.Event.ID;
 
 import play.Logger;
+import play.Play;
 import play.db.jpa.JPA;
 
 /**
@@ -341,6 +349,13 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				fileOut.write(decoded);
 				fileOut.close();
 				
+				Thumbnails.of(f.getAbsolutePath())
+			    .size(Integer.parseInt(Play.configuration.get("image.width").toString()), (int) (Integer.parseInt(Play.configuration.get("image.width").toString())*1.7))
+			    .outputFormat("png")
+			    
+			    .imageType(BufferedImage.TYPE_USHORT_555_RGB)
+			   
+			    .toFile(f.getAbsolutePath());
 				
 				category.setImageUrl(File.separator + f.getPath());
 			}
@@ -414,6 +429,18 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 				fileOut.write(decoded);
 				fileOut.close();
+				
+				Thumbnails.of(f.getAbsolutePath())
+			    .size(Integer.parseInt(Play.configuration.get("image.width").toString()), (int) (Integer.parseInt(Play.configuration.get("image.width").toString())*1.7))
+			    .outputFormat("png")
+			    .imageType(BufferedImage.TYPE_USHORT_555_RGB)
+			   
+			    .toFile(f.getAbsolutePath());
+				
+				
+				/**
+				 * TYPE_USHORT_555_RGB
+				 */
 				
 				category.setImageUrl(File.separator + f.getPath());
 			}
@@ -505,6 +532,13 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				fileOut.write(decoded);
 				fileOut.close();
 				
+				Thumbnails.of(f.getAbsolutePath())
+			    .size(Integer.parseInt(Play.configuration.get("image.width").toString()), (int) (Integer.parseInt(Play.configuration.get("image.width").toString())*1.7))
+			    .outputFormat("png")
+			    .imageType(BufferedImage.TYPE_USHORT_555_RGB)
+			   
+			    .toFile(f.getAbsolutePath());
+				
 				question.setImageUrl(File.separator + f.getPath());
 				
 			}
@@ -593,6 +627,13 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 						FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 						fileOut.write(decoded);
 						fileOut.close();
+						
+						Thumbnails.of(f.getAbsolutePath())
+					    .size(Integer.parseInt(Play.configuration.get("image.width").toString()), (int) (Integer.parseInt(Play.configuration.get("image.width").toString())*1.7))
+					    .outputFormat("png")
+					    .imageType(BufferedImage.TYPE_USHORT_555_RGB)
+					   
+					    .toFile(f.getAbsolutePath());
 						
 						question.setImageUrl(File.separator + f.getPath());
 					}
@@ -865,8 +906,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					String imageTmpFormat = model.getImageUrl().substring(11, model.getImageUrl().indexOf(";base64,"));
 					//System.out.println (imageTmpFormat);
 					
-					
-					
+				
 					//System.out.println (imageTmpFormat);
 					String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 					
@@ -883,6 +923,14 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 					fileOut.write(decoded);
 					fileOut.close();
+					
+					
+					
+					Thumbnails.of(f.getAbsolutePath())
+				    .size(Integer.parseInt(Play.configuration.get("image.avatar.size").toString()), Integer.parseInt(Play.configuration.get("image.avatar.size").toString()))
+				    .outputFormat("png")
+				    .imageType(BufferedImage.TYPE_USHORT_555_RGB)
+				    .toFile(f.getAbsolutePath());
 					
 					user.setImageUrl(File.separator + f.getPath());
 				}
@@ -911,6 +959,12 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					FileOutputStream fileOut = new FileOutputStream (f.getAbsolutePath());
 					fileOut.write(decoded);
 					fileOut.close();
+					
+					Thumbnails.of(f.getAbsolutePath())
+				    .size(Integer.parseInt(Play.configuration.get("image.avatar.size").toString()), Integer.parseInt(Play.configuration.get("image.avatar.size").toString()))
+				    .outputFormat("png")
+				    .imageType(BufferedImage.TYPE_USHORT_555_RGB)
+				    .toFile(f.getAbsolutePath());
 					
 					user.setImageUrl(File.separator + f.getPath());
 				}
