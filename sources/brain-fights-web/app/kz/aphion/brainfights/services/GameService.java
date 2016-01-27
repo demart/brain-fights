@@ -316,7 +316,7 @@ public class GameService {
 			invitationReceiver.save();
 			
 			// TODO Отправить PUSH уведомление о том что игрок не принял приглашение
-			Logger.info("PUSH " + invitationReceiver.getUser().getName() + "  отказался играть с вами!");
+			Logger.info("PUSH " + invitationReceiver.getUser().getName() + " отказался играть с вами!");
 			NotificationService.sendPushNotificaiton(invitationSender.getUser(), "CorpQ", invitationReceiver.getUser().getName() + "  отказался играть с вами!");
 			
 			//Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок отказался принять ваше приглашение!");
@@ -896,8 +896,8 @@ public class GameService {
 						gamer.setStatus(GamerStatus.WAITING_OPONENT);
 						oponent.setStatus(GamerStatus.WAITING_ROUND);
 						
-						Logger.info("PUSH " + gamer.getUser().getName() + "закончил свой ход. Ходите!");
-						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + "закончил свой ход. Ходите!");
+						Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ходите!");
+						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ходите!");
 						
 						//Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
 						//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " ваш ход!");
@@ -930,8 +930,8 @@ public class GameService {
 				oponent.setStatus(GamerStatus.WAITING_ANSWERS);
 				oponent.save();
 				
-				Logger.info("PUSH " + gamer.getUser().getName() + "закончил свой ход. Ходите!");
-				NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + "закончил свой ход. Ходите!");
+				Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ходите!");
+				NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ходите!");
 				
 				//Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
 				//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " ваш ход!");

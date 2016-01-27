@@ -68,7 +68,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    //self.view.backgroundColor = [Constants SYSTEM_COLOR_GREEN];
+    self.view.backgroundColor = [Constants SYSTEM_COLOR_LIGHTER_GREY];
     self.questionView.backgroundColor = [Constants SYSTEM_COLOR_WHITE];
     self.loadingImage = [UIImage imageNamed:@"loadingImageIcon"];
     self.loadImageOperationQueue = [[NSOperationQueue alloc] init];
@@ -78,7 +79,8 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     [self initHeader];
     [self initTapGestureRecognizer];
 
-    [self.progressView setBackgroundColor:[UIColor orangeColor]];
+    //[self.progressView setBackgroundColor:[UIColor orangeColor]];
+    [self.progressView setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
     
     self.state = STATE_WAITING_START;
     [self initNextStep];
@@ -206,6 +208,7 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     view.layer.shadowOffset = CGSizeMake(2, 2);
     view.layer.shadowRadius = 2;
     view.layer.shadowOpacity = 0.5;
+    //view.layer.shadowColor = [[Constants SYSTEM_COLOR_GREEN] CGColor];
 }
 
 
@@ -830,9 +833,9 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
     self.popTip.offset = 2;
     self.popTip.edgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
     self.popTip.shouldDismissOnTap = YES;
-    self.popTip.popoverColor = [Constants SYSTEM_COLOR_ORANGE];
-    self.popTip.popoverColor = [UIColor orangeColor];
-//    self.popTip.popoverColor = [Constants SYSTEM_COLOR_GREEN];
+//    self.popTip.popoverColor = [Constants SYSTEM_COLOR_ORANGE];
+//    self.popTip.popoverColor = [UIColor orangeColor];
+    self.popTip.popoverColor = [Constants SYSTEM_COLOR_GREEN];
     [self.popTip showText:message direction:AMPopTipDirectionDown maxWidth:self.questionView.frame.size.width inView:self.view fromFrame:self.questionView.frame duration:15];
     self.popTip.tapHandler = ^{
     };

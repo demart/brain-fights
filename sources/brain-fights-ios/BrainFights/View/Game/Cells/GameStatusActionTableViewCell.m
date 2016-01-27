@@ -29,6 +29,10 @@
     [self initButtonView:self.surrenderActionButton];
     [self initButtonView:self.playButton];
     [self initButtonView:self.addToFriendsButton];
+    
+    [self.surrenderActionButton setBackgroundColor:[Constants SYSTEM_COLOR_RED]];
+    [self.playButton setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+    [self.addToFriendsButton setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
 }
 
 -(void) initButtonView:(UIView*) view {

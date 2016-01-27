@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -28,7 +28,8 @@
                             <constraint firstAttribute="height" constant="40" id="bUj-ah-VVd"/>
                             <constraint firstAttribute="width" constant="32" id="vRC-rI-kIj"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYU-9E-DJ2">
@@ -37,13 +38,17 @@
                             <constraint firstAttribute="width" constant="32" id="Loy-oC-EOg"/>
                             <constraint firstAttribute="height" constant="40" id="snk-u5-GEu"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPm-Ba-Ecm">
-                        <rect key="frame" x="147" y="17" width="27" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="147" y="8" width="27" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="riW-OA-lMH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Арман Сыздыков" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2My-vG-RG0">
@@ -85,7 +90,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="3C2-CN-BfS" secondAttribute="trailing" constant="40" id="TgB-PZ-iMl"/>
                     <constraint firstItem="jYU-9E-DJ2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="WCl-cj-Zo1"/>
                     <constraint firstItem="NPm-Ba-Ecm" firstAttribute="leading" secondItem="ODT-I0-2YO" secondAttribute="trailing" constant="8" id="ck7-U9-sC2"/>
-                    <constraint firstItem="NPm-Ba-Ecm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="fR0-TV-7lv"/>
+                    <constraint firstItem="NPm-Ba-Ecm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fR0-TV-7lv"/>
                     <constraint firstAttribute="bottomMargin" secondItem="pHC-Pn-sPJ" secondAttribute="bottom" constant="-4.5" id="hSz-yM-gKs"/>
                     <constraint firstAttribute="bottomMargin" secondItem="c1J-6D-QFF" secondAttribute="bottom" constant="13.5" id="ncm-8d-Xv8"/>
                     <constraint firstItem="c1J-6D-QFF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="40" id="uuf-6v-PRd"/>

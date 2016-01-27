@@ -32,6 +32,8 @@
     self.backGroundViewHeader.layer.cornerRadius = 5.0;
     self.backGroundViewBottom.layer.cornerRadius = 5.0;
     
+    [self.gameRoundTitle setTextColor:[Constants SYSTEM_COLOR_ORANGE]];
+    
     [self initTapOnQuestionViews];
 
 }
