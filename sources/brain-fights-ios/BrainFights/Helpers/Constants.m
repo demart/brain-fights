@@ -23,6 +23,10 @@
     return [UIColor colorWithRed:192.0/255.0f green:192.0/255.0f blue:192.0/255.0f alpha:1.0f];
 }
 
++(UIColor*) SYSTEM_COLOR_LIGHTER2_GREY {
+    return [UIColor colorWithRed:233.0/255.0f green:233.0/255.0f blue:236.0/255.0f alpha:1.0f];
+}
+
 +(UIColor*) SYSTEM_COLOR_LIGHTER_GREY {
     return [UIColor colorWithRed:239.0/255.0f green:239.0/255.0f blue:244.0/255.0f alpha:1.0f];
 }

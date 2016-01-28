@@ -185,10 +185,6 @@ static UIRefreshControl* refreshControl;
 // Загружает данные с сервера
 -(void) loadDepartmentsRating:(UIRefreshControl*) refreshControll {
     [[UserService sharedInstance] retrieveDepartmentsRating:self.departmentType.id withPage:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
-        if (refreshControll != nil)
-            [refreshControll endRefreshing];
-        [DejalBezelActivityView removeViewAnimated:NO];
-        
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *departments = (NSMutableArray*)response.data;
             if (departments == nil || [departments count] < 1) {
@@ -216,6 +212,9 @@ static UIRefreshControl* refreshControl;
             [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
+        [DejalBezelActivityView removeViewAnimated:YES];
         
     } onFailure:^(NSError *error) {
         if (refreshControll != nil)
@@ -229,7 +228,6 @@ static UIRefreshControl* refreshControl;
 
 - (void) loadDepartmentTypesAndDepartments {
     [[UserService sharedInstance] retrieveDepartmentTyps:^(ResponseWrapperModel *response) {
-        [DejalBezelActivityView removeViewAnimated:YES];
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *departmentTypes = (NSMutableArray*)response.data;
             if (departmentTypes == nil || [departmentTypes count] < 1) {
@@ -240,6 +238,7 @@ static UIRefreshControl* refreshControl;
                 [self loadDepartmentsRating:nil];
             }
         }
+        //[DejalBezelActivityView removeViewAnimated:YES];
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
             [[AppDelegate globalDelegate] showAuthorizationView:self];
