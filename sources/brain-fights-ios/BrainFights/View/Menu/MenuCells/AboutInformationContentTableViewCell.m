@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    /*
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentJustified;
     paragraphStyle.paragraphSpacingBefore = 5;
@@ -34,6 +34,7 @@
     [self.contentText sizeToFit];
     self.contentText.textAlignment = NSTextAlignmentJustified;
     [self.contentText sizeToFit];
+     */
     
 }
 

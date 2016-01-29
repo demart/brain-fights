@@ -555,6 +555,19 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         } completion:^(BOOL finished) {
             [self hideTopTip];
         }];
+        
+        GameRoundQuestionModel *question = self.gameRoundModel.questions[0];
+        for (int i=0; i < [question.answers count]; i++) {
+            GameRoundQuestionAnswerModel *answer = question.answers[i];
+            UILabel *label = self.answerViewTexts[i];
+            [label setText:answer.text];
+            [label setTextColor:[UIColor blackColor]];
+            
+            UIView *answerView = ((UIView*)self.answerViews[i]);
+            if (answerView.isHidden)
+                [answerView setHidden:NO];
+            [answerView setBackgroundColor:[UIColor whiteColor]];
+        }
     }
     
     // Если нужно ответить на второй вопрос
@@ -564,6 +577,19 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         } completion:^(BOOL finished) {
             [self hideTopTip];
         }];
+        
+        GameRoundQuestionModel *question = self.gameRoundModel.questions[1];
+        for (int i=0; i < [question.answers count]; i++) {
+            GameRoundQuestionAnswerModel *answer = question.answers[i];
+            UILabel *label = self.answerViewTexts[i];
+            [label setText:answer.text];
+            [label setTextColor:[UIColor blackColor]];
+            
+            UIView *answerView = ((UIView*)self.answerViews[i]);
+            if (answerView.isHidden)
+                [answerView setHidden:NO];
+            [answerView setBackgroundColor:[UIColor whiteColor]];
+        }
     }
     
     // Если нужно ответить на третий вопрос
@@ -573,17 +599,45 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         } completion:^(BOOL finished) {
             [self hideTopTip];
         }];
+        
+        GameRoundQuestionModel *question = self.gameRoundModel.questions[2];
+        for (int i=0; i < [question.answers count]; i++) {
+            GameRoundQuestionAnswerModel *answer = question.answers[i];
+            UILabel *label = self.answerViewTexts[i];
+            [label setText:answer.text];
+            [label setTextColor:[UIColor blackColor]];
+            
+            UIView *answerView = ((UIView*)self.answerViews[i]);
+            if (answerView.isHidden)
+                [answerView setHidden:NO];
+            [answerView setBackgroundColor:[UIColor whiteColor]];
+        }
     }
 }
 
 - (void) prepareViewForAnswerQuestion:(GameRoundQuestionModel*)question withQuestionIndex:(NSInteger)questionIndex {
-    [self.goForwardImageView setHidden:YES];
+   /*
     for (UIView *answerView in self.answerViews) {
         if (answerView.isHidden)
             [answerView setHidden:NO];
         [answerView setBackgroundColor:[UIColor whiteColor]];
         
     }
+    */
+/*
+    for (int i=0; i < [question.answers count]; i++) {
+        GameRoundQuestionAnswerModel *answer = question.answers[i];
+        UILabel *label = self.answerViewTexts[i];
+        [label setText:answer.text];
+        [label setTextColor:[UIColor blackColor]];
+        
+        UIView *answerView = ((UIView*)self.answerViews[i]);
+        if (answerView.isHidden)
+            [answerView setHidden:NO];
+        [answerView setBackgroundColor:[UIColor whiteColor]];
+    }
+*/
+ 
     if (self.progressView.isHidden)
         [self.progressView setHidden:NO];
     
@@ -639,12 +693,16 @@ static NSInteger QUESTION_WITHOUT_ANSWER_ID = -1;
         }
     }
     
+    [self.goForwardImageView setHidden:YES];
+    
+    /*
     for (int i=0; i < [question.answers count]; i++) {
         GameRoundQuestionAnswerModel *answer = question.answers[i];
         UILabel *label = self.answerViewTexts[i];
         [label setText:answer.text];
         [label setTextColor:[UIColor blackColor]];
     }
+     */
     
 }
 
