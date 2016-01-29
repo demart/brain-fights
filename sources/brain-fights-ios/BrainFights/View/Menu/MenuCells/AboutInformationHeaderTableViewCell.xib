@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -14,14 +14,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="169.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenLogoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="u1R-73-Bmz">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="corpQIcon" translatesAutoresizingMaskIntoConstraints="NO" id="u1R-73-Bmz">
                         <rect key="frame" x="52" y="29" width="217" height="110"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="110" id="H7q-Iu-uFf"/>
                             <constraint firstAttribute="width" constant="217" id="bOw-JA-g4Y"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Версия 1.1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="onw-9x-fmn">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Версия 1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="onw-9x-fmn">
                         <rect key="frame" x="52" y="149" width="217" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="217" id="AkF-CA-tQ2"/>
@@ -43,6 +43,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="greenLogoIcon" width="629" height="323"/>
+        <image name="corpQIcon" width="2080" height="700"/>
     </resources>
 </document>

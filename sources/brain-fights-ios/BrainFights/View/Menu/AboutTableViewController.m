@@ -10,6 +10,7 @@
 
 #import "AboutInformationHeaderTableViewCell.h"
 #import "AboutInformationContentTableViewCell.h"
+#import "AboutInformationFooterTableViewCell.h"
 
 
 @interface AboutTableViewController ()
@@ -40,7 +41,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 
@@ -62,15 +63,30 @@
         }
         return cell;
     }
+
+    if (indexPath.row == 2) {
+        AboutInformationContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AboutInformationFooterCell"];
+        if (!cell) {
+            [tableView registerNib:[UINib nibWithNibName:@"AboutInformationFooterTableViewCell" bundle:nil]forCellReuseIdentifier:@"AboutInformationFooterCell"];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"AboutInformationFooterCell"];
+        }
+        return cell;
+    }
     
     return nil;
 }
 
+static CGFloat HEIGHT = 504;
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat proportion = tableView.bounds.size.height / HEIGHT;
     if (indexPath.row == 0)
-        return 170;
+        return 180*proportion;
     if (indexPath.row == 1)
-        return 150;
+        return 220*proportion;
+    if (indexPath.row == 2) {
+        //CGFloat proportion = tableView.bounds.size.height / HEIGHT;
+        return tableView.bounds.size.height - 180*proportion - 220*proportion; // AUTO SIZE TO FULL SCREEN
+    }
     return 44;
 }
 

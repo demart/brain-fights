@@ -860,8 +860,8 @@ public class GameService {
 							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-							Logger.info("PUSH Вы проиграли игру против " + gamer.getUser().getName());
-							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", "Вы проиграли игру против " + gamer.getUser().getName());
+							Logger.info("PUSH Вы проиграли игроку " + gamer.getUser().getName());
+							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", "Вы проиграли игроку " + gamer.getUser().getName());
 							
 						} else {
 							// Проиграл текущий игрок
@@ -876,8 +876,8 @@ public class GameService {
 							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-							Logger.info("PUSH Вы выиграли игру против " + gamer.getUser().getName());
-							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", "Вы выиграли игру против " + gamer.getUser().getName());
+							Logger.info("PUSH Вы выиграли игрока " + gamer.getUser().getName());
+							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", "Вы выиграли игрока " + gamer.getUser().getName());
 						
 						}
 					}
