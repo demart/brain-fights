@@ -316,8 +316,8 @@ public class GameService {
 			invitationReceiver.save();
 			
 			// TODO Отправить PUSH уведомление о том что игрок не принял приглашение
-			Logger.info("PUSH " + invitationReceiver.getUser().getName() + " отказался играть с вами!");
-			NotificationService.sendPushNotificaiton(invitationSender.getUser(), "CorpQ", invitationReceiver.getUser().getName() + "  отказался играть с вами!");
+			Logger.info("PUSH " + invitationReceiver.getUser().getName() + " отказался играть с Вами");
+			NotificationService.sendPushNotificaiton(invitationSender.getUser(), "CorpQ", invitationReceiver.getUser().getName() + " отказался играть с Вами");
 			
 			//Logger.info("PUSH " + invitationSender.getUser().getName() + " игрок отказался принять ваше приглашение!");
 			//NotificationService.sendPushNotificaiton(invitationSender.getUser(), "CorpQ", invitationSender.getUser().getName() + " игрок отказался принять ваше приглашение!");
@@ -840,8 +840,8 @@ public class GameService {
 						oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 						oponent.getUser().save();
 						
-						Logger.info("PUSH " + gamer.getUser().getName() + " закончил игру с Вами в ничью!");
-						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил игру с Вами в ничью!");
+						Logger.info("PUSH " + gamer.getUser().getName() + " закончил игру с Вами вничью");
+						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил игру с Вами вничью");
 						
 						//Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
 						//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " вы закончили игру в ничью!");
@@ -860,12 +860,8 @@ public class GameService {
 							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-							Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
-							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " вы проиграли игру!");
-							
-							//Logger.info("PUSH " + oponent.getUser().getName() + " вы проиграли игру!");
-							//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " вы проиграли игру!");
-							
+							Logger.info("PUSH Вы проиграли игру против " + gamer.getUser().getName());
+							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", "Вы проиграли игру против " + gamer.getUser().getName());
 							
 						} else {
 							// Проиграл текущий игрок
@@ -880,12 +876,9 @@ public class GameService {
 							oponent.getUser().setTotalGames(oponent.getUser().getTotalGames() + 1);
 							oponent.getUser().save();
 							
-							Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
-							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " вы выиграли игру!");
-							
-							//Logger.info("PUSH " + oponent.getUser().getName() + " вы выиграли игру!");
-							//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " вы выиграли игру!");
-							
+							Logger.info("PUSH Вы выиграли игру против " + gamer.getUser().getName());
+							NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", "Вы выиграли игру против " + gamer.getUser().getName());
+						
 						}
 					}
 					
@@ -896,11 +889,9 @@ public class GameService {
 						gamer.setStatus(GamerStatus.WAITING_OPONENT);
 						oponent.setStatus(GamerStatus.WAITING_ROUND);
 						
-						Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ходите!");
-						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ходите!");
+						Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ваш ход!");
+						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ваш ход!");
 						
-						//Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
-						//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " ваш ход!");
 						
 					} else {
 						// Инициатором был опонент теперь наша очередь выбирать
@@ -930,11 +921,9 @@ public class GameService {
 				oponent.setStatus(GamerStatus.WAITING_ANSWERS);
 				oponent.save();
 				
-				Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ходите!");
-				NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ходите!");
+				Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ваш ход!");
+				NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ваш ход!");
 				
-				//Logger.info("PUSH " + oponent.getUser().getName() + " ваш ход!");
-				//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " ваш ход!");
 			}
 		} else {
 			// Если меньше 3х ответов, то пока еще нужно отвечать
@@ -1059,10 +1048,6 @@ public class GameService {
 		Logger.info("PUSH " + gamer.getUser().getName() + " сдался! Вы выиграли!");
 		NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " сдался! Вы выиграли!");
 		
-		//Logger.info("PUSH " + oponent.getUser().getName() + " ваш противник сдался!");
-		//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " ваш противник сдался!");
-		
-		
 		// Строим модель игры
 		GameModel model = GameModel.buildModel(game, gamer, oponent, null);  
 		return model;
@@ -1146,11 +1131,9 @@ public class GameService {
 		game.setDeleted(true);
 		game.save();
 		
-		Logger.info("PUSH " + gamer.getUser().getName() + " так и не принял ваше приглашение.");
-		NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " так и не принял ваше приглашение.");
-		
-		//Logger.info("PUSH " + gamer.getUser().getName() + " так и не принял ваше приглашение!");
-		//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " так и не принял ваше приглашение!");
+		Logger.info("PUSH " + gamer.getUser().getName() + " так и не принял Ваше приглашение.");
+		NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " так и не принял Ваше приглашение.");
+
 	}
 
 	
