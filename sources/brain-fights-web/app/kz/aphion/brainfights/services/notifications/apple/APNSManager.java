@@ -105,6 +105,7 @@ public class APNSManager {
 			payloadBuilder.setAlertTitle(title);
 			payloadBuilder.setAlertBody(message); 
 			payloadBuilder.setSoundFileName("ring-ring.aiff");
+			payloadBuilder.setBadgeNumber(1);
 			// payloadBuilder.addCustomProperty("g", ); GamerId
 			String payload = payloadBuilder.buildWithDefaultMaximumLength();
 			Logger.info(payload);
