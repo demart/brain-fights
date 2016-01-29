@@ -80,12 +80,12 @@ static CGFloat HEIGHT = 504;
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat proportion = tableView.bounds.size.height / HEIGHT;
     if (indexPath.row == 0)
-        return 180*proportion;
+        return 160*proportion;
     if (indexPath.row == 1)
-        return 220*proportion;
+        return 260*proportion;
     if (indexPath.row == 2) {
         //CGFloat proportion = tableView.bounds.size.height / HEIGHT;
-        return tableView.bounds.size.height - 180*proportion - 220*proportion; // AUTO SIZE TO FULL SCREEN
+        return tableView.bounds.size.height - 160*proportion - 260*proportion; // AUTO SIZE TO FULL SCREEN
     }
     return 44;
 }

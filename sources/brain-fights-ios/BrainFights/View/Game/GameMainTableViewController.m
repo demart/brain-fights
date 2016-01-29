@@ -117,7 +117,7 @@ static UIRefreshControl *refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            NSString* message = [[NSString alloc] initWithFormat:@"Не удалось загрузить список игр. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            NSString* message = [[NSString alloc] initWithFormat:@"Не удалось загрузить список игр. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@\n", response.errorCode, response.errorMessage];
             [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
 //            [self presentErrorViewController];
         }
@@ -126,7 +126,7 @@ static UIRefreshControl *refreshControl;
         if (refreshControl != nil)
             [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
-        NSString* message = [[NSString alloc] initWithFormat:@"Операция завершилась с ошибкой. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        NSString* message = [[NSString alloc] initWithFormat:@"Операция завершилась с ошибкой. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@\n", error.code, error.localizedDescription.description];
         [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         //[self presentErrorViewController];
     }];
@@ -160,17 +160,17 @@ static UIRefreshControl *refreshControl;
     NSString* title = @"Игра закончилась";
     NSString* message;
     
-    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_DRAW]) {
-        message = [[NSString alloc] initWithFormat: @"Вы закончили игру в ничью с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_DRAW]) {
+        message = [[NSString alloc] initWithFormat: @"\nВы закончили игру в ничью с %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
-    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_LOOSER]) {
-        message = [[NSString alloc] initWithFormat: @"Вы проиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_LOOSER]) {
+        message = [[NSString alloc] initWithFormat: @"\nВы проиграли игроку %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
-    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_WINNER]) {
-        message = [[NSString alloc] initWithFormat: @"Вы выиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_WINNER]) {
+        message = [[NSString alloc] initWithFormat: @"\nВы выиграли игрока %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
-    if ([gameModel.gamerStatus isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
-        message = [[NSString alloc] initWithFormat: @"Ваш опонент %@ сдался.\n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+    if ([gameModel.me.status isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
+        message = [[NSString alloc] initWithFormat: @"\nВаш опонент %@ сдался\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title

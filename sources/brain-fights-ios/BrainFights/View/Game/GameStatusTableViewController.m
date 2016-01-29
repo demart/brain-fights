@@ -138,16 +138,16 @@ static UIRefreshControl* refreshControl;
     NSString* message;
     
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_DRAW]) {
-        message = [[NSString alloc] initWithFormat: @"Вы закончили игру в ничью с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВы закончили игру в ничью с %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_LOOSER]) {
-        message = [[NSString alloc] initWithFormat: @"Вы проиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВы проиграли игроку %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_WINNER]) {
-        message = [[NSString alloc] initWithFormat: @"Вы выиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВы выиграли игрока %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
-        message = [[NSString alloc] initWithFormat: @"Ваш опонент %@ сдался.\n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВаш опонент %@ сдался\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
