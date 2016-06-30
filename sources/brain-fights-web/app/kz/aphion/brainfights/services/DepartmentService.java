@@ -2,7 +2,9 @@ package kz.aphion.brainfights.services;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kz.aphion.brainfights.exceptions.AuthorizationException;
 import kz.aphion.brainfights.exceptions.ErrorCode;
@@ -22,6 +24,9 @@ import play.db.jpa.JPA;
  *
  */
 public class DepartmentService {
+	
+	private static Map<Long, Integer> mapOfUsersCountInDeps = new HashMap<Long, Integer>();
+	private static Map<Long, Integer> mapOfScoreInDeps = new HashMap<Long, Integer>();
 
 	/**
 	 * Метод возвращает модель организационной структуры на заданном уровне иерархии
@@ -169,10 +174,15 @@ public class DepartmentService {
 		// Подсчитаем рейтинг внутренних департаментов
 		if (department.getChildren() != null)
 			for (Department child : department.getChildren()) {
+				totalUserCount += mapOfUsersCountInDeps.get(child.getId());
+				totalCount += 1;
+				totalScore += mapOfScoreInDeps.get(child.getId());
+				/*
 				totalScore += child.getScore();
 				totalCount += 1;
 				if (child.getUsers() != null)
 					totalUserCount += child.getUsers().size();
+					*/
 			}
 		
 		// Посчитаем рейтинг пользователей
@@ -184,8 +194,10 @@ public class DepartmentService {
 			totalUserCount += department.getUsers().size();
 		}
 		
+		int avarageScore = 0;
+		
 		if (totalCount != 0) {
-			int avarageScore = totalScore / totalCount;
+			avarageScore = totalScore / totalCount;
 			department.setScore(avarageScore);
 		} else {
 			department.setScore(0);
@@ -193,6 +205,8 @@ public class DepartmentService {
 		
 		department.setUserCount(totalUserCount);
 		
+		mapOfUsersCountInDeps.put(department.getId(), totalUserCount);
+		mapOfScoreInDeps.put(department.getId(), avarageScore);
 		department.save();
 	}
 	

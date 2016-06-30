@@ -41,6 +41,7 @@ import kz.aphion.brainfights.persistents.user.DepartmentType;
 import kz.aphion.brainfights.persistents.user.User;
 import kz.aphion.brainfights.services.ADService;
 import kz.aphion.brainfights.services.AdmService;
+import kz.aphion.brainfights.services.DepartmentService;
 import kz.aphion.brainfights.models.ResponseStatus;
 import kz.aphion.brainfights.models.ResponseWrapperModel;
 import play.Logger;
@@ -829,6 +830,7 @@ public class AdmController extends Controller {
 		System.out.println ("Is user's role administrator? Answer: " + status);
 		if (status == true) {
 			ADService.updateAllFromLdap();
+			DepartmentService.updateDepartmentStatistics();
 	}
 	}
 	

@@ -76,7 +76,7 @@ Ext.define('BrainFightsConsole.view.departments.DepartmentsTreeList' ,{
             	align: 'center',
             },
             {
-            	text: 'Позиция',
+            	text: 'Рейтинг',
             	dataIndex: 'score',
             	width: 80,
             	align: 'center'
