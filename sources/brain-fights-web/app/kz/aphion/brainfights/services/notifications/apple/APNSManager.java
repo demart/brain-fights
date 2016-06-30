@@ -43,7 +43,8 @@ public class APNSManager {
 			try {
 				pushManager =
 						new PushManager<SimpleApnsPushNotification>(
-						        ApnsEnvironment.getSandboxEnvironment(),
+						        //ApnsEnvironment.getSandboxEnvironment(),
+								ApnsEnvironment.getProductionEnvironment(),
 						        SSLContextUtil.createDefaultSSLContext("BrainFightsPushDev.p12", "lepon&7&"),
 						        null, // Optional: custom event loop group
 						        null, // Optional: custom ExecutorService for calling listeners

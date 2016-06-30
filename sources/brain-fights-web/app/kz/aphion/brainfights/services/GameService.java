@@ -800,9 +800,9 @@ public class GameService {
 		for (GameRoundQuestion gameRoundQuestionObject : gameRound.getQuestions()) {
 			for (GameRoundQuestionAnswer gameRoundQuestionAnswer : gameRoundQuestionObject.getQuestionAnswers()) {
 				if (gameRoundQuestionAnswer.getGamer().id == gamer.id) {
-					gamerQuestionAnswers =gamerQuestionAnswers+1;
+					gamerQuestionAnswers = gamerQuestionAnswers+1;
 				} else {
-					oponentQuestionAnswers =oponentQuestionAnswers+1;
+					oponentQuestionAnswers = oponentQuestionAnswers+1;
 				}
 			}
 		}
@@ -817,6 +817,7 @@ public class GameService {
 				// Нужно завершать раунд
 				gameRound.setStatus(GameRoundStatus.COMPLETED);
 				gameRound.save();
+				gameRound = gameRound.refresh();
 				
 				if (gameRound.getNumber() == 6) {
 					// Последний раунд
@@ -826,8 +827,11 @@ public class GameService {
 					game.save();
 
 					// Считаем очки
-					calculateScore(gamer, oponent);
-										
+					calculateScore(gamer, oponent);			
+					
+					//gamer = gamer.refresh();
+					//oponent = oponent.refresh();
+
 					if (gamer.getCorrectAnswerCount() == oponent.getCorrectAnswerCount()) {
 						// Ничья
 						gamer.setStatus(GamerStatus.DRAW);
@@ -843,10 +847,8 @@ public class GameService {
 						Logger.info("PUSH " + gamer.getUser().getName() + " закончил игру с Вами вничью");
 						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил игру с Вами вничью");
 						
-						//Logger.info("PUSH " + oponent.getUser().getName() + " вы закончили игру в ничью!");
-						//NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", oponent.getUser().getName() + " вы закончили игру в ничью!");
-						
 					} else {
+						Logger.info("It is not a draw, we need to check");
 						if (gamer.getCorrectAnswerCount() > oponent.getCorrectAnswerCount()) {
 							// Выиграл текущий игрок
 							gamer.setStatus(GamerStatus.WINNER);
@@ -881,7 +883,6 @@ public class GameService {
 						
 						}
 					}
-					
 				} else {
 					// Еще есть раунды
 					// Если игрок был инициатором раунда, тогда теперь выбирает противник
@@ -891,7 +892,6 @@ public class GameService {
 						
 						Logger.info("PUSH " + gamer.getUser().getName() + " закончил свой ход. Ваш ход!");
 						NotificationService.sendPushNotificaiton(oponent.getUser(), "CorpQ", gamer.getUser().getName() + " закончил свой ход. Ваш ход!");
-						
 						
 					} else {
 						// Инициатором был опонент теперь наша очередь выбирать

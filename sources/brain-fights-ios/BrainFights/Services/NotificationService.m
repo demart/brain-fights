@@ -87,7 +87,7 @@
     if (application.applicationState == UIApplicationStateActive) {
         // Получаем когда приложение запущено и пользователь его видит
         NSLog(@"PUSH: application state: %@", @"Active");
-        
+
         NSDictionary *aps = (NSDictionary*)[userInfo valueForKey:@"aps"];
         NSString *alert = [aps valueForKey:@"alert"];
 
@@ -102,19 +102,23 @@
         
         [[LNNotificationCenter defaultCenter] presentNotification:notification forApplicationIdentifier:@"games"];
         
+        // Сбрасываем счетчик так как приложение запущено
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        
         handler(UIBackgroundFetchResultNoData);
     }
     
     if (application.applicationState == UIApplicationStateInactive) {
         // Получаем когда приложение запущено но пользователь свернул его
         NSLog(@"PUSH: application state: %@", @"Inactive");
-        
+        //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:[UIApplication sharedApplication].applicationIconBadgeNumber + 1];
         handler(UIBackgroundFetchResultNoData);
     }
     
     if (application.applicationState == UIApplicationStateBackground) {
         // Получаем когда приложение закрыто
         NSLog(@"PUSH: application state: %@", @"Background");
+        //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:[UIApplication sharedApplication].applicationIconBadgeNumber + 1];
         
         handler(UIBackgroundFetchResultNoData);
     }

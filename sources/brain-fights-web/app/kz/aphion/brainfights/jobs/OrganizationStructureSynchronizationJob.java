@@ -16,7 +16,7 @@ import play.jobs.OnApplicationStart;
  * @author artem.demidovich
  *
  */
-//@On("0 0 4 1/1 * ? *") // Every day at 4am (morning)
+@On("0 0 4 1/1 * ? *") // Every day at 4am (morning)
 //@OnApplicationStart
 public class OrganizationStructureSynchronizationJob extends Job {
 

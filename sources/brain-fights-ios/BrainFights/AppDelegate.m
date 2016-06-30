@@ -190,10 +190,6 @@ static NSString * const AboutViewControllerStoryboardID = @"AboutViewControllerS
 /// === NOTIFICATIONS =======
 /// =========================
 
-// ================
-//   NOTFICATIONS
-// ================
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [NotificationService application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
@@ -228,6 +224,7 @@ static NSString * const AboutViewControllerStoryboardID = @"AboutViewControllerS
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

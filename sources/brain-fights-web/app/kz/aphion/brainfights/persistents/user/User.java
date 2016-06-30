@@ -43,7 +43,8 @@ public class User extends PersistentObject {
 		this.wonGames = 0;
 		this.loosingGames = 0;
 		this.totalGames = 0;
-		
+		this.drawnGames = 0;
+
 		this.lastPosition = 0;
 		this.lastScore = 0;
 		this.lastDrawnGames = 0;
