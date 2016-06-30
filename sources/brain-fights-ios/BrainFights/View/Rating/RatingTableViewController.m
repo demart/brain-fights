@@ -143,6 +143,8 @@ static UIRefreshControl* refreshControl;
     [[UserService sharedInstance] retrieveUsersRating:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
         if (refreshControll != nil)
             [refreshControll endRefreshing];
+        [DejalBezelActivityView removeViewAnimated:NO];
+        
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *userProfiles = (NSMutableArray*)response.data;
             if (userProfiles == nil || [userProfiles count] < 1) {
@@ -164,15 +166,18 @@ static UIRefreshControl* refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить рейтинг пользователей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
-        [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
         if (refreshControll != nil)
             [refreshControll endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить рейтинг пользователей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -180,8 +185,6 @@ static UIRefreshControl* refreshControl;
 // Загружает данные с сервера
 -(void) loadDepartmentsRating:(UIRefreshControl*) refreshControll {
     [[UserService sharedInstance] retrieveDepartmentsRating:self.departmentType.id withPage:self.page withLimit:PAGE_LIMIT onSuccess:^(ResponseWrapperModel *response) {
-        if (refreshControll != nil)
-            [refreshControll endRefreshing];
         if ([response.status isEqualToString:SUCCESS]) {
             NSMutableArray *departments = (NSMutableArray*)response.data;
             if (departments == nil || [departments count] < 1) {
@@ -205,14 +208,21 @@ static UIRefreshControl* refreshControl;
         if ([response.status isEqualToString:SERVER_ERROR]) {
             // TODO SHOW ERROR
             //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить рейтинг департаментов. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
-        [DejalBezelActivityView removeViewAnimated:NO];
+        
+        if (refreshControll != nil)
+            [refreshControll endRefreshing];
+        [DejalBezelActivityView removeViewAnimated:YES];
         
     } onFailure:^(NSError *error) {
         if (refreshControll != nil)
             [refreshControll endRefreshing];
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить рейтинг департаментов. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -228,16 +238,21 @@ static UIRefreshControl* refreshControl;
                 [self loadDepartmentsRating:nil];
             }
         }
+        //[DejalBezelActivityView removeViewAnimated:YES];
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // TODO SHOW ERROR
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить рейтинг департаментов. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
     } onFailure:^(NSError *error) {
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadUsersRating)];
+        [DejalBezelActivityView removeViewAnimated:NO];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить рейтинг департаментов. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 

@@ -77,6 +77,7 @@ static const CGFloat kJVTableViewTopInset = 0.0;
         
         UserProfileModel *userProfileMdodel = [[UserService sharedInstance] getUserProfile];
         [cell initCell:userProfileMdodel];
+        [cell.lastActivityTimeLabel setHidden:YES];
         
         return cell;
     }
@@ -154,13 +155,27 @@ static const CGFloat kJVTableViewTopInset = 0.0;
 static CGFloat HEIGHT = 504;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0)
-        return 200;
+    CGFloat proportion = tableView.bounds.size.height / HEIGHT;
+    if (indexPath.section == 0) {
+        if (proportion < 1) {
+            return 200*proportion;
+        } else {
+            return 200;
+        }
+    }
     if (indexPath.section == 1) {
-        return 50;
+        if (proportion < 1) {
+            return 50*proportion;
+        } else {
+            return 50;
+        }
     }
     if (indexPath.section == 2) {
-        return tableView.bounds.size.height - (200 + 50 * 3);
+        if (proportion < 1) {
+            return tableView.bounds.size.height - (200*proportion + 50*proportion * 3);
+        } else {
+            return tableView.bounds.size.height - (200 + 50 * 3);
+        }
     }
     return 44;
 }

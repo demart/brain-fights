@@ -137,11 +137,16 @@ static CGFloat HEIGHT = 504;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Не удалось загрузить вопросы. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
+            
         }
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(processSelectedCategory)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Не удалось зарузить вопросы. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 

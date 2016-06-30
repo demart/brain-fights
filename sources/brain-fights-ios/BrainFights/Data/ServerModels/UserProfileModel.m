@@ -11,11 +11,19 @@
 @implementation UserProfileModel
 
 
-// Время последнего обновления в формате
+// Время последнего обновления в формате даты
 -(NSDate*) getLastStatisticsUpdateDate {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     NSDate *date = [formatter dateFromString:self.lastStatisticsUpdate];
+    return date;
+}
+
+// Время последней активности в формате даты
+-(NSDate*) getLastActivityTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    NSDate *date = [formatter dateFromString:self.lastActivityTime];
     return date;
 }
 

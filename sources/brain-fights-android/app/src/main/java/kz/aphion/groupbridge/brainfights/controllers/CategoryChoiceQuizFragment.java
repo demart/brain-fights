@@ -110,7 +110,7 @@ public class CategoryChoiceQuizFragment extends Fragment implements RestTask.Res
                     categoryFragment.game=game;
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.beginTransaction()
-                            .add(R.id.container, categoryFragment)
+                            .add(R.id.flContent, categoryFragment)
                             .commit();
                 }
                 else{

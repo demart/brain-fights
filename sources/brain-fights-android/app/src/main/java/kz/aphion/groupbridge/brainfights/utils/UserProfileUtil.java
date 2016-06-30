@@ -30,10 +30,12 @@ public class UserProfileUtil {
         place.setText(String.valueOf(user.gamePosition));
         username.setText(user.name);
         position.setText(user.position);
-
+        if(user.imageUrl!=null&&user.imageUrl.length()>0){
+            Picasso.with(context).load(Const.BASE_URL+user.imageUrl).into(avatar);
+        }
 // /        avatar.bringToFront();
         if (user.lastStatisticsUpdate!=null) {
-            Date lastEntranceDate = Util.getDateFromString(user.lastStatisticsUpdate);
+            Date lastEntranceDate = Util.getDateFromString(user.lastActivityTime);
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("ru"));
             lastEntrance.setText("Заходил "+sdf.format(lastEntranceDate));
         }

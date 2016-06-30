@@ -1,9 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:actionBarStyle"   tools:ignore="NewApi">@style/BrainFightsActionBar</item>
         <item name="actionBarStyle">@style/BrainFightsActionBar</item>
+        <item name="colorPrimary">@color/ttk_lightGreen</item>
+        <item name="colorPrimaryDark">@color/ttk_green</item>
+        <item name="colorAccent">@color/ttk_orange</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
     </style>
     <style name="BrainFightsActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background" tools:ignore="NewApi">@color/ttk_green</item>
@@ -24,7 +28,7 @@
         <item name="android:background">@color/ttk_green</item>
     </style>
     <style name="QuizAnswerButton" parent="@android:style/Widget.Button">
-        <item name="android:layout_width">match_parent</item>
+        <!--<item name="android:layout_width">match_parent</item>-->
         <item name="android:layout_height">@dimen/quiz_answer_height</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@color/ttk_lightGreenT</item>
@@ -33,7 +37,7 @@
     <style name="QuizLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">180dp</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
         <item name="android:background">@color/ttk_white</item>
         <item name="android:layout_margin">10dp</item>
         <item name="elevation">2dp</item>
@@ -41,6 +45,10 @@
     <style name="RatingUserHeader" parent="@android:style/Widget.TextView">
         <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/ttk_white</item>
+    </style>
+
+    <style name="NavView">
+        <item name="android:gravity">center_vertical</item>
     </style>
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="180dp"-->

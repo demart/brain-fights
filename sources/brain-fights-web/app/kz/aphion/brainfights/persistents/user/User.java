@@ -43,7 +43,8 @@ public class User extends PersistentObject {
 		this.wonGames = 0;
 		this.loosingGames = 0;
 		this.totalGames = 0;
-		
+		this.drawnGames = 0;
+
 		this.lastPosition = 0;
 		this.lastScore = 0;
 		this.lastDrawnGames = 0;
@@ -242,6 +243,18 @@ public class User extends PersistentObject {
 		}
 		return null;
 	}
+	
+	public String getLastActivityTimeISO8601() {
+		if (lastActivityTime != null) {
+			TimeZone tz = TimeZone.getTimeZone("UTC");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			df.setTimeZone(tz);
+			String timeAsISO = df.format(lastActivityTime.getTime());
+			return timeAsISO;
+		}
+		return null;
+	}
+	
 	
 	public String getName() {
 		return name;

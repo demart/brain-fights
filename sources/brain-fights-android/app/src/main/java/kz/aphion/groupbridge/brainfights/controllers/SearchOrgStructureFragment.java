@@ -136,9 +136,9 @@ public class SearchOrgStructureFragment extends Fragment implements RestTask.Res
                 @Override
                 public void run() {
                     List<SearchOrgStructModel> departmentList = SearchOrgStructModel.getFromListByType(list,SearchOrgStructModel.SearchOrgStructModelType.DEPARTMENT);
-                    final SearchOrgStructureAdapter rvAdapter = new SearchOrgStructureAdapter(R.layout.card_search_orgstruct, departmentList ,SearchOrgStructureFragment.this);
+                    final SearchOrgStructureAdapter rvAdapter = new SearchOrgStructureAdapter(R.layout.card_search_orgstruct, departmentList ,SearchOrgStructureFragment.this, getContext());
                     List<SearchOrgStructModel> userList = SearchOrgStructModel.getFromListByType(list,SearchOrgStructModel.SearchOrgStructModelType.USER);
-                    final SearchOrgStructureAdapter rvAdapterUser = new SearchOrgStructureAdapter(R.layout.card_search_orgstruct, userList ,SearchOrgStructureFragment.this);
+                    final SearchOrgStructureAdapter rvAdapterUser = new SearchOrgStructureAdapter(R.layout.card_search_orgstruct, userList ,SearchOrgStructureFragment.this, getContext());
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -191,7 +191,7 @@ public class SearchOrgStructureFragment extends Fragment implements RestTask.Res
                     searchOrgStructureFragment.parent = department;
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.beginTransaction()
-                            .add(R.id.container, searchOrgStructureFragment)
+                            .add(R.id.flContent, searchOrgStructureFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .addToBackStack(null)
                             .commit();

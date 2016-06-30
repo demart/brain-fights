@@ -65,7 +65,7 @@ public class UserService {
 			// затираем всем этот ключ, для того чтобы если на одной девайсе два разных чувака авторизовались
 			// то мог получать только последний
 			JPA.em().createQuery("update User set devicePushToken = null where devicePushToken = :token")
-			.setParameter("token", model.devicePushToken).executeUpdate();
+				.setParameter("token", model.devicePushToken).executeUpdate();
 			user.setDevicePushToken(model.devicePushToken);
 		}
 		
@@ -110,12 +110,14 @@ public class UserService {
 		// затираем всем этот ключ, для того чтобы если на одной девайсе два разных чувака авторизовались
 		// то мог получать только последний
 		JPA.em().createQuery("update User set devicePushToken = null where devicePushToken = :token")
-		.setParameter("token", model.devicePushToken).executeUpdate();
+			.setParameter("token", model.devicePushToken).executeUpdate();
 		
-		if (model.invalidPushToken != null && "".equals(model.devicePushToken)) {
+		if (model.invalidPushToken != null && "".equals(model.invalidPushToken)) {
 			JPA.em().createQuery("update User set devicePushToken = null where devicePushToken = :token")
-			.setParameter("token", model.invalidPushToken).executeUpdate();
+				.setParameter("token", model.invalidPushToken).executeUpdate();
 		}
+		JPA.em().flush();
+		JPA.em().refresh(user);
 
 		user.setDevicePushToken(model.devicePushToken);
 		user.save();

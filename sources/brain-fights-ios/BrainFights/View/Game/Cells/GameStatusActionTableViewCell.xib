@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -14,26 +14,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVp-Gb-Tru">
-                        <rect key="frame" x="115" y="19" width="90" height="30"/>
-                        <color key="backgroundColor" red="0.0" green="0.69803921570000005" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="afc-Iw-WRW"/>
-                            <constraint firstAttribute="width" constant="90" id="shm-c8-g0j"/>
-                        </constraints>
-                        <state key="normal" title="Играть">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="playAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nBs-cA-TFp"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Laj-Nu-5ur">
-                        <rect key="frame" x="235" y="20" width="70" height="28"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Laj-Nu-5ur">
+                        <rect key="frame" x="230" y="19" width="80" height="30"/>
                         <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="IQn-vS-t0Y"/>
-                            <constraint firstAttribute="height" constant="28" id="Y6X-5L-jtW"/>
+                            <constraint firstAttribute="width" constant="80" id="IQn-vS-t0Y"/>
+                            <constraint firstAttribute="height" constant="30" id="Y6X-5L-jtW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <state key="normal" title="В друзья">
@@ -43,12 +29,12 @@
                             <action selector="addToFrindsAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="U51-O4-dbb"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-rS-wkC">
-                        <rect key="frame" x="15" y="20" width="70" height="28"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-rS-wkC">
+                        <rect key="frame" x="10" y="19" width="80" height="30"/>
                         <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="TI5-ki-gGo"/>
-                            <constraint firstAttribute="height" constant="28" id="fnt-iV-R1b"/>
+                            <constraint firstAttribute="width" constant="80" id="TI5-ki-gGo"/>
+                            <constraint firstAttribute="height" constant="30" id="fnt-iV-R1b"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <state key="normal" title="Сдаться">
@@ -58,12 +44,28 @@
                             <action selector="surrenderAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uUr-AR-C3d"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVp-Gb-Tru">
+                        <rect key="frame" x="110" y="17" width="100" height="35"/>
+                        <color key="backgroundColor" red="0.0" green="0.69803921570000005" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="afc-Iw-WRW"/>
+                            <constraint firstAttribute="width" constant="100" id="shm-c8-g0j"/>
+                        </constraints>
+                        <state key="normal" title="Играть">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="playAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nBs-cA-TFp"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="jVp-Gb-Tru" firstAttribute="leading" secondItem="xq7-rS-wkC" secondAttribute="trailing" constant="30" id="0p5-mi-XAM"/>
+                    <constraint firstItem="jVp-Gb-Tru" firstAttribute="leading" secondItem="xq7-rS-wkC" secondAttribute="trailing" constant="20" id="0p5-mi-XAM"/>
                     <constraint firstItem="jVp-Gb-Tru" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PUl-ZJ-ycH"/>
-                    <constraint firstItem="Laj-Nu-5ur" firstAttribute="leading" secondItem="jVp-Gb-Tru" secondAttribute="trailing" constant="30" id="QML-aq-s1E"/>
+                    <constraint firstItem="Laj-Nu-5ur" firstAttribute="leading" secondItem="jVp-Gb-Tru" secondAttribute="trailing" constant="20" id="QML-aq-s1E"/>
+                    <constraint firstItem="Laj-Nu-5ur" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e9d-x5-jkB"/>
                     <constraint firstItem="jVp-Gb-Tru" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="fNe-0N-2tu"/>
+                    <constraint firstItem="xq7-rS-wkC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vFG-wm-Aya"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

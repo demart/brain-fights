@@ -20,13 +20,26 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             >
-            <ImageView
+            <!--<ImageView-->
+                <!--android:layout_width="55dp"-->
+                <!--android:layout_height="55dp"-->
+                <!--android:src="@drawable/ic_default_avatar3"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--/>-->
+            <com.github.siyamed.shapeimageview.CircularImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/user_profile_avatar"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/ic_default_avatar3"
+                android:src="@drawable/ic_default_avatar2"
                 android:scaleType="fitCenter"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
+                app:siBorderWidth="0dp"
+                app:siBorderColor="@color/ttk_green"
+                android:background="@drawable/bg_circle_small"
+                android:layout_gravity="center_vertical"
                 />
             <LinearLayout
                 android:orientation="vertical"

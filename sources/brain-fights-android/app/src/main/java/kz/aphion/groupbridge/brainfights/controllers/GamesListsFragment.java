@@ -254,7 +254,7 @@ public class GamesListsFragment extends Fragment implements RestTask.RestTaskCal
         NewGameChoiceFragment newGameChoiceFragment = new NewGameChoiceFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, newGameChoiceFragment)
+                .add(R.id.flContent, newGameChoiceFragment)
                 .addToBackStack("GameList")
                 .commit();
     }
@@ -264,7 +264,7 @@ public class GamesListsFragment extends Fragment implements RestTask.RestTaskCal
             gameFragment.gameId = game.id;
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.container, gameFragment)
+                    .add(R.id.flContent, gameFragment)
                     .addToBackStack("GameList")
                     .commit();
         }
@@ -275,7 +275,7 @@ public class GamesListsFragment extends Fragment implements RestTask.RestTaskCal
             gameFragment.gameId = gameId;
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.container, gameFragment)
+                    .add(R.id.flContent, gameFragment)
                     .addToBackStack("GameList")
                     .commit();
         }
@@ -323,7 +323,7 @@ public class GamesListsFragment extends Fragment implements RestTask.RestTaskCal
             categoryFragment.game = game;
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.container, categoryFragment)
+                    .add(R.id.flContent, categoryFragment)
                     .addToBackStack("GameList")
                     .commit();
         }

@@ -84,6 +84,7 @@
         }
         
         if ([response.status isEqualToString:AUTHORIZATION_ERROR]) {
+            [DejalBezelActivityView removeViewAnimated:NO];
             [[AppDelegate globalDelegate] showAuthorizationView:self];
         }
         
@@ -93,11 +94,15 @@
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:@"Не удалось загрузить список друзей."];
+            //[self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:@"Не удалось загрузить список друзей."];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить список друзей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить список друзей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки:  %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -128,12 +133,17 @@
         if ([response.status isEqualToString:SERVER_ERROR]) {
             NSLog(@"response.status: %@", response.status);
             // SHOW ERROR ALERT
-            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:@"Не удалось найти игрока."];
+            //[self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:@"Не удалось найти игрока."];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке начать игру со случайным игроком. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
     } onFailure:^(NSError *error) {
         NSLog(@"error: %@", error);
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+        [DejalBezelActivityView removeViewAnimated:NO];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке начать игру со случайным игроком. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -192,11 +202,15 @@
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
             // TODO SHOW ALERT
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
         // TODO SHOW ERROR
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
     
 }
@@ -226,12 +240,15 @@
             
             if ([response.status isEqualToString:SERVER_ERROR]) {
                 NSLog(@"response.status: %@", response.status);
-                // SHOW ERROR ALERT
+                NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке убрать из друзей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+                [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
             }
             
         } onFailure:^(NSError *error) {
             NSLog(@"error: %@", error);
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(loadFriendsAsync)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке убрать из друзей. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }];
     }
 }

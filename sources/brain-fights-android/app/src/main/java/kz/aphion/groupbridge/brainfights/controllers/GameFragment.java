@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +26,15 @@ import kz.aphion.groupbridge.brainfights.models.GameRoundQuestionModel;
 import kz.aphion.groupbridge.brainfights.models.GameStatus;
 import kz.aphion.groupbridge.brainfights.models.GamerStatus;
 import kz.aphion.groupbridge.brainfights.models.ResponseStatus;
+import kz.aphion.groupbridge.brainfights.models.Status;
 import kz.aphion.groupbridge.brainfights.models.StatusSingle;
+import kz.aphion.groupbridge.brainfights.models.UserGameModel;
 import kz.aphion.groupbridge.brainfights.models.UserType;
 import kz.aphion.groupbridge.brainfights.stores.CurrentUser;
 import kz.aphion.groupbridge.brainfights.tasks.RestTask;
 import kz.aphion.groupbridge.brainfights.tasks.RestTaskParams;
 import kz.aphion.groupbridge.brainfights.tasks.RestTaskResult;
+import kz.aphion.groupbridge.brainfights.tasks.RestTaskUtil;
 import kz.aphion.groupbridge.brainfights.utils.Dialogs;
 
 /**
@@ -49,6 +53,8 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
     public boolean gameEndNotification;
     Button btnSurrender;
     Button btnFriend;
+    Button btnGame;
+    LinearLayout playersLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v =inflater.inflate(R.layout.fragment_game, container, false);
@@ -57,11 +63,12 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
         rv = (RecyclerView)v.findViewById(R.id.game_round_list);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         loadingPanel = (RelativeLayout) v.findViewById(R.id.loadingPanel);
+        playersLayout = (LinearLayout) v.findViewById(R.id.players_layout);
         loadingPanel.setVisibility(View.VISIBLE);
         score = (TextView) v.findViewById(R.id.game_score_text);
-        meProfile = new GameUserProfileHelper(v.findViewById(R.id.game_me_profile_layout));
-        opponentProfile = new GameUserProfileHelper(v.findViewById(R.id.game_opponent_profile_layout));
-        Button btnGame = (Button) v.findViewById(R.id.game_game_button);
+        meProfile = new GameUserProfileHelper(v.findViewById(R.id.game_me_profile_layout), getContext());
+        opponentProfile = new GameUserProfileHelper(v.findViewById(R.id.game_opponent_profile_layout), getContext());
+        btnGame = (Button) v.findViewById(R.id.game_game_button);
         btnGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +89,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                 setFriendlyStatus();
             }
         });
+        playersLayout.setAlpha(0);
         LoadGameInfo();
 
         return v;
@@ -119,9 +127,37 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
     }
     private void setScore(){
         if(game!=null&&game.me!=null&&game.oponent!=null){
-            score.setText(game.me.correctAnswerCount+" : "+game.oponent.correctAnswerCount);
+            String meScore = "-";
+            if(game.me.correctAnswerCount!=null)meScore=String.valueOf(game.me.correctAnswerCount);
+            String opponentScore = "-";
+            if(game.oponent.correctAnswerCount!=null)opponentScore=String.valueOf(game.oponent.correctAnswerCount);
+            score.setText(meScore+" : "+opponentScore);
         }else{
             score.setText("0 : 0");
+        }
+    }
+    private void setButtonGameState(GameModel game){
+        if(game!=null&&game.me.status!=null){
+            switch (game.me.status){
+                case WAITING_OPONENT:
+                case WAITING_OPONENT_DECISION:
+                    btnGame.setAlpha(0);
+                    btnGame.setText("Играть");
+                    break;
+                case WAITING_ANSWERS:
+                case WAITING_ROUND:
+                    btnGame.setAlpha(1);
+                    btnGame.setText("Играть");
+                    break;
+                case LOOSER:
+                case WINNER:
+                case SURRENDED:
+                case DRAW:
+                case OPONENT_SURRENDED:
+                    btnGame.setAlpha(1);
+                    btnGame.setText("Реванш");
+                    break;
+            }
         }
     }
     @Override
@@ -133,8 +169,10 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                     GameModel oldGame=game;
                     this.game = response.getData();
                     setScore();
+                    setButtonGameState(game);
                     meProfile.setData(game.me.user);
                     opponentProfile.setData(game.oponent.user);
+                    playersLayout.setAlpha(1);
                     updateRoundList();
 //                    if(oldGame!=null){
 //                        if(oldGame!=null&&game!=null&&
@@ -203,6 +241,25 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                     LoadGameInfo();
                 }
             }
+        }else if(taskResult.getTaskType().equals(RestTask.TaskType.CREATE_INVITATION)){
+            if (taskResult.getTaskStatus().equals(RestTask.TaskStatus.SUCCESS)) {
+                StatusSingle<UserGameModel> response = (StatusSingle<UserGameModel>) taskResult.getResponseData();
+                if(response.getStatus().equals(ResponseStatus.SUCCESS)) {
+                    if(getActivity().getSupportFragmentManager().popBackStackImmediate("GameList", FragmentManager.POP_BACK_STACK_INCLUSIVE)) {
+                        GamesListsFragment.UpdateGameList(getActivity().getSupportFragmentManager());
+                    }else{
+                        GamesListsFragment fragment = new GamesListsFragment();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                        fragment.UpdateGamesLists();
+                    }
+                }
+                else{
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                            response.getErrorMessage(), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
         }
     }
 
@@ -240,7 +297,7 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                 cqf.game = game;
                 fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .add(R.id.container, cqf)
+                        .add(R.id.flContent, cqf)
                         //.addToBackStack(null)
                         .commit();
                 break;
@@ -251,10 +308,16 @@ public class GameFragment extends Fragment implements RestTask.RestTaskCallback,
                 categoryFragment.fromGame=true;
                 fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, categoryFragment)
+                        .replace(R.id.flContent, categoryFragment)
                         //.addToBackStack(null)
                         .commit();
                 break;
+            case DRAW:
+            case SURRENDED:
+            case WINNER:
+            case LOOSER:
+            case OPONENT_SURRENDED:
+                RestTaskUtil.createInvitation(getContext(),this, game.oponent.user.id);
         }
     }
 

@@ -11,12 +11,21 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:visibility="gone"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_green"
+        android:layout_margin="10dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:singleLine="false"
         android:layout_margin="20dp"
         android:textSize="16dp"
-        android:text="Информация о программе"/>
+        android:textColor="@color/ttk_black"
+        android:gravity="center_horizontal"
+        android:text="Корпоративный мобильный портал, интеллектуальная игра АО «Транстелеком»."/>
 </LinearLayout>

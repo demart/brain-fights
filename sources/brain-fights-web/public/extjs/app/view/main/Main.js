@@ -16,6 +16,7 @@ Ext.define('BrainFightsConsole.view.main.Main', {
     },
 
     requires: [
+               
     ],
     
     id: 'mainViewportId',

@@ -114,7 +114,9 @@
                     // Impossible
                 }
                 if ([response.status isEqualToString:SERVER_ERROR]) {
-                    [self presentErrorViewControllerWithTryAgainSelector:@selector(signInAction)];
+                    NSString* message = [[NSString alloc] initWithFormat:@"Операция завершилась с ошибкой. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+                    [self showAlertWithTitle:@"Ошибка" andMessage:message];
+                    //[self presentErrorViewControllerWithTryAgainSelector:@selector(signInAction)];
                 }
                 NSLog(@"Authorization failed: %@ %@", response.errorCode, response.errorMessage);
             }
@@ -122,8 +124,11 @@
         
         
     } onFailure:^(NSError *error) {
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(signInAction)];
-        [DejalBezelActivityView removeViewAnimated:NO];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        NSString* message = [[NSString alloc] initWithFormat:@"Операция завершилась с ошибкой. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self showAlertWithTitle:@"Ошибка" andMessage:message];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(signInAction)];
+
     }];
 }
 

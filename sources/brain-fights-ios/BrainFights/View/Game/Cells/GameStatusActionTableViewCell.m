@@ -18,6 +18,7 @@
 @property (nonatomic, copy) void (^addToFriendsActionBlock)(void);
 @property (nonatomic, copy) void (^surrenderActionBlock)(void);
 
+@property UITableViewController *parentTableViewController;
 
 @end
 
@@ -28,6 +29,10 @@
     [self initButtonView:self.surrenderActionButton];
     [self initButtonView:self.playButton];
     [self initButtonView:self.addToFriendsButton];
+    
+    [self.surrenderActionButton setBackgroundColor:[Constants SYSTEM_COLOR_RED]];
+    [self.playButton setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+    [self.addToFriendsButton setBackgroundColor:[Constants SYSTEM_COLOR_ORANGE]];
 }
 
 -(void) initButtonView:(UIView*) view {
@@ -43,6 +48,46 @@
     [super setSelected:selected animated:animated];
 }
 
+
+- (void) initCell:(GameModel*) gameModel parentTableViewController:(UITableViewController*) parentTableViewController {
+    NSLog(@"GameStatusActionTableViewCell initCell invoked");
+    self.model = gameModel;
+    self.parentTableViewController = parentTableViewController;
+    
+    if ([gameModel.status isEqualToString:GAME_STATUS_FINISHED]) {
+        [self.surrenderActionButton setHidden:YES];
+        [self.playButton setTitle:@"Реванш" forState:UIControlStateNormal];
+        [self.playButton setEnabled:YES];
+    }
+    
+    if ([gameModel.status isEqualToString:GAME_STATUS_WAITING]) {
+        // Не корректная ситация нужно убрать все кнопки
+        [self.surrenderActionButton setHidden:YES];
+        [self.playButton setHidden:YES];
+        [self.addToFriendsButton setHidden:YES];
+    }
+    
+    if ([gameModel.status isEqualToString:GAME_STATUS_STARTED]) {
+        if ([gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_ANSWERS] ||
+            [gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_ROUND]) {
+            // Ход текущего игрока
+            [self.playButton setTitle:@"Играть!" forState:UIControlStateNormal];
+            [self.playButton setBackgroundColor:[Constants SYSTEM_COLOR_GREEN]];
+            [self.playButton setEnabled:YES];
+        }
+        
+        if ([gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_OPONENT]) {
+            // Ожидаем игрока
+            [self.playButton setTitle:@"Ждем" forState:UIControlStateNormal];
+            [self.playButton setBackgroundColor:[Constants SYSTEM_COLOR_LIGHT_GREY]];
+            [self.playButton setEnabled:NO];
+        }
+    }
+    
+    if ([gameModel.oponent.user.type isEqualToString:USER_TYPE_FRIEND]) {
+        [self.addToFriendsButton setHidden:YES];
+    }
+}
 
 - (void) initCell:(GameModel*) gameModel onPlayAction:(void (^)(void))playAction onSurrenderAction:(void (^)(void))surrenderAction onAddToFriendsAction:(void (^)(void))addToFriendsAction onRevancheAction:(void (^)(void))onRevancheAction {
     NSLog(@"GameStatusActionTableViewCell initCell invoked");
@@ -88,18 +133,22 @@
 
 
 - (IBAction)surrenderAction:(id)sender {
-    self.surrenderActionBlock();
+    [self.parentTableViewController performSelector:@selector(onSurrenderAction)];
+    //self.surrenderActionBlock();
 }
 
 - (IBAction)addToFrindsAction:(UIButton *)sender {
-    self.addToFriendsActionBlock();
+    [self.parentTableViewController performSelector:@selector(onAddToFriendsAction)];
+    //self.addToFriendsActionBlock();
 }
 
 - (IBAction)playAction:(UIButton *)sender {
     if ([self.model.status isEqualToString:GAME_STATUS_FINISHED]){
-        self.revancheActionBlock();
+        [self.parentTableViewController performSelector:@selector(onRevancheAction)];
+        //self.revancheActionBlock();
     } else {
-        self.playActionBlock();
+        [self.parentTableViewController performSelector:@selector(onPlayAction)];
+        //self.playActionBlock();
     }
 }
 

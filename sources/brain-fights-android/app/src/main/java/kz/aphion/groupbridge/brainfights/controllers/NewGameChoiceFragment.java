@@ -70,7 +70,7 @@ public class NewGameChoiceFragment extends Fragment implements RestTask.RestTask
         SearchUserByTextFragment searchUserByTextFragment = new SearchUserByTextFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, searchUserByTextFragment)
+                .add(R.id.flContent, searchUserByTextFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -79,7 +79,7 @@ public class NewGameChoiceFragment extends Fragment implements RestTask.RestTask
         SearchOrgStructureFragment searchOrgStructureFragment = new SearchOrgStructureFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.container, searchOrgStructureFragment)
+                .add(R.id.flContent, searchOrgStructureFragment)
                 .addToBackStack(null)
                 .commit();
     }

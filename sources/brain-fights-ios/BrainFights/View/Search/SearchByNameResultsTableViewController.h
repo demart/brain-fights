@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseTableViewController.h"
 
-@interface SearchByNameResultsTableViewController : UITableViewController
+@interface SearchByNameResultsTableViewController : BaseTableViewController
 
 // Отфильтрованные пользователи
 @property NSMutableArray *filteredUsers;

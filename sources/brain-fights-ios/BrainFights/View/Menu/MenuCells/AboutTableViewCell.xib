@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -18,7 +18,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q22-8t-Tw2">
                         <rect key="frame" x="0.0" y="123" width="320" height="57"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Aphion Software" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMI-81-Wyp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Разработано в Aphion Software" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMI-81-Wyp">
                                 <rect key="frame" x="8" y="33" width="304" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -34,7 +34,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="О приложении" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkB-Th-Fvn">
-                        <rect key="frame" x="66" y="80" width="125" height="20.5"/>
+                        <rect key="frame" x="66" y="80" width="122" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -47,21 +47,21 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="greenLogoTextIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dl8-1t-CfU">
-                        <rect key="frame" x="191" y="68" width="75" height="31"/>
+                        <rect key="frame" x="191" y="77" width="70" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="75" id="fr7-aZ-FXJ"/>
-                            <constraint firstAttribute="height" constant="31" id="iMh-sz-2xk"/>
+                            <constraint firstAttribute="width" constant="70" id="fr7-aZ-FXJ"/>
+                            <constraint firstAttribute="height" constant="25" id="iMh-sz-2xk"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="Q22-8t-Tw2" secondAttribute="bottom" constant="-9" id="BMD-6T-1lU"/>
                     <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="etS-yT-cXj" secondAttribute="bottom" constant="21" id="H9X-fu-OMj"/>
-                    <constraint firstItem="dl8-1t-CfU" firstAttribute="leading" secondItem="UkB-Th-Fvn" secondAttribute="trailing" id="LwQ-3p-cYp"/>
+                    <constraint firstItem="dl8-1t-CfU" firstAttribute="leading" secondItem="UkB-Th-Fvn" secondAttribute="trailing" constant="8" id="LwQ-3p-cYp"/>
                     <constraint firstItem="UkB-Th-Fvn" firstAttribute="leading" secondItem="etS-yT-cXj" secondAttribute="trailing" constant="8" id="P2M-An-xHm"/>
                     <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="UkB-Th-Fvn" secondAttribute="bottom" constant="22" id="ayQ-b6-WRL"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Q22-8t-Tw2" secondAttribute="trailing" constant="-8" id="fR1-FZ-RpQ"/>
-                    <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="dl8-1t-CfU" secondAttribute="bottom" constant="24" id="mB1-8m-vs7"/>
+                    <constraint firstItem="Q22-8t-Tw2" firstAttribute="top" secondItem="dl8-1t-CfU" secondAttribute="bottom" constant="21" id="mB1-8m-vs7"/>
                     <constraint firstItem="Q22-8t-Tw2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="tJs-au-h41"/>
                     <constraint firstItem="etS-yT-cXj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="25" id="zug-L6-ffw"/>
                 </constraints>
@@ -75,6 +75,6 @@
     </objects>
     <resources>
         <image name="aboutIcon" width="100" height="100"/>
-        <image name="greenLogoTextIcon" width="536" height="213"/>
+        <image name="greenLogoTextIcon" width="2080" height="700"/>
     </resources>
 </document>

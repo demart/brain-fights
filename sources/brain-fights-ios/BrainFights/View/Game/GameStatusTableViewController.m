@@ -88,6 +88,8 @@ static UIRefreshControl* refreshControl;
     [GameService retrieveGameInformation:self.gameModel.id onSuccess:^(ResponseWrapperModel *response) {
         if (refreshControl != nil)
             [refreshControl endRefreshing];
+        [DejalBezelActivityView removeViewAnimated:YES];
+        
         if ([response.status isEqualToString:SUCCESS]) {
             self.model = (GameModel*)response.data;
             [self.tableView reloadData];
@@ -99,14 +101,19 @@ static UIRefreshControl* refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(refreshGameStatus)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(refreshGameStatus)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке обновить статус игры. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
-        [DejalBezelActivityView removeViewAnimated:YES];
+        
     } onFailure:^(NSError *error) {
-        if (refreshControl != nil)
+        if (refreshControl != nil) {
             [refreshControl endRefreshing];
+        }
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(refreshGameStatus)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке обновить статус игры. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(refreshGameStatus)];
     }];
 }
 
@@ -131,16 +138,16 @@ static UIRefreshControl* refreshControl;
     NSString* message;
     
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_DRAW]) {
-        message = [[NSString alloc] initWithFormat: @"Вы закончили игру в ничью с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВы закончили игру в ничью с %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_LOOSER]) {
-        message = [[NSString alloc] initWithFormat: @"Вы проиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВы проиграли игроку %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_WINNER]) {
-        message = [[NSString alloc] initWithFormat: @"Вы выиграли игру с %@ \n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВы выиграли игрока %@\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     if ([gameModel.me.status isEqualToString:GAMER_STATUS_OPONENT_SURRENDED]) {
-        message = [[NSString alloc] initWithFormat: @"Ваш опонент %@ сдался.\n Ваши очки: %li", gameModel.oponent.user.name, gameModel.me.resultScore];
+        message = [[NSString alloc] initWithFormat: @"\nВаш опонент %@ сдался\n\nВаши очки: %li\n", gameModel.oponent.user.name, gameModel.me.resultScore];
     }
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
@@ -272,7 +279,7 @@ static UIRefreshControl* refreshControl;
             [tableView registerNib:[UINib nibWithNibName:@"GameStatusActionTableViewCell" bundle:nil]forCellReuseIdentifier:@"GameStatusActionCell"];
             cell = [tableView dequeueReusableCellWithIdentifier:@"GameStatusActionCell"];
         }
-        
+        /*
         [cell initCell:self.model onPlayAction:^{
             [self onPlayAction];
         } onSurrenderAction:^{
@@ -282,6 +289,8 @@ static UIRefreshControl* refreshControl;
         } onRevancheAction:^{
             [self onRevancheAction];
         }];
+        */
+        [cell initCell:self.model parentTableViewController:self];
         
         return cell;
     }
@@ -305,6 +314,9 @@ static UIRefreshControl* refreshControl;
         // Подгужаем список вопросов для ответов
         [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
         [GameService getRoundQuestions:self.model.id withRound:self.model.lastRound.id onSuccess:^(ResponseWrapperModel *response) {
+            
+            [DejalBezelActivityView removeViewAnimated:NO];
+            
             if ([response.status isEqualToString:SUCCESS]) {
                 GameRoundModel *gameRoundModel = (GameRoundModel*)response.data;
                 // Начинаем новый раунд
@@ -318,13 +330,16 @@ static UIRefreshControl* refreshControl;
             }
             
             if ([response.status isEqualToString:SERVER_ERROR]) {
-                [self presentErrorViewControllerWithTryAgainSelector:@selector(onPlayAction)];
+                //[self presentErrorViewControllerWithTryAgainSelector:@selector(onPlayAction)];
+                NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке начать игру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+                [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
             }
-            [DejalBezelActivityView removeViewAnimated:NO];
             
         } onFailure:^(NSError *error) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(onPlayAction)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(onPlayAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке начать игру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }];
     }
     
@@ -335,8 +350,9 @@ static UIRefreshControl* refreshControl;
 
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Подождите\nИдет загрузка..."];
     [GameService surrenderGame:self.model.id onSuccess:^(ResponseWrapperModel *response) {
+        [DejalBezelActivityView removeViewAnimated:NO];
         if ([response.status isEqualToString:SUCCESS]) {
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Вы сдались!"
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Поражение!"
                                                                            message:@"В данной игре вы сдались. Ваш опонент заработал 18 очков."
                                                                     preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -351,13 +367,16 @@ static UIRefreshControl* refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(onSurrenderAction)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(onSurrenderAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке завершить игру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
-        [DejalBezelActivityView removeViewAnimated:NO];
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(onSurrenderAction)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке завершить игру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
+//        [self presentErrorViewControllerWithTryAgainSelector:@selector(onSurrenderAction)];
     }];
 }
 
@@ -378,12 +397,16 @@ static UIRefreshControl* refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(onAddToFriendsAction)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(onAddToFriendsAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке добавить в друзья. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(onAddToFriendsAction)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(onAddToFriendsAction)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке добавить в друзья. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -405,12 +428,16 @@ static UIRefreshControl* refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            [self presentErrorViewControllerWithTryAgainSelector:@selector(onRevancheAction)];
+            //[self presentErrorViewControllerWithTryAgainSelector:@selector(onRevancheAction)];
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке начать новую игру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
-        [self presentErrorViewControllerWithTryAgainSelector:@selector(onRevancheAction)];
+        //[self presentErrorViewControllerWithTryAgainSelector:@selector(onRevancheAction)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке добавить в друзья. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
     
 }

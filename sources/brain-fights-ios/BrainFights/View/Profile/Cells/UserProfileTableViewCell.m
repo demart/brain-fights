@@ -44,7 +44,19 @@
     [self.userScore setText:[@(userProfile.score) stringValue]];
     [self.userScore sizeToFit];
     
-
+    if (userProfile.lastActivityTime == nil || [userProfile.lastActivityTime isEqualToString:@""]) {
+        [self.lastActivityTimeLabel setHidden:YES];
+    } else {
+        if (![userProfile.type isEqualToString:USER_TYPE_ME]) {
+            [self.lastActivityTimeLabel setHidden:NO];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"dd LLLL yyyy 'в' HH:mm"];
+//        [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
+            NSString *stringFromDate = [formatter stringFromDate:[userProfile getLastActivityTime]];
+            NSString *lastActivityTime = [[NSString alloc] initWithFormat:@"Заходил %@", stringFromDate];
+            [self.lastActivityTimeLabel setText:lastActivityTime];
+        }
+    }
 }
 
 @end

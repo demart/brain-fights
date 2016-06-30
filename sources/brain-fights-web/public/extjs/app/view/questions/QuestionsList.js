@@ -5,7 +5,7 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
     requires: [
    		'Ext.MessageBox',
    		'Ext.layout.container.Border',
-   		'Ext.toolbar.Paging',
+  
    		
    	    'BrainFightsConsole.view.questions.QuestionsListController',
    	    'BrainFightsConsole.view.questions.QuestionsEditWindow',
@@ -23,6 +23,8 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
 	defaults: {
        // collapsible: true,
         split: true,
+       // autoScroll: true,
+        scroll: true,
         bodyPadding: '0 0 0 0'
     },
     items: [ 
@@ -235,20 +237,6 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
 
                 	listeners: {
                 		viewready: function() {
-            	            var height = Ext.getBody().getSize().height - 265;
-            	    		console.log(height);
-            	    	    var rows = Math.floor(height / 25.0);
-            	    	    console.log(rows);
-            	    	    this.store.pageSize = rows;
-            	    		this.store.load();
-            	    	},
-            	    	
-            	    	resize: function() {
-            	            var height = Ext.getBody().getSize().height - 265;
-            	    		console.log(height);
-            	    		var rows = Math.floor(height / 25.0);
-            	    	    console.log(rows);
-            	    	    this.store.pageSize = rows;
             	    		this.store.load();
             	    	},
             	    	
@@ -312,29 +300,27 @@ Ext.define('BrainFightsConsole.view.questions.QuestionsList' ,{
                 		
                 },
 ],
-bbar:            	 {
- 	xtype: 'pagingtoolbar',
-     store: 'QuestionStore',
-     displayInfo: true,
-     dock: 'bottom',
-     displayMsg: 'Показано записей {0} - {1} из {2}',
-     emptyMsg: "",
-     items:[]
- },
+
             },
 {
 region: 'center',
 title: 'Просмотр информации о вопросе',
 flex: 1,
 layout: 'fit',
-scroll: true,
+//autoScroll: true,
+//scroll: true,
 id: 'viewQuestionInformationId',
 items: [
 {
     defaultType: 'textfield',
     style: 'margin: 10px',
+    //scroll: true,
+    autoHeight: true,
+    autoScroll: true,
+    width: 500,
     style: 'margin: 10px',
-    height: 800,
+   // minHeight: 550,
+    //maxheight: 800,
     defaults: {
     	labelWidth: 140,
     	width: 370,

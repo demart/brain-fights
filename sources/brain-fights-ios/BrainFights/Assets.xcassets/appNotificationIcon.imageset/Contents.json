@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "logo_green_final-80.png",
+      "filename" : "CorpQ15-320.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "logo_green_final-87.png",
+      "filename" : "CorpQ15-321.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "logo_green_final-120.png",
+      "filename" : "CorpQ15-322.png",
       "scale" : "3x"
     }
   ],

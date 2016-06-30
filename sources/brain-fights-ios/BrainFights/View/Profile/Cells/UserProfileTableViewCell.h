@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userGamePosition;
 @property (weak, nonatomic) IBOutlet UILabel *userScore;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthBeforeRating;
+@property (weak, nonatomic) IBOutlet UILabel *lastActivityTimeLabel;
 
 - (void) initCell:(UserProfileModel*) userProfile;
 

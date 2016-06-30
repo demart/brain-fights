@@ -192,7 +192,7 @@ public class AdmController extends Controller {
 		Boolean status = AdmService.checkUsers(Security.connected());
 		System.out.println ("Is user's role administrator or manager? Answer: " + status);
 		if (status == true) {
-			List<Category> list = AdmService.getCategoryList(start,limit);
+			List<Category> list = AdmService.getCategoryList(start, limit);
 			ArrayList<CategoryModel> models = AdmService.createCategoryList(list);
 		
 			AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
@@ -202,6 +202,30 @@ public class AdmController extends Controller {
 			renderJSON(wrapper);
 		}
 	}
+	
+	/**
+	 * Читаем список категорий для комбо листа при добавлении вопроса
+	 * @param page
+	 * @param start
+	 * @param limit
+	 * @throws PlatformException
+	 */
+		public static void readCategoryComboList (int page, int start, int limit) throws PlatformException {
+			Logger.info("Read Category List. User is " +  Security.connected());
+			
+			Boolean status = AdmService.checkUsers(Security.connected());
+			System.out.println ("Is user's role administrator or manager? Answer: " + status);
+			if (status == true) {
+				List<Category> list = AdmService.getCategoryComboList(start, limit);
+				ArrayList<CategoryModel> models = AdmService.createCategoryList(list);
+			
+				AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
+				wrapper.setData(models.toArray());
+				wrapper.setStatus(ResponseStatus.SUCCESS);
+				wrapper.setTotalCount(AdmService.getCountCategoryNotDeleted().intValue());
+				renderJSON(wrapper);
+			}
+		}
 	
 	/**
 	 * Создание новой категории
@@ -448,7 +472,7 @@ public class AdmController extends Controller {
 		System.out.println ("Is user's role administrator/manager? Answer: " + status);
 		if (status == true) {
 			
-			List<Category> listBase = AdmService.getCategoryList(start, limit);
+			List<Category> listBase = AdmService.getCategoryComboList(start, limit);
 			
 			ArrayList<CategoryModel> models = AdmService.createCategoryComboList(listBase);
 			
@@ -875,7 +899,7 @@ public class AdmController extends Controller {
 		if (status == true) {
 		AdminResponseWrapperModel wrapper = new AdminResponseWrapperModel();
 		wrapper.setStatus(ResponseStatus.BAD_REQUEST);
-		System.out.println (photo[0]);
+		//System.out.println (photo[0]);
 		
 		String format = "csv";
 		String format2 = "lsx";
@@ -887,8 +911,8 @@ public class AdmController extends Controller {
 			ArrayList<QuestionModel> models = AdmService.readCsvFile(photo[0].getPath());
 			
 			wrapper.setData(models.toArray());
-		//	wrapper.setDownloadQuestions(AdmService.count-1);
-		//	wrapper.setModelQuestions(models.size());
+			wrapper.setDownloadQuestions(AdmService.count-1);
+			wrapper.setModelQuestions(models.size());
 			wrapper.setStatus(ResponseStatus.SUCCESS);
 		
 		}
@@ -898,8 +922,8 @@ public class AdmController extends Controller {
 			ArrayList<QuestionModel> models = AdmService.readExcelFile(photo[0].getPath());
 			
 			wrapper.setData(models.toArray());
-		//	wrapper.setDownloadQuestions(AdmService.count-1);
-		//	wrapper.setModelQuestions(models.size());
+			wrapper.setDownloadQuestions(AdmService.count-1);
+			wrapper.setModelQuestions(models.size());
 			wrapper.setStatus(ResponseStatus.SUCCESS);
 			
 			

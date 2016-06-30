@@ -139,7 +139,13 @@
 
 // Выводит сколько времени уже ждем игрока
 - (void) calculateWaitingTime {
-    NSDate *lastUpdateDate = [self.gameModel.me getLastUpdateStatusDate];
+    NSDate *lastUpdateDate = nil;
+    //if ([self.gameModel.me.status isEqualToString:GAMER_STATUS_WAITING_OPONENT]) {
+        lastUpdateDate = [self.gameModel.me getLastUpdateStatusDate];
+    //} else {
+    //    lastUpdateDate = [self.gameModel.oponent getLastUpdateStatusDate];
+   // }
+//    *lastUpdateDate = [self.gameModel.me getLastUpdateStatusDate];
     NSDate *currentTime = [NSDate date];
     NSTimeInterval secondsBetween = [currentTime timeIntervalSinceDate:lastUpdateDate];
     

@@ -71,7 +71,13 @@ Ext.define('BrainFightsConsole.view.questions.DownloadWindow', {
 	                       	 if (action.result.status == "BAD_REQUEST")
 	                       		 Ext.Msg.alert('Ошибка', 'Ошибка чтения файла. Доступные форматы: xlsx, csv');
 	                       	 else if (action.result.status == "SUCCESS") {
-	                       		 //Ext.Msg.alert('Успешно', 'ЫЫЫЫЫть');
+	                       		Ext.getCmp('downloadQuestionsWindowId').hide();
+                       		 var store = Ext.getCmp('questionsImportGridId');
+                       		 store.getStore().removeAll();
+                       		 store.getStore().add(action.result.data);
+                       		 Ext.getCmp('saveImportQuestionId').enable();
+                       		 Ext.Msg.alert('Внимание', 'Обработано вопросов ' + action.result.modelsQuestions + ' из ' + action.result.downloadQuestions);
+                    
 	                       	 }
 	                         else
 	                       		 Ext.Msg.alert('Ошибка', 'Файл не загрузился');
@@ -83,12 +89,13 @@ Ext.define('BrainFightsConsole.view.questions.DownloadWindow', {
                         	 if (action.result.status == "BAD_REQUEST")
                         		 Ext.Msg.alert('Ошибка', 'Ошибка чтения файла. Доступные форматы: xlsx, csv');
                         	 else if (action.result.status == "SUCCESS") {
-                        		 //Ext.Msg.alert('Успешно', 'ЫЫЫЫЫть');
+
                         		 Ext.getCmp('downloadQuestionsWindowId').hide();
                         		 var store = Ext.getCmp('questionsImportGridId');
                         		 store.getStore().removeAll();
                         		 store.getStore().add(action.result.data);
                         		 Ext.getCmp('saveImportQuestionId').enable();
+                        		 Ext.Msg.alert('Внимание', 'Обработано вопросов ' + action.result.modelsQuestions + ' из ' + action.result.downloadQuestions);
                         	 }
                         	 else
                         		 Ext.Msg.alert('Ошибка', 'Файл не загрузился');

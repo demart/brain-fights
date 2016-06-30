@@ -10,8 +10,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
+
 import kz.aphion.groupbridge.brainfights.R;
 import kz.aphion.groupbridge.brainfights.models.UserProfile;
+import kz.aphion.groupbridge.brainfights.utils.Const;
 
 /**
  * Created by alimjan on 11.11.2015.
@@ -44,6 +48,8 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
         holder.name.setText(profile.getName());
         holder.position.setText(profile.getPosition());
         holder.friendPosition = position;
+        if(profile.imageUrl!=null&&profile.imageUrl.length()>0)
+        Picasso.with(context).load(Const.BASE_URL+profile.imageUrl).into(holder.avatar);
         holder.user = profile;
         switch (profile.playStatus){
             case WAITING:
@@ -79,6 +85,7 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
         CardView game;
         UserProfile user;
         ImageButton gameImage;
+        CircularImageView avatar;
         public ViewHolder(View itemView, final FriendRecyclerOnClickCallback callback) {
             super(itemView);
 //            name = (TextView) itemView.findViewById(R.id.friend_list_name);
@@ -105,6 +112,7 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
                     callback.onProfileClick(user);
                 }
             });
+            avatar = (CircularImageView) itemView.findViewById(R.id.user_profile_avatar);
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {

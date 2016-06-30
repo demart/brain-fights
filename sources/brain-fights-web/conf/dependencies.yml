@@ -3,5 +3,11 @@
 require:
 - play -> secure
 - com.relayrides -> pushy 0.4.3
+<<<<<<< HEAD
 - org.apache.poi -> poi 3.13
 - org.apache.poi -> poi-ooxml 3.13
+=======
+#- org.apache.poi -> poi 3.13
+#- org.apache.poi -> poi-ooxml 3.13
+- net.coobird -> thumbnailator 0.4.3
+>>>>>>> 074a6acf7a471e758641141345de224883ee590a

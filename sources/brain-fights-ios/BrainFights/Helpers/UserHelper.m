@@ -67,6 +67,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -137,6 +138,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -244,6 +246,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -351,6 +354,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -432,6 +436,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -527,6 +532,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"
@@ -671,6 +677,7 @@
                                                            @"lastScore":@"lastScore",
                                                            @"lastGamePosition":@"lastGamePosition",
                                                            @"lastStatisticsUpdate":@"lastStatisticsUpdate",
+                                                           @"lastActivityTime":@"lastActivityTime",
                                                            }];
     
     [userProfileModel addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"department"

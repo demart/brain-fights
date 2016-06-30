@@ -112,13 +112,16 @@ static UIRefreshControl* refreshControl;
         }
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
-            // SHOW ERROR
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить организационную структуру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
     } onFailure:^(NSError *error) {
         if (refreshControl!=nil)
             [refreshControl endRefreshing];
         [DejalBezelActivityView removeViewAnimated:YES];
         // TODO [self presentErrorViewControllerWithTryAgainSelector:@selector(loadDepartmentsAsync)];
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке загрузить организационную структуру. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 
@@ -140,12 +143,15 @@ static UIRefreshControl* refreshControl;
         
         if ([response.status isEqualToString:SERVER_ERROR]) {
             [DejalBezelActivityView removeViewAnimated:NO];
-            // TODO SHOW ALERT
+            NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %@ : %@", response.errorCode, response.errorMessage];
+            [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
         }
         
     } onFailure:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:NO];
         // TODO SHOW ERROR
+        NSString* message = [[NSString alloc] initWithFormat:@"Ошибка при попытке отправить приглашение. Проверьте соединение с интернетом и попробуйте еще раз, Описание ошибки: %li : %@", error.code, error.localizedDescription.description];
+        [self presentSimpleAlertViewWithTitle:@"Ошибка" andMessage:message];
     }];
 }
 

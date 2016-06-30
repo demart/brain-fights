@@ -23,12 +23,16 @@
     //return @"http://localhost:8080";
     //return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
 //    return @"http://localhost:9000";
-    return @"http://aphion.kz/green";
+//    return @"http://aphion.kz/green";
+//    return @"http://aphion.kz/green";
+    return @"http://corpq.ttc.kz";
+   // return @"http://37.208.44.171";
     //return @"http://192.168.1.106:9000";
     //return @"http://192.168.0.94:8080";
     //return @"http://api.sushimi.kz/rest-api";
 #else
-    return @"http://aphion.kz/green";
+    return @"http://corpq.ttc.kz";
+//    return @"http://aphion.kz/green";
     //return @"http://ec2-54-69-182-222.us-west-2.compute.amazonaws.com:8080";
     //return @"http://172.20.10.2";
     //return @"http://api.sushimi.kz/rest-api";

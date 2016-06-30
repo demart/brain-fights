@@ -1,5 +1,9 @@
 package kz.aphion.brainfights.models;
 
+import java.util.Calendar;
+
+import javax.persistence.Column;
+
 import play.db.jpa.JPA;
 import kz.aphion.brainfights.exceptions.ErrorCode;
 import kz.aphion.brainfights.exceptions.PlatformException;
@@ -140,6 +144,12 @@ public class UserProfileModel {
 	public UserGamePlayingStatus playStatus;
 	
 	/**
+	 * Время последней активности
+	 */
+	public String lastActivityTime;
+	
+	
+	/**
 	 * Строит профиль пользоваля, по умолчанию выставляет USER TYPE = ME
 	 * @param user пользователь
 	 * @return
@@ -182,7 +192,7 @@ public class UserProfileModel {
 		model.lastTotalGames = user.getLastTotalGames();
 		model.lastWonGames = user.getLastWonGames();
 		model.lastStatisticsUpdate = user.getLastStatisticsUpdateDateISO8601();
-		
+		model.lastActivityTime = user.getLastActivityTimeISO8601();
 		
 		return model;
 	}

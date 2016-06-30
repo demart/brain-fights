@@ -43,7 +43,8 @@ public class APNSManager {
 			try {
 				pushManager =
 						new PushManager<SimpleApnsPushNotification>(
-						        ApnsEnvironment.getSandboxEnvironment(),
+						        //ApnsEnvironment.getSandboxEnvironment(),
+								ApnsEnvironment.getProductionEnvironment(),
 						        SSLContextUtil.createDefaultSSLContext("BrainFightsPushDev.p12", "lepon&7&"),
 						        null, // Optional: custom event loop group
 						        null, // Optional: custom ExecutorService for calling listeners
@@ -105,6 +106,7 @@ public class APNSManager {
 			payloadBuilder.setAlertTitle(title);
 			payloadBuilder.setAlertBody(message); 
 			payloadBuilder.setSoundFileName("ring-ring.aiff");
+			payloadBuilder.setBadgeNumber(1);
 			// payloadBuilder.addCustomProperty("g", ); GamerId
 			String payload = payloadBuilder.buildWithDefaultMaximumLength();
 			Logger.info(payload);

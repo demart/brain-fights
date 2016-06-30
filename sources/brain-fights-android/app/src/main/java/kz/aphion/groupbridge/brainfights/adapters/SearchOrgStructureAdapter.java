@@ -1,5 +1,6 @@
 package kz.aphion.groupbridge.brainfights.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -17,6 +21,7 @@ import kz.aphion.groupbridge.brainfights.models.Department;
 import kz.aphion.groupbridge.brainfights.models.SearchOrgStructModel;
 import kz.aphion.groupbridge.brainfights.models.UserProfile;
 import kz.aphion.groupbridge.brainfights.models.UserType;
+import kz.aphion.groupbridge.brainfights.utils.Const;
 
 /**
  * Created by alimjan on 11.11.2015.
@@ -26,11 +31,13 @@ public class SearchOrgStructureAdapter extends RecyclerView.Adapter<SearchOrgStr
     int layout;
     List<SearchOrgStructModel> items;
     SearchOrgStructureAdapterOnClickCallback callback;
+    Context context;
 
-    public SearchOrgStructureAdapter(int layout, List<SearchOrgStructModel> items, SearchOrgStructureAdapterOnClickCallback callback){
+    public SearchOrgStructureAdapter(int layout, List<SearchOrgStructModel> items, SearchOrgStructureAdapterOnClickCallback callback, Context context){
         this.layout = layout;
         this.items = items;
         this.callback = callback;
+        this.context = context;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,6 +56,8 @@ public class SearchOrgStructureAdapter extends RecyclerView.Adapter<SearchOrgStr
             else
             holder.userName.setText(user.getName());
             holder.userPosition.setText(user.getPosition());
+            if(user.imageUrl!=null&&user.imageUrl.length()>0)
+            Picasso.with(context).load(Const.BASE_URL+user.imageUrl).into(holder.avatar);
 
         }else {
             Department department = item.getDepartmentModel();
@@ -81,6 +90,7 @@ public class SearchOrgStructureAdapter extends RecyclerView.Adapter<SearchOrgStr
         TextView departmentRating;
         TextView departmentGemersAmount;
         TextView itsMyDepartment;
+        CircularImageView avatar;
 
         public ViewHolder(final View itemView, final SearchOrgStructureAdapterOnClickCallback callback) {
             super(itemView);
@@ -112,6 +122,7 @@ public class SearchOrgStructureAdapter extends RecyclerView.Adapter<SearchOrgStr
                     callback.onProfileClick(item.getUserProfile());
                 }
             });
+            avatar = (CircularImageView) itemView.findViewById(R.id.user_profile_avatar);
         }
     }
     public interface SearchOrgStructureAdapterOnClickCallback{
