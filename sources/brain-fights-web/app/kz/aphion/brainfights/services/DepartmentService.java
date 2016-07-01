@@ -175,8 +175,11 @@ public class DepartmentService {
 		if (department.getChildren() != null)
 			for (Department child : department.getChildren()) {
 				totalUserCount += mapOfUsersCountInDeps.get(child.getId());
-				totalCount += 1;
-				totalScore += mapOfScoreInDeps.get(child.getId());
+				
+				if (mapOfUsersCountInDeps.get(child.getId()) > 0) {
+					totalCount += 1;
+					totalScore += mapOfScoreInDeps.get(child.getId())*10;
+				}
 				/*
 				totalScore += child.getScore();
 				totalCount += 1;
@@ -188,7 +191,7 @@ public class DepartmentService {
 		// Посчитаем рейтинг пользователей
 		if (department.getUsers() != null) {
 			for (User user : department.getUsers()) {
-				totalScore += user.getScore();
+				totalScore += user.getScore()*10;
 				totalCount +=1;
 			}
 			totalUserCount += department.getUsers().size();
