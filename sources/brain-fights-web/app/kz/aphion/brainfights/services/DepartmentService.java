@@ -143,6 +143,9 @@ public class DepartmentService {
 	public static void updateDepartmentStatistics() {
 		List<Department> departments = Department.find("from Department where parent=null and deleted = false").fetch();
 		
+		mapOfUsersCountInDeps.clear();
+		mapOfScoreInDeps.clear();
+		
 		for (Department department : departments) {
 			updateDepartmentStatisticsRecursive(department);
 		}
