@@ -181,7 +181,7 @@ public class DepartmentService {
 				
 				if (mapOfUsersCountInDeps.get(child.getId()) > 0) {
 					totalCount += 1;
-					totalScore += mapOfScoreInDeps.get(child.getId())*10;
+					totalScore += mapOfScoreInDeps.get(child.getId());
 				}
 				/*
 				totalScore += child.getScore();
@@ -199,6 +199,7 @@ public class DepartmentService {
 			}
 			totalUserCount += department.getUsers().size();
 		}
+		
 		
 		int avarageScore = 0;
 		

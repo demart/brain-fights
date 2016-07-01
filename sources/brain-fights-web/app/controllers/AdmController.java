@@ -909,7 +909,7 @@ public class AdmController extends Controller {
 		
 		if (StringUtils.equals(format, formatFile)) {
 			
-			System.out.println ("CSV file");
+			//System.out.println ("CSV file");
 			ArrayList<QuestionModel> models = AdmService.readCsvFile(photo[0].getPath());
 			
 			wrapper.setData(models.toArray());
@@ -920,7 +920,7 @@ public class AdmController extends Controller {
 		}
 		
 		else if (StringUtils.equals(format2, formatFile)) {
-			System.out.println ("Excel file");
+			//System.out.println ("Excel file");
 			ArrayList<QuestionModel> models = AdmService.readExcelFile(photo[0].getPath());
 			
 			wrapper.setData(models.toArray());

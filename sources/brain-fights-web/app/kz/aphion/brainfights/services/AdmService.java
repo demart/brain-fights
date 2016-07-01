@@ -337,10 +337,10 @@ public class AdmService {
 				String nameImage = "" + AdmService.getCountCategoryNotDeleted() + 1000000000 + (Math.random()*1000000+3);
 				
 				byte[] decoded = Base64.decodeBase64(stringInBase64);
-File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
+				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
 				//System.out.println(f.getName());
 				//System.out.println(f.getAbsolutePath());
-				System.out.println(f.getPath());
+				//System.out.println(f.getPath());
 				
 				
 				f.createNewFile();
@@ -420,7 +420,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				File f = new File("public" + File.separator +"images" + File.separator + "categories" + File.separator + nameImage + "." + imageTmpFormat);
 				//System.out.println(f.getName());
 				//System.out.println(f.getAbsolutePath());
-				System.out.println(f.getPath());
+				//System.out.println(f.getPath());
 				
 				
 				f.createNewFile();
@@ -468,7 +468,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		String stringInBase64 =strTmpOne.substring(7, strTmpOne.length());
 		
 		String imageTmpFormat = strImage.substring(11, strImage.indexOf(";base64,"));
-		System.out.println (imageTmpFormat);
+		//System.out.println (imageTmpFormat);
 		
 		byte[] decoded = Base64.decodeBase64(stringInBase64);
 		File f = new File("public" + File.separator + "Test." + imageTmpFormat);
@@ -524,7 +524,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 				File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
 				//System.out.println(f.getName());
 				//System.out.println(f.getAbsolutePath());
-				System.out.println(f.getPath());
+			//	System.out.println(f.getPath());
 				
 				f.createNewFile();
 
@@ -552,7 +552,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 					Answer tmp = new Answer();
 					tmp.setCorrect(answer.getCorrect());
 					tmp.setName(answer.getName());
-					System.out.println(answer.getName());
+					//System.out.println(answer.getName());
 					tmp.setDeleted(false);
 					tmp.setQuestion(question);
 					question.getAnswers().add(tmp);
@@ -582,7 +582,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			Question question = Question.findById(model.getId());
 			if (question == null)
 				throw new PlatformException("0", "Question not found");
-			System.out.println("Cat: " + model.getCategoryId());
+			//System.out.println("Cat: " + model.getCategoryId());
 			
 			if (model.getCategoryId() != null && model.getCategoryId() != 0) {
 				Category category = Category.findById(model.getCategoryId());
@@ -618,7 +618,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 						File f = new File("public" + File.separator +"images" + File.separator + "questions" + File.separator + nameImage + "." + imageTmpFormat);
 						//System.out.println(f.getName());
 						//System.out.println(f.getAbsolutePath());
-						System.out.println(f.getPath());
+						//System.out.println(f.getPath());
 						
 						
 						f.createNewFile();
@@ -1029,7 +1029,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 			}
 			
 			if (model.getParent() == null) {
-				System.out.println(tmpLeaf);
+				//System.out.println(tmpLeaf);
 				if (model.getType() == null) {
 					DepartmentTreeModel mod = new DepartmentTreeModel(model.getId(), model.getName(), icon, model.getScore(), model.getUserCount(), "Не указан", 0l,  tmpLeaf, false);
 					root.getChildren().add(mod);
@@ -1056,7 +1056,7 @@ File f = new File("public" + File.separator +"images" + File.separator + "catego
 		root.setChildren(new ArrayList<DepartmentTreeModel>());
 
 		for (Department model: listBase) {
-				System.out.println(model.getId());
+				//System.out.println(model.getId());
 				Boolean tmpLeaf = true;
 				String icon = "tree-icons-children";
 				
