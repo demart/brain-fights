@@ -191,14 +191,14 @@ public class DepartmentService {
 					*/
 			}
 		
-		int paramDivision = 1;
+	//	int paramDivision = 1;
 	
 		// Посчитаем рейтинг пользователей
 		if (department.getUsers() != null) {
 			for (User user : department.getUsers()) {
-				totalScore += user.getScore()*10;
+				totalScore += user.getScore();
 				totalCount +=1;
-				paramDivision = 10;
+		//		paramDivision = 10;
 			}
 			totalUserCount += department.getUsers().size();
 		}
@@ -208,7 +208,11 @@ public class DepartmentService {
 		
 		if (totalCount != 0) {
 			avarageScore = totalScore/totalCount;
-			department.setScore(avarageScore/paramDivision);
+			
+			if (avarageScore == 0 && totalScore > 0)
+				avarageScore = 1;
+			
+			department.setScore(avarageScore);
 		
 		} else {
 			department.setScore(0);
